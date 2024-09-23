@@ -145,10 +145,11 @@ class FeishuMessageHandler(FeishuApp):
 
 
 if __name__ == "__main__":
-    hack = 'https://open.feishu.cn/open-apis/bot/v2/hook/699721fe-7185-4d32-8fea-79b1970d85ec'
-    ins = FeishuMessageHandler(r'W:\Personal_Project\NeiRelated\projects\rag_chatbot\configs\feishu_config.yaml')
-    # ins.send_message_by_card_json(card_json=data_json, webhook_address=hack)
-    # ins.retrieve_file('om_a99671951663a27181cf5fbecd62369d', 'file_v3_00ep_d2e5827f-f0d3-4980-a50a-432b399ad66g')
-    res = ins.send_message_by_template(receive_id='ou_2401613ed164502ea6a20417c20dffee', template_id='AAq7OhvOhSJB2',
-                                       template_variable={'log_rich_text': 'hi'})
-    print(res)
+    pass
+    # hack = 'https://open.feishu.cn/open-apis/bot/v2/hook/699721fe-7185-4d32-8fea-79b1970d85ec'
+    # ins = FeishuMessageHandler(r'W:\Personal_Project\NeiRelated\projects\rag_chatbot\configs\feishu_config.yaml')
+    # # ins.send_message_by_card_json(card_json=data_json, webhook_address=hack)
+    # # ins.retrieve_file('om_a99671951663a27181cf5fbecd62369d', 'file_v3_00ep_d2e5827f-f0d3-4980-a50a-432b399ad66g')
+    # res = ins.send_message_by_template(receive_id='ou_2401613ed164502ea6a20417c20dffee', template_id='AAq7OhvOhSJB2',
+    #                                    template_variable={'log_rich_text': 'hi'})
+    # print(res)

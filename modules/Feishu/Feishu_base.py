@@ -122,6 +122,9 @@ class FeishuApp:
         if if_headless:
             chrome_options.add_argument('--headless')
         chrome_options.add_argument("--disable-popup-blocking")
+        if not self.__chromedriver_path:
+            logger.error("Failed to rpa get UAT, chromedriver not provided.")
+            return
         driver = uc.Chrome(options=chrome_options,
                            driver_executable_path=self.__chromedriver_path,
                            version_main=self.__chromedriver_version)

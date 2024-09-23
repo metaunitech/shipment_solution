@@ -15,6 +15,8 @@ LLM_PLATFORM = LLM_PARAMS.get('platform')
 logger.info(f"LLM_PLATFORM : {LLM_PLATFORM}")
 logger.info(f"LLM_PARAMS: {LLM_PARAMS}")
 
+WEB_PORT = int(config_data.get("WEB", {}).get('port'))
+
 FEISHU_CONFIG_PATH = Path(__file__).parent / 'configs' / 'feishu_config.yaml'
 
 previous_id_lock = Lock()
@@ -38,7 +40,8 @@ def receive_data():
                 app.config['data_queue'].append(data)
             if app.config['data_queue'] and msg_id != app.config['previous_id']:
                 msg_dicts = app.config['data_queue']
-                inserted_msgs = FEISHU_CHATBOT.process_msg_dict(msg_dicts)
+                inserted_msgs = msg_dicts
+                # inserted_msgs = FEISHU_CHATBOT.process_msg_dict(msg_dicts)
                 logger.info(msg_dicts)
                 app.config['data_queue'] = []
             app.config['previous_id'] = msg_id
@@ -56,4 +59,4 @@ def receive_data():
 
 
 if __name__ == '__main__':
-    app.run("0.0.0.0", port=6162)
+    app.run("0.0.0.0", port=WEB_PORT)
