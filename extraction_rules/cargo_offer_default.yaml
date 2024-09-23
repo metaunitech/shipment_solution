@@ -1,0 +1,19 @@
+background:
+  - cargo offer原始信息，一般都是用英文的。
+  - EAR SEP 可以默认录入9.1号， END SEP 默认9.20， MID,SEP 默认 ,9.15
+  - SEIYO FORTUNE    10514MT    2007   NINGDE   18-25TH SEP 这种时间是区间的，就录最前面的9.18
+keys:
+  - 货物名称-CARGO-NAME
+  - 货量-QUANTITY
+  - 积载包装-SF-PACKAGE
+  - 装货港口-L-PORT
+  - 卸货港口-D-PORT
+  - 装率-L-RATE
+  - 卸率-D-RATE
+  - 装运开始日期-LAY-DATE
+  - 装运结束日期-CANCELING-DATE
+  - 佣金-COMM
+  - 运费单价-FRT-RATE
+  - 备注-REMARK
+  - 报盘公司-COMPANY
+

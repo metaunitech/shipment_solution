@@ -1,0 +1,11 @@
+ship_info:
+  - { "content": "PLS KINDLY PPS SUITABLE CGO FOR OUR FLWG VSLS:
+MV HAI AU 58// DWCC 3900MT- OPEN TAGBILARAN, PHIL ON 25-30TH AUGNMV HAI AU STAR//DWCC 4930 MT - OPEN BACOLOD, PHIL ON 14-19TH AUG3MV SEAGULL 09//DWCC 4900MT-OPEN ZAMBOANGA, PHIL ON 12-17TH AUG4.MV HAI DANG 168/ DWCC 4900 MT - OPEN QUANG NINH, VIETNAM END OF AUG5.MV HAI AU 28/GEARLESS//DWCC 4950MT- OPEN THAILAND 14-19TH AUG6MV HAI AU SKY//GEARLESS//DWCC 4930 MT- to be revert later7.MV VIEN DONG 151//GEARLESS//DWCC 6300 MT - OPEN HCM, VIETNAM 06-07TH AUG- HOTTO FIX
+8.MV VIEN DONG 09/DWCC 6100 MT - OPEN ILOILO, PHILS ON 25-30TH AUG9MV SEAGULL VICTORY// DWCC 11.400 MT - OPEN BATAAN, PHILS ON 5-10TH SEPT",
+  "reason":"这段里提供了9条船可以被租赁的信息，每条船的港口和开放时间都有，船名和大小也都有，因此属于船舶邮件"}
+cargo_info:
+  - {"content": "**===================**\n\nGood day.\n\nPlease offer FIRM for:\n\n30,000MTS +/- 05% MOLOO, BOULDERS IN BULK, SIZE: 10-800 KGS\n\nLAYCAN: 16 - 21 SEPT 2024\n\nLPORT: 1 SP SB KAKINADA, INDIA\n\nDPORT: 1SP SA MALE ON ANCHORAGE,\n\nLRATE: 5000 MTS PWD SHEXIU BASIS.\n\nDRATE: 3000 MTS PWD FHEXIU BASIS.\n\nCOMM -3.75 TTL HERE.\n\nLook forward to hearing from you soon.\n\nPlease offer your best.\n\nFOR FURTHER DETAILS, CLARIFICATIONS, PLS CONTACT.\n\nBrgds/ Capt George - As broker & agent only\n\nmob: ++30 697 2077443 / WhatsApp, 7X24.\n\ne-mail : seamus@pkt.gr & seamus@otenet.gr\n\nSKYPE ID : seamus2002\n\n++++ **++++",
+  "reason": "邮件内容中包含了需要运输的货物，对船大小的需求，装港地，离港地等信息，因此属于需要租赁船的需求邮件，属于货盘邮件。"}
+other:
+  - {"content": "For reply pls put '' dry@tyshipping.com '' to CC or  '' Leave the message on Skype'' for receivin' faster reaction. Pls do not  hesitate to reach us for asking competitive pda(s) & the best ship-port  agency services in Mersin + Iskenderun ports ! BEST REGARDS TUGAY  YAKICI AS BROKER ONLY TY SHIPPING PHN : +90 324 3289216 PHN  : +90 324 3289215 FAX : +90 324 3289227 MOB:+90 535 351 81 26  SKYPE:tyakici chartering@tyshipping.com dry@tyshipping.com  info@tyshippingco.com www.tyshipping.com.tr Instagram:  tyshipping_ Facebook: TY Shipping Co. Linked-In: TY SHIPPING  CO. https://www.yakicigroup.com",
+  "reason": "邮件中既不包含需要出租的船舶，也不包含对船舶租赁的需求，不属于船舶邮件，也不属于货盘邮件。因此属于其他邮件类型。"}

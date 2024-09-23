@@ -1,0 +1,28 @@
+background:
+  - 船舶邮件（ship_info）原始信息，一般都是用英文的。
+  - EAR SEP 可以默认录入9.1号， END SEP 默认9.20， MID,SEP 默认 ,9.15
+  - SEIYO FORTUNE    10514MT    2007   NINGDE   18-25TH SEP 这种时间是区间的，就录最前面的9.18
+keys:
+  - 船舶代码-ID
+  - 船舶类型-TYPE
+  - 船舶英文名称-ENGLISH-NAME
+  - 船舶中文名称-CHINESE-NAME
+  - 建造年份-BUILT-YEAR
+  - 载货吨-DWCC
+  - 载重吨-DWT
+  - 总吨位-GRT
+  - 净吨位-NRT
+  - 船长-LOA
+  - 船宽-BM
+  - 型深-DEPTH
+  - 船级-CLASS
+  - 舱口数量-HATCH
+  - 舱位数量-HOLD
+  - 吊机-GEAR
+  - 抓斗-GRAB
+  - 夏季海水吃水-DRAFT
+  - 甲板数-DECK
+  - P&I
+  - 船舶名称-VSL-NAME
+  - 空船港口-OPEN-PORT
+  - 空船日期-OPEN-DATE
