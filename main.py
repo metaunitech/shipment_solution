@@ -59,7 +59,7 @@ class ShipmentFlow:
             elif chat_type == 'group':
                 receive_id = message.get('chat_id')
                 receive_type = 'chat_id'
-                mentions = message.get('mentions')
+                mentions = message.get('mentions', [])
                 if not any([i.get('user_id') for i in mentions]):
                     logger.error(f"Not mention current bot. Skipped.{[i.get('user_id') for i in mentions]}")
                     continue
