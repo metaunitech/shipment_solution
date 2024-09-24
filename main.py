@@ -293,9 +293,7 @@ class ShipmentFlow:
             #                                                      receive_id_type=receive_type)
             rich_text_log = (
                 f'<b>【邮件主体收到】</b>\n'
-                f'<i>{self.json_to_code_block(self.get_data_loader_context(document_loader))}</i>\n'
-                f'<b>正在进行步骤：<font color="blue"><b>邮件分类</b></font></b>\n'
-                f'<b>【时间】</b>: {current_time}'
+                f'{self.json_to_code_block(self.get_data_loader_context(document_loader))}\n'
             )
             self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
                                                                  template_id='AAq7OhvOhSJB2',  # Hardcoded.
