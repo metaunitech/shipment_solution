@@ -49,7 +49,7 @@ class ShipmentFlow:
         msgs = []
         for msg_dict in msg_dicts:
             event = msg_dict.get('event', {})
-            event_id = event.get('event_id')
+            event_id = msg_dict.get('event_id')
             message = event.get('message', {})
             chat_type = message.get('chat_type')
             message_type = message.get('message_type')
