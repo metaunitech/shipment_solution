@@ -63,7 +63,7 @@ class FeishuMessageHandler(FeishuApp):
     def send_message(self, receive_id, receive_id_type='open_id'):
         pass
 
-    def retrieve_file(self, message_id, file_key, store_path: Path):
+    def retrieve_file(self, message_id, file_key, store_path: Path, file_type='file'):
         # 创建client
         client = lark.Client.builder() \
             .app_id(self.__app_id) \
@@ -75,7 +75,7 @@ class FeishuMessageHandler(FeishuApp):
         request: GetMessageResourceRequest = GetMessageResourceRequest.builder() \
             .message_id(message_id) \
             .file_key(file_key) \
-            .type("file") \
+            .type(file_type) \
             .build()
 
         # 发起请求

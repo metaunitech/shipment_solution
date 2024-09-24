@@ -101,6 +101,29 @@ class ShipmentFlow:
                 res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
                                      receive_type=receive_type)
                 msgs.append(res)
+            elif message_type == 'image':
+                message_id = message.get('message_id')
+                content_str = message.get('content')
+                content = json.loads(content_str) if content_str else {}
+                file_key = content.get('image_key')
+                current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+                target_folder = Path(__file__).parent.parent / 'src' / 'input' / current_date / event_id
+                os.makedirs(target_folder, exist_ok=True)
+                file_path = self.feishu_message_handler.retrieve_file(message_id, file_key, target_folder, file_type='image')
+                logger.info(f"Document {file_path.name} received.")
+                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                rich_text_log = (
+                    f'<b>【上传文件接收成功】</b>\n'
+                    f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
+                    f'<b>【时间】</b>: {current_time}'
+                )
+                self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
+                                                                     template_id='AAq7OhvOhSJB2',  # Hardcoded.
+                                                                     template_variable={'log_rich_text': rich_text_log},
+                                                                     receive_id_type=receive_type)
+                res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
+                                     receive_type=receive_type)
+                msgs.append(res)
 
             else:
                 logger.error(f"Unknown message_type: {message_type}")
