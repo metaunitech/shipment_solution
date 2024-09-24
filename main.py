@@ -166,7 +166,7 @@ class ShipmentFlow:
     @staticmethod
     def get_data_loader_context(document_loader):
         data = document_loader.load()
-        contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
+        contents_list = [i.__dict__ for i in data]
         # content_str = '\n'.join(contents_list)
         return contents_list
 
