@@ -327,12 +327,7 @@ class ShipmentFlow:
         logger.success(f"=>      KIE Extraction results: {json.dumps(extraction_res, ensure_ascii=False, indent=2)}")
         if receive_type and receive_id:
             # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            rich_text_log = (
-                f'<b>【邮件拆分后的原文片段】</b>\n'
-                "\n".join([i[1] + "\n" + i[2] for i in extraction_res])
-                # f'<b>正在进行步骤：<font color="blue"><b>插入多维表</b></font>\n'
-                # f'<b>【时间】</b>: {current_time}'
-            )
+            rich_text_log = f'<b>【邮件拆分后的原文片段】</b>\n'+"\n-----------\n".join([i[1] + "\n" + i[2] for i in extraction_res])
             logger.warning(rich_text_log)
 
             self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
