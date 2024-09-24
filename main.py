@@ -111,7 +111,8 @@ class ShipmentFlow:
                 current_date = datetime.datetime.now().strftime("%Y-%m-%d")
                 target_folder = Path(__file__).parent.parent / 'src' / 'input' / current_date / event_id
                 os.makedirs(target_folder, exist_ok=True)
-                file_path = self.feishu_message_handler.retrieve_file(message_id, file_key, target_folder, file_type='image')
+                file_path = self.feishu_message_handler.retrieve_file(message_id, file_key, target_folder,
+                                                                      file_type='image')
                 logger.info(f"Document {file_path.name} received.")
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 rich_text_log = (
@@ -325,6 +326,19 @@ class ShipmentFlow:
         extraction_res = [] if not extraction_res else extraction_res
         logger.success(f"=>      KIE Extraction results: {json.dumps(extraction_res, ensure_ascii=False, indent=2)}")
         if receive_type and receive_id:
+            # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            rich_text_log = (
+                f'<b>【邮件拆分后的原文片段】</b>\n'
+                "\n".join([i[1] + "\n" + i[2] for i in extraction_res])
+                # f'<b>正在进行步骤：<font color="blue"><b>插入多维表</b></font>\n'
+                # f'<b>【时间】</b>: {current_time}'
+            )
+            logger.warning(rich_text_log)
+
+            self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
+                                                                 template_id='AAq7OhvOhSJB2',  # Hardcoded.
+                                                                 template_variable={'log_rich_text': rich_text_log},
+                                                                 receive_id_type=receive_type)
             current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             rich_text_log = (
                 f'<b>【邮件关键信息提取成功】</b>\n'
@@ -332,13 +346,14 @@ class ShipmentFlow:
                 f'<b>正在进行步骤：<font color="blue"><b>插入多维表</b></font>\n'
                 f'<b>【时间】</b>: {current_time}'
             )
-            logger.warning(rich_text_log)
             self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
                                                                  template_id='AAq7OhvOhSJB2',  # Hardcoded.
                                                                  template_variable={'log_rich_text': rich_text_log},
                                                                  receive_id_type=receive_type)
+
         try:
-            self.insert_data_to_spreadsheet(Path(document_path) if document_path else None, document_type, extraction_res)
+            self.insert_data_to_spreadsheet(Path(document_path) if document_path else None, document_type,
+                                            extraction_res)
             logger.success(f"=>      Data Inserted.")
             if receive_type and receive_id:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
