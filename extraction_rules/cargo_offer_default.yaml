@@ -2,16 +2,27 @@ background:
   - cargo offer原始信息，一般都是用英文的。
   - EAR SEP 可以默认录入9.1号， END SEP 默认9.20， MID,SEP 默认 ,9.15
   - SEIYO FORTUNE    10514MT    2007   NINGDE   18-25TH SEP 这种时间是区间的，就录最前面的9.18
+  - 10pct 10% (percent)指的是货物质量占据总船容的10%
+  - ttl 2.5 pct指的是佣金总计2.5% (Commission total 2.5%)
+  - F.I.O.S.T.：free in,out,stowed and trimmed 船方不负担装船，卸船，理仓，以及平仓费用
+  - 3,000MT 5PCT MOLCO：3,000公吨，允许5%的增减。
+  - PIC：Point of Contact，联系人。
+  - CQD/3DAYS TO HEAVUP：CQD（Cargo Quantity Discharged），3天内完成卸货
+  - CQD BE (TRY DISRATE)：CQD（Cargo Quantity Discharged）Bends，尝试卸货速率。
 keys:
   - 货物名称-CARGO-NAME
   - 货量-QUANTITY
   - 积载包装-SF-PACKAGE
-  - 装货港口-L-PORT
-  - 卸货港口-D-PORT
+  - 装货港口-L-PORT:
+      - 通常在如下格式中是左边那个：<港口缩写>/<港口缩写>，例如：DANGJIN/OSAKA，DANGJIN就是装货港口
+  - 卸货港口-D-PORT:
+      - 通常在如下格式中是右边那个：<港口缩写>/<港口缩写>，例如：DANGJIN/OSAKA，OSAKA就是装货港口
   - 装率-L-RATE
   - 卸率-D-RATE
-  - 装运开始日期-LAY-DATE
-  - 装运结束日期-CANCELING-DATE
+  - 装运开始日期-LAY-DATE:
+      - 对于装运日期的返回格式根据如下例子EAR SEP 可以默认录入9.1号，END SEP 默认9.20，MID SEP 默认9.15
+  - 装运结束日期-CANCELING-DATE:
+      - 对于装运日期的返回格式根据如下例子EAR SEP 可以默认录入9.1号，END SEP 默认9.20，MID SEP 默认9.15
   - 佣金-COMM
   - 运费单价-FRT-RATE
   - 备注-REMARK
