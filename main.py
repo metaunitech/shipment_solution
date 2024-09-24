@@ -199,7 +199,7 @@ class ShipmentFlow:
         return f'```json\n{formatted_json}\n```'
 
     def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, receive_type=None):
-        document_loader = self.load_document(document_path=Path(document_path), content=content)
+        document_loader = self.load_document(document_path=Path(document_path) if document_path else None, content=content)
         current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         if receive_type and receive_id:
             rich_text_log = (
