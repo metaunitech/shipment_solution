@@ -52,6 +52,8 @@ class ShipmentFlow:
             event_id = event.get('event_id')
             message = event.get('message', {})
             chat_type = message.get('chat_type')
+            message_type = message.get('message_type')
+
             if not chat_type:
                 logger.error("Chat type is not mentioned.")
                 continue
@@ -63,13 +65,12 @@ class ShipmentFlow:
                 receive_id = message.get('chat_id')
                 receive_type = 'chat_id'
                 mentions = message.get('mentions', [])
-                if message_type == 'text' and '16c5228b4a88575e' not in [i.get('tenant_key', ) for i in mentions]:
+                if message_type == 'text' and '16c5228b4a88575e' not in [i.get('tenant_key', '') for i in mentions]:
                     logger.error(f"Not mention current bot. Skipped.{[i.get('name', 'Unknown') for i in mentions]}")
                     continue
             else:
                 logger.error(f"Unknown chat_type: {chat_type}")
                 continue
-            message_type = message.get('message_type')
             if message_type == 'text':
                 content_str = message.get('content')
                 content = json.loads(content_str) if content_str else {}
