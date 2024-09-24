@@ -1,5 +1,6 @@
 import datetime
 import json
+import traceback
 from pathlib import Path
 from langchain_openai import ChatOpenAI
 
@@ -171,12 +172,12 @@ class ShipmentFlow:
     def mark_finish(self):
         pass
 
-    def insert_data_to_spreadsheet(self, document_path: Path, document_type, extraction_res):
+    def insert_data_to_spreadsheet(self, document_path: Union[Path, None], document_type, extraction_res):
         data_to_insert = []
         for data in extraction_res:
             cur_res = data[0]
             cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
-            cur_res['source_name'] = document_path.name
+            cur_res['source_name'] = document_path.name if document_path else 'PureText'
             data_to_insert.append(cur_res)
         logger.info(f"Inserting {data_to_insert}")
         if document_type == 'ship_info':
@@ -205,7 +206,7 @@ class ShipmentFlow:
         if receive_type and receive_id:
             rich_text_log = (
                 f'<b>【邮件主体收到】</b>\n'
-                f'<i>{document_path if document_path else content[:10] + "..."}</i>\n'
+                f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
                 f'<b>正在进行步骤：<font color="blue"><b>邮件分类</b></font></b>\n'
                 f'<b>【时间】</b>: {current_time}'
             )
@@ -217,12 +218,12 @@ class ShipmentFlow:
         try:
             document_type, reason = self.classify_document(document_loader)
             logger.success(
-                f"=>     Classify {document_path if document_path else content[:10] + '...'}: TYPE:{document_type}, REASON:{reason}")
+                f"=>     Classify {document_path if document_path else content[:50] + '...'}: TYPE:{document_type}, REASON:{reason}")
             if receive_type and receive_id:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 rich_text_log = (
                     f'<b>【邮件主体分类成功】</b>\n'
-                    f'<i>{document_path if document_path else content[:10] + "..."}</i>\n'
+                    f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
                     f'<b>邮件分类：<font color="green"><b>{document_type}</b></font>\n'
                     f'<b>分类原因：<font color="grey"><b>{reason}</b></font>\n'
                     f'<b>正在进行步骤：<font color="blue"><b>关键信息提取</b></font></b>\n'
@@ -233,11 +234,12 @@ class ShipmentFlow:
                                                                      template_variable={'log_rich_text': rich_text_log},
                                                                      receive_id_type=receive_type)
         except Exception as e:
+            logger.error(traceback.format_exc())
             if receive_type and receive_id:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 rich_text_log = (
                     f'<b>【邮件主体分类失败】</b>\n'
-                    f'<i>{document_path if document_path else content[:10] + "..."}</i>\n'
+                    f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
                     f'<b>失败原因：<font color="red"><b>{str(e)}</b></font></b>\n'
                     f'<b>【时间】</b>: {current_time}'
                 )
@@ -255,7 +257,7 @@ class ShipmentFlow:
             current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             rich_text_log = (
                 f'<b>【邮件关键信息提取成功】</b>\n'
-                f'<b>提取结果：<font color="green"><b>{self.json_to_code_block(json.dumps(extraction_res, indent=2, ensure_ascii=False))}</b></font></b>\n'
+                # f'<b>提取结果：<font color="green"><b>{self.json_to_code_block(json.dumps(extraction_res, indent=2, ensure_ascii=False))}</b></font></b>\n'
                 f'<b>正在进行步骤：<font color="blue"><b>插入多维表</b></font>\n'
                 f'<b>【时间】</b>: {current_time}'
             )
@@ -264,7 +266,7 @@ class ShipmentFlow:
                                                                  template_variable={'log_rich_text': rich_text_log},
                                                                  receive_id_type=receive_type)
         try:
-            self.insert_data_to_spreadsheet(Path(document_path), document_type, extraction_res)
+            self.insert_data_to_spreadsheet(Path(document_path) if document_path else None, document_type, extraction_res)
             logger.success(f"=>      Data Inserted.")
             if receive_type and receive_id:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -278,11 +280,12 @@ class ShipmentFlow:
                                                                      template_variable={'log_rich_text': rich_text_log},
                                                                      receive_id_type=receive_type)
         except Exception as e:
+            logger.error(traceback.format_exc())
             if receive_type and receive_id:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 rich_text_log = (
                     f'<b>【分类数据插入失败】</b>\n'
-                    f'<i>{document_path if document_path else content[:10] + "..."}</i>\n'
+                    f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
                     f'<b>失败原因：<font color="red"><b>{str(e)}</b></font>\n'
                     f'<b>【时间】</b>: {current_time}'
                 )
