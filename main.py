@@ -60,8 +60,8 @@ class ShipmentFlow:
                 receive_id = message.get('chat_id')
                 receive_type = 'chat_id'
                 mentions = message.get('mentions', [])
-                if not any([i.get('id', {}).get('user_id') for i in mentions]):
-                    logger.error(f"Not mention current bot. Skipped.{[i.get('id', {}).get('user_id') for i in mentions]}")
+                if '16c5228b4a88575e' not in [i.get('tenant_key', ) for i in mentions]:
+                    logger.error(f"Not mention current bot. Skipped.{[i.get('name', 'Unknown') for i in mentions]}")
                     continue
             else:
                 logger.error(f"Unknown chat_type: {chat_type}")
