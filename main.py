@@ -246,7 +246,7 @@ class ShipmentFlow:
     @staticmethod
     def json_to_code_block(json_data):
         formatted_json = json.dumps(json_data, indent=2, ensure_ascii=False)
-        return f'```json\n{formatted_json}\n```'
+        return f'```JSON\n{formatted_json}\n```'
 
     @staticmethod
     def json_to_html_table(json_data):
@@ -328,11 +328,11 @@ class ShipmentFlow:
             current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             rich_text_log = (
                 f'<b>【邮件关键信息提取成功】</b>\n'
-                f'{self.json_to_html_table([i[0] for i in extraction_res])}\n'
+                f'{self.json_to_code_block([i[0] for i in extraction_res])}\n'
                 f'<b>正在进行步骤：<font color="blue"><b>插入多维表</b></font>\n'
                 f'<b>【时间】</b>: {current_time}'
             )
-            logger.info(rich_text_log)
+            logger.warning(rich_text_log)
             self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
                                                                  template_id='AAq7OhvOhSJB2',  # Hardcoded.
                                                                  template_variable={'log_rich_text': rich_text_log},
