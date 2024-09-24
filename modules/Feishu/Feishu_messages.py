@@ -90,7 +90,7 @@ class FeishuMessageHandler(FeishuApp):
         # 处理业务结果
         stored_path = store_path / response.file_name
         if stored_path.exists():
-            return False
+            return stored_path
         f = open(stored_path, "wb")
         f.write(response.file.read())
         f.close()

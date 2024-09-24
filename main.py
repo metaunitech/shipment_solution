@@ -1,5 +1,6 @@
 import datetime
 import json
+import os
 import traceback
 from pathlib import Path
 from langchain_openai import ChatOpenAI
@@ -48,6 +49,7 @@ class ShipmentFlow:
         msgs = []
         for msg_dict in msg_dicts:
             event = msg_dict.get('event', {})
+            event_id = event.get('event_id')
             message = event.get('message', {})
             chat_type = message.get('chat_type')
             if not chat_type:
@@ -61,7 +63,7 @@ class ShipmentFlow:
                 receive_id = message.get('chat_id')
                 receive_type = 'chat_id'
                 mentions = message.get('mentions', [])
-                if '16c5228b4a88575e' not in [i.get('tenant_key', ) for i in mentions]:
+                if message_type == 'text' and '16c5228b4a88575e' not in [i.get('tenant_key', ) for i in mentions]:
                     logger.error(f"Not mention current bot. Skipped.{[i.get('name', 'Unknown') for i in mentions]}")
                     continue
             else:
@@ -76,7 +78,28 @@ class ShipmentFlow:
                                      receive_type=receive_type)
                 msgs.append(res)
             elif message_type == 'file':
-                pass
+                message_id = message.get('message_id')
+                content_str = message.get('content')
+                content = json.loads(content_str) if content_str else {}
+                file_key = content.get('file_key')
+                current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+                target_folder = Path(__file__).parent.parent / 'src' / 'input' / current_date / event_id
+                os.makedirs(target_folder, exist_ok=True)
+                file_path = self.feishu_message_handler.retrieve_file(message_id, file_key, target_folder)
+                logger.info(f"Document {file_path.name} received.")
+                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                rich_text_log = (
+                    f'<b>【上传文件接收成功】</b>\n'
+                    f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
+                    f'<b>【时间】</b>: {current_time}'
+                )
+                self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
+                                                                     template_id='AAq7OhvOhSJB2',  # Hardcoded.
+                                                                     template_variable={'log_rich_text': rich_text_log},
+                                                                     receive_id_type=receive_type)
+                res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
+                                     receive_type=receive_type)
+                msgs.append(res)
 
             else:
                 logger.error(f"Unknown message_type: {message_type}")
@@ -257,7 +280,7 @@ class ShipmentFlow:
             current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             rich_text_log = (
                 f'<b>【邮件关键信息提取成功】</b>\n'
-                # f'<b>提取结果：<font color="green"><b>{self.json_to_code_block(json.dumps(extraction_res, indent=2, ensure_ascii=False))}</b></font></b>\n'
+                f'{self.json_to_code_block(json.dumps(extraction_res, indent=2, ensure_ascii=False))}\n'
                 f'<b>正在进行步骤：<font color="blue"><b>插入多维表</b></font>\n'
                 f'<b>【时间】</b>: {current_time}'
             )
