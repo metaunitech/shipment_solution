@@ -1,3 +1,5 @@
+import traceback
+
 from flask import Flask, request, jsonify
 from loguru import logger
 from threading import Lock
@@ -43,10 +45,15 @@ def receive_data():
             if app.config['data_queue'] and msg_id != app.config['previous_id']:
                 msg_dicts = app.config['data_queue']
                 # inserted_msgs = msg_dicts
-                inserted_msgs = SHIPMENT_FLOW_INS.process_msg_dicts(msg_dicts)
-                logger.info(msg_dicts)
-                app.config['data_queue'] = []
-            app.config['previous_id'] = msg_id
+                try:
+                    inserted_msgs = SHIPMENT_FLOW_INS.process_msg_dicts(msg_dicts)
+                    logger.info(msg_dicts)
+                    app.config['data_queue'] = []
+                    app.config['previous_id'] = msg_id
+                except:
+                    logger.error(traceback.format_exc())
+                    app.config['data_queue'] = []
+                    app.config['previous_id'] = msg_id
 
     logger.warning("DATA QUEUE:")
     logger.info(app.config['data_queue'])
