@@ -77,7 +77,8 @@ class ShipmentFlow:
                 content = content.get('text')
                 res = self.unit_flow(document_path=None, content=content, receive_id=receive_id,
                                      receive_type=receive_type)
-                msgs.append(res)
+                if res:
+                    msgs.append(res)
             elif message_type == 'file':
                 message_id = message.get('message_id')
                 content_str = message.get('content')
@@ -100,7 +101,8 @@ class ShipmentFlow:
                                                                      receive_id_type=receive_type)
                 res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
                                      receive_type=receive_type)
-                msgs.append(res)
+                if res:
+                    msgs.append(res)
             elif message_type == 'image':
                 message_id = message.get('message_id')
                 content_str = message.get('content')
@@ -123,8 +125,8 @@ class ShipmentFlow:
                                                                      receive_id_type=receive_type)
                 res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
                                      receive_type=receive_type)
-                msgs.append(res)
-
+                if res:
+                    msgs.append(res)
             else:
                 logger.error(f"Unknown message_type: {message_type}")
                 continue
@@ -298,13 +300,15 @@ class ShipmentFlow:
 
         extraction_res = self.extract_key_information(document_loader=document_loader,
                                                       document_type=document_type)
+        if not extraction_res:
+            return
         extraction_res = [] if not extraction_res else extraction_res
         logger.success(f"=>      KIE Extraction results: {json.dumps(extraction_res, ensure_ascii=False, indent=2)}")
         if receive_type and receive_id:
             current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             rich_text_log = (
                 f'<b>【邮件关键信息提取成功】</b>\n'
-                f'{self.json_to_code_block(json.dumps(extraction_res, indent=2, ensure_ascii=False))}\n'
+                f'{self.json_to_code_block(json.dumps([i[0] for i in extraction_res], indent=2, ensure_ascii=False))}\n'
                 f'<b>正在进行步骤：<font color="blue"><b>插入多维表</b></font>\n'
                 f'<b>【时间】</b>: {current_time}'
             )
