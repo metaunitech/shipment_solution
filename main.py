@@ -308,7 +308,7 @@ class ShipmentFlow:
             current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             rich_text_log = (
                 f'<b>【邮件关键信息提取成功】</b>\n'
-                f'{self.json_to_code_block(json.dumps([i[0] for i in extraction_res], indent=2, ensure_ascii=False))}\n'
+                f'{self.json_to_code_block([i[0] for i in extraction_res])}\n'
                 f'<b>正在进行步骤：<font color="blue"><b>插入多维表</b></font>\n'
                 f'<b>【时间】</b>: {current_time}'
             )
