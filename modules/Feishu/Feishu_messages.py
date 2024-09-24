@@ -1,6 +1,7 @@
 # encoding=utf-8
 import json
 import os
+import time
 from pathlib import Path
 import yaml
 import requests
@@ -88,7 +89,8 @@ class FeishuMessageHandler(FeishuApp):
             return
 
         # 处理业务结果
-        stored_path = store_path / response.file_name
+        file_name = response.file_name if response.file_name else f"{int(time.time()*1000)}.jpg"
+        stored_path = store_path / file_name
         if stored_path.exists():
             return stored_path
         f = open(stored_path, "wb")
