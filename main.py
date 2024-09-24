@@ -53,7 +53,7 @@ class ShipmentFlow:
             message = event.get('message', {})
             chat_type = message.get('chat_type')
             message_type = message.get('message_type')
-
+            logger.info([event_id, chat_type, message_type])
             if not chat_type:
                 logger.error("Chat type is not mentioned.")
                 continue
