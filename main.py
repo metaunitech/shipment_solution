@@ -245,8 +245,28 @@ class ShipmentFlow:
 
     @staticmethod
     def json_to_code_block(json_data):
-        formatted_json = json.dumps(json_data, indent=2)
+        formatted_json = json.dumps(json_data, indent=2, ensure_ascii=False)
         return f'```json\n{formatted_json}\n```'
+
+    @staticmethod
+    def json_to_html_table(json_data):
+        def to_html_table(data):
+            if isinstance(data, dict):
+                table = '<table border="1">\n'
+                table += '  <tr><th>Key</th><th>Value</th></tr>\n'
+                for key, value in data.items():
+                    table += f'  <tr><td>{key}</td><td>{value}</td></tr>\n'
+                table += '</table>\n'
+                return table
+            elif isinstance(data, list):
+                tables = ''
+                for item in data:
+                    tables += to_html_table(item)
+                return tables
+            else:
+                return str(data)
+
+        return to_html_table(json_data)
 
     def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, receive_type=None):
         document_loader = self.load_document(document_path=Path(document_path) if document_path else None,
@@ -308,10 +328,11 @@ class ShipmentFlow:
             current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             rich_text_log = (
                 f'<b>【邮件关键信息提取成功】</b>\n'
-                f'{self.json_to_code_block([i[0] for i in extraction_res])}\n'
+                f'{self.json_to_html_table([i[0] for i in extraction_res])}\n'
                 f'<b>正在进行步骤：<font color="blue"><b>插入多维表</b></font>\n'
                 f'<b>【时间】</b>: {current_time}'
             )
+            logger.info(rich_text_log)
             self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
                                                                  template_id='AAq7OhvOhSJB2',  # Hardcoded.
                                                                  template_variable={'log_rich_text': rich_text_log},
