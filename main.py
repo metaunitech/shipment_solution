@@ -60,8 +60,8 @@ class ShipmentFlow:
                 receive_id = message.get('chat_id')
                 receive_type = 'chat_id'
                 mentions = message.get('mentions')
-                if not any(i.get('user_id') for i in mentions):
-                    logger.error("Not mention current bot. Skipped.")
+                if not any([i.get('user_id') for i in mentions]):
+                    logger.error(f"Not mention current bot. Skipped.{[i.get('user_id') for i in mentions]}")
                     continue
             else:
                 logger.error(f"Unknown chat_type: {chat_type}")
@@ -71,7 +71,8 @@ class ShipmentFlow:
                 content_str = message.get('content')
                 content = json.loads(content_str) if content_str else {}
                 content = content.get('text')
-                res = self.unit_flow(document_path=None, content=content, receive_id=receive_id, receive_type=receive_type)
+                res = self.unit_flow(document_path=None, content=content, receive_id=receive_id,
+                                     receive_type=receive_type)
                 msgs.append(res)
             elif message_type == 'file':
                 pass
