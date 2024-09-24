@@ -54,7 +54,8 @@ def receive_data():
     # 返回一个响应给客户端
     response = {"challenge": data.get('challenge')} if data.get('challenge') else {'note': 'success',
                                                                                    'data': inserted_msgs,
-                                                                                   'data_string': f'PASS'}
+                                                                                   'data_string': f'PASS',
+                                                                                   "challenge": data.get('challenge')}
     return jsonify(response), 200
 
 

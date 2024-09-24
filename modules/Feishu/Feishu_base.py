@@ -4,11 +4,14 @@ import os
 import time
 
 import requests
-from selenium.webdriver.chrome.options import Options
-import undetected_chromedriver as uc
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+try:
+    from selenium.webdriver.chrome.options import Options
+    import undetected_chromedriver as uc
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.wait import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+except:
+    pass
 from pathlib import Path
 from loguru import logger
 
@@ -111,32 +114,37 @@ class FeishuApp:
         return md5_hash_value
 
     def rpa_get_user_access_token(self, account, if_headless=False, timeout=20):
-        url = 'https://open.feishu.cn/api-explorer/'
-        chrome_options = Options()
-        # options = {}
-        # chrome_options = ChromeOptions()
-        chrome_options.add_argument("--disable-gpu")
-        chrome_options.add_argument("--lang=zh_CN.UTF-8")
-        # chrome_options.add_argument("--incognito")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        if if_headless:
-            chrome_options.add_argument('--headless')
-        chrome_options.add_argument("--disable-popup-blocking")
         if not self.__chromedriver_path:
             logger.error("Failed to rpa get UAT, chromedriver not provided.")
             return
-        driver = uc.Chrome(options=chrome_options,
-                           driver_executable_path=self.__chromedriver_path,
-                           version_main=self.__chromedriver_version)
-        driver.execute_cdp_cmd(
-            "Network.setUserAgentOverride",
-            {
-                "userAgent": driver.execute_script(
-                    "return navigator.userAgent"
-                ).replace("Headless", "")
-            },
-        )
-        driver.get(url)
+        url = 'https://open.feishu.cn/api-explorer/'
+        try:
+            chrome_options = Options()
+            # options = {}
+            # chrome_options = ChromeOptions()
+            chrome_options.add_argument("--disable-gpu")
+            chrome_options.add_argument("--lang=zh_CN.UTF-8")
+            # chrome_options.add_argument("--incognito")
+            chrome_options.add_argument("--disable-dev-shm-usage")
+            if if_headless:
+                chrome_options.add_argument('--headless')
+            chrome_options.add_argument("--disable-popup-blocking")
+
+            driver = uc.Chrome(options=chrome_options,
+                               driver_executable_path=self.__chromedriver_path,
+                               version_main=self.__chromedriver_version)
+            driver.execute_cdp_cmd(
+                "Network.setUserAgentOverride",
+                {
+                    "userAgent": driver.execute_script(
+                        "return navigator.userAgent"
+                    ).replace("Headless", "")
+                },
+            )
+            driver.get(url)
+        except:
+            logger.error("Failed to rpa get UAT, chromedriver not provided.")
+            return
         cookie_path = Path(self.__cookie_path) / f'{self.md5_hash(account)}.json'
         if cookie_path.exists():
             with open(cookie_path, 'r', encoding='utf-8') as f:

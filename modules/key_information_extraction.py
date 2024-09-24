@@ -235,6 +235,7 @@ class TextKIE:
             key_parts.append(cur_parts)
         # Loop over slices & keys
         for idx1, txt_part in enumerate(parts):
+            txt_part = [i for i in txt_part if i]
             txt = '\n'.join(txt_part)
             for idx2, key_part in enumerate(key_parts):
                 todo_keys = []
