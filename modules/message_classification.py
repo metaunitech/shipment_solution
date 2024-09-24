@@ -46,7 +46,7 @@ class MessageClassifier:
         cargo_info_examples = examples.get('cargo_info')
         cargo_info_examples_str = '暂无' if not cargo_info_examples else json.dumps(cargo_info_examples, indent=2,
                                                                                     ensure_ascii=False)
-        other_examples = examples.get('other')
+        other_examples = examples.get('others')
         other_examples_str = '暂无' if not other_examples else json.dumps(other_examples, indent=2,
                                                                           ensure_ascii=False)
         llm_ins = self.create_llm_instance()

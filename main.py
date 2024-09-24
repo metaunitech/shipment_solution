@@ -198,7 +198,7 @@ class ShipmentFlow:
         for vessel_info_chunk in tqdm.tqdm(vessel_info_chunks):
             modified_outputs = self.kie_instance(rule_config_path=str(config_path),
                                                  file_type=document_type,
-                                                 text_lines=[vessel_info_chunk, mutual_info])
+                                                 text_lines=[mutual_info, vessel_info_chunk])
             outs.append([modified_outputs[0], vessel_info_chunk, mutual_info])
         logger.success(json.dumps(outs, indent=2, ensure_ascii=False))
         return outs
@@ -388,8 +388,8 @@ class ShipmentFlow:
 
 if __name__ == "__main__":
     ins = ShipmentFlow()
-    # ins.unit_flow(
-    #     r'W:\Personal_Project\NeiRelated\projects\shipment_solution\src\emails\船舶数据\HAITIN TRACO - OPEN TONNAGE 06 SEP 2024.eml')
+    ins.unit_flow(
+        r'W:\Personal_Project\NeiRelated\projects\shipment_solution\src\emails\货盘数据\img_v3_02ef_9c5736cc-bfda-447d-9213-7626620892bg_part_0.png')
     # data = [
     #     [
     #         {
@@ -419,4 +419,4 @@ if __name__ == "__main__":
     #     ]
     # ]
     # ins.debug_data_insert(data)
-    ins.main()
+    # ins.main()
