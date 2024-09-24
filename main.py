@@ -163,6 +163,13 @@ class ShipmentFlow:
             logger.error(f"Unknown input :{document_path} {content}")
             return None
 
+    @staticmethod
+    def get_data_loader_context(document_loader):
+        data = document_loader.load()
+        contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
+        content_str = '\n'.join(contents_list)
+        return content_str
+
     def classify_document(self, document_loader):
         data = document_loader.load()
         contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
@@ -274,9 +281,19 @@ class ShipmentFlow:
                                              content=content)
         current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         if receive_type and receive_id:
+            # rich_text_log = (
+            #     f'<b>【邮件主体收到】</b>\n'
+            #     # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
+            #     # f'<b>正在进行步骤：<font color="blue"><b>邮件分类</b></font></b>\n'
+            #     f'<b>【时间】</b>: {current_time}'
+            # )
+            # self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
+            #                                                      template_id='AAq7OhvOhSJB2',  # Hardcoded.
+            #                                                      template_variable={'log_rich_text': rich_text_log},
+            #                                                      receive_id_type=receive_type)
             rich_text_log = (
                 f'<b>【邮件主体收到】</b>\n'
-                f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
+                f'<i>{self.get_data_loader_context(document_loader)}</i>\n'
                 f'<b>正在进行步骤：<font color="blue"><b>邮件分类</b></font></b>\n'
                 f'<b>【时间】</b>: {current_time}'
             )
@@ -284,6 +301,7 @@ class ShipmentFlow:
                                                                  template_id='AAq7OhvOhSJB2',  # Hardcoded.
                                                                  template_variable={'log_rich_text': rich_text_log},
                                                                  receive_id_type=receive_type)
+
         # Classify
         try:
             document_type, reason = self.classify_document(document_loader)
@@ -327,7 +345,8 @@ class ShipmentFlow:
         logger.success(f"=>      KIE Extraction results: {json.dumps(extraction_res, ensure_ascii=False, indent=2)}")
         if receive_type and receive_id:
             # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            rich_text_log = f'<b>【邮件拆分后的原文片段】</b>\n'+"\n-----------\n".join([i[1] + "\n" + i[2] for i in extraction_res])
+            rich_text_log = f'<b>【邮件拆分后的原文片段】</b>\n' + "\n-----------\n".join(
+                [i[1] + "\n" + i[2] for i in extraction_res])
             logger.warning(rich_text_log)
 
             self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
