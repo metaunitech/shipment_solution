@@ -167,8 +167,8 @@ class ShipmentFlow:
     def get_data_loader_context(document_loader):
         data = document_loader.load()
         contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
-        content_str = '\n'.join(contents_list)
-        return content_str
+        # content_str = '\n'.join(contents_list)
+        return contents_list
 
     def classify_document(self, document_loader):
         data = document_loader.load()
@@ -293,7 +293,7 @@ class ShipmentFlow:
             #                                                      receive_id_type=receive_type)
             rich_text_log = (
                 f'<b>【邮件主体收到】</b>\n'
-                f'<i>{self.get_data_loader_context(document_loader)}</i>\n'
+                f'<i>{self.json_to_code_block(self.get_data_loader_context(document_loader))}</i>\n'
                 f'<b>正在进行步骤：<font color="blue"><b>邮件分类</b></font></b>\n'
                 f'<b>【时间】</b>: {current_time}'
             )
