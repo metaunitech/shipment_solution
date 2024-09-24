@@ -3,6 +3,7 @@ from loguru import logger
 from threading import Lock
 from pathlib import Path
 import yaml
+from main import ShipmentFlow
 
 app = Flask(__name__)
 
@@ -23,6 +24,7 @@ previous_id_lock = Lock()
 app.config['data_queue'] = []
 app.config['previous_id'] = None
 
+SHIPMENT_FLOW_INS = ShipmentFlow(FEISHU_CONFIG_PATH)
 
 @app.route('/api/lark_event', methods=['POST'])
 def receive_data():
@@ -40,8 +42,8 @@ def receive_data():
                 app.config['data_queue'].append(data)
             if app.config['data_queue'] and msg_id != app.config['previous_id']:
                 msg_dicts = app.config['data_queue']
-                inserted_msgs = msg_dicts
-                # inserted_msgs = FEISHU_CHATBOT.process_msg_dict(msg_dicts)
+                # inserted_msgs = msg_dicts
+                inserted_msgs = SHIPMENT_FLOW_INS.process_msg_dicts(msg_dicts)
                 logger.info(msg_dicts)
                 app.config['data_queue'] = []
             app.config['previous_id'] = msg_id

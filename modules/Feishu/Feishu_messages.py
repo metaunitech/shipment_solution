@@ -26,57 +26,11 @@ class FeishuMessageHandler(FeishuApp):
         self.__app_id = configs.get('app_id')
         self.__app_secret = configs.get('app_secret')
 
-    def _sdk_general(self,
-                     uri,
-                     request_type: Union[lark.HttpMethod],
-                     path_params: Union[Dict, None] = None,
-                     token_type: Union[lark.AccessTokenType] = None,
-                     queries_params: Union[List[Tuple], None] = None,
-                     bodies_params: Union[Dict, None] = None):
-        if not token_type:
-            token_type = self.__global_token_type
-        client = lark.Client.builder() \
-            .enable_set_token(True) \
-            .log_level(lark.LogLevel.DEBUG) \
-            .build()
-        if token_type == lark.AccessTokenType.USER:
-            bearer = self.get_user_access_token()
-            option = lark.RequestOption.builder().user_access_token(bearer).build()
-
-        elif token_type == lark.AccessTokenType.TENANT:
-            bearer, _ = self.get_tenant_access_token()
-            option = lark.RequestOption.builder().tenant_access_token(bearer).build()
-
-        else:
-            bearer, _ = self.get_app_access_token()
-            option = lark.RequestOption.builder().app_access_token(bearer).build()
-
-        request: lark.BaseRequest = lark.BaseRequest.builder() \
-            .http_method(request_type) \
-            .uri(uri) \
-            .paths(path_params) \
-            .headers({"Authorization": f'Bearer {bearer}'}) \
-            .token_types({token_type}) \
-            .queries(queries_params) \
-            .body(bodies_params) \
-            .build()
-        response: lark.BaseResponse = client.request(request, option)
-        # 处理失败返回
-        if not response.success():
-            lark.logger.error(
-                f"{uri} failed, code: {response.code}, msg: {response.msg}, log_id: {response.get_log_id()}")
-            return {}
-        response = json.loads(response.raw.content)
-
-        # 处理业务结果
-        # lark.logger.info(lark.JSON.marshal(response['data'], indent=4))
-        return response
-
-    def send_message_by_template(self, receive_id, template_id, template_variable: dict):
+    def send_message_by_template(self, receive_id, template_id, template_variable: dict, receive_id_type='open_id'):
         content = {'type': 'template', 'data': {'template_id': template_id, 'template_variable': template_variable}}
-        card_json = {'receive_id': receive_id,
-                     'msg_type': 'interactive',
-                     'content': json.dumps(content, ensure_ascii=False)}
+        # card_json = {'receive_id': receive_id,
+        #              'msg_type': 'interactive',
+        #              'content': json.dumps(content, ensure_ascii=False)}
         # 创建client
         client = lark.Client.builder() \
             .app_id(self.__app_id) \
@@ -86,12 +40,11 @@ class FeishuMessageHandler(FeishuApp):
 
         # 构造请求对象
         request: CreateMessageRequest = CreateMessageRequest.builder() \
-            .receive_id_type("open_id") \
+            .receive_id_type(receive_id_type) \
             .request_body(CreateMessageRequestBody.builder()
                           .receive_id(receive_id)
                           .msg_type("interactive")
-                          .content(
-            json.dumps(content, ensure_ascii=False))
+                          .content(json.dumps(content, ensure_ascii=False))
                           .build()) \
             .build()
 
@@ -107,7 +60,7 @@ class FeishuMessageHandler(FeishuApp):
         # 处理业务结果
         lark.logger.info(lark.JSON.marshal(response.data, indent=4))
 
-    def send_message(self, receive_id):
+    def send_message(self, receive_id, receive_id_type='open_id'):
         pass
 
     def retrieve_file(self, message_id, file_key, store_path: Path):
