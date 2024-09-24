@@ -49,11 +49,11 @@ class ShipmentFlow:
         msgs = []
         for msg_dict in msg_dicts:
             event = msg_dict.get('event', {})
-            event_id = msg_dict.get('event_id')
+            event_id = msg_dict.get('header', {}).get('event_id')
             message = event.get('message', {})
             chat_type = message.get('chat_type')
             message_type = message.get('message_type')
-            logger.info([event_id, chat_type, message_type])
+            logger.info([event, event_id, chat_type, message_type])
             if not chat_type:
                 logger.error("Chat type is not mentioned.")
                 continue
