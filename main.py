@@ -168,7 +168,7 @@ class ShipmentFlow:
         data = document_loader.load()
         contents_list = [i.__dict__ for i in data]
         # content_str = '\n'.join(contents_list)
-        return contents_list
+        return contents_list, [i.__dict__.get('page_content') for i in data if i.__dict__.get('page_content')]
 
     def classify_document(self, document_loader):
         data = document_loader.load()
@@ -291,10 +291,13 @@ class ShipmentFlow:
             #                                                      template_id='AAq7OhvOhSJB2',  # Hardcoded.
             #                                                      template_variable={'log_rich_text': rich_text_log},
             #                                                      receive_id_type=receive_type)
+            total, content = self.get_data_loader_context(document_loader)
             rich_text_log = (
                 f'<b>【邮件主体收到】</b>\n'
-                f'{self.json_to_code_block(self.get_data_loader_context(document_loader))}\n'
+                f'{self.json_to_code_block(total)}\n'
             )
+            for c in content:
+                rich_text_log += '\n----------\n' + c
             self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
                                                                  template_id='AAq7OhvOhSJB2',  # Hardcoded.
                                                                  template_variable={'log_rich_text': rich_text_log},
