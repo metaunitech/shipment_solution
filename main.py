@@ -245,12 +245,15 @@ class ShipmentFlow:
     def mark_finish(self):
         pass
 
-    def insert_data_to_spreadsheet(self, document_path: Union[Path, None], document_type, extraction_res):
+    def insert_data_to_spreadsheet(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None):
         data_to_insert = []
         for data in extraction_res:
             cur_res = data[0]
             cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
-            cur_res['source_name'] = document_path.name if document_path else 'PureText'
+            if event_id:
+                cur_res['source_name'] = event_id
+            else:
+                cur_res['source_name'] = document_path.name if document_path else 'PureText'
             data_to_insert.append(cur_res)
         logger.info(f"Inserting {data_to_insert}")
         if document_type == 'ship_info':
