@@ -50,6 +50,8 @@ class ShipmentFlow:
         for msg_dict in msg_dicts:
             event = msg_dict.get('event', {})
             event_id = msg_dict.get('header', {}).get('event_id')
+            current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+
             target_folder = Path(__file__).parent.parent / 'src' / 'input' / current_date / event_id
             if target_folder.exists():
                 logger.warning("event_id exists.")
@@ -92,7 +94,6 @@ class ShipmentFlow:
                 content_str = message.get('content')
                 content = json.loads(content_str) if content_str else {}
                 file_key = content.get('file_key')
-                current_date = datetime.datetime.now().strftime("%Y-%m-%d")
                 # target_folder = Path(__file__).parent.parent / 'src' / 'input' / current_date / event_id
                 # os.makedirs(target_folder, exist_ok=True)
                 file_path = self.feishu_message_handler.retrieve_file(message_id, file_key, target_folder)
@@ -116,7 +117,6 @@ class ShipmentFlow:
                 content_str = message.get('content')
                 content = json.loads(content_str) if content_str else {}
                 file_key = content.get('image_key')
-                current_date = datetime.datetime.now().strftime("%Y-%m-%d")
                 # target_folder = Path(__file__).parent.parent / 'src' / 'input' / current_date / event_id
                 # os.makedirs(target_folder, exist_ok=True)
                 file_path = self.feishu_message_handler.retrieve_file(message_id, file_key, target_folder,
