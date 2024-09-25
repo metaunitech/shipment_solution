@@ -326,12 +326,12 @@ class ShipmentFlow:
         try:
             document_type, reason = self.classify_document(document_loader)
             logger.success(
-                f"=>     Classify {document_path if document_path else content[:50] + '...'}: TYPE:{document_type}, REASON:{reason}")
+                f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, REASON:{reason}")
             if receive_type and receive_id:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 rich_text_log = (
                     f'<b>【邮件主体分类成功】</b>\n'
-                    f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
+                    # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
                     f'<b>邮件分类：<font color="green"><b>{document_type}</b></font>\n'
                     f'<b>分类原因：<font color="grey"><b>{reason}</b></font>\n'
                     f'<b>正在进行步骤：<font color="blue"><b>关键信息提取</b></font></b>\n'
@@ -347,7 +347,7 @@ class ShipmentFlow:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 rich_text_log = (
                     f'<b>【邮件主体分类失败】</b>\n'
-                    f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
+                    # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
                     f'<b>失败原因：<font color="red"><b>{str(e)}</b></font></b>\n'
                     f'<b>【时间】</b>: {current_time}'
                 )
@@ -408,7 +408,7 @@ class ShipmentFlow:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 rich_text_log = (
                     f'<b>【分类数据插入失败】</b>\n'
-                    f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
+                    # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
                     f'<b>失败原因：<font color="red"><b>{str(e)}</b></font>\n'
                     f'<b>【时间】</b>: {current_time}'
                 )
