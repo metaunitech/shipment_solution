@@ -83,7 +83,7 @@ class ShipmentFlow:
                 content_str = message.get('content')
                 content = json.loads(content_str) if content_str else {}
                 content = content.get('text')
-                with open(target_folder/'input_text.txt', 'w', encoding='utf-8') as f:
+                with open(target_folder / 'input_text.txt', 'w', encoding='utf-8') as f:
                     f.write(content)
 
                 res = self.unit_flow(document_path=None, content=content, receive_id=receive_id,
@@ -213,6 +213,9 @@ class ShipmentFlow:
         ## By serial
         outs = []
         for vessel_info_chunk in tqdm.tqdm(vessel_info_chunks):
+            text_lines = ["原文：" + content_str,
+                          '本次提取任务重点放在下面的部分: ' + vessel_info_chunk] if len(vessel_info_chunks) > 1 else [
+                content_str]
             modified_outputs = self.kie_instance(rule_config_path=str(config_path),
                                                  file_type=document_type,
                                                  # text_lines=[mutual_info, vessel_info_chunk]
@@ -361,8 +364,8 @@ class ShipmentFlow:
             # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             rich_text_log = f'<b>【邮件关键信息提取成功】</b>\n'
             for idx, i in enumerate(extraction_res):
-                rich_text_log += f'---------片段 {idx}---------'+'\n'+i[2] + "\n" + i[1]
-                rich_text_log += self.json_to_code_block(i[0])
+                rich_text_log += f'---------片段 {idx}---------' + '\n' + i[2] + "\n" + i[1]
+                rich_text_log += "\n\n" + self.json_to_code_block(i[0])
             logger.warning(rich_text_log)
 
             self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
