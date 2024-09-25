@@ -11,6 +11,18 @@
 货盘邮件（cargo_info）:邮件的大致内容是有一些货物需要运输，需要借符合条件的船。内容中通常包含需要租赁船舶（>=1艘船）的需求信息。信息包括：装运港，离港等。
 其他邮件（others）:内容既不属于船舶邮件也不属于货盘邮件的邮件，统一归类为其他邮件不做处理。
 
+注意：
+      - 一般同时出现装运港和目的地的是货盘邮件。
+      - 10pct 10% (percent)指的是货物质量占据总船容的10%
+      - ttl 2.5 pct指的是佣金总计2.5% (Commission total 2.5%)
+      - F.I.O.S.T.：free in,out,stowed and trimmed 船方不负担装船，卸船，理仓，以及平仓费用
+      - 3,000MT 5PCT MOLCO：3,000公吨，允许5%的增减。
+      - PIC：Point of Contact，联系人。
+      - CQD/3DAYS TO HEAVUP：CQD（Cargo Quantity Discharged），3天内完成卸货
+      - CQD BE (TRY DISRATE)：CQD（Cargo Quantity Discharged）Bends，尝试卸货速率。
+      - Gcn 3,75% pu iac -> Gcn：佣金（General Commission）。3,75%：佣金率为3.75%。pu iac：按发票金额计算（Per Unit Invoice Amount）
+
+
 # Examples:
 ## 船舶邮件(ship_info)
 {ship_info_type_examples}

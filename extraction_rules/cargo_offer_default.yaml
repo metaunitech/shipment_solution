@@ -9,6 +9,8 @@ background:
   - PIC：Point of Contact，联系人。
   - CQD/3DAYS TO HEAVUP：CQD（Cargo Quantity Discharged），3天内完成卸货
   - CQD BE (TRY DISRATE)：CQD（Cargo Quantity Discharged）Bends，尝试卸货速率。
+  - Gcn 3,75% pu iac -> Gcn：佣金（General Commission）。3,75%：佣金率为3.75%。pu iac：按发票金额计算（Per Unit Invoice Amount）
+
 keys:
   - 货物名称-CARGO-NAME
   - 货量-QUANTITY
