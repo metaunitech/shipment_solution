@@ -4,6 +4,7 @@ from typing import Union
 from langchain_openai import ChatOpenAI
 from pathlib import Path
 from loguru import logger
+from retrying import retry
 
 MODEL_NAME = 'glm-4-flash'
 API_TOKEN = 'a9d2815b090f143cdac247d7600a127f.WSDK8WqwJzZtCmBK'
@@ -36,7 +37,7 @@ class MessageSegmenter:
                           model=model_name,
                           openai_api_key=API_TOKEN,
                           openai_api_base="https://open.bigmodel.cn/api/paas/v4/")
-
+    @retry(stop_max_attempt_number=2, wait_fixed=2000)
     def segment(self, content, content_type):
         prompt_path = self.__prompt_base_dir / 'chunk_document_parts.txt'
         with open(prompt_path, 'r', encoding='utf-8') as f:

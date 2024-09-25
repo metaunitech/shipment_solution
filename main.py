@@ -19,6 +19,7 @@ from loguru import logger
 
 from langchain_core.documents import Document
 from typing import Union
+from retrying import retry
 
 MODEL_NAME = 'glm-4-flash'
 API_TOKEN = 'a9d2815b090f143cdac247d7600a127f.WSDK8WqwJzZtCmBK'
@@ -178,6 +179,7 @@ class ShipmentFlow:
         # content_str = '\n'.join(contents_list)
         return contents_list, [i.__dict__.get('page_content') for i in data if i.__dict__.get('page_content')]
 
+    @retry(stop_max_attempt_number=2, wait_fixed=2000)
     def classify_document(self, document_loader):
         data = document_loader.load()
         contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
@@ -308,7 +310,7 @@ class ShipmentFlow:
                 f'{self.json_to_code_block(total)}\n'
             )
             for idx, c in enumerate(content):
-                rich_text_log += f'\n-----片段 {idx}-----\n' + c
+                rich_text_log += f'\n' + c
             self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
                                                                  template_id='AAq7OhvOhSJB2',  # Hardcoded.
                                                                  template_variable={'log_rich_text': rich_text_log},
@@ -357,25 +359,27 @@ class ShipmentFlow:
         logger.success(f"=>      KIE Extraction results: {json.dumps(extraction_res, ensure_ascii=False, indent=2)}")
         if receive_type and receive_id:
             # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            rich_text_log = f'<b>【邮件拆分后的原文片段】</b>\n' + "\n-----------\n".join(
-                [i[1] + "\n" + i[2] for i in extraction_res])
+            rich_text_log = f'<b>【邮件关键信息提取成功】</b>\n'
+            for idx, i in enumerate(extraction_res):
+                rich_text_log += f'---------片段 {idx}---------'+'\n'+i[2] + "\n" + i[1]
+                rich_text_log += self.json_to_code_block(i[0])
             logger.warning(rich_text_log)
 
             self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
                                                                  template_id='AAq7OhvOhSJB2',  # Hardcoded.
                                                                  template_variable={'log_rich_text': rich_text_log},
                                                                  receive_id_type=receive_type)
-            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            rich_text_log = (
-                f'<b>【邮件关键信息提取成功】</b>\n'
-                f'{self.json_to_code_block([i[0] for i in extraction_res])}\n'
-                f'<b>正在进行步骤：<font color="blue"><b>插入多维表</b></font>\n'
-                f'<b>【时间】</b>: {current_time}'
-            )
-            self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
-                                                                 template_id='AAq7OhvOhSJB2',  # Hardcoded.
-                                                                 template_variable={'log_rich_text': rich_text_log},
-                                                                 receive_id_type=receive_type)
+            # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            # rich_text_log = (
+            #     f'<b>【邮件关键信息提取成功】</b>\n'
+            #     f'{self.json_to_code_block([i[0] for i in extraction_res])}\n'
+            #     f'<b>正在进行步骤：<font color="blue"><b>插入多维表</b></font>\n'
+            #     f'<b>【时间】</b>: {current_time}'
+            # )
+            # self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
+            #                                                      template_id='AAq7OhvOhSJB2',  # Hardcoded.
+            #                                                      template_variable={'log_rich_text': rich_text_log},
+            #                                                      receive_id_type=receive_type)
 
         try:
             self.insert_data_to_spreadsheet(Path(document_path) if document_path else None, document_type,
