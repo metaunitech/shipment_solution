@@ -50,6 +50,11 @@ class ShipmentFlow:
         for msg_dict in msg_dicts:
             event = msg_dict.get('event', {})
             event_id = msg_dict.get('header', {}).get('event_id')
+            target_folder = Path(__file__).parent.parent / 'src' / 'input' / current_date / event_id
+            if target_folder.exists():
+                logger.warning("event_id exists.")
+                continue
+            os.makedirs(target_folder, exist_ok=True)
             message = event.get('message', {})
             chat_type = message.get('chat_type')
             message_type = message.get('message_type')
@@ -75,6 +80,9 @@ class ShipmentFlow:
                 content_str = message.get('content')
                 content = json.loads(content_str) if content_str else {}
                 content = content.get('text')
+                with open(target_folder/'input_text.txt', 'w', encoding='utf-8') as f:
+                    f.write(content)
+
                 res = self.unit_flow(document_path=None, content=content, receive_id=receive_id,
                                      receive_type=receive_type)
                 if res:
@@ -85,8 +93,8 @@ class ShipmentFlow:
                 content = json.loads(content_str) if content_str else {}
                 file_key = content.get('file_key')
                 current_date = datetime.datetime.now().strftime("%Y-%m-%d")
-                target_folder = Path(__file__).parent.parent / 'src' / 'input' / current_date / event_id
-                os.makedirs(target_folder, exist_ok=True)
+                # target_folder = Path(__file__).parent.parent / 'src' / 'input' / current_date / event_id
+                # os.makedirs(target_folder, exist_ok=True)
                 file_path = self.feishu_message_handler.retrieve_file(message_id, file_key, target_folder)
                 logger.info(f"Document {file_path.name} received.")
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -109,8 +117,8 @@ class ShipmentFlow:
                 content = json.loads(content_str) if content_str else {}
                 file_key = content.get('image_key')
                 current_date = datetime.datetime.now().strftime("%Y-%m-%d")
-                target_folder = Path(__file__).parent.parent / 'src' / 'input' / current_date / event_id
-                os.makedirs(target_folder, exist_ok=True)
+                # target_folder = Path(__file__).parent.parent / 'src' / 'input' / current_date / event_id
+                # os.makedirs(target_folder, exist_ok=True)
                 file_path = self.feishu_message_handler.retrieve_file(message_id, file_key, target_folder,
                                                                       file_type='image')
                 logger.info(f"Document {file_path.name} received.")
