@@ -205,7 +205,10 @@ class ShipmentFlow:
         for vessel_info_chunk in tqdm.tqdm(vessel_info_chunks):
             modified_outputs = self.kie_instance(rule_config_path=str(config_path),
                                                  file_type=document_type,
-                                                 text_lines=[mutual_info, vessel_info_chunk])
+                                                 # text_lines=[mutual_info, vessel_info_chunk]
+                                                 text_lines=["原文：" + content_str,
+                                                             '本次提取任务重点放在下面的部分: ' + vessel_info_chunk]
+                                                 )
             outs.append([modified_outputs[0], vessel_info_chunk, mutual_info])
         logger.success(json.dumps(outs, indent=2, ensure_ascii=False))
         return outs
@@ -279,7 +282,7 @@ class ShipmentFlow:
     def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, receive_type=None):
         document_loader = self.load_document(document_path=Path(document_path) if document_path else None,
                                              content=content)
-        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         if receive_type and receive_id:
             # rich_text_log = (
             #     f'<b>【邮件主体收到】</b>\n'
@@ -296,8 +299,8 @@ class ShipmentFlow:
                 f'<b>【邮件主体收到】</b>\n'
                 f'{self.json_to_code_block(total)}\n'
             )
-            for c in content:
-                rich_text_log += '\n----------\n' + c
+            for idx, c in enumerate(content):
+                rich_text_log += f'\n-----片段 {idx}-----\n' + c
             self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
                                                                  template_id='AAq7OhvOhSJB2',  # Hardcoded.
                                                                  template_variable={'log_rich_text': rich_text_log},
