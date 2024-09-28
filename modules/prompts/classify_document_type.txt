@@ -13,6 +13,7 @@
 
 注意：
       - 一般同时出现装运港和目的地的是货盘邮件。
+      - 只要出现运输的货物是什么大概率是货盘邮件
       - 10pct 10% (percent)指的是货物质量占据总船容的10%
       - ttl 2.5 pct指的是佣金总计2.5% (Commission total 2.5%)
       - F.I.O.S.T.：free in,out,stowed and trimmed 船方不负担装船，卸船，理仓，以及平仓费用

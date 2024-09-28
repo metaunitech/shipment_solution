@@ -202,25 +202,26 @@ class ShipmentFlow:
         data = document_loader.load()
         contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
         content_str = '\n'.join(contents_list)
-        try:
-            vessel_info_chunks, mutual_info, comment = self.message_segmenter.segment(content_str, document_type, entry_count)
-        except Exception as e:
-            logger.error(f"[Segmentation]    Failed to segment message, will treat as single paragraph. Note: {str(e)}")
-            vessel_info_chunks = [content_str]
-            mutual_info = ''
-            # comment = f"[Segmentation]    Failed to segment message, will treat as single paragraph. Note: {str(e)}"
+        if entry_count == 1:
+            vessel_info_chunks, mutual_info, comment = [content_str], '', 'Only one entry'
+        else:
+            try:
+                vessel_info_chunks, mutual_info, comment = self.message_segmenter.segment(content_str, document_type, entry_count)
+            except Exception as e:
+                logger.error(f"[Segmentation]    Failed to segment message, will treat as single paragraph. Note: {str(e)}")
+                vessel_info_chunks = [content_str]
+                mutual_info = ''
+                # comment = f"[Segmentation]    Failed to segment message, will treat as single paragraph. Note: {str(e)}"
         # Do extraction:
         ## By serial
         outs = []
         for vessel_info_chunk in tqdm.tqdm(vessel_info_chunks):
-            text_lines = ["原文：" + content_str,
-                          '本次提取任务重点放在下面的部分: ' + vessel_info_chunk] if len(vessel_info_chunks) > 1 else [
-                content_str]
+            text_lines = ["参考原文：" + content_str,
+                          '本次提取任务重点放在下面的部分: ' + vessel_info_chunk] if entry_count > 1 else [content_str]
             modified_outputs = self.kie_instance(rule_config_path=str(config_path),
                                                  file_type=document_type,
                                                  # text_lines=[mutual_info, vessel_info_chunk]
-                                                 text_lines=["原文：" + content_str,
-                                                             '本次提取任务重点放在下面的部分: ' + vessel_info_chunk]
+                                                 text_lines=text_lines
                                                  )
             outs.append([modified_outputs[0], vessel_info_chunk, mutual_info])
         logger.success(json.dumps(outs, indent=2, ensure_ascii=False))
