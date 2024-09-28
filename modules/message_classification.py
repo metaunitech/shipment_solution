@@ -15,6 +15,9 @@ class DocumentType(BaseModel):
         description='收到消息的种类，从如下三种里选择：ship_info, cargo_info, others.',
         options=['ship_info', 'cargo_info', 'others']
     )
+    entry_count: int= Field(
+        description="若是船盘，返回当前邮件中可供出租的船的数量；若是货盘，返回邮件中需要租赁的需求数量；若是其他邮件返回0"
+    )
     reason: str = Field(
         description='做出这种分类的原因。'
     )
@@ -66,9 +69,10 @@ class MessageClassifier:
         logger.debug(res_content)
         answer_instance = retry_parser.parse(res_content)
         document_type = answer_instance.document_type
+        entry_count = answer_instance.entry_count
         reason = answer_instance.reason
-        logger.success(f'Content type: {document_type}. Reason: {reason}')
-        return document_type, reason
+        logger.success(f'Content type: {document_type}. Entry count: {entry_count} Reason: {reason}')
+        return document_type, reason, entry_count
 
 
 if __name__ == '__main__':

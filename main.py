@@ -184,11 +184,11 @@ class ShipmentFlow:
         data = document_loader.load()
         contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
         content_str = '\n'.join(contents_list)
-        document_type, reason = self.message_classifier.classify(content_str)
+        document_type, reason, entry_count = self.message_classifier.classify(content_str)
 
-        return document_type, reason
+        return document_type, reason, entry_count
 
-    def extract_key_information(self, document_loader, document_type):
+    def extract_key_information(self, document_loader, document_type, entry_count: int):
         logger.info(f"->     Starts to extract key information from {document_type}.")
         if document_type == 'others':
             logger.warning("Message type is OTHER. DO NOT PARSE. SKIPPED.")
@@ -203,7 +203,7 @@ class ShipmentFlow:
         contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
         content_str = '\n'.join(contents_list)
         try:
-            vessel_info_chunks, mutual_info, comment = self.message_segmenter.segment(content_str, document_type)
+            vessel_info_chunks, mutual_info, comment = self.message_segmenter.segment(content_str, document_type, entry_count)
         except Exception as e:
             logger.error(f"[Segmentation]    Failed to segment message, will treat as single paragraph. Note: {str(e)}")
             vessel_info_chunks = [content_str]
@@ -231,8 +231,8 @@ class ShipmentFlow:
             document_paths = self.collect_emails()
         for document_path in tqdm.tqdm(document_paths):
             document_loader = self.load_document(Path(document_path))
-            document_type, reason = self.classify_document(document_loader)
-            logger.success(f"=>     Classify {document_path}: TYPE:{document_type}, REASON:{reason}")
+            document_type, reasonc = self.classify_document(document_loader)
+            logger.success(f"=>     Classify {document_path}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
             if '船舶数据' in document_path and document_type == 'ship_info':
                 logger.success("CORRECT")
             elif '货盘数据' in document_path and document_type == 'cargo_info':
@@ -300,16 +300,6 @@ class ShipmentFlow:
                                              content=content)
         # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         if receive_type and receive_id:
-            # rich_text_log = (
-            #     f'<b>【邮件主体收到】</b>\n'
-            #     # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
-            #     # f'<b>正在进行步骤：<font color="blue"><b>邮件分类</b></font></b>\n'
-            #     f'<b>【时间】</b>: {current_time}'
-            # )
-            # self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
-            #                                                      template_id='AAq7OhvOhSJB2',  # Hardcoded.
-            #                                                      template_variable={'log_rich_text': rich_text_log},
-            #                                                      receive_id_type=receive_type)
             total, content = self.get_data_loader_context(document_loader)
             rich_text_log = (
                 f'<b>【邮件主体收到】</b>\n'
@@ -324,9 +314,9 @@ class ShipmentFlow:
 
         # Classify
         try:
-            document_type, reason = self.classify_document(document_loader)
+            document_type, reason, entry_count = self.classify_document(document_loader)
             logger.success(
-                f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, REASON:{reason}")
+                f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
             if receive_type and receive_id:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 rich_text_log = (

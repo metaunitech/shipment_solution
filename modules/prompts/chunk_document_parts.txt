@@ -211,7 +211,7 @@ D/R : 6,000 MT
 {format_instruction}
 
 # Question:
-以下是一封{message_type}的邮件内容
+以下是一封{message_type}的邮件内容, 里面包含{entry_count}个不同的船的需求/供给信息，你需要把下文切分出{entry_count}块以及共同的部分
 {input_content}
 
 YOUR ANSWER:
