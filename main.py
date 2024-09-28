@@ -348,7 +348,8 @@ class ShipmentFlow:
             return
 
         extraction_res = self.extract_key_information(document_loader=document_loader,
-                                                      document_type=document_type)
+                                                      document_type=document_type,
+                                                      entry_count=entry_count)
         if not extraction_res:
             return
         extraction_res = [] if not extraction_res else extraction_res
