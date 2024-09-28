@@ -12,6 +12,8 @@ from modules.utils.ocr_handler import OCRHandler
 from modules.message_classification import MessageClassifier
 from modules.message_segmentation import MessageSegmenter
 from modules.key_information_extraction import TextKIE
+from modules.key_information_validation import KIValidation
+
 from modules.Feishu.Feishu_spreadsheet import FeishuSpreadsheetHandler
 from modules.Feishu.Feishu_messages import FeishuMessageHandler
 from glob import glob
@@ -43,6 +45,7 @@ class ShipmentFlow:
         self.rule_config_path = Path(__file__).parent / 'extraction_rules'
         llm_ins = self.create_llm_instance()
         self.kie_instance = TextKIE(llm_ins)
+        self.ki_validator = KIValidation()
         self.feishu_spreadsheet_handler = FeishuSpreadsheetHandler(feishu_config_path)
         self.feishu_message_handler = FeishuMessageHandler(feishu_config_path)
 
@@ -206,9 +209,11 @@ class ShipmentFlow:
             vessel_info_chunks, mutual_info, comment = [content_str], '', 'Only one entry'
         else:
             try:
-                vessel_info_chunks, mutual_info, comment = self.message_segmenter.segment(content_str, document_type, entry_count)
+                vessel_info_chunks, mutual_info, comment = self.message_segmenter.segment(content_str, document_type,
+                                                                                          entry_count)
             except Exception as e:
-                logger.error(f"[Segmentation]    Failed to segment message, will treat as single paragraph. Note: {str(e)}")
+                logger.error(
+                    f"[Segmentation]    Failed to segment message, will treat as single paragraph. Note: {str(e)}")
                 vessel_info_chunks = [content_str]
                 mutual_info = ''
                 # comment = f"[Segmentation]    Failed to segment message, will treat as single paragraph. Note: {str(e)}"
@@ -227,13 +232,21 @@ class ShipmentFlow:
         logger.success(json.dumps(outs, indent=2, ensure_ascii=False))
         return outs
 
+    def validate_key_information(self, document_type, extraction_res):
+        logger.info("Starts to Validate results.")
+        modified_res = self.ki_validator.validate(document_type=document_type,
+                                                  extraction_res=extraction_res)
+        logger.info("=>         Validation finished.")
+        return modified_res
+
     def debug_batch(self, document_paths=None, steps=None):
         if not document_paths:
             document_paths = self.collect_emails()
         for document_path in tqdm.tqdm(document_paths):
             document_loader = self.load_document(Path(document_path))
-            document_type, reasonc = self.classify_document(document_loader)
-            logger.success(f"=>     Classify {document_path}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
+            document_type, reason, entry_count = self.classify_document(document_loader)
+            logger.success(
+                f"=>     Classify {document_path}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
             if '船舶数据' in document_path and document_type == 'ship_info':
                 logger.success("CORRECT")
             elif '货盘数据' in document_path and document_type == 'cargo_info':
@@ -246,16 +259,20 @@ class ShipmentFlow:
     def mark_finish(self):
         pass
 
-    def insert_data_to_spreadsheet(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None):
+    def insert_data_to_spreadsheet(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
+                                   raw_text=None):
         data_to_insert = []
         for data in extraction_res:
             cur_res = data[0]
+            if raw_text and '备注-REMARK' in cur_res:
+                cur_res['备注-REMARK'] = raw_text
             cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
             if event_id:
                 cur_res['source_name'] = event_id
             else:
                 cur_res['source_name'] = document_path.name if document_path else 'PureText'
             data_to_insert.append(cur_res)
+
         logger.info(f"Inserting {data_to_insert}")
         if document_type == 'ship_info':
             table_id = 'tbly9gtTypeOLQ8Q'
@@ -348,15 +365,18 @@ class ShipmentFlow:
                                                                      receive_id_type=receive_type)
             return
 
+        # Extraction
         extraction_res = self.extract_key_information(document_loader=document_loader,
                                                       document_type=document_type,
                                                       entry_count=entry_count)
         if not extraction_res:
             return
         extraction_res = [] if not extraction_res else extraction_res
+        # Validation
+        extraction_res = self.validate_key_information(document_type, extraction_res)
+        # Display
         logger.success(f"=>      KIE Extraction results: {json.dumps(extraction_res, ensure_ascii=False, indent=2)}")
         if receive_type and receive_id:
-            # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             rich_text_log = f'<b>【邮件关键信息提取成功】</b>\n'
             for idx, i in enumerate(extraction_res):
                 rich_text_log += f'---------片段 {idx}---------' + '\n' + i[2] + "\n" + i[1]
@@ -367,21 +387,16 @@ class ShipmentFlow:
                                                                  template_id='AAq7OhvOhSJB2',  # Hardcoded.
                                                                  template_variable={'log_rich_text': rich_text_log},
                                                                  receive_id_type=receive_type)
-            # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            # rich_text_log = (
-            #     f'<b>【邮件关键信息提取成功】</b>\n'
-            #     f'{self.json_to_code_block([i[0] for i in extraction_res])}\n'
-            #     f'<b>正在进行步骤：<font color="blue"><b>插入多维表</b></font>\n'
-            #     f'<b>【时间】</b>: {current_time}'
-            # )
-            # self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
-            #                                                      template_id='AAq7OhvOhSJB2',  # Hardcoded.
-            #                                                      template_variable={'log_rich_text': rich_text_log},
-            #                                                      receive_id_type=receive_type)
 
+
+
+        # INSERTION
         try:
-            self.insert_data_to_spreadsheet(Path(document_path) if document_path else None, document_type,
-                                            extraction_res)
+            total, content = self.get_data_loader_context(document_loader)
+            self.insert_data_to_spreadsheet(Path(document_path) if document_path else None,
+                                            document_type,
+                                            extraction_res,
+                                            raw_text=content)
             logger.success(f"=>      Data Inserted.")
             if receive_type and receive_id:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -420,9 +435,9 @@ class ShipmentFlow:
 
 
 if __name__ == "__main__":
-    ins = ShipmentFlow()
+    ins = ShipmentFlow(r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml')
     ins.unit_flow(
-        r'W:\Personal_Project\NeiRelated\projects\shipment_solution\src\emails\货盘数据\img_v3_02ef_9c5736cc-bfda-447d-9213-7626620892bg_part_0.png')
+        r'W:\Personal_Project\NeiRelated\projects\shipment_solution\src\emails\货盘数据\6,000 mt urea Butterworth ／ Kohsichang.eml')
     # data = [
     #     [
     #         {

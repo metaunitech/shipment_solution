@@ -1,0 +1,16 @@
+cargo_info:
+  装运开始日期-LAY-DATE:
+    function: validate_date
+    comments: 通常是时间区间的开始日期（不要输出区间），对于装运开始日期的返回格式根据如下例子：EAR SEP-END SEP返回09-01，MID SEP/EAR OCT返回09-15
+    examples:
+      - { "4-5 SEPT 2024": "2024-09-04" }
+  装运结束日期-CANCELING-DATE:
+    function: validate_date
+    comments: 通常是时间区间的结尾（不要输出区间），对于装运结束日期的返回格式根据如下例子：EAR SEP-END SEP返回09-30，MID SEP/EAR OCT返回10-01
+    examples:
+      - { "3-5 SEPT 2024": "2024-09-05" }
+      - { "EAR SEP-END SEP": '2024-09-30' }
+ship_info:
+  空船日期-OPEN-DATE:
+    function: validate_date_range
+    comments: 船只空闲的时间，是一个时间区间
