@@ -232,6 +232,7 @@ class ShipmentFlow:
         logger.success(json.dumps(outs, indent=2, ensure_ascii=False))
         return outs
 
+    @retry(stop_max_attempt_number=2, wait_fixed=2000)
     def validate_key_information(self, document_type, extraction_res):
         logger.info("Starts to Validate results.")
         modified_res = self.ki_validator.validate(document_type=document_type,
@@ -396,7 +397,7 @@ class ShipmentFlow:
             self.insert_data_to_spreadsheet(Path(document_path) if document_path else None,
                                             document_type,
                                             extraction_res,
-                                            raw_text=content)
+                                            raw_text='\n'.join(content))
             logger.success(f"=>      Data Inserted.")
             if receive_type and receive_id:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
