@@ -10,9 +10,10 @@ background:
   - CQD/3DAYS TO HEAVUP：CQD（Cargo Quantity Discharged），3天内完成卸货
   - CQD BE (TRY DISRATE)：CQD（Cargo Quantity Discharged）Bends，尝试卸货速率。
 keys:
-  - 船舶代码-ID
+#  - 船舶代码-ID
   - 船舶类型-TYPE
-  - 船舶英文名称-ENGLISH-NAME
+  - 船舶英文名称-ENGLISH-NAME:
+      - 通常以MV开头，返回MV后面的名字，例如：对于MV ELIJAH，船英文名为：ELIJAH
   - 船舶中文名称-CHINESE-NAME
   - 建造年份-BUILT-YEAR
   - 载货吨-DWCC
@@ -31,7 +32,7 @@ keys:
   - 甲板数-DECK
   - P&I
   - 船舶名称-VSL-NAME
-  - 空船港口-OPEN-PORT:
-    - 对于装运日期的返回格式根据如下例子EAR SEP 可以默认录入9.1号，END SEP 默认9.20，MID SEP 默认9.15
+  - 空船港口-OPEN-PORT
   - 空船日期-OPEN-DATE:
-    - 对于装运日期的返回格式根据如下例子EAR SEP 可以默认录入9.1号，END SEP 默认9.20，MID SEP 默认9.15
+    - 通常是时间区间的开始（不要输出区间），对于装运开始日期的返回格式根据如下例子：EAR SEP-END SEP返回09-01，MID SEP/EAR OCT返回09-15
+    - \%MM-\%DD
