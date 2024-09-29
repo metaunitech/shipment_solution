@@ -85,6 +85,7 @@ class KIValidation:
                     validate_method = getattr(self, validate_method_name, None)
                     if not validate_method:
                         logger.error(f"VALIDATION METHOD: {validate_method_name} not Exist.")
+                        cur_res[key] = res[key]
                         continue
                     try:
                         modified_value = validate_method(input=res[key], comments=comments, examples=examples)

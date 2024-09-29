@@ -182,7 +182,7 @@ class ShipmentFlow:
         metadata_set = set(Path(i.__dict__.get('metadata', {}).get('source')).stem for i in data if
                            i.__dict__.get('metadata', {}).get('source'))
         return contents_list, list(metadata_set) + [i.__dict__.get('page_content') for i in data if
-                                                    i.__dict__.get('page_content')]
+                                                    i.__dict__.get('page_content')] + list(metadata_set)
 
     @retry(stop_max_attempt_number=2, wait_fixed=2000)
     def classify_document(self, document_loader):
@@ -441,7 +441,7 @@ class ShipmentFlow:
 if __name__ == "__main__":
     ins = ShipmentFlow(r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml')
     ins.unit_flow(
-        r'W:\Personal_Project\NeiRelated\projects\shipment_solution\src\emails\货盘数据\6,000 mt urea Butterworth ／ Kohsichang.eml')
+        r'W:\Personal_Project\NeiRelated\projects\shipment_solution\src\emails\船舶数据\Fw：MV.OCEANWINGLORY  DWCC 15200MT OPEN KANMON-BUSAN RANGE 2TH ／OCT.eml')
     # data = [
     #     [
     #         {

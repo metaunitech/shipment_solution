@@ -12,5 +12,5 @@ cargo_info:
       - { "EAR SEP-END SEP": '2024-09-30' }
 ship_info:
   空船日期-OPEN-DATE:
-    function: validate_date_range
-    comments: 船只空闲的时间，是一个时间区间
+    function: validate_date
+    comments: 船只空闲的日期
