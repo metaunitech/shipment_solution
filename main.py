@@ -193,7 +193,7 @@ class ShipmentFlow:
 
         return document_type, reason, entry_count
 
-    def extract_key_information(self, document_loader, document_type, entry_count: int):
+    def extract_key_information(self, document_loader, document_type, entry_count: int, extra_info: str):
         logger.info(f"->     Starts to extract key information from {document_type}.")
         if document_type == 'others':
             logger.warning("Message type is OTHER. DO NOT PARSE. SKIPPED.")
@@ -208,6 +208,7 @@ class ShipmentFlow:
         _, contents_list = self.get_data_loader_context(document_loader)
         # contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
         content_str = '\n'.join(contents_list)
+        content_str += f'\n原文得一些总结和分析：{extra_info}'
         if entry_count == 1:
             vessel_info_chunks, mutual_info, comment = [content_str], '', 'Only one entry'
         else:
@@ -374,7 +375,8 @@ class ShipmentFlow:
         # Extraction
         extraction_res = self.extract_key_information(document_loader=document_loader,
                                                       document_type=document_type,
-                                                      entry_count=entry_count)
+                                                      entry_count=entry_count,
+                                                      extra_info=reason)
         if not extraction_res:
             return
         extraction_res = [] if not extraction_res else extraction_res
@@ -441,7 +443,7 @@ class ShipmentFlow:
 if __name__ == "__main__":
     ins = ShipmentFlow(r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml')
     ins.unit_flow(
-        r'W:\Personal_Project\NeiRelated\projects\shipment_solution\src\emails\货盘数据\6,000 mt urea Butterworth ／ Bangkok.eml')
+        r'W:\Personal_Project\NeiRelated\projects\shipment_solution\src\emails\货盘数据\img_v3_02ef_9c5736cc-bfda-447d-9213-7626620892bg_part_0.png')
     # data = [
     #     [
     #         {
