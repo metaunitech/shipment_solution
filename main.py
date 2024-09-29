@@ -179,7 +179,6 @@ class ShipmentFlow:
     def get_data_loader_context(document_loader):
         data = document_loader.load()
         contents_list = [i.__dict__ for i in data]
-        # content_str = '\n'.join(contents_list)
         return contents_list, [i.__dict__.get('page_content') for i in data if i.__dict__.get('page_content')]
 
     @retry(stop_max_attempt_number=2, wait_fixed=2000)
@@ -268,6 +267,8 @@ class ShipmentFlow:
             if raw_text and '备注-REMARK' in cur_res:
                 cur_res['备注-REMARK'] = raw_text
             cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
+            if raw_text:
+                cur_res['原文依据'] = raw_text
             if event_id:
                 cur_res['source_name'] = event_id
             else:
