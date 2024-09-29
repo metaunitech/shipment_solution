@@ -7,6 +7,8 @@ import yaml
 import json
 from loguru import logger
 from pathlib import Path
+from retrying import retry
+
 
 MODEL_NAME = 'glm-4-flash'
 API_TOKEN = 'a9d2815b090f143cdac247d7600a127f.WSDK8WqwJzZtCmBK'
@@ -32,8 +34,9 @@ class KIValidation:
                           model=model_name,
                           openai_api_key=API_TOKEN,
                           openai_api_base="https://open.bigmodel.cn/api/paas/v4/")
-
+    @retry(stop_max_attempt_number=2, wait_fixed=2000)
     def validate_date(self, input, comments=None, examples=None):
+        comments = '' if not comments else comments
         try:
             formatted_date = datetime.datetime.strptime(input, '%Y-%m-%d')
             return formatted_date.strftime('%Y-%m-%d')
