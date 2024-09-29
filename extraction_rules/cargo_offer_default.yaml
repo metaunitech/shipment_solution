@@ -16,9 +16,9 @@ keys:
   - 货量-QUANTITY
   - 积载包装-SF-PACKAGE
   - 装货港口-L-PORT:
-      - 始发港口，通常在如下格式中是左边那个：<港口缩写>/<港口缩写>，例如：DANGJIN/OSAKA，DANGJIN就是装货港口;或者<港口>to<港口>中的左边那个。例如：dangjing to OSAKA, DANGJIN就是装港港口
+      - 始发港口(返回大写英文)，通常在如下格式中是左边那个：<港口缩写>/<港口缩写>，例如：DANGJIN/OSAKA，DANGJIN就是装货港口;或者<港口>to<港口>中的左边那个。例如：dangjing to OSAKA, DANGJIN就是装港港口
   - 卸货港口-D-PORT:
-      - 目标港口，通常在如下格式中是右边那个：<港口缩写>/<港口缩写>，例如：DANGJIN/OSAKA，OSAKA就是卸货港口;或者<港口>to<港口>中的右边那个。例如：dangjing to OSAKA, OSAKA就是装港港口
+      - 目标港口(返回大写英文)，通常在如下格式中是右边那个：<港口缩写>/<港口缩写>，例如：DANGJIN/OSAKA，OSAKA就是卸货港口;或者<港口>to<港口>中的右边那个。例如：dangjing to OSAKA, OSAKA就是装港港口
   - 装率-L-RATE
   - 卸率-D-RATE
   - 装运开始日期-LAY-DATE:
