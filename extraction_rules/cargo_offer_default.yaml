@@ -1,6 +1,6 @@
 background:
   - cargo offer原始信息，一般都是用英文的。
-  - EAR SEP 可以默认录入9.1号， END SEP 默认9.20， MID,SEP 默认 ,9.15
+  - EAR SEP 录入9.1号， END SEP 默认9.20， MID,SEP 默认 9.15
   - SEIYO FORTUNE    10514MT    2007   NINGDE   18-25TH SEP 这种时间是区间的，就录最前面的9.18
   - 10pct 10% (percent)指的是货物质量占据总船容的10%
   - ttl 2.5 pct指的是佣金总计2.5% (Commission total 2.5%)
@@ -22,13 +22,12 @@ keys:
   - 装率-L-RATE
   - 卸率-D-RATE
   - 装运开始日期-LAY-DATE:
-      - 货物开始装运的日期。通常是时间区间的开始（不要输出区间），对于装运开始日期的返回格式根据如下例子：EAR SEP-END SEP返回09-01，MID SEP/EAR OCT返回09-15
-      - \%Y-\%m-\%d
-  - 装运结束日期-CANCELING-DATE:
-      - 货物结束装运的日期。通常是时间区间的结尾（不要输出区间），对于装运结束日期的返回格式根据如下例子：EAR SEP-END SEP返回09-30，MID SEP/EAR OCT返回10-01
+      - 在货盘邮件里肯定存在，通常是出现的日期区间的开始（不要输出区间），对于装运开始日期的返回格式根据如下例子：EAR SEP-END SEP返回09-01，MID SEP/EAR OCT返回09-15。如果实在没有，返回日期区间
       - \%Y-\%m-\%d
   - 佣金-COMM
   - 运费单价-FRT-RATE
   - 备注-REMARK
   - 报盘公司-COMPANY
-
+  - 装运结束日期-CANCELING-DATE:
+      - 在货盘邮件里肯定存在，通常是出现的日期区间的结尾，例如：28-30 AUG 2024里，装运结束时间为：2024-08-30。如果实在无法判断，返回日期区间
+      - \%Y-\%m-\%d

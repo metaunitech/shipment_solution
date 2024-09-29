@@ -441,7 +441,7 @@ class ShipmentFlow:
 if __name__ == "__main__":
     ins = ShipmentFlow(r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml')
     ins.unit_flow(
-        r'W:\Personal_Project\NeiRelated\projects\shipment_solution\src\emails\船舶数据\Fw：MV.OCEANWINGLORY  DWCC 15200MT OPEN KANMON-BUSAN RANGE 2TH ／OCT.eml')
+        r'W:\Personal_Project\NeiRelated\projects\shipment_solution\src\emails\货盘数据\6,000 mt urea Butterworth ／ Bangkok.eml')
     # data = [
     #     [
     #         {
