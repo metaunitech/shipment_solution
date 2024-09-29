@@ -77,13 +77,13 @@ class KIValidation:
 
     def validate(self, document_type, extraction_res):
         output_res = []
-        todo_keys = [list(self.requirements.get(document_type, {}).keys())[0] for i in
-                     self.requirements.get(document_type, {}).keys()]
+        todo_keys = list(self.requirements.get(document_type, {}).keys())
         for res_all in extraction_res:
             res, body, mutual_body = tuple(res_all)
             cur_res = {}
             for key in res:
                 if key in todo_keys:
+                    logger.info(f"Validate: {key}")
                     validate_method_name = self.requirements[document_type][key].get('function')
                     comments = self.requirements[document_type][key].get('comments')
                     examples = self.requirements[document_type][key].get('examples')

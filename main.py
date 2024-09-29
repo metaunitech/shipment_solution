@@ -443,7 +443,7 @@ class ShipmentFlow:
 if __name__ == "__main__":
     ins = ShipmentFlow(r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml')
     ins.unit_flow(
-        r'W:\Personal_Project\NeiRelated\projects\shipment_solution\src\emails\货盘数据\img_v3_02ef_9c5736cc-bfda-447d-9213-7626620892bg_part_0.png')
+        r'W:\Personal_Project\NeiRelated\projects\shipment_solution\src\emails\货盘数据\tct order(1).eml')
     # data = [
     #     [
     #         {
