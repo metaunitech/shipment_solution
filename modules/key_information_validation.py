@@ -1,4 +1,5 @@
 import datetime
+import time
 
 from langchain_openai import ChatOpenAI
 from langchain.output_parsers import PydanticOutputParser, OutputFixingParser
@@ -59,7 +60,8 @@ class KIValidation:
             f"注：今天是{datetime.datetime.now().strftime('%YY-%MM-%DD')}，"
             f"YOUR ANSWER:\n"
             f"请按照如下格式要求返回我JSON\n"
-            f"{format_instruction}")
+            f"{format_instruction}\n"
+            f"TS:{str(time.time()*1000)}")
         res_raw = llm_ins.invoke(prompt)
         res_content = res_raw.content
         logger.debug(res_content)
