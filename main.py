@@ -179,7 +179,10 @@ class ShipmentFlow:
     def get_data_loader_context(document_loader):
         data = document_loader.load()
         contents_list = [i.__dict__ for i in data]
-        return contents_list, [i.__dict__.get('page_content') for i in data if i.__dict__.get('page_content')]
+        metadata_set = set(Path(i.__dict__.get('metadata', {}).get('source')).stem for i in data if
+                           i.__dict__.get('metadata', {}).get('source'))
+        return contents_list, list(metadata_set) + [i.__dict__.get('page_content') for i in data if
+                                                    i.__dict__.get('page_content')]
 
     @retry(stop_max_attempt_number=2, wait_fixed=2000)
     def classify_document(self, document_loader):
@@ -201,8 +204,9 @@ class ShipmentFlow:
             config_path = self.rule_config_path / 'cargo_offer_default.yaml'
         logger.info(f"Config_path: {config_path}")
         # Message Segmentation
-        data = document_loader.load()
-        contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
+        # data = document_loader.load()
+        _, contents_list = self.get_data_loader_context(document_loader)
+        # contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
         content_str = '\n'.join(contents_list)
         if entry_count == 1:
             vessel_info_chunks, mutual_info, comment = [content_str], '', 'Only one entry'
@@ -389,8 +393,6 @@ class ShipmentFlow:
                                                                  template_id='AAq7OhvOhSJB2',  # Hardcoded.
                                                                  template_variable={'log_rich_text': rich_text_log},
                                                                  receive_id_type=receive_type)
-
-
 
         # INSERTION
         try:
