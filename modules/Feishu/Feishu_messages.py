@@ -27,11 +27,8 @@ class FeishuMessageHandler(FeishuApp):
         self.__app_id = configs.get('app_id')
         self.__app_secret = configs.get('app_secret')
 
-    def send_message_by_template(self, receive_id, template_id, template_variable: dict, receive_id_type='open_id'):
+    def send_message_by_template(self, receive_id, template_id, template_variable: dict, receive_id_type='chat_id'):
         content = {'type': 'template', 'data': {'template_id': template_id, 'template_variable': template_variable}}
-        # card_json = {'receive_id': receive_id,
-        #              'msg_type': 'interactive',
-        #              'content': json.dumps(content, ensure_ascii=False)}
         # 创建client
         client = lark.Client.builder() \
             .app_id(self.__app_id) \
@@ -60,9 +57,70 @@ class FeishuMessageHandler(FeishuApp):
 
         # 处理业务结果
         lark.logger.info(lark.JSON.marshal(response.data, indent=4))
+        return response.data.message_id
 
-    def send_message(self, receive_id, receive_id_type='open_id'):
-        pass
+    def send_message_by_text(self, receive_id, text, receive_id_type='chat_id'):
+        client = lark.Client.builder() \
+            .app_id(self.__app_id) \
+            .app_secret(self.__app_secret) \
+            .log_level(lark.LogLevel.DEBUG) \
+            .build()
+
+        # 构造请求对象
+        request: CreateMessageRequest = CreateMessageRequest.builder() \
+            .receive_id_type(receive_id_type) \
+            .request_body(CreateMessageRequestBody.builder()
+                          .receive_id(receive_id)
+                          .msg_type("text")
+                          .content(json.dumps({'text': text}, ensure_ascii=False))
+                          .build()) \
+            .build()
+
+        # 发起请求
+        response: CreateMessageResponse = client.im.v1.message.create(request)
+
+        # 处理失败返回
+        if not response.success():
+            lark.logger.error(
+                f"client.im.v1.message.create failed, code: {response.code}, msg: {response.msg}, log_id: {response.get_log_id()}, resp: \n{json.dumps(json.loads(response.raw.content), indent=4, ensure_ascii=False)}")
+            return
+
+        # 处理业务结果
+        lark.logger.info(lark.JSON.marshal(response.data, indent=4))
+        return response.data.message_id
+
+    def reply_message_by_template(self, message_id, template_id, template_variable: dict, in_thread=False):
+        content = {'type': 'template', 'data': {'template_id': template_id, 'template_variable': template_variable}}
+
+        # 创建client
+        client = lark.Client.builder() \
+            .app_id(self.__app_id) \
+            .app_secret(self.__app_secret) \
+            .log_level(lark.LogLevel.DEBUG) \
+            .build()
+
+        # 构造请求对象
+        request: ReplyMessageRequest = ReplyMessageRequest.builder() \
+            .message_id(message_id) \
+            .request_body(ReplyMessageRequestBody.builder()
+                          .msg_type("interactive")
+                          .content(json.dumps(content, ensure_ascii=False))
+                          .reply_in_thread(in_thread)
+                          .build()) \
+            .build()
+
+        # 发起请求
+        response: ReplyMessageResponse = client.im.v1.message.reply(request)
+
+        # 处理失败返回
+        if not response.success():
+            lark.logger.error(
+                f"client.im.v1.message.reply failed, code: {response.code}, msg: {response.msg}, log_id: {response.get_log_id()}, resp: \n{json.dumps(json.loads(response.raw.content), indent=4, ensure_ascii=False)}")
+            return
+
+        # 处理业务结果
+        lark.logger.info(lark.JSON.marshal(response.data, indent=4))
+        return response.data.message_id
 
     def retrieve_file(self, message_id, file_key, store_path: Path, file_type='file'):
         # 创建client
@@ -86,25 +144,7 @@ class FeishuMessageHandler(FeishuApp):
         if not response.success():
             lark.logger.error(
                 f"client.im.v1.message_resource.get failed, code: {response.code}, msg: {response.msg}, log_id: {response.get_log_id()}")
-            return
-
-        # 处理业务结果
-        file_name = response.file_name if response.file_name else f"{int(time.time()*1000)}.jpg"
-        stored_path = store_path / file_name
-        if stored_path.exists():
-            return stored_path
-        f = open(stored_path, "wb")
-        f.write(response.file.read())
-        f.close()
-        return stored_path
 
 
-if __name__ == "__main__":
-    pass
-    # hack = 'https://open.feishu.cn/open-apis/bot/v2/hook/699721fe-7185-4d32-8fea-79b1970d85ec'
-    # ins = FeishuMessageHandler(r'W:\Personal_Project\NeiRelated\projects\rag_chatbot\configs\feishu_config.yaml')
-    # # ins.send_message_by_card_json(card_json=data_json, webhook_address=hack)
-    # # ins.retrieve_file('om_a99671951663a27181cf5fbecd62369d', 'file_v3_00ep_d2e5827f-f0d3-4980-a50a-432b399ad66g')
-    # res = ins.send_message_by_template(receive_id='ou_2401613ed164502ea6a20417c20dffee', template_id='AAq7OhvOhSJB2',
-    #                                    template_variable={'log_rich_text': 'hi'})
-    # print(res)
+
+
