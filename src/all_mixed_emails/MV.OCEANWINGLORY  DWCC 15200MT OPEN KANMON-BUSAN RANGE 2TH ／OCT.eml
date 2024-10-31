@@ -1,0 +1,185 @@
+Received-SPF: pass (spfCheck: domain of 163.com designates 220.197.31.3 as permitted sender) client-ip=220.197.31.3; envelope-from=grandvictory1@163.com; helo=m16.mail.163.com;
+Received: from m16.mail.163.com (unknown [220.197.31.3])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 484E44C0651
+	for <chartering@jahline.com>; Fri, 13 Sep 2024 09:19:15 +0800 (CST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=iXmSsToGGdAnDMaZWpCznnWyHYb4NQ8BBv7JPMofvRU=; b=M
+	nLHbCDoca4r3TarMVU0xMNNbOwOICH4Zl5239BEcXZ0KUpnOTBHpK1y17Y1XkplJ
+	cNnszCHutGaKj5Yjh99rBSWZdf8j5bDDdQDlvVu8J3to5zOMOh7cDxRvmbY5mgIN
+	MoJrfX65uF8MXC1Uq4+dvjNGZHfgg3GxXE6cpZdKYI=
+Received: from mail-tracker-183-3ep34-kunp1-54f898d94d-6fk2k (unknown [10.47.74.31])
+	by smtp100 (Coremail) with SMTP id KSIvCgCX7usTk+Nm37n3AA--.20706S2;
+	Fri, 13 Sep 2024 09:19:15 +0800 (CST)
+Received: from grandvictory1$163.com ( [183.245.213.186] ) by
+ ajax-webmail-wmsvr-trace-40-93 (Coremail) ; Fri, 13 Sep 2024 09:19:07 +0800
+ (CST)
+Date: Fri, 13 Sep 2024 09:19:07 +0800 (CST)
+From: "GRAND VICTORY SHIPPING" <grandvictory1@163.com>
+To: chartering <chartering@jahline.com>
+Subject: MV.OCEANWINGLORY  DWCC 15200MT OPEN KANMON-BUSAN RANGE 2TH /OCT
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+X-CM-CTRLMSGS: kaorZnBsdXM9MTcyNjE5MDM0Njc1M180OTc5NTM2ZTM2MGIyYTk2MjcxNjMyZ
+ DIwOWRhMGZkZCZtYWlsVHJhY2tpbmc9MSZ0cmFjZUtleT1lYjNkY2NlOGJhNDdmZTlkNGNkYjhl
+ M2M2NWEzNTkwOA==
+X-NTES-SC: AL_Qu2ZBP2Sv0sv4SSRYukXn0oRgOw8XsewvP8n34dTO5E0mCXv8wUrQ2BnMmTv7vuOBiumrweyfD9A5e59Xah0QrLRkubjT7d2M5u9c4bTBg02
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_1166_293003473.1726190347509"
+MIME-Version: 1.0
+Message-ID: <1802683662.3553537.1726190355210.JavaMail.root@mail-tracker-183-3ep34-kunp1-54f898d94d-6fk2k>
+X-Coremail-Locale: zh_CN
+X-NTES-TM-INF: aRIGHTkHd18HIDpvDmNUJTQ3F3F-WEguOjoeeXBDSGwKV0sWaj1jeBdTLmcsLFBcYhIcamNgLw
+X-CM-TRANSID:KSIvCgCX7usTk+Nm37n3AA--.20706S2
+X-Coremail-Antispam: 1Uf129KBjvdXoWrKF4xJrWkAFWfKr1DJw4rAFb_yoWkArc_Jr
+	1UJ34UJr1UGF1UXr18Jw13Jr17X34jqr1DGw1UJ3WDJrW2qr1DAryDJr1DtF1UXFn5GryU
+	Jr15Ary5W3yxtjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UUUUUUUUU==
+X-Originating-IP: [10.47.74.31]
+X-CM-SenderInfo: hjud0vxylf30tu1rqiywtou0bp/
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWTYjWV
+	dZCAsdC1lBS1dZKFlBTk43V1ktWUFJV1kPCRoVCBIfWUFZQklJH1YdT0wYSUofSxlMTUtWFRQJFh
+	oXVRMBExYaEhckEhVZV1kYEgtZQVlJSUtVSkJMVUhKVUhZV1kWGg8SFR0UWUFZS1VLVUtVS1kG
+X-HM-Tid: 0a91e8f683600377kunm484e44c0651
+X-HM-MType: 1
+
+------=_Part_1166_293003473.1726190347509
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
+
+CgpUTyA6Q0hBUlRFUklORyAKRlJPTSA6T0NFQU5XSU4gSU5UJ0wgU0hJUFBJTkcgTElNSVRFRCi0
+87PJuqPUy6OpCkdPT0QgREFZCgoKREVBUiBmcmllbmRzIAoKCmZvY3VzIG9uICBDSElOQS1KQVBB
+Ti1LT1JFQS1DSVMtQVNJQS1QRyBBUkVBUyBUUkFESU5HICxBTkQgSUYgWU9VIEhBVkUgU1VJVEFC
+QUxFIENBUkdPUyAsUExTIENPTlRBQ1QgVVMgTk8gQU5ZIEhFU2lUQXRpb24gISFMT09LIEZPUldB
+UkQgWU9VUiBDT09QRVJBVElPTiAuCgoKVENUIE9SIFZPWSBBTEwgT0sgCk1WLk9DRUFOV0lOIEdM
+T1JZIG9wZW4ga2FubW9uIC1idXNhbiByYW5nZSAydGgvb2N0IApQQU5BTUEgICBGTEFHLCAyMDEw
+QkxULERXVC9EV0NDIDE1NjAwLzE1MjAwTVQgT04gOC4yTSBTU1csSVJTIENMQVNTCkxPQS9CTS9E
+RVBUSCAxMzkuOE0vMjFNLzExLjBNLiBHUlQvTlJUIDk0NzAvNTU3NSBHL0IgQ0FQQSAyMDA1M0NC
+TSAzSC8zSCwKSEFUQ0ggU0laRTpOTzE6MjIuNE0qMTMuOU0gTk8yOjIxLk0qMTMuOU07ICBOTy4z
+ICAyMS4zKjEzLjlNIApIQVRDSCBDT1ZFUiA6Q0hBSU4gRkxPQURJTkcgVFlQRSAKU0QgREVDSywg
+U0VNSSBCT1ggSE9MRCAuICBQJiBJIENPVkVSRUQsIEFEQSxGSVRURUQgNDVNVCAqMiBDUkFORVMg
+Q09OU0VDVElWRUxZIC5IQVRDSCBDT1ZFUiBBTExPV0VEIApEQU5HRVJPVVMgQ0FSR08gT0sgCgoK
+KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioKCgoKClRIS1Mg
+JkJFU1QgUkVHQVJEUwoKCgoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqKioqKioqKioqKioKCk9DRUFOV0lOIElOVCdMIFNISVBQSU5HIExURCAKClRFTCA6Kzg2
+LTA1ODAtNjIwNTUyNi82MjAxMTMxIAoKTVMgQkVMTEEgTUEgo7ogKE1BTkFHRVIpCgplbWFpbDpn
+cmFuZHZpY3RvcnkxQDE2My5jb20oQ0hBUlRFUklORykKCmZheDowNTgwLTYyMDExMjEKCndlY2hh
+dCBhY2NvdW50IKO6Z3JhbmR2aWN0b3J5MQoKU0tZUEU6ICAgIGxpdmU6LmNpZC41NzhmZjhlNzY2
+NjIwNDI0ClNLWVBFIERROg==
+------=_Part_1166_293003473.1726190347509
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<div style=3D"line-height:1.7;color:#000000;font-size:14px;font-family:Aria=
+l"><div style=3D"line-height: 1.7; font-size: 14px; font-family: Arial;"><d=
+iv style=3D"color: rgb(0, 0, 0); line-height: 1.7; word-break: break-word !=
+important;"><br></div><div style=3D"line-height: 1.7; word-break: break-wor=
+d !important;"><font style=3D"line-height: 1.6; font-size: 10px; word-break=
+: break-word !important;"><span style=3D"font-size: 16px; word-break: break=
+-word !important;"><span style=3D"word-break: break-word !important;"><div =
+style=3D"font-size: 14px; line-height: 1.7; word-break: break-word !importa=
+nt;"><div style=3D"line-height: 1.7; word-break: break-word !important;"><d=
+iv style=3D"line-height: 1.7; word-break: break-word !important;"><font sty=
+le=3D"line-height: 1.6; font-size: 10px; word-break: break-word !important;=
+"><span style=3D"font-size: 16px; word-break: break-word !important;"><span=
+ style=3D"word-break: break-word !important;"><div style=3D"font-size: 14px=
+; word-break: break-word !important;"><span style=3D"font-family: Verdana; =
+word-break: break-word !important;">TO :CHARTERING&nbsp;<br style=3D"word-b=
+reak: break-word !important;">FROM :OCEANWIN INT'L SHIPPING LIMITED(=E5=A4=
+=A7=E6=88=90=E6=B5=B7=E8=BF=90=EF=BC=89</span></div><div style=3D"font-size=
+: 14px; word-break: break-word !important;"><span style=3D"font-family: Ver=
+dana; word-break: break-word !important;">GOOD DAY</span></div><div style=
+=3D"font-size: 14px; word-break: break-word !important;"><br style=3D"word-=
+break: break-word !important;"></div><div style=3D"font-size: 14px; word-br=
+eak: break-word !important;"><span style=3D"font-family: Verdana; word-brea=
+k: break-word !important;">DEAR friends&nbsp;</span></div><div style=3D"fon=
+t-size: 14px; word-break: break-word !important;"><br style=3D"word-break: =
+break-word !important;"></div><div style=3D"font-size: 14px; word-break: br=
+eak-word !important;"><span style=3D"font-family: Verdana; word-break: brea=
+k-word !important;">focus on&nbsp; CHINA-JAPAN-KOREA-CIS-ASIA-PG AREAS TRAD=
+ING ,AND IF YOU HAVE SUITABALE CARGOS ,PLS CONTACT US NO ANY HESiTAtion !!L=
+OOK FORWARD YOUR COOPERATION .</span></div><div style=3D"font-size: 14px; w=
+ord-break: break-word !important;"><span style=3D"font-family: Verdana; wor=
+d-break: break-word !important;"><br></span></div><div style=3D"font-size: =
+14px; word-break: break-word !important;"><div style=3D"word-break: break-w=
+ord !important;"><span style=3D"font-family: &quot;Arial Black&quot;;">TCT =
+OR VOY ALL OK&nbsp;</span></div></div><div style=3D"font-size: 14px; word-b=
+reak: break-word !important;"><span style=3D"font-family: &quot;Microsoft Y=
+ahei&quot;; font-size: 20px; word-break: break-word !important;"><b style=
+=3D"word-break: break-word !important;">MV.OCEANWIN GLORY <span style=3D"ba=
+ckground-color: rgb(221, 64, 50);">open kanmon -busan range 2th/oct&nbsp;</=
+span></b></span></div><div style=3D"font-size: 14px; word-break: break-word=
+ !important;"><span style=3D"font-size: 16px; word-break: break-word !impor=
+tant;">PANAMA&nbsp;&nbsp;&nbsp;FLAG,&nbsp;2010BLT,DWT/DWCC 15600/15200MT&nb=
+sp;ON&nbsp;8.2M&nbsp;SSW,IRS&nbsp;CLASS</span><br style=3D"font-size: 16px;=
+ word-break: break-word !important;"><span style=3D"font-size: 16px; word-b=
+reak: break-word !important;">LOA/BM/DEPTH&nbsp;139.8M/21M/11.0M. GRT/NRT 9=
+470/5575 G/B&nbsp;CAPA&nbsp;20053CBM&nbsp;3H/3H,</span><br style=3D"font-si=
+ze: 16px; word-break: break-word !important;"><span style=3D"font-size: 16p=
+x; word-break: break-word !important;">HATCH&nbsp;SIZE:NO1:22.4M*13.9M&nbsp=
+;NO2:21.M*13.9M;&nbsp;&nbsp;NO.3&nbsp;&nbsp;21.3*13.9M&nbsp;</span><br styl=
+e=3D"font-size: 16px; word-break: break-word !important;"><span style=3D"fo=
+nt-size: 16px; word-break: break-word !important;">HATCH&nbsp;COVER&nbsp;:C=
+HAIN FLOADING TYPE&nbsp;</span><br style=3D"font-size: 16px; word-break: br=
+eak-word !important;"><span style=3D"font-size: 16px; word-break: break-wor=
+d !important;">SD&nbsp;DECK, SEMI BOX&nbsp;HOLD&nbsp;.&nbsp; P&amp;&nbsp;I&=
+nbsp;COVERED,&nbsp;ADA,FITTED&nbsp;45MT&nbsp;*2 CRANES CONSECTIVELY .HATCH =
+COVER ALLOWED&nbsp;<br>DANGEROUS CARGO OK&nbsp;</span></div><div style=3D"f=
+ont-size: 14px; word-break: break-word !important;"><span style=3D"font-fam=
+ily: &quot;Microsoft Yahei&quot;; font-size: 16px; word-break: break-word !=
+important;"><br style=3D"word-break: break-word !important;"></span></div><=
+div style=3D"font-size: 14px; word-break: break-word !important;">*********=
+***************************************************************************=
+********************</div><div style=3D"font-size: 14px; word-break: break-=
+word !important;"><br style=3D"word-break: break-word !important;"></div><d=
+iv style=3D"font-size: 14px; word-break: break-word !important;"><br style=
+=3D"word-break: break-word !important;"></div><div style=3D"font-size: 14px=
+; word-break: break-word !important;"><span style=3D"word-break: break-word=
+ !important;"><font face=3D"Verdana" style=3D"word-break: break-word !impor=
+tant;"><div style=3D"word-break: break-word !important;"><div style=3D"word=
+-break: break-word !important;"><div style=3D"font-family: Arial; margin: 0=
+px; word-break: break-word !important;"><span style=3D"font-family: Verdana=
+; font-size: 16px; word-break: break-word !important;">THKS &amp;BEST REGAR=
+DS</span></div><div style=3D"font-family: Arial; margin: 0px; word-break: b=
+reak-word !important;"><br style=3D"word-break: break-word !important;"></d=
+iv><p style=3D"font-family: Arial; margin: 0px; word-break: break-word !imp=
+ortant;">*********************************************************</p><p st=
+yle=3D"font-family: Arial; margin: 0px; word-break: break-word !important;"=
+><span style=3D"font-family: Verdana; word-break: break-word !important;">O=
+CEANWIN INT'L SHIPPING LTD&nbsp;</span></p><p style=3D"font-family: Arial; =
+margin: 0px; word-break: break-word !important;"><span style=3D"font-family=
+: Verdana; word-break: break-word !important;">TEL :+86-0580-6205526/620113=
+1&nbsp;</span></p><p style=3D"font-family: Arial; margin: 0px; word-break: =
+break-word !important;"><span style=3D"font-family: Verdana; word-break: br=
+eak-word !important;">MS BELLA MA =EF=BC=9A (MANAGER)</span></p><p style=3D=
+"font-family: Arial; margin: 0px; word-break: break-word !important;"><span=
+ style=3D"font-family: Verdana; word-break: break-word !important;">email:<=
+a data-auto-link=3D"1" href=3D"mailto:grandvictory1@163.com" style=3D"color=
+: rgb(148, 117, 77); word-break: break-word !important;">grandvictory1@163.=
+com</a>(CHARTERING)</span></p><p style=3D"font-family: Arial; margin: 0px; =
+word-break: break-word !important;"><span style=3D"font-family: Verdana; wo=
+rd-break: break-word !important;">fax:0580-6201121</span></p><p style=3D"fo=
+nt-family: Arial; margin: 0px; word-break: break-word !important;"><span st=
+yle=3D"font-family: Verdana; word-break: break-word !important;">wechat acc=
+ount =EF=BC=9Agrandvictory1</span></p><p style=3D"font-family: Arial; margi=
+n: 0px; word-break: break-word !important;"><span style=3D"font-family: Ver=
+dana; word-break: break-word !important;">SKYPE:&nbsp; &nbsp; live:.cid.578=
+ff8e766620424<br style=3D"word-break: break-word !important;">SKYPE DQ:</sp=
+an></p></div></div></font></span></div><div style=3D"font-size: 14px; word-=
+break: break-word !important;"><img src=3D"http://mail.163.com/js6/s?func=
+=3Dmbox:getMessageData&amp;mid=3D389:xtbBhRMfqmWXv7uUEAABsQ&amp;part=3D3" o=
+rgwidth=3D"405" orgheight=3D"316" data-image=3D"1" style=3D"font-family: Ve=
+rdana; border: 0px; width: 405px; height: 316px; word-break: break-word !im=
+portant;"><img src=3D"https://count.mail.163.com/beacon/webmail.gif?type=3D=
+webmail_mailtrace&amp;guid=3Dpre_e8d4295aefd4cd0e86f2b3f54bf4b129" style=3D=
+"width: 1px; height: 1px;"></div></span></span></font></div></div></div></s=
+pan></span></font></div></div></div><img style=3D"width:1px;height:1px" src=
+=3D"https://count.mail.163.com/beacon/webmail.gif?type=3Dwebmail_mailtrace&=
+amp;guid=3Dpre_41008ee6e4b76be7afa8cf9611873d0b"><img style=3D"width:1px;he=
+ight:1px" src=3D"https://count.mail.163.com/beacon/webmail.gif?type=3Dwebma=
+il_mailtrace&amp;guid=3DENC_ZkIMXGZud0QJITs_DzhVIThiECBwWhl0OmxFeCEYG2oIUkt=
+OaTB4ZA0AeC9vLF18ZBI6dn4zeG0YcS0NISksEzh9XUJp">
+------=_Part_1166_293003473.1726190347509--
+

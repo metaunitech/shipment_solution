@@ -1,0 +1,527 @@
+Received-SPF: pass (spfCheck: domain of vip.163.com designates 220.197.30.223 as permitted sender) client-ip=220.197.30.223; envelope-from=auto_abba+chartering=jahline.com@vip.163.com; helo=mail-m16.vip.163.com;
+Received: from mail-m16.vip.163.com (unknown [220.197.30.223])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 7B9FE4C063A
+	for <chartering@jahline.com>; Mon,  9 Sep 2024 23:18:28 +0800 (CST)
+Received: from mail-wr1-f58.google.com (unknown [209.85.221.58])
+	by gzmx5 (Coremail) with SMTP id Vc8vCgDXvzC_Ed9mKmGBAA--.31036S3;
+	Mon, 09 Sep 2024 23:18:25 +0800 (CST)
+Received: by mail-wr1-f58.google.com with SMTP id ffacd0b85a97d-374c35b8e38sf2159282f8f.2
+        for <abba@vip.163.com>; Mon, 09 Sep 2024 08:18:25 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1725895103; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=Hds4UkHkM7j0Obx7GnYtcRr+l80WeFL7vp3qAAqlWEWQgXPC2CL33FFwyurpPOHfH9
+         4UGRpRpHEcV+Aniz6sAdoNdYZy0kfNFah7E2IhF3qsmbtLxb3iEfjPhB7ALQYbTnMPsC
+         1KCt1XwG9mejOjxXM4iLiHhA50ngTx0Gc9Pq6t8WNrcPUqGd0k145Fq7/WjKp1cPFPO3
+         OHMNdD6Ao9f0LyPQVWBR5mVEN/OMQM4b6hwDDKtbDLekUJu5/+NPFZiTHuURQbRbHlIg
+         pgoZTjtUL/BQ7s8MeUkPffI8CvKBOFddh9Vm95YDLQI9blI5MXrmSzLuJyIGJWbP9QFf
+         iyAw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=list-unsubscribe:list-archive:list-help:list-post:list-id
+         :mailing-list:precedence:reply-to:mime-version:thread-topic
+         :message-id:to:from:subject:date:user-agent:sender:dkim-signature;
+        bh=0owuKrzCpprG7UxCv38Qa4Uw5wGouei53Qz4nbYIB8M=;
+        fh=vEBJP/7nLR0wyVpChTGkLCWwxmO9gpeI57+47enEbD0=;
+        b=W8ZG4vn0sJq8CmuT5r3eBc1woWv1bLIBpnpulSQ4HG+badM7J97emz9oId38iALZwa
+         /a/8vD9vdbw+MEDhODg5rz/1bklAZAXU0SUW/3jUYGdXEeVZTeKA+Vln3Y25ee6iBsHG
+         gebzbswdUu14DhKQ1mGbVDA4yk4DqVanLptVLWhc2gnLdA1YWU/A1jFHILL1M2ECdGZF
+         CShCSj6ZLsMY/UijBNxQRETi2ydlRRtZlb3lRC2e4VoCFmoSqRHkiLFDXg5tdMvU5yrv
+         BID5rwuUsZbW5lE6gp0zZ6t3qO/ATiWQa92/1mMLiuNcQXKVq+q8x8jDWmnMqEQ9EQgr
+         txyw==;
+        darn=vip.163.com
+ARC-Authentication-Results: i=2; gmr-mx.google.com;
+       dkim=temperror (no key for signature) header.i=@alestaint.com header.s=dkim header.b=iS2AJHEi;
+       spf=pass (google.com: domain of chartering@alestaint.com designates 193.33.165.253 as permitted sender) smtp.mailfrom=chartering@alestaint.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=alestaint.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20230601; t=1725895103; x=1726499903; darn=vip.163.com;
+        h=list-unsubscribe:list-archive:list-help:list-post:list-id
+         :mailing-list:precedence:reply-to:x-original-authentication-results
+         :x-original-sender:mime-version:thread-topic:message-id:to:from
+         :subject:date:user-agent:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0owuKrzCpprG7UxCv38Qa4Uw5wGouei53Qz4nbYIB8M=;
+        b=eMMyx/2+FeFMtiLM94Lk13Q3ZYsIyvc/CXk6RTRsnCbS5AtyGcLVQ4qOwg/lWGi4v2
+         FEwZjEAAOyTXuAIxqMp011iqQhWNOd1D8cJ9vkaOt4SGaDJk7DN1CatFpvUQyQbJungc
+         oD5erskAUjTdB28tOO7WQjwr60AffrOc7ifUxpJ/aycX8sA2obTy5zEfxJM9Ucn6VEK7
+         FUWT4oNWx1WEq9tNV9GII7Q5UT+UO2jObx1pKp1Yh3tY8Rf0jFbLymZT0vjmChIosonu
+         X/z4I0AXzwODDXCY2d7GXSXrP03Z9DANdoLujDhHhf2PA0Ln/gNC5cVbZQ2xv1pAzLjv
+         4baQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725895103; x=1726499903;
+        h=list-unsubscribe:list-archive:list-help:list-post
+         :x-spam-checked-in-group:list-id:mailing-list:precedence:reply-to
+         :x-original-authentication-results:x-original-sender:mime-version
+         :thread-topic:message-id:to:from:subject:date:user-agent:x-beenthere
+         :x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0owuKrzCpprG7UxCv38Qa4Uw5wGouei53Qz4nbYIB8M=;
+        b=Q7f+8KzPmvl/fgM5TSvWBshwwJyF7oY93WrJHFZoRe5H+K9uRkt+F5FKxZP2mSUe3U
+         QqAvqEdjm89QibZL/snv0KsEmHp26Pn/QJRLx3GAW0TjeSAwCMsMSTxTgL1vVsYnwz0M
+         DAuQD7mySxHMLuJfpZlx8OBvg7i8DWZGBCpMuyWg0coPD7E44ln+6dZPQRRQZ//aknGD
+         gagM7FQvOquFDQR0FFQwRtRxzGn3efaEaFbqae3o7QA1LCOi7AbePfVFQEbpoM/fPUs7
+         cn2h5EM+Kdl/lWrtAE3oy4ibdOUNPTItmrywhQJd2gkhpvLP3qJBArHeBVxgySIzZtBv
+         g+rw==
+X-Forwarded-Encrypted: i=2; AJvYcCWwnkqr7YKAkKSNh+6LJuqv5AzA3IlgHrIBjoxb4BGI6xJSTgOkRDDyvSF3oobv4wULf8c9@vip.163.com
+X-Gm-Message-State: AOJu0Yy5Mm1/rWyzHOlGgH6ssxN2Za2daBiX9ZHMlOP8g013yeFTDkn0
+	RpcJx8dYfUJctaBtFJ/M7l9jRNmndHpRKmTupJvVBskauwkMerRd
+X-Google-Smtp-Source: AGHT+IFOaXQVXNlDDsKvsUaTkv/aUePLZvVPu9QBAovr6JPcZHvB2fRE9IiS09Q7gUmVlAwf8v966g==
+X-Received: by 2002:adf:e261:0:b0:371:9121:5643 with SMTP id ffacd0b85a97d-378895b797cmr6759040f8f.12.1725895102436;
+        Mon, 09 Sep 2024 08:18:22 -0700 (PDT)
+X-BeenThere: alestaint-deepsea@googlegroups.com
+Received: by 2002:a5d:4d82:0:b0:367:9918:6c47 with SMTP id ffacd0b85a97d-378883c14c7ls860053f8f.2.-pod-prod-04-eu;
+ Mon, 09 Sep 2024 08:18:19 -0700 (PDT)
+X-Forwarded-Encrypted: i=2; AJvYcCWTMYWqD8/h+2HHVwtUPYGLmv/tavulyjOM4yMwqSkDbzf6OwV+0LK6fKDKfWNpeE0L9aBpoSQ5ROIubjBF3y4hbg==@googlegroups.com
+X-Received: by 2002:a5d:62c3:0:b0:374:becb:d9de with SMTP id ffacd0b85a97d-378896a4859mr7580638f8f.44.1725895099149;
+        Mon, 09 Sep 2024 08:18:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1725895099; cv=none;
+        d=google.com; s=arc-20240605;
+        b=NNZmtu2/6+ovj7ab1MKlNgXD1oHLTO/kPLGPodyLRjmHjrywPXHewE8j0fHBemOR1x
+         0GKKNtNGThsxZoFosBJoY/7Ld8zgGh043A0xBnmCeQtayRPVuogJox8ZopNdPZJ0jfEe
+         b5asQavhtszzlNrP1DN72boYxuMF2y9CN4gT+GRJKrofu5DLfyV8vUtPplJJV/W4VoZT
+         U8cZCNo/2SK52cOj0jWZwAL4ue796Jld6rdgk1e0hy8r3OJXfNv4GhU33S/bf258S7j7
+         vwZxzpWesQb2wBMqA7xzmPwEuUp0sqijIkRuIKzLarcE1EocVjFTmG3IgZUADwIgobst
+         78Ig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:thread-topic:message-id:to:from:subject:date
+         :user-agent:dkim-signature;
+        bh=8sIh54D3WUeJrXxv+oA7CiueSr8FP1j0n6pOciQJC8w=;
+        fh=8jGqso91A5NvpI/CdPhHtx5mQAGbEsKaUlFFoUz26YI=;
+        b=hpSLtJ6u+d6cZ942azE78B/G8dv8zpIKPznUD42OOVNQacKI4HTFHhLVw6Uz074W33
+         EoifpF4HTLCVxJ7TPw4IPBuww/x3i3GhKzLcaIb5GWASvFwYbqAYCDahz1ZxeFpeFqE/
+         TBPIUBdFeGOGxsqkCBBqbhpBguflI2T31T4Bi8NGDwKcc7mqLrMfe0upEvlEqJ9NgTj3
+         3RxBAsAOKc6KXOW2TG9vKoMbzXtEPVYuIeAW5p90qf+m1NYYJgcxHddqhuRMVUftiuUf
+         YqA2LxN0MnmZnDkULOxNOt5W2XNO/g7L1q9Pn+iQenM6dRBquGuV+SfUs5ZWTjpI9thT
+         OuBw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; gmr-mx.google.com;
+       dkim=temperror (no key for signature) header.i=@alestaint.com header.s=dkim header.b=iS2AJHEi;
+       spf=pass (google.com: domain of chartering@alestaint.com designates 193.33.165.253 as permitted sender) smtp.mailfrom=chartering@alestaint.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=alestaint.com
+Received: from mx01.webevin.com (mx01.webevin.com. [193.33.165.253])
+        by gmr-mx.google.com with ESMTPS id ffacd0b85a97d-37895649112si100104f8f.1.2024.09.09.08.18.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Sep 2024 08:18:18 -0700 (PDT)
+Received-SPF: pass (google.com: domain of chartering@alestaint.com designates 193.33.165.253 as permitted sender) client-ip=193.33.165.253;
+Received: from mx01.webevin.com (localhost.localdomain [127.0.0.1])
+	by mx01.webevin.com (Proxmox) with ESMTP id B77CA221E92;
+	Mon,  9 Sep 2024 18:18:17 +0300 (+03)
+Received: from server1.webevin.com (server1.webevin.com [193.33.164.209])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx01.webevin.com (Proxmox) with ESMTPS id 9204A221D02;
+	Mon,  9 Sep 2024 18:18:17 +0300 (+03)
+Received: from [78.190.104.83] (port=24246 helo=[192.168.1.102])
+	by server1.webevin.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.97.1)
+	(envelope-from <chartering@alestaint.com>)
+	id 1sng9e-0000000BmI9-1yeA;
+	Mon, 09 Sep 2024 18:18:15 +0300
+User-Agent: Microsoft-MacOutlook/16.90.24090118
+Date: Mon, 09 Sep 2024 18:18:14 +0300
+Subject: Rice ex. Georgetown to N. Europe
+From: Alesta International <chartering@alestaint.com>
+To: Alesta International <chartering@alestaint.com>
+Message-ID: <EC3B2656-02B4-43E3-8C81-DF3D75BBC91C@alestaint.com>
+Thread-Topic: Rice ex. Georgetown to N. Europe
+X-Priority: 2
+Mime-version: 1.0
+X-Priority: 2
+Content-type: multipart/alternative;
+	boundary="B_3808750694_1329253676"
+X-Original-Sender: chartering@alestaint.com
+X-Original-Authentication-Results: gmr-mx.google.com;       dkim=temperror (no
+ key for signature) header.i=@alestaint.com header.s=dkim header.b=iS2AJHEi;
+       spf=pass (google.com: domain of chartering@alestaint.com designates
+ 193.33.165.253 as permitted sender) smtp.mailfrom=chartering@alestaint.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=alestaint.com
+Reply-To: chartering@alestaint.com
+Precedence: list
+Mailing-list: list alestaint-deepsea@googlegroups.com; contact alestaint-deepsea+owners@googlegroups.com
+List-ID: <alestaint-deepsea.googlegroups.com>
+X-Spam-Checked-In-Group: alestaint-deepsea@googlegroups.com
+X-Google-Group-Id: 111092958020
+List-Post: <https://groups.google.com/group/alestaint-deepsea/post>, <mailto:alestaint-deepsea@googlegroups.com>
+List-Help: <https://groups.google.com/support/>, <mailto:alestaint-deepsea+help@googlegroups.com>
+List-Archive: <https://groups.google.com/group/alestaint-deepsea
+List-Unsubscribe: <mailto:googlegroups-manage+111092958020+unsubscribe@googlegroups.com>,
+ <https://groups.google.com/group/alestaint-deepsea/subscribe>
+X-CM-TRANSID: Vc8vCgDXvzC_Ed9mKmGBAA--.31036S3.fw
+Authentication-Results: gzmx5; spf=pass smtp.mail=alestaint-deepsea+bn
+	cbcpobmmru4krbpnd7s3amgqep4ck7pq@googlegroups.com;
+X-Coremail-Antispam: 1Uf129KBjvJXoW7Cr4UZr47Zry7ur1kZw4rAFb_yoW8XF1fpF
+	Z0kw4qyan3J34rZ3ZF93WfZw1rZ3sakwn0k34UGw4F9an0kryqgFWSyw12vaykKrWDXw1q
+	vr1jy3W5Wr4DZF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRBOJ8UUUUU=
+Return-path: auto_abba+chartering=jahline.com@vip.163.com
+Errors-to: auto_abba+chartering=jahline.com@vip.163.com
+Resent-Message-Id: <66DF11C2.0739FC.04848>
+Resent-Date: Mon, 9 Sep 2024 23:18:26 +0800 (CST)
+Resent-From: abba@vip.163.com
+Resent-To: chartering@jahline.com
+X-CM-SenderInfo: pdeetqxylshiywtou0bp/
+Delivered-To: abba@vip.163.com
+X-CM-Forward-Sender: alestaint-deepsea+bncbcpobmmru4krbpnd7s3amgqep4ck7pq@googlegroups.com
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWTYjWV
+	dZCAsdC1lBS1dZKFlBTk43V1ktWUFJV1kPCRoVCBIfWUFZGRgZQ1ZOT0tNSksdGE0YQkxWFRQJFh
+	oXVRMBExYaEhckEhVZV1kYEgtZQVlJSUtVSkJMVUhLVUlJSFlXWRYaDxIVHRRZQVlLVUtVS1VLWQ
+	Y+
+Sender: auto_abba+chartering=jahline.com@vip.163.com
+X-HM-Tid: 0a91d75d679b0377kunm7b9fe4c063a
+X-HM-MType: 1
+
+> This message is in MIME format. Since your mail reader does not understand
+this format, some or all of this message may not be legible.
+
+--B_3808750694_1329253676
+Content-type: text/plain; charset="UTF-8"
+Content-transfer-encoding: quoted-printable
+
+=20
+
+Good aftrn ,
+
+=20
+
+pls offer firm for
+
+=20
+
+Georgetown (naabsa), Guyana/ Antwerp
+
+Abt. 5.000 ts brown rice abt 46=C2=B4=20
+
+Lay/can: Prompt/ onwards
+
+2000 shinc/ 2000 sshex
+
+Gencon 3.75% pus
+
+Part cargo OK
+
+=20
+
+In combination or not:
+
+=20
+
+Georgetown (naabsa), Guyana/ 1 Portugal
+
+8.000 ts brown rice abt 46=C2=B4=20
+
+Lay/can: Prompt/ onwards
+
+as above
+
+=20
+
+Georgetown (naabsa); Guayna/ 1 Portugal
+
+Abt. 15.000 ts brown rice abt 46=C2=B4=20
+
+End September/ onwards
+
+as above
+
+=20
+
+Pleased to hear
+
+=20
+
+Best Regards
+
+Capt.Erdinc Sahin
+
+--=20
+
+Alesta International Limited
+
+Reg Nr C 44173=20
+
+Mob: +90 533 549 4540=20
+
+Tel  : +90 232 743 6687
+
+E-mail: chartering@alestaint.com =20
+
+Home Page: www.alestaint.com | Skype: alesta.international
+
+ Disclaimer: This e-mail is intended only for the recipient(s).It may conta=
+in information that is confidential, privileged or otherwise protected from=
+ disclosure.Unintended recipients are prohibited from taking action on the =
+basis of information in this e-mail.Alesta International Limited reserves t=
+he right,to the extent and under circumstances permitted by applicable law,=
+ to retain, monitor and intercept e-mail messages to and from its systems.I=
+f you are not the intended recipient, please delete this message plus any a=
+ttachment(s) and advise the sender of this by return e-mail.=20
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+--=20
+You received this message because you are subscribed to the Google Groups "=
+alestaint-deepsea" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to alestaint-deepsea+unsubscribe@googlegroups.com.
+
+--B_3808750694_1329253676
+Content-type: text/html; charset="UTF-8"
+Content-transfer-encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40"><head><meta http-equiv=3DContent-Type content=
+=3D"text/html; charset=3Dutf-8"><meta name=3DGenerator content=3D"Microsoft=
+ Word 15 (filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Aptos;
+	panose-1:2 11 0 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:"Times New Roman \(CS G=C3=B6vde\)";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;}
+p.MsoPlainText, li.MsoPlainText, div.MsoPlainText
+	{mso-style-priority:99;
+	mso-style-link:"D=C3=BCz Metin Char";
+	margin:0cm;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;
+	mso-fareast-language:EN-US;}
+span.DzMetinChar
+	{mso-style-name:"D=C3=BCz Metin Char";
+	mso-style-priority:99;
+	mso-style-link:"D=C3=BCz Metin";
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;
+	mso-fareast-language:EN-US;}
+span.E-postaStili20
+	{mso-style-type:personal-reply;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;
+	font-weight:normal;
+	font-style:normal;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;
+	mso-ligatures:none;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DTR link=3Dblue vlink=
+=3Dpurple style=3D'word-wrap:break-word'><div class=3DWordSection1><div><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><p class=3DMsoPlainText>Good a=
+ftrn ,<o:p></o:p></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=
+=3DMsoPlainText>pls offer firm for<o:p></o:p></p><p class=3DMsoPlainText><o=
+:p>&nbsp;</o:p></p><p class=3DMsoNormal><span style=3D'font-size:11.0pt;fon=
+t-family:"Calibri",sans-serif;mso-ligatures:standardcontextual;mso-fareast-=
+language:EN-US'>Georgetown (naabsa), Guyana/ Antwerp<o:p></o:p></span></p><=
+p class=3DMsoNormal><span style=3D'font-size:11.0pt;font-family:"Calibri",s=
+ans-serif;mso-ligatures:standardcontextual;mso-fareast-language:EN-US'>Abt.=
+ 5.000 ts brown rice abt 46=C2=B4&nbsp;<o:p></o:p></span></p><p class=3DMso=
+Normal><span style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;mso=
+-ligatures:standardcontextual;mso-fareast-language:EN-US'>Lay/can: Prompt/ =
+onwards<o:p></o:p></span></p><p class=3DMsoNormal><span style=3D'font-size:=
+11.0pt;font-family:"Calibri",sans-serif;mso-ligatures:standardcontextual;ms=
+o-fareast-language:EN-US'>2000 shinc/ 2000 sshex<o:p></o:p></span></p><p cl=
+ass=3DMsoNormal><span style=3D'font-size:11.0pt;font-family:"Calibri",sans-=
+serif;mso-ligatures:standardcontextual;mso-fareast-language:EN-US'>Gencon 3=
+.75% pus<o:p></o:p></span></p><p class=3DMsoNormal><span style=3D'font-size=
+:11.0pt;font-family:"Calibri",sans-serif;mso-ligatures:standardcontextual;m=
+so-fareast-language:EN-US'>Part cargo OK<o:p></o:p></span></p><p class=3DMs=
+oNormal><span style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;ms=
+o-ligatures:standardcontextual;mso-fareast-language:EN-US'><o:p>&nbsp;</o:p=
+></span></p><p class=3DMsoNormal><span style=3D'font-size:11.0pt;font-famil=
+y:"Calibri",sans-serif;mso-ligatures:standardcontextual;mso-fareast-languag=
+e:EN-US'>In combination or not:<o:p></o:p></span></p><p class=3DMsoNormal><=
+span style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;mso-ligatur=
+es:standardcontextual;mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span><=
+/p><p class=3DMsoNormal><span style=3D'font-size:11.0pt;font-family:"Calibr=
+i",sans-serif;mso-ligatures:standardcontextual;mso-fareast-language:EN-US'>=
+Georgetown (naabsa), Guyana/ 1 Portugal<o:p></o:p></span></p><p class=3DMso=
+Normal><span style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;mso=
+-ligatures:standardcontextual;mso-fareast-language:EN-US'>8.000 ts brown ri=
+ce abt 46=C2=B4&nbsp;<o:p></o:p></span></p><p class=3DMsoNormal><span style=
+=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;mso-ligatures:standar=
+dcontextual;mso-fareast-language:EN-US'>Lay/can: Prompt/ onwards<o:p></o:p>=
+</span></p><p class=3DMsoNormal><span style=3D'font-size:11.0pt;font-family=
+:"Calibri",sans-serif;mso-ligatures:standardcontextual;mso-fareast-language=
+:EN-US'>as above<o:p></o:p></span></p><p class=3DMsoNormal><span style=3D'f=
+ont-size:11.0pt;font-family:"Calibri",sans-serif;mso-ligatures:standardcont=
+extual;mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p class=3DM=
+soNormal><span style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;m=
+so-ligatures:standardcontextual;mso-fareast-language:EN-US'>Georgetown (naa=
+bsa); Guayna/ 1 Portugal<o:p></o:p></span></p><p class=3DMsoNormal><span st=
+yle=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;mso-ligatures:stan=
+dardcontextual;mso-fareast-language:EN-US'>Abt. 15.000 ts brown rice abt 46=
+=C2=B4&nbsp;<o:p></o:p></span></p><p class=3DMsoNormal><span style=3D'font-=
+size:11.0pt;font-family:"Calibri",sans-serif;mso-ligatures:standardcontextu=
+al;mso-fareast-language:EN-US'>End September/ onwards<o:p></o:p></span></p>=
+<p class=3DMsoNormal><span style=3D'font-size:11.0pt;font-family:"Calibri",=
+sans-serif;mso-ligatures:standardcontextual;mso-fareast-language:EN-US'>as =
+above<o:p></o:p></span></p><p class=3DMsoNormal><span style=3D'font-size:11=
+.0pt;font-family:"Calibri",sans-serif;mso-ligatures:standardcontextual;mso-=
+fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><s=
+pan style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif;mso-ligature=
+s:standardcontextual;mso-fareast-language:EN-US'>Pleased to hear<o:p></o:p>=
+</span></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><div><p class=3DMsoNor=
+mal><span style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif'>Best =
+Regards<o:p></o:p></span></p><p class=3DMsoNormal><span style=3D'font-size:=
+11.0pt;font-family:"Calibri",sans-serif'>Capt.Erdinc&nbsp;Sahin<o:p></o:p><=
+/span></p><p class=3DMsoNormal><span style=3D'font-size:11.0pt;font-family:=
+"Calibri",sans-serif'>--&nbsp;<o:p></o:p></span></p><p class=3DMsoNormal><b=
+><span style=3D'font-size:10.5pt;font-family:"Arial",sans-serif;color:black=
+'>Alesta International Limited</span></b><b><span style=3D'font-size:13.5pt=
+;color:black'><o:p></o:p></span></b></p><p class=3DMsoNormal><span style=3D=
+'font-size:10.0pt;font-family:"Arial",sans-serif;color:black'>Reg Nr C 4417=
+3</span><span style=3D'font-family:"Arial",sans-serif;color:black;backgroun=
+d:white'>&nbsp;</span><span style=3D'font-size:14.0pt;color:black'><o:p></o=
+:p></span></p><p class=3DMsoNormal><span style=3D'font-size:10.0pt;font-fam=
+ily:"Arial",sans-serif;color:black'>Mob: +90 533 549 4540&nbsp;</span><span=
+ style=3D'font-size:13.5pt;color:black'><o:p></o:p></span></p><p class=3DMs=
+oNormal><span style=3D'font-size:10.0pt;font-family:"Arial",sans-serif;colo=
+r:black'>Tel &nbsp;: +90 232 743 6687</span><span style=3D'font-size:13.5pt=
+;color:black'><o:p></o:p></span></p><p class=3DMsoNormal><span style=3D'fon=
+t-size:10.0pt;font-family:"Arial",sans-serif;color:black'>E-mail:&nbsp;</sp=
+an><span style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>charteri=
+ng@alestaint.com&nbsp;&nbsp;</span><span style=3D'font-size:13.5pt;color:bl=
+ack'><o:p></o:p></span></p><p class=3DMsoNormal><span style=3D'font-size:10=
+.0pt;font-family:"Arial",sans-serif;color:black'>Home Page:&nbsp;www.alesta=
+int.com&nbsp;|&nbsp;Skype:&nbsp;alesta.international</span><span style=3D'f=
+ont-size:13.5pt;color:black'><o:p></o:p></span></p><table class=3DMsoNormal=
+Table border=3D0 cellspacing=3D0 cellpadding=3D0 width=3D612 style=3D'width=
+:458.9pt;border-collapse:collapse'><tr style=3D'height:.1pt'><td width=3D61=
+2 style=3D'width:458.9pt;padding:7.5pt 0cm 0cm 0cm;height:.1pt'><p class=3D=
+MsoNormal><b><span style=3D'font-size:8.0pt;font-family:"Calibri",sans-seri=
+f'><o:p>&nbsp;</o:p></span></b></p><p class=3DMsoNormal><b><span style=3D'f=
+ont-size:8.0pt;font-family:"Calibri",sans-serif'>Disclaimer:&nbsp;</span></=
+b><span style=3D'font-size:8.0pt;font-family:"Calibri",sans-serif'><o:p></o=
+:p></span></p><p class=3DMsoNormal style=3D'text-align:justify'><span style=
+=3D'font-size:8.0pt;font-family:"Calibri",sans-serif'>This e-mail is intend=
+ed only for the recipient(s).It may contain information that is confidentia=
+l, privileged or otherwise protected from disclosure.Unintended recipients =
+are prohibited from taking action on the basis of information in this e-mai=
+l.Alesta International Limited reserves the right,to&nbsp;the extent and un=
+der circumstances permitted by applicable law, to retain, monitor and inter=
+cept e-mail messages to and from its systems.If you&nbsp;are not&nbsp;the i=
+ntended recipient, please delete this message plus any attachment(s) and ad=
+vise the sender of this by return e-mail.<o:p></o:p></span></p><p class=3DM=
+soNormal><span style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif'>=
+<o:p>&nbsp;</o:p></span></p></td></tr></table></div><p class=3DMsoNormal><s=
+pan style=3D'font-size:11.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;=
+</o:p></span></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=3DMs=
+oPlainText><o:p>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></=
+p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p=
+>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=3DMs=
+oPlainText><o:p>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></=
+p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p=
+>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=3DMs=
+oPlainText><o:p>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></=
+p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p=
+>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=3DMs=
+oPlainText><o:p>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></=
+p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p=
+>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=3DMs=
+oPlainText><o:p>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></=
+p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p=
+>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=3DMs=
+oPlainText><o:p>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></=
+p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p=
+>&nbsp;</o:p></p><p class=3DMsoPlainText><o:p>&nbsp;</o:p></p><p class=3DMs=
+oPlainText><o:p>&nbsp;</o:p></p></div></body></html>
+
+<p></p>
+
+-- <br />
+You received this message because you are subscribed to the Google Groups &=
+quot;alestaint-deepsea&quot; group.<br />
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to <a href=3D"mailto:alestaint-deepsea+unsubscribe@googlegroups.com">a=
+lestaint-deepsea+unsubscribe@googlegroups.com</a>.<br />
+
+--B_3808750694_1329253676--
+
+
+

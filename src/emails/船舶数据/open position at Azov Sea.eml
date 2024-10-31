@@ -1,0 +1,288 @@
+Received-SPF: pass (spfCheck: domain of em540622.springmarines.com designates 158.120.84.39 as permitted sender) client-ip=158.120.84.39; envelope-from=bounce.jrylsqsdrd9xkv2=tvdyckkf4tsn=d082dr2m0hmuwu@em540622.springmarines.com; helo=e3i39.smtp2go.com;
+Received: from e3i39.smtp2go.com (unknown [158.120.84.39])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 674DD1809B1
+	for <chartering@jahline.com>; Tue,  3 Sep 2024 15:43:41 +0800 (CST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smtpcorp.com;
+ i=@smtpcorp.com; q=dns/txt; s=a1-4; t=1725349408; h=feedback-id :
+ x-smtpcorp-track : date : message-id : to : subject : from : reply-to
+ : sender : list-unsubscribe : list-unsubscribe-post;
+ bh=eGDr4PCvBzQuFr4T3sEEX9JB7LuGOqwHFSvExltgd4M=;
+ b=0+hKqBBiYfz5E+2BWGIflhs8dNkH/LWGEo++o64lwmfwTy+nwY8UVeqSUd3/3R1+jgqCZ
+ i1rZB1zmy1+ykxnoiUMLtaVhId7LnPkwsTsvTM0zfg3bMBPIXvpYbH2HKr3O9NYysiqhyJF
+ aIhcAs+nRyYkV1LOU/fGw+2DI8KLQABUO4UdpckFIxbeArskc+yYERh/2BjLW1W/i0hc1PO
+ tqabmQKWZpz9mlDAYROWcn98ikKkPfX8KwyfMQ/VH08A30CJyxRR7F8dXQQnZeiEAbeigsk
+ Zi5LLhg2b/BT9fBV4gZ3q7+CKM1QtgH3BMGZWBDRkNdTx9IL8kNgWvMiroFg==
+Received: from [10.130.239.230] (helo=GulerPc)
+	by smtpcorp.com with esmtpa (Exim 4.97.1-S2G)
+	(envelope-from <chartering@springmarines.com>)
+	id 1slOBf-FnQW0hPquPY-0T2p;
+	Tue, 03 Sep 2024 07:42:51 +0000
+From: "Chartering SpringMarines" <chartering@springmarines.com>
+To: "Chartering SpringMarines" <chartering@springmarines.com>
+References: 
+ <022401dac08b$53011d20$f9035760$@springmarines.com>              <0e8801dafdce$f5231ba0$df6952e0$@springmarines.com> 
+In-Reply-To: 
+Subject: open position at Azov Sea
+Date: Tue, 3 Sep 2024 10:39:46 +0300
+Message-ID: <0fd401dafdd4$e0de4c90$a29ae5b0$@springmarines.com>
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	boundary="----=_NextPart_000_0FD5_01DAFDEE.062BD2B0"
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQLdrMi09Ga9YIX+n6pS3mfbBKczbgGIcfhEsDQC8tCAAAhKwA==
+Content-Language: tr
+X-Report-Abuse: Please forward a copy of this message, including all headers, to <abuse-report@smtp2go.com>
+Feedback-ID: 540622m:540622avhZYsy:540622s9oC2RX05c
+X-smtpcorp-track: J_oiFjdYLPOi.MdYw8LkaMOli.ju1ZLQymtQb
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWTYjWV
+	dZCAsdC1lBS1dZKFlBTk43V1ktWUFJV1kPCRoVCBIfWUFZQxhJHlYYGE1LGE4dQh5LSUtWFRQJFh
+	oXVRMBExYaEhckEhVZV1kYEgtZQVlKTkNVSklLVUNPVUhCWVdZFhoPEhUdFFlBWU5LSFVKS0pKTE
+	9JVUpLS1VKQktLWQY+
+Sender: bounce.jrylsqsdrd9xkv2=tvdyckkf4tsn=d082dr2m0hmuwu@em540622.springmarines.com
+X-HM-Tid: 0a91b6d6e27e0370kunm674dd1809b1
+X-HM-MType: 1
+
+This is a multipart message in MIME format.
+
+------=_NextPart_000_0FD5_01DAFDEE.062BD2B0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_001_0FD6_01DAFDEE.062BF9C0"
+
+
+------=_NextPart_001_0FD6_01DAFDEE.062BF9C0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+PLEASE OFFER YOUR SUITABLE FIRM/RATED CARGOES FOR: 
+
+VOLGODON MAX TYPE VESSEL
+
+LIBERIA FLAG, BUILT 2004, DWT: 6933 MTS AT 4,60M,
+
+BUREAU VERITAS CLASSED, WEST OF ENGLAND P+I COVERED,
+
+G/B 403.000 CBFT, HOLD CAPACITY 11408 m3, 
+
+LOA: 139,63M, BEAM: 16,70M, DEPTH: 6,00M, 4 HOLDS X 4 HATCHES,
+
+HATCHCOVERS MCGREGOR TYPE
+
+ 
+
+OPEN AT AZOV SEA PROMPT
+
+ 
+
+Best Regards,
+
+
+
+Phn    : +90 212 351 35 45
+
+E-mail: chartering@springmarines.com <mailto:chartering@springmarines.com> 
+
+ 
+
+
+------=_NextPart_001_0FD6_01DAFDEE.062BF9C0
+Content-Type: text/html;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><META =
+HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
+(filtered medium)"><!--[if !mso]><style>v\:* =
+{behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style><![endif]--><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Aptos;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;
+	mso-fareast-language:EN-US;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;
+	mso-ligatures:none;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DTR link=3Dblue =
+vlink=3Dpurple style=3D'word-wrap:break-word'><div =
+class=3DWordSection1><p class=3DMsoNormal =
+style=3D'mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b><span =
+lang=3DEN-US style=3D'font-size:10.5pt;font-family:"Bookman Old =
+Style",serif;mso-ligatures:none;mso-fareast-language:JA'>PLEASE OFFER =
+YOUR SUITABLE FIRM/RATED CARGOES FOR: <o:p></o:p></span></b></p><p =
+class=3DMsoNormal><b><span =
+style=3D'font-size:10.0pt;font-family:"Bookman Old =
+Style",serif;mso-ligatures:none;mso-fareast-language:KO'>VOLGODON MAX =
+TYPE VESSEL<o:p></o:p></span></b></p><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Bookman Old =
+Style",serif;mso-ligatures:none;mso-fareast-language:KO'>LIBERIA FLAG, =
+BUILT 2004, DWT: 6933 MTS AT 4,60M,<o:p></o:p></span></p><p =
+class=3DMsoNormal><span style=3D'font-size:10.0pt;font-family:"Bookman =
+Old Style",serif;mso-ligatures:none;mso-fareast-language:JA'>BUREAU =
+VERITAS CLASSED, </span><span lang=3DEN-US =
+style=3D'font-size:10.0pt;font-family:"Bookman Old =
+Style",serif;mso-ligatures:none'>WEST OF ENGLAND P+I =
+COVERED,</span><span style=3D'font-size:10.0pt;font-family:"Bookman Old =
+Style",serif;mso-ligatures:none;mso-fareast-language:KO'><o:p></o:p></spa=
+n></p><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Bookman Old =
+Style",serif;mso-ligatures:none;mso-fareast-language:KO'>G/B 403.000 =
+CBFT,</span><span style=3D'font-size:10.0pt;font-family:"Bookman Old =
+Style",serif;mso-ligatures:none'> </span><span =
+style=3D'font-size:10.0pt;font-family:"Bookman Old =
+Style",serif;mso-ligatures:none;mso-fareast-language:KO'>HOLD CAPACITY =
+11408 m3, </span><span lang=3DEN-US =
+style=3D'font-size:10.0pt;font-family:"Bookman Old =
+Style",serif;mso-ligatures:none;mso-fareast-language:TR'><o:p></o:p></spa=
+n></p><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Bookman Old =
+Style",serif;mso-ligatures:none;mso-fareast-language:KO'>LOA: 139,63M, =
+BEAM: 16,70M, DEPTH: 6,00M, 4 HOLDS X 4 HATCHES,<o:p></o:p></span></p><p =
+class=3DMsoNormal><span style=3D'font-size:10.0pt;font-family:"Bookman =
+Old Style",serif;mso-ligatures:none;mso-fareast-language:KO'>HATCHCOVERS =
+MCGREGOR TYPE<o:p></o:p></span></p><p class=3DMsoNormal><b><span =
+lang=3DEN-US style=3D'font-size:10.5pt;font-family:"Bookman Old =
+Style",serif;mso-ligatures:none;mso-fareast-language:TR'><o:p>&nbsp;</o:p=
+></span></b></p><p class=3DMsoNormal><b><span lang=3DEN-US =
+style=3D'font-size:10.5pt;font-family:"Bookman Old =
+Style",serif;mso-ligatures:none;mso-fareast-language:TR'>OPEN AT AZOV =
+SEA PROMPT<o:p></o:p></span></b></p><p class=3DMsoNormal><span =
+lang=3DEN-US style=3D'font-size:10.5pt;font-family:"Bookman Old =
+Style",serif'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-US style=3D'font-size:10.5pt;font-family:"Bookman Old =
+Style",serif;color:black;mso-fareast-language:TR'>Best =
+Regards,</span><span lang=3DEN-US =
+style=3D'font-size:10.5pt;font-family:"Bookman Old =
+Style",serif;color:black;mso-ligatures:none;mso-fareast-language:TR'><o:p=
+></o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:10.5pt;font-family:"Bookman Old =
+Style",serif;color:black;mso-ligatures:none;mso-fareast-language:TR'><img=
+ width=3D144 height=3D87 style=3D'width:1.5in;height:.9062in' =
+id=3D"Picture_x0020_1" =
+src=3D"cid:image001.jpg@01D9F6B5.8FB29820"></span><span =
+style=3D'mso-fareast-language:TR'><o:p></o:p></span></p><p =
+class=3DMsoNormal><span lang=3DEN-US =
+style=3D'font-size:10.0pt;font-family:"Bookman Old =
+Style",serif;color:black;mso-fareast-language:TR'>Phn =
+&nbsp;&nbsp;&nbsp;: +90 212 351 35 45</span><span =
+style=3D'font-size:10.0pt;mso-fareast-language:TR'><o:p></o:p></span></p>=
+<p class=3DMsoNormal><span lang=3DEN-US =
+style=3D'font-size:10.0pt;font-family:"Bookman Old =
+Style",serif;color:black;mso-fareast-language:TR'>E-mail: </span><span =
+lang=3DEN-US style=3D'font-size:10.0pt;font-family:"Bookman Old =
+Style",serif;color:blue;mso-fareast-language:TR'><a =
+href=3D"mailto:chartering@springmarines.com">chartering@springmarines.com=
+</a></span><span =
+style=3D'font-size:10.0pt;mso-fareast-language:TR'><o:p></o:p></span></p>=
+<p class=3DMsoNormal><span =
+lang=3DEN-US><o:p>&nbsp;</o:p></span></p></div></body></html>
+------=_NextPart_001_0FD6_01DAFDEE.062BF9C0--
+
+------=_NextPart_000_0FD5_01DAFDEE.062BD2B0
+Content-Type: image/jpeg;
+	name="image001.jpg"
+Content-Transfer-Encoding: base64
+Content-ID: <image001.jpg@01D9F6B5.8FB29820>
+
+/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIf
+IiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7
+Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCABXAJADASIA
+AhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQA
+AAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3
+ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWm
+p6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEA
+AwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSEx
+BhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElK
+U1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3
+uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD2aiii
+gAooooAKbI4jjZz0UEmnVm6hfCK9gsWA2XSshb0J6VE5KKuVFXZnJr866E1w2DcPK6Jx+OfwzitT
+RoJ4NNj+1O7zyEvIXOSCe35YrPCWOjWCzXKiV7clYx/efqxH49/atexmluLKGaaMRvIoYqD0zXPR
+5nL3nrY1qWt7q0ucn4x8cPpF0uk6TGs+ovjczDKxZ6DHdu/oKzbfwfr2uRifWNYun387PNKIPoo/
+wFcxo9yk3xGSa/IxJfSBy3TJJA/XAr22rs6j1ehyU2pXbPOJ/hXhS1teFXHT5z/hVfwha6zovjuP
+S9QuJ2RoHZVeVmRh2IGcdRXp9UbnTI7jVrLUuBLarIo91Ycj8wKr2XLqmW4xbulYvUUUVsMKKKKA
+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
+
+------=_NextPart_000_0FD5_01DAFDEE.062BD2B0--
+

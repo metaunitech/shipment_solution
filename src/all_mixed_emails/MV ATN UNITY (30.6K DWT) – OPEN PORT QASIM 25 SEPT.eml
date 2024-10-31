@@ -1,0 +1,385 @@
+Received: from APC01-TYZ-obe.outbound.protection.outlook.com (unknown [40.107.117.94])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 2AD824C074B
+	for <chartering@jahline.com>; Wed, 11 Sep 2024 10:35:43 +0800 (CST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PJ1F58ABJE6uYG9/8Lw/hfI3OEmjDqr5k+OWz0kauPzr8QNEzJMNFdI15cw9lxpJxMba+PJayQSGCbAGZqROJMw3XQqCk2CYEiLLZ1803LaJtcLr3PRBos6WAlwZ36394a/pPRE3/M1ad+GY5gz//wWAoPq287tDE/QvPTsHyUY7me/o0IoiAYwerPZqvF5TnAzMvCjzc8S9pwXBMH+JvPpn+32zKbHDVHSO9SJZ4gDn48H/RV50K/4Tun0UDaxPvS3G1FSofwclZlV263Ajcp3frwBcBqSOX9qMry4h1G6fHI+RXODdDIcM8Ztmy99UC9Q14G7EqhSa0y+HA7ChiQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dssDX6EwRGQymqQVlysD/tmP1yuBO/GGApalYXTas44=;
+ b=RnYQH13H4Y1HRspTzC6jWdBjv1BDM+22rZa6a5yi3JTKon7Xv73RAYsVmp6GAAamegeku7WqWzBulLWJBQJxbvweyX9wpxgFnvhw9svSfCeyd7uxVW+P6kcUng2QwvNHT30N3BAvpS3v5zrXKZhA+yepUclbW0+ipVWUjvfdcm1qIE+jBy8h7DfKQw+1RxNNQlxiQ9jBpHV3b+Qj8wAtohWfY8Lvr5InBJL1rykk3Zm9q3iGe7ZEjj2AV/wmYnGtHsZv0oBXLoMIQbaOrf68IUiVlU9f5uKJeA2zBXf3QETt95Vz5YqvjZ77foHTZMMm9nbcySgpVV4GfvJ90CM82g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wshipping.com; dmarc=pass action=none
+ header.from=wshipping.com; dkim=pass header.d=wshipping.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=welhuntcom.onmicrosoft.com; s=selector1-welhuntcom-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dssDX6EwRGQymqQVlysD/tmP1yuBO/GGApalYXTas44=;
+ b=yNAZIuaG6BjZTRzFUDLCfWy6ys7aev5rkv2De/kJuYsrSwFZOrRT0eGEpssHkAAph5cx0XnguqsIBNVSXJjiPUnc4NReTPZg4T45bqX0/Po5hP53ZWNTrwiMNF6V06G1rydwb8uW2LKr/RlLorzddkiFYUbH9D2T5zijh3xXQ2yZ43uXkm/+sMeo9rTUbcaHMhc1dESLrZCFnP7YrAdFhIjGPCkKCMxj+BHITnU5Sw9rH+lG+FbkoKcc8fe3WARySK8qTg2vcdTk33tW9ECd32AcI/jh/ZsZZnYmxq9SIPvui3WofLKMDHXFgnu/Y45DcHf21l9aRpBbSxRglLmjbw==
+Received: from KL1PR0601MB4147.apcprd06.prod.outlook.com
+ (2603:1096:820:31::10) by TYZPR06MB6046.apcprd06.prod.outlook.com
+ (2603:1096:400:342::5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7939.24; Wed, 11 Sep
+ 2024 02:35:40 +0000
+Received: from KL1PR0601MB4147.apcprd06.prod.outlook.com
+ ([fe80::abad:2a1c:a23c:df2a]) by KL1PR0601MB4147.apcprd06.prod.outlook.com
+ ([fe80::abad:2a1c:a23c:df2a%3]) with mapi id 15.20.7939.022; Wed, 11 Sep 2024
+ 02:35:40 +0000
+From: Gosta <gosta@wshipping.com>
+Subject:
+ =?Windows-1252?Q?MV_ATN_UNITY_(30.6K_DWT)_=96_OPEN_PORT_QASIM_25_SEPT?=
+Thread-Topic:
+ =?Windows-1252?Q?MV_ATN_UNITY_(30.6K_DWT)_=96_OPEN_PORT_QASIM_25_SEPT?=
+Thread-Index: AQHbA/MaH7aVJPuDi0SK1VjZuvFOOLJR3ofK
+Date: Wed, 11 Sep 2024 02:35:40 +0000
+Message-ID:
+ <KL1PR0601MB4147DD43A9AD40E93039C2BCBE9B2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+References:
+ <KL1PR0601MB41472CFAC1877F58B708136EB7022@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147CF7E7FDEDDEBF5EC3D3AB7002@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147A7377EFF749CA273645FB7002@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41476C1C9C48C74BE7DDED3AB7002@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB414749FF7C78E78195D21421B7002@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41477EAF35FEAD606A6678B7B7002@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41471ECB3184D4F57DDE20DDB7002@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147543C3283970E5DE8AE18B7002@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB414707EC742DCC30C01FC3FEB7002@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147FE90BDB23E63A5D1256AB7072@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147C8FD3A64A76C9E0535FEB7062@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41471A7A86B9D5BD2E098235B7062@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147B555D271CDF74DA9039BB7062@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147D55E8D52DC4F1E322278B7062@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147F1B18531DBC8788BC225B7062@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147DAF2F38E550236F6B241B7062@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB414782BE15DF5022BA2A53B2B7092@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147E517A794692E9C0BABBAB7092@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147FA9CA9CEEE70C99603D4B7092@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147D35B458CB007EF36379BB7092@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147F4ECD1A1CBCAE1CF8692B7092@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147BBBDBA06B1B2593E59ADB7092@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB414706B35418EF6B03E39730B70E2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147125776D31F584DE53BC7B70E2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB414771ABC5831223A902B685B70E2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147BB023171C373967E9E18B70E2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147C1D85975B20D0D7C6CBCB70E2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB414743C3B194BB235E01463EBE102@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147C001276C70A5A63E0D67BEE42@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <PSAPR06MB4152C2A5F3F459F74FEEA013BEEC2@PSAPR06MB4152.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147EE0DB4876047F71F0F0EBEED2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB414700FD8E7BF02DB742FFE6BEED2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41471C7B42E1093731069B9BBEC62@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB414755F2740257F79E8E78C2BEC62@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41475201DDCD874C63BDB949BEC62@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147F2A2B265EB04EDCFC5BDBEC62@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41472FFA27136B6AE5F2BAA9BEC62@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB414788F1A970A65A401D84D9BEC12@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147549B2693849627582DA1BEC12@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147B023D014FC238B58BB53BEC12@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41471928505D7BFB290FCD7FBEC12@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147D201737C00429F65B060BECD2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147D28072E41B18601E4CC7BECD2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41478B572C8C68F69CCB5937BEDA2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147EE9B1B4BCB12E065D07BBEDB2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB414738E9B9889B66D74DD0E4BEDB2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41473FFAC3399453114E38E2BEAB2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147CED9688578A4BFB975DDBEAB2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41471CD99457EBD32BCDFE0ABEB42@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147F0233940A2AD972FDEABBEB72@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147DF69B554A4B13EA7BE5ABEB72@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147D5C4E6E040DFB292BDA9BEB22@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147DE657EF3A77A409069A5BEB22@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147F21CA08D36DDCFFB553CBEB22@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB414729F6DC3D34B1AEB7F253BEBF2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147B78465587191FCDC85FEBEBF2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <PSAPR06MB4152F7BF50A4ABB35F13DD5EBEB92@PSAPR06MB4152.apcprd06.prod.outlook.com>
+ <PSAPR06MB415246C99841A9F180D5D13EBEB92@PSAPR06MB4152.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41471B57355D84B46A83F73BBE852@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147D1EB3051E291BCDA75A7BE852@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147C50FB951582E8B78A926BE8B2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41478AEBBD79FD61E7DB5DA8BE9D2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB41476E119D87BAFEC5595414BE9E2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB414795E7C2983D8817D387C0BE9E2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147A6843DA8E8D6648ED3FBBE9A2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147B390CACDCA51193EAB23BE9B2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+ <KL1PR0601MB4147574B6285469B0311D3A3BE9B2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+In-Reply-To:
+ <KL1PR0601MB4147574B6285469B0311D3A3BE9B2@KL1PR0601MB4147.apcprd06.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wshipping.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: KL1PR0601MB4147:EE_|TYZPR06MB6046:EE_
+x-ms-office365-filtering-correlation-id: 186b7a5d-96ae-4e0a-e06a-08dcd20a6d3a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|376014|7416014|1800799024|38070700018;
+x-microsoft-antispam-message-info:
+ =?Windows-1252?Q?bquzkoNNyhwVQNW5d15FuiZCqb4GlyTqTmSj7s0ZI9NY7rpcs1gjtNBW?=
+ =?Windows-1252?Q?O8Pt52Un4B+eQTqhuoL4cg2anvNBzeps09pv7MUugLLW7lft9ZMguxp/?=
+ =?Windows-1252?Q?0lZi2Jy0ao9JtCT9bPsn3leLWX8M/5+aA7VKCEVAUhRP5jkyQw4j1D4J?=
+ =?Windows-1252?Q?TkltQ1QDxR/HbgC1oYJcLjxNhaEOf1fvrU0Fh04EiGe/E7W0S4lXWqpw?=
+ =?Windows-1252?Q?hhHwWJmnm5sIWy8AbHgPRORf8d2bkzcHBSWr4JNiUgGkpWBKRiU9i0+l?=
+ =?Windows-1252?Q?S2rtQLSQ+ACbSx4K8bH31SgLhunayfAlL8UK48o92gxUz1lWWoxDfkep?=
+ =?Windows-1252?Q?dLaUje1i4iKTU9XR83Yqaf7mhkzW9WtJ8snGWFy7S9KyFifPBoag4CVe?=
+ =?Windows-1252?Q?2HcfJzl8aLKMNvdipotV9vJp0d1hr7Oplt9LwuSeRy9YEXBvXUuLepmA?=
+ =?Windows-1252?Q?WlptjrOKyK2hy32i/rwb9sUeg3GmIATslUqucyps71ctS3XWjqzE0kQR?=
+ =?Windows-1252?Q?7j32X6WxpqwusSa2QK/hf3yBVdayMCS4b8UxgJfrlrbhqi90Ei2Ik59z?=
+ =?Windows-1252?Q?yvec/WMpQlDbC7Av9xAY9vl5ilA2/rUmJNAFTBn79cT7VdZL7TSJyNrC?=
+ =?Windows-1252?Q?l6nvfWA7JfB4+g/GaxX+HRc8PW40w/lyaZW4+9+HQ0CkVp1JvUyiaL6A?=
+ =?Windows-1252?Q?9N94Vfg1QLZzgZsaAlq9+HY9ITyFqT9I7iV2GaD06mU/g1KxzbNedh8c?=
+ =?Windows-1252?Q?OtwaPC5KhxQdf33wgVZ12DknZhQZjJ2Pm0TiF68JMqNZO6MqKuHwe09I?=
+ =?Windows-1252?Q?DQ2pIkDirkje+ola/4wgtHWiIPdNpx5Y6YTMd9MSPLWPC7q59UsoGDAd?=
+ =?Windows-1252?Q?qDo+i8cBzgzcPuUG277RQ1VtHYAqGUJvvhMrh9i9pMJ3tPdgMxZKa81d?=
+ =?Windows-1252?Q?GjknxIUQBGD176o41SY+DSl+8ytY0TGnTgqW3wJnesElu+jIfo+QJJN+?=
+ =?Windows-1252?Q?XUdCfWyJ4jXvkOqnEAInguvYEv997VgpDn6sf4uYjACFQPG2kzrEWemI?=
+ =?Windows-1252?Q?+VfLj11S0/RWQ4ki7ypWSasylICThNOR1gWqVT+yBnQrch2s4VbgTNHp?=
+ =?Windows-1252?Q?0DxTG6fdFG9qZ95VAVBb9zm6AUOPwnikSwsx+keYshPcg7orn59b06y5?=
+ =?Windows-1252?Q?0I6MvfAFOa7hLOnQdppUTaVZMSdXZgKXiWQv9FQE4uyr1wzNAhhMGoh8?=
+ =?Windows-1252?Q?Rb8He1e+xUdscvX9yxCRZLEMNCweDaucfI/wGHPOu3v9xu4+WdWcCCx8?=
+ =?Windows-1252?Q?FU5NtYdSQSWIAiHQCq0Jeh0UTe54oLemR6nqA3vKY4mQBuQ0C3a2wCrA?=
+ =?Windows-1252?Q?7p/mVClVDQt2jymVebRZ/WJeY27AlJc5z2REIP6dNAHXvW4uByAjtE+e?=
+ =?Windows-1252?Q?PICtl/MNryO27uWN4Qojzg=3D=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR0601MB4147.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024)(38070700018);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?9Bpv53J1jQTk+v7o9VGotO4RIqKNSqIE9ODHIzUOXY4JQUbfd75WWLD1?=
+ =?Windows-1252?Q?8oSh93yVi5bm+yV/OzgRpSlLokSDYFkY70x39WSShZF/06PYFol+g835?=
+ =?Windows-1252?Q?Rg6e+rT6E1kzjWey17Gk/kdUlXRkE2Do8Q1PKuhO8LoNmt+/7awyNyx1?=
+ =?Windows-1252?Q?Z4YAmK+6IRdfWeMUwZVeB9707EanXaqCiEAvlzubaLehxXET4qWAYwtM?=
+ =?Windows-1252?Q?Cao2Ypw/vsIg5maWyhRYH5Lz42+AHY44jgcykhe88zkr8LUPVDVwebu7?=
+ =?Windows-1252?Q?/m/O9jrVVfRPrPNRrdeEhesqa5OTMB8jique/a2bYIJTjOL0hc3eXsoS?=
+ =?Windows-1252?Q?1cJOidYU3bKhJ4QUv504C1yI6ZkeuLuEaf879nVpkqVJBSsVT/vTSVDd?=
+ =?Windows-1252?Q?QrEA0Cc1FODv8OhO9P9VwV83l7UnvH4zvurW4GEIIJ3VyKNQ25jzAnu0?=
+ =?Windows-1252?Q?2k3S0Sja0YwV8BUWXLmPIJ8zqbX7TlYSKZZWTdyDs0aXY3Mq/9IV0rXk?=
+ =?Windows-1252?Q?Im8Xv7YBUoFON6NyowziwHc6RggvGnyWOOqOPeI77VjnN0J4K3MUBMt4?=
+ =?Windows-1252?Q?hMuOHO4JBs7xYBwQ7O5EsxJ6j04AFpF51PfK1mBMx+hkUnYwoNYFQQDX?=
+ =?Windows-1252?Q?hQfqw0leqll+JqqGtpSo+9vGe1NOx3E4E43EPMcrb/7NhN3zkz28uCzs?=
+ =?Windows-1252?Q?qrvANN8EtvhexhbsCqeO/czAFydGEkhFMjmGZI+N9P05gTvIDSkSuDLl?=
+ =?Windows-1252?Q?tBiDkMy9+QzLn7TuTdLb3WH7IRNW56XAtz+xJlwM6M5hNhc9hxc4DDh/?=
+ =?Windows-1252?Q?cdAm5aTzHIr0IV2OHClsfp0ZDJ3N+Hp1qXeco5XVcZ3NN8Flr/0NdT2+?=
+ =?Windows-1252?Q?KQe7TyYS7yy09szo86SSARcKEQQpkfkXRW7oEPVMGxN06pz/ASSD0zRY?=
+ =?Windows-1252?Q?Vd9NoVSvfVomML9pg9Xa9NBw2sO4lFXRqI8C2cyc4jSW7WCHTLJMwB1N?=
+ =?Windows-1252?Q?xXgBH8LyP81yDvf3SH/zolAGruyXUrLWPSOIdPCWTNcP6evfq13hOMly?=
+ =?Windows-1252?Q?a/HThYCtKDywAL+/dZX+ZRPzznpe8v+TrFN7Y/5KpSTff5JNrD4O48pe?=
+ =?Windows-1252?Q?Ndf77Ib5W79NWTxb3rW6LgFu99R5M7pBUinaticDYBjcC7+hDbx3qqFR?=
+ =?Windows-1252?Q?TAzlMHdqdrFq2FFBoSf+GcLvAx9zNg0cmOeoDRwyHBwWDz+hOizrUg0H?=
+ =?Windows-1252?Q?0xFkzKkr/02r9VHJcHdL6OaBs+xVx8gqxhkAjMBp3cs7/yXMaMmPvs1M?=
+ =?Windows-1252?Q?xnTeq3s+nxCv+zNBFTPfgqbOjSDKX1Bk2Hn4kAcuCntLYdHITy2q6GT+?=
+ =?Windows-1252?Q?B9+rwdoHXacfK6LXWibA6fUv+FIUNKilT7SICCNTQCA35rxhBF9OEPoN?=
+ =?Windows-1252?Q?I9CgWTqve20U0L30sdh3NL/CcjELbQgArausCS2d79081BmnAjybK1mB?=
+ =?Windows-1252?Q?xx2JrYVaDa3LSWaLdSO3TSGYpiJmk2xTTG7KzZQFEWGg3uSZb8wUYvXl?=
+ =?Windows-1252?Q?VBMWVVo54ISHumxCHkoSykxHXKM4FDhhq/iWF0ehcnVd4Vzqk9MGNJw8?=
+ =?Windows-1252?Q?EVvIAKOwzBQLF7Zs1+cABp+acKobXyW6EdfnUVV6DHymcrFsVJhrLSE1?=
+ =?Windows-1252?Q?HY2LLiwZask=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_KL1PR0601MB4147DD43A9AD40E93039C2BCBE9B2KL1PR0601MB4147_"
+MIME-Version: 1.0
+X-OriginatorOrg: wshipping.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR0601MB4147.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 186b7a5d-96ae-4e0a-e06a-08dcd20a6d3a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Sep 2024 02:35:40.3253
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 65f2ec61-0212-4426-b9cf-f8218312e160
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: aECgUsQ2l0HHrb3V7CDW1oEWWrWij6s35SKB1SJa41XLH9UnbyNMZ7W0Z+jk2dPBb5lvNbIttt+Pu/eXPjijVA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6046
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWTYjWV
+	dZKFlBTk43V1ktWUFJV1kPCRoVCBIfWUFZGR1MGFYfTkkfGUgYGhkeTx1WFRQJFhoXVRMBExYaEh
+	ckEhVZV1kYEgtZQVlPS1VKS0xVSkpMVUJPWVdZFhoPEhUdFFlBWU5LSFVKS0pNQ05KVUpLS1VKQk
+	tLWQY+
+X-HM-Tid: 0a91deefcce20377kunm2ad824c074b
+X-HM-MType: 1
+
+--_000_KL1PR0601MB4147DD43A9AD40E93039C2BCBE9B2KL1PR0601MB4147_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Attn: Chartering desk
+
+Pls propose suitable cargo for our below period TC vsl:
+
+MV ATN UNITY (30.6K DWT) =96 OPEN PORT QASIM 25 SEPT
+CLASS ABS
+PANAMA FLAG, 2007 BUILT, SDBC
+30,611 DWT ON DRAFT 9.8M SSW
+LOA/BM/DEPTH : 178.70/28.00/14.00
+GR/BL CAPA: 40,795 / 39,500 CBM
+GRT/NRT: 19,918 / 10,477 MT
+CRANES: 4 X 30T SWL, WHEN CRANES AT =93GRABS MODE=94 THEN SWL IS REDUCED TO=
+ 24MT
+GRABS: 2 X 10 CBM & 2 X 8 CBM (1 GRAB NOT WORKING)
+HO/HA: 5/5; FOLDING TYPE HATCHCOVER
+ADA
+
+BUNKER CONPSUMTION
+- LADEN/BALLAST: ABOUT 11.00 / 12.00 KNTS ON ABOUT 17.00 MT/DAY VLSFO + 0.2=
+0 MT LSMGO/DAY
+- PORT WORKING : 5.00 MT/DAY VLSFO + 0.2 MT/DAY LSMGO
+- IDLE : 2.00 MT/DAY VLSFO + 0.2 MT/DAY  LSMGO
+
+Trading area: PG-Japan range.
+
+Tks/Brgds
+Gosta
+
+W Shipping Pte. Ltd.
+Guaranteed by WelHunt International Pte. Ltd.
+8, Marina View, #14-06A, Asia Square Tower 1, Singapore 018960
+Mobile/WhatsApp: +65 9776 8520
+Skype: live:.cid.91aff2aa3bc1b945
+Website: www.welhunt.com
+---------------------------------------------------------------------------=
+--------------------------------
+This email and any files transmitted with it are confidential and intended =
+solely for the use of the individual or entity to whom they are addressed. =
+If you have received this email in error please notify the system manager. =
+This message contains confidential information and is intended only for the=
+ individual named. If you are not the named addressee you should not dissem=
+inate, distribute or copy this e-mail. Please notify the sender immediately=
+ by e-mail if you have received this e-mail by mistake and delete this e-ma=
+il from your system. If you are not the intended recipient you are notified=
+ that disclosing, copying, distributing or taking any action in reliance on=
+ the contents of this information is strictly prohibited.
+
+--_000_KL1PR0601MB4147DD43A9AD40E93039C2BCBE9B2KL1PR0601MB4147_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Attn: Chartering desk&nbsp;</div>
+<div id=3D"x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_di=
+vRplyFwdMsg" dir=3D"ltr">
+</div>
+<div id=3D"x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_=
+x_x_x_x_x_divRplyFwdMsg" dir=3D"ltr">
+</div>
+<div style=3D"direction: ltr; text-align: left; text-indent: 0px; margin: 0=
+px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, H=
+elvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<br>
+Pls propose suitable cargo for our below period TC vsl:</div>
+<div style=3D"direction: ltr; text-align: left; text-indent: 0px; font-fami=
+ly: Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(34, 34, 34);"=
+>
+<br>
+</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+<b>MV ATN UNITY (30.6K DWT) =96 OPEN </b>PORT QASIM<b>&nbsp;25 SEPT</b></di=
+v>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+CLASS ABS</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+PANAMA FLAG, 2007 BUILT, SDBC<br>
+30,611 DWT ON DRAFT 9.8M SSW<br>
+LOA/BM/DEPTH : 178.70/28.00/14.00<br>
+GR/BL CAPA: 40,795 / 39,500 CBM<br>
+GRT/NRT: 19,918 / 10,477 MT<br>
+CRANES: 4 X 30T SWL, WHEN CRANES AT =93GRABS MODE=94 THEN SWL IS REDUCED TO=
+ 24MT<br>
+GRABS: 2 X 10 CBM &amp; 2 X 8 CBM (1 GRAB NOT WORKING)<br>
+HO/HA: 5/5; FOLDING TYPE HATCHCOVER<br>
+ADA<br>
+<br>
+BUNKER CONPSUMTION<br>
+- LADEN/BALLAST: ABOUT 11.00 / 12.00 KNTS ON ABOUT 17.00 MT/DAY VLSFO + 0.2=
+0 MT LSMGO/DAY<br>
+- PORT WORKING : 5.00 MT/DAY VLSFO + 0.2 MT/DAY LSMGO&nbsp;<br>
+- IDLE : 2.00 MT/DAY VLSFO + 0.2 MT/DAY &nbsp;LSMGO &nbsp;</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+<br>
+</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Trading area: PG-Japan range.</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+<br>
+</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Tks/Brgds</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Gosta&nbsp;</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+<br>
+</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+W Shipping Pte. Ltd.</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Guaranteed by WelHunt International Pte. Ltd.</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+8, Marina View, #14-06A, Asia Square Tower 1, Singapore 018960</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Mobile/WhatsApp: +65 9776 8520</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Skype: live:.cid.91aff2aa3bc1b945</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Website: www.welhunt.com</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+---------------------------------------------------------------------------=
+--------------------------------</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+This email and any files transmitted with it are confidential and intended =
+solely for the use of the individual or entity to whom they are addressed. =
+If you have received this email in error please notify the system manager. =
+This message contains confidential
+ information and is intended only for the individual named. If you are not =
+the named addressee you should not disseminate, distribute or copy this e-m=
+ail. Please notify the sender immediately by e-mail if you have received th=
+is e-mail by mistake and delete
+ this e-mail from your system. If you are not the intended recipient you ar=
+e notified that disclosing, copying, distributing or taking any action in r=
+eliance on the contents of this information is strictly prohibited.</div>
+</body>
+</html>
+
+--_000_KL1PR0601MB4147DD43A9AD40E93039C2BCBE9B2KL1PR0601MB4147_--

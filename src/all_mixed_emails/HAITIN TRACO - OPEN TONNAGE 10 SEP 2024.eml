@@ -1,0 +1,772 @@
+Received-SPF: pass (spfCheck: domain of _spf.google.com designates 209.85.208.41 as permitted sender) client-ip=209.85.208.41; envelope-from=haitintracoship@gmail.com; helo=mail-ed1-f41.google.com;
+Received: from mail-ed1-f41.google.com (unknown [209.85.208.41])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 166FF4C0518
+	for <chartering@jahline.com>; Tue, 10 Sep 2024 10:02:25 +0800 (CST)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5c255e3c327so5302274a12.1
+        for <chartering@jahline.com>; Mon, 09 Sep 2024 19:02:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725933743; x=1726538543; darn=jahline.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=l3ub05KAqqxA9Je6eJB5MqqS6N+Z8weDQkJruTolWFA=;
+        b=AbERmLru++4tVnvfz3r418qIEz9vmMxw9aLHcth4S4JBKStCBWyP/lHQQoQRpErb6V
+         iGhifBatD67fAXtXN4GaZJkP554SR+Tk0UNVXVDX7sK86G0MDizcdhG+nahCpLeYxBJt
+         J/UJfiAKeZZzcrdFKPR2KRV1yQhgi4yBLV88/kR/vrggOSN4PrmMNZuK0nxvm83J8wxd
+         /01wHf2tm7nDCSIOw/Jj8Me79f0UOFsPVDVnD07ahBj+zXkynJFLh7T3AewGhPGma+Hf
+         eXasxZJRMihyZSg5oFSmvhQ/xzKf4y95q0sInO3T5Zw32bzaqrirDnHu1A+CH0sekWcq
+         Cz1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725933743; x=1726538543;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=l3ub05KAqqxA9Je6eJB5MqqS6N+Z8weDQkJruTolWFA=;
+        b=MsZF/Xj6cwfanmUuXeFxY6vpQy9ehuAm2TXV7krwOxQJeFxrjnJ6rWtlnQuP3OQ3fR
+         hQiaVluvJAzEkheyvqE6KhEeUcjfoxj9CzeuaNUtRATZR4ykyoCDl1B/RXxBJwMdenJJ
+         1CxQn4gZfgzSRIkCO8wbv9ExA0cpoDTnuxNa/GiFXFvJG/n9L8L20mFJwyQIlCcIscLW
+         Zm5lV85bmQLPJXSqd7ZtlbrC8d5X5qdzPKMG+3RtCXGvsL3iMwG7/6qWGrBw5Vtxsesm
+         RCS2SbJyjnNhvbkoVGC4wLIIHloOmNiHSbSdEurDqGbeLYSqlmjC932Hwy7+ifkWruHQ
+         h5sA==
+X-Forwarded-Encrypted: i=1; AJvYcCU9XPF9xAlZfb/ek2Lv8B70Myky2MdCArkMRq+hBJ/Jfrv7OH2+ukh8Hi5FCYh6+R8iUtaRSQ9gA2wT@jahline.com
+X-Gm-Message-State: AOJu0YzV/roccv1g0Kgl4NUyAWiHAdFl97BsRr48fcEgWu08tu9Z8W2p
+	5GPVtRBat6PXo9moWr6ViXMW0Bbrm0K8++Ys0YYMzERNO+pKcEhV96DpwI0hQlq0fT1kbO26cBm
+	SqMk1NVhWuX6K25LXe0JN1sWtpkA=
+X-Google-Smtp-Source: AGHT+IFAmPTQK2DoeX/M1+IdanmQRwxwAs6XbQei1DLQXB8ZRqvJm3Rqfo6e+e7YiFrYH6tOe6eusMX2+A4w6Q8bWe4=
+X-Received: by 2002:a05:6402:4306:b0:5c3:3f6a:7dd3 with SMTP id
+ 4fb4d7f45d1cf-5c3dc798bd7mr8504608a12.15.1725933742438; Mon, 09 Sep 2024
+ 19:02:22 -0700 (PDT)
+MIME-Version: 1.0
+From: Hai Tin Traco <haitintracoship@gmail.com>
+Date: Tue, 10 Sep 2024 09:02:10 +0700
+Message-ID: <CAHBOrNA6aBU6M4u1JUvSSsLpi6OsNjT-37ysdErAbeHkU3gmZA@mail.gmail.com>
+Subject: HAITIN TRACO - OPEN TONNAGE 10 SEP 2024
+To: Hai Tin Traco <haitintracoship@gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000009fc3650621ba43d6"
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWTYjWV
+	dZCAsdC1lBS1dZKFlBTkM3V1ktWUFJV1kPCRoVCBIfWUFZQx4YGFZKGE1LGh9PQx5JSRhWFRQJFh
+	oXVRMBExYaEhckEhVZV1kYEgtZQVlJS0JVQ05VSUtDVU9KWVdZFhoPEhUdFFlBWU5LSFVKS0pKTE
+	5KVUpLS1VKQktLWQY+
+X-HM-Tid: 0a91d9aaf8090377kunm166ff4c0518
+X-HM-MType: 1
+
+--0000000000009fc3650621ba43d6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+DEAR SIRS/MADAMS,
+
+GD DAY!
+
+
+
+PLS ARRANGE SUITABLE CGO FOR THE FLW TONNAGE:
+
+
+
+MV. GREEN PACIFIC - DWT: 4200.00 MT  =E2=80=93 BACOLOD,  PHILIPPINES  / MID=
+ OCTOBER
+2024
+
+MV.  LUCKY STAR 6  - DWT: 7,869.21 MT =E2=80=93 NORTH PHILIPPINES  / MID SE=
+PTEMBER
+2024
+
+MV. GREEN STAR      - DWT: 3,142.1 MT   =E2=80=93 BUTUAN PHILIPPINES / EARL=
+Y
+OCTOBER 2024
+
+MV. GREEN SKY        - DWT: 5,170.0 MT   =E2=80=93 HO CHI MINH, VIET NAM/ 0=
+5TH-
+OCTOBER 2024
+
+
+*1/ MV. GREEN PACIFIC **=E2=80=93 BACOLOD,  PHILIPPINES  / MID OCTOBER 2024=
+*
+
+
+TYPE OF SHIP: MULTI-PURPOSE VESSEL/ SINGLE DECK
+
+PORT OF REGISTRY: ST. MAARTEN,  CLASS : NR
+
+IMO NUMBER: 9371139 / CALL SIGN: 8PJC6
+
+YEAR BUILT: 2005
+
+DWT/ GRT/NRT: 4200/2581/1445
+
+LENGTH/BM/DRAFT: 79.95/ 13.80/ 7.45M
+
+HOLD/HATCH: 2HO/2HA
+
+VSL'S GEAR: 01X15 MT
+
+
+*2/ MV. LUCKY STAR 6 =E2=80=93 **NORTH PHILIPPINES, MID SEPTEMBER 2024*
+
+
+
+TYPE OF SHIP: M.BULK CARRIER / TWEEN  DECK
+
+GENERAL CGO/BULK VSL YEAR BUILT: 1996
+
+CLASSIFICATION: PMDS
+
+IMO/CALL SIGN: 9146912/3EPB3
+
+PORT OF REGISTRY : PANAMA
+
+NEVIGATION : OCEAN GOING
+
+HOLDS: 2 / HATCHES: 2, STEEL MACGEGOR HATCH COVERS
+
+GRT/NRT/DWT: 4738/2196/ 7869.21 MT
+
+LOA/BM/DEPTH: 96.7/ 17,4M/ 11,6 M
+
+HOLD/HATCH: 2HO/2HA,(TWEEN DECK/ PONTOOO)
+
+HOLD GRAIN / BALE: 10595.63/10102.54 CBM
+
+HATCH SIZE (L X B)  No 1 H/C 14.7 X 12.6 // No2  H/C 28.0 X 12,6 MTRS
+
+DERRICKS 25 TONES X 3 SETS, P&I CLUB : MARITIME MUTUAL NZ
+
+
+
+3/ MV. GREEN STAR *=E2=80=93 **BUTUAN PHILIPPINES / EARLY OCTOBER 2024*
+
+
+
+TYPE OF SHIP: M.BULK CARRIER / SINGLE DECK
+
+VIETNAM FLAG*, *GENERAL CGO VSL YEAR BUILT: 2009
+
+CLASS: VR (Vietnam Register )
+
+HOLDS: 2 / HATCHES: 2, STEEL MACGEGOR HATCH COVERS
+
+GRT/NRT/DWT: 1.596/1023/ 3,113.80 MT
+
+LOA/BM/DRAFT: 78.630/ 12.624/ 5,220M
+
+HOLD/HATCH: 2HO/2HA
+
+HOLD GRAIN/BALE: 3709.7/3635.5
+
+Hold dimensions (L x B x H )  No.1 =3D 25.80 x 12.60  x 5.03M  No.2 =3D 25.=
+80 x
+12.60  x 5.00 M
+Hatches size(L x B x H ):No.1 =3D 19.80 x 8.40 x  1.38 M  No.2 =3D 19.32 x =
+8.40
+x  1.40 M
+
+VSL'S GEAR: 1 X 10 MT, P& I CLB WOE
+
+
+*4/ MV. GREEN SKY - HO CHI MINH, VIET NAM/ 05TH- OCTOBER 2024*
+
+TYPE OF SHIP: M.BULK CARRIER / SINGLE DECK
+
+VIETNAM FLAG, GENERAL CGO VSL YEAR BUILT: 2012
+
+DWT/GRT/NRT : 5,170.0/2,999/1,860
+
+LOA 91.94, LBP 15.3 DRAFT: 6.3 M
+
+HOLD/HATCH: 2HO/2HA
+
+HOLD GRAIN / BALE: 6959/6750 CBM
+
+Hold dimensions ( L x B X H ) : No.1 =3D 29.4 x 15.3  x 6.8M ;  No.2 =3D 28=
+.4 x
+15.3 x 6.8 M
+
+Hatches size (L x B x H ) : No.1 =3D 21.0 x 10.0 x 1.5 M ;  No.2 =3D 20.0 x
+10.0 x 1.5 M4.
+
+VSL'S GEAR: 2 X 15 MT
+
+
+
+Pls to hear in shortly,
+--
+
+*THANKS & BEST REGARDS,*
+
+
+
+Mobile:    Mr. Kevin.Thanh      +84.982148569
+
+                 Mr. Kiem                  +84.904642998
+
+                 Mr. Sun. Nhat           +84.967032873
+
+                 Ms. Helen.Ha           +84.912698858
+
+ (Zalo/Viber/Whatsapp)
+
+-----------------------------------
+---------------------------------------------------------
+
+*HAI TIN INTERNATIONAL TRANSPORT TRADING COMPANY LIMITED*
+
+Head office add:  No. 37, Street No. 17, Ward 11, Go Vap District, Ho Chi
+Minh City, Vietnam
+
+Branch office add: 574 Nguyen Cong Hoan Street, Dong Khe Ward, Ngo Quyen
+District, Hai Phong, Vietnam
+
+Email : haitintracoship@gmail.com    www.haitintraco.com
+
+--0000000000009fc3650621ba43d6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p class=3D"MsoNormal" style=3D"margin:0in;line-height:16.=
+1pt;background-image:initial;background-position:initial;background-size:in=
+itial;background-repeat:initial;background-origin:initial;background-clip:i=
+nitial;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-s=
+ize:12pt;font-family:&quot;Times New Roman&quot;,serif;color:black">DEAR SI=
+RS/MADAMS,</span><span style=3D"font-size:12pt;font-family:&quot;Times New =
+Roman&quot;,serif"></span></p><p class=3D"MsoNormal" style=3D"margin:0in;li=
+ne-height:16.1pt;background-image:initial;background-position:initial;backg=
+round-size:initial;background-repeat:initial;background-origin:initial;back=
+ground-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"><span st=
+yle=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif;color:b=
+lack">GD DAY!</span><span style=3D"font-size:12pt;font-family:&quot;Times N=
+ew Roman&quot;,serif"></span></p><p class=3D"MsoNormal" style=3D"margin:0in=
+;line-height:16.1pt;background-image:initial;background-position:initial;ba=
+ckground-size:initial;background-repeat:initial;background-origin:initial;b=
+ackground-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"><span=
+ style=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif;colo=
+r:black">=C2=A0</span><span style=3D"font-size:12pt;font-family:&quot;Times=
+ New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" style=3D"margin:0=
+in;line-height:16.1pt;background-image:initial;background-position:initial;=
+background-size:initial;background-repeat:initial;background-origin:initial=
+;background-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"><sp=
+an style=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif;co=
+lor:black">PLS ARRANGE SUITABLE CGO FOR THE FLW TONNAGE:=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span><span style=3D"font-size:1=
+2pt;font-family:&quot;Times New Roman&quot;,serif"></span></p><p class=3D"M=
+soNormal" style=3D"margin:0in;line-height:16.1pt;background-image:initial;b=
+ackground-position:initial;background-size:initial;background-repeat:initia=
+l;background-origin:initial;background-clip:initial;font-size:11pt;font-fam=
+ily:Calibri,sans-serif"><span style=3D"font-size:12pt;font-family:&quot;Tim=
+es New Roman&quot;,serif">=C2=A0</span></p><p class=3D"MsoNormal" style=3D"=
+margin:0in;line-height:16.1pt;background-image:initial;background-position:=
+initial;background-size:initial;background-repeat:initial;background-origin=
+:initial;background-clip:initial;font-size:11pt;font-family:Calibri,sans-se=
+rif"><span style=3D"color:rgb(0,0,0);font-family:&quot;Times New Roman&quot=
+;,serif;font-size:17.3333px">MV. GREEN PACIFIC - DWT: 4200.00 MT=C2=A0</spa=
+n><span style=3D"color:rgb(0,0,0);font-family:&quot;Times New Roman&quot;,s=
+erif;font-size:17.3333px">=C2=A0</span><span style=3D"color:rgb(0,0,0);font=
+-family:&quot;Times New Roman&quot;,serif;font-size:17.3333px">=E2=80=93</s=
+pan><span style=3D"color:rgb(0,0,0);font-family:&quot;Times New Roman&quot;=
+,serif;font-size:17.3333px">=C2=A0BACOLOD,=C2=A0</span>=C2=A0<span style=3D=
+"color:rgb(0,0,0);font-family:&quot;Times New Roman&quot;,serif;font-size:1=
+7.3333px">PHILIPPINES</span>=C2=A0=C2=A0<span style=3D"color:rgb(0,0,0);fon=
+t-family:&quot;Times New Roman&quot;,serif;font-size:17.3333px">/ MID OCTOB=
+ER 2024</span></p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-heigh=
+t:normal;background-image:initial;background-position:initial;background-si=
+ze:initial;background-repeat:initial;background-origin:initial;background-c=
+lip:initial;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"f=
+ont-size:13pt;font-family:&quot;Times New Roman&quot;,serif;color:black">MV=
+.=C2=A0 LUCKY STAR 6=C2=A0 - DWT: 7,869.21 MT =E2=80=93=C2=A0</span><span s=
+tyle=3D"color:rgb(0,0,0);font-family:&quot;Times New Roman&quot;,serif;font=
+-size:17.3333px">NORTH PHILIPPINES=C2=A0 / MID SEPTEMBER 2024</span></p><p =
+class=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;background-i=
+mage:initial;background-position:initial;background-size:initial;background=
+-repeat:initial;background-origin:initial;background-clip:initial;font-size=
+:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:13pt;font-fa=
+mily:&quot;Times New Roman&quot;,serif;color:black">MV. GREEN=C2=A0STAR=C2=
+=A0 =C2=A0 =C2=A0 - DWT: 3,142.1 MT=C2=A0 =C2=A0=E2=80=93 BUTUAN=C2=A0</spa=
+n><span style=3D"color:rgb(0,0,0);font-family:&quot;Times New Roman&quot;,s=
+erif;font-size:17.3333px">PHILIPPINES=C2=A0</span><span style=3D"font-size:=
+13pt;font-family:&quot;Times New Roman&quot;,serif;color:black">/ EARLY OCT=
+OBER=C2=A0</span><span style=3D"font-size:13pt;font-family:&quot;Times New =
+Roman&quot;,serif;color:black">2024</span></p><p class=3D"MsoNormal" style=
+=3D"margin:6pt 0in;line-height:normal;background-image:initial;background-p=
+osition:initial;background-size:initial;background-repeat:initial;backgroun=
+d-origin:initial;background-clip:initial"><span style=3D"font-family:&quot;=
+Times New Roman&quot;,serif;font-size:13pt;color:black">MV. GREEN SKY=C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 - DWT: 5,170.0 MT=C2=A0 =C2=A0=E2=80=93 HO CHI MINH, =
+VIET NAM/ 05TH-=C2=A0</span><span style=3D"font-size:13pt;font-family:&quot=
+;Times New Roman&quot;,serif;color:black">OCTOBER=C2=A0</span><span style=
+=3D"font-size:13pt;font-family:&quot;Times New Roman&quot;,serif;color:blac=
+k">2024</span></p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-heigh=
+t:normal;background-image:initial;background-position:initial;background-si=
+ze:initial;background-repeat:initial;background-origin:initial;background-c=
+lip:initial;font-size:11pt;font-family:Calibri,sans-serif"><br></p><p class=
+=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;background-image:=
+initial;background-position:initial;background-size:initial;background-repe=
+at:initial;background-origin:initial;background-clip:initial"><span style=
+=3D"font-family:Calibri,sans-serif;font-size:11pt"><b><span style=3D"font-s=
+ize:13pt;font-family:&quot;Times New Roman&quot;,serif;color:black">1/ MV. =
+GREEN PACIFIC=C2=A0</span></b></span><b><span style=3D"color:rgb(0,0,0);fon=
+t-family:&quot;Times New Roman&quot;,serif;font-size:17.3333px">=E2=80=93</=
+span><span style=3D"color:rgb(0,0,0);font-family:&quot;Times New Roman&quot=
+;,serif;font-size:17.3333px">=C2=A0</span><span style=3D"color:rgb(0,0,0);f=
+ont-family:&quot;Times New Roman&quot;,serif;font-size:17.3333px">BACOLOD,=
+=C2=A0</span><span style=3D"font-family:Calibri,sans-serif;font-size:14.666=
+7px">=C2=A0</span><span style=3D"color:rgb(0,0,0);font-family:&quot;Times N=
+ew Roman&quot;,serif;font-size:17.3333px">PHILIPPINES</span><span style=3D"=
+font-family:Calibri,sans-serif;font-size:14.6667px">=C2=A0=C2=A0</span><spa=
+n style=3D"color:rgb(0,0,0);font-family:&quot;Times New Roman&quot;,serif;f=
+ont-size:17.3333px">/ MID OCTOBER 2024</span></b></p><p class=3D"MsoNormal"=
+ style=3D"margin:6pt 0in;line-height:normal;background-image:initial;backgr=
+ound-position:initial;background-size:initial;background-repeat:initial;bac=
+kground-origin:initial;background-clip:initial"><b><span style=3D"color:rgb=
+(0,0,0);font-family:&quot;Times New Roman&quot;,serif;font-size:17.3333px">=
+<br></span></b></p><p class=3D"MsoNormal" style=3D"margin:0in 0in 8pt;line-=
+height:15.6933px;font-size:11pt;font-family:Calibri,sans-serif"><span style=
+=3D"font-size:12pt;line-height:17.12px;font-family:&quot;Times New Roman&qu=
+ot;,serif;color:black">TYPE OF SHIP: MULTI-PURPOSE VESSEL/ SINGLE DECK</spa=
+n></p><p class=3D"MsoNormal" style=3D"margin:0in 0in 8pt;line-height:15.693=
+3px;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size=
+:12pt;line-height:17.12px;font-family:&quot;Times New Roman&quot;,serif;col=
+or:black">PORT OF REGISTRY: ST. MAARTEN,=C2=A0 CLASS : NR</span></p><p clas=
+s=3D"MsoNormal" style=3D"margin:0in 0in 8pt;line-height:15.6933px;font-size=
+:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;line-he=
+ight:17.12px;font-family:&quot;Times New Roman&quot;,serif;color:black">IMO=
+ NUMBER:=C2=A0</span><span style=3D"font-size:13pt;line-height:18.5467px;fo=
+nt-family:&quot;Times New Roman&quot;,serif;color:black">9371139</span><spa=
+n style=3D"font-size:12pt;line-height:17.12px;font-family:&quot;Times New R=
+oman&quot;,serif">=C2=A0/=C2=A0<span style=3D"color:black">CALL SIGN: 8PJC6=
+=C2=A0</span></span></p><p class=3D"MsoNormal" style=3D"margin:0in 0in 8pt;=
+line-height:15.6933px;font-size:11pt;font-family:Calibri,sans-serif"><span =
+style=3D"color:black;font-family:&quot;Times New Roman&quot;,serif;font-siz=
+e:12pt">YEAR BUILT: 2005</span></p><p class=3D"MsoNormal" style=3D"margin:6=
+pt 0in;line-height:normal;background-image:initial;background-position:init=
+ial;background-size:initial;background-repeat:initial;background-origin:ini=
+tial;background-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"=
+><span style=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,seri=
+f;color:black">DWT/ GRT/NRT: 4200/2581/1445</span><span style=3D"font-famil=
+y:&quot;Times New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" styl=
+e=3D"margin:6pt 0in;line-height:normal;background-image:initial;background-=
+position:initial;background-size:initial;background-repeat:initial;backgrou=
+nd-origin:initial;background-clip:initial;font-size:11pt;font-family:Calibr=
+i,sans-serif"><span style=3D"font-size:12pt;font-family:&quot;Times New Rom=
+an&quot;,serif;color:black">LENGTH/BM/DRAFT: 79.95/ 13.80/ 7.45M</span><spa=
+n style=3D"font-family:&quot;Times New Roman&quot;,serif"></span></p><p cla=
+ss=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;background-imag=
+e:initial;background-position:initial;background-size:initial;background-re=
+peat:initial;background-origin:initial;background-clip:initial;font-size:11=
+pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;font-famil=
+y:&quot;Times New Roman&quot;,serif;color:black">HOLD/HATCH: 2HO/2HA</span>=
+</p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;backg=
+round-image:initial;background-position:initial;background-size:initial;bac=
+kground-repeat:initial;background-origin:initial;background-clip:initial"><=
+/p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;backgr=
+ound-image:initial;background-position:initial;background-size:initial;back=
+ground-repeat:initial;background-origin:initial;background-clip:initial;fon=
+t-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;f=
+ont-family:&quot;Times New Roman&quot;,serif;color:black">VSL&#39;S GEAR: 0=
+1X15 MT</span><span style=3D"font-family:&quot;Times New Roman&quot;,serif"=
+></span></p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:norm=
+al;background-image:initial;background-position:initial;background-size:ini=
+tial;background-repeat:initial;background-origin:initial;background-clip:in=
+itial;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-si=
+ze:12pt;font-family:&quot;Times New Roman&quot;,serif;color:black"><br></sp=
+an></p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;ba=
+ckground-image:initial;background-position:initial;background-size:initial;=
+background-repeat:initial;background-origin:initial;background-clip:initial=
+"><span style=3D"font-family:Calibri,sans-serif;font-size:11pt"><b><span st=
+yle=3D"font-size:13pt;font-family:&quot;Times New Roman&quot;,serif;color:b=
+lack">2/ MV. LUCKY STAR 6 =E2=80=93=C2=A0</span></b></span><span style=3D"c=
+olor:rgb(0,0,0);font-family:&quot;Times New Roman&quot;,serif;font-size:17.=
+3333px"><b>NORTH PHILIPPINES, MID SEPTEMBER 2024</b></span></p><p class=3D"=
+MsoNormal" style=3D"margin:0in;line-height:normal;background-image:initial;=
+background-position:initial;background-size:initial;background-repeat:initi=
+al;background-origin:initial;background-clip:initial;font-size:11pt;font-fa=
+mily:Calibri,sans-serif"><span style=3D"font-size:12pt;font-family:&quot;Ti=
+mes New Roman&quot;,serif">=C2=A0</span></p><p class=3D"MsoNormal" style=3D=
+"margin:0in;line-height:normal;background-image:initial;background-position=
+:initial;background-size:initial;background-repeat:initial;background-origi=
+n:initial;background-clip:initial;font-size:11pt;font-family:Calibri,sans-s=
+erif"><span style=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;=
+,serif;color:black">TYPE OF SHIP: M.BULK CARRIER / TWEEN=C2=A0 DECK</span><=
+span style=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"=
+></span></p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:norm=
+al;background-image:initial;background-position:initial;background-size:ini=
+tial;background-repeat:initial;background-origin:initial;background-clip:in=
+itial;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-si=
+ze:12pt;font-family:&quot;Times New Roman&quot;,serif;color:black">GENERAL =
+CGO/BULK VSL YEAR BUILT: 1996</span><span style=3D"font-size:12pt;font-fami=
+ly:&quot;Times New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" sty=
+le=3D"margin:6pt 0in;line-height:normal;background-image:initial;background=
+-position:initial;background-size:initial;background-repeat:initial;backgro=
+und-origin:initial;background-clip:initial;font-size:11pt;font-family:Calib=
+ri,sans-serif"><span style=3D"font-size:12pt;font-family:&quot;Times New Ro=
+man&quot;,serif;color:black">CLASSIFICATION: PMDS</span><span style=3D"font=
+-size:12pt;font-family:&quot;Times New Roman&quot;,serif"></span></p><p cla=
+ss=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;background-imag=
+e:initial;background-position:initial;background-size:initial;background-re=
+peat:initial;background-origin:initial;background-clip:initial;font-size:11=
+pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;font-famil=
+y:&quot;Times New Roman&quot;,serif;color:black">IMO/CALL SIGN: 9146912/3EP=
+B3</span><span style=3D"font-size:12pt;font-family:&quot;Times New Roman&qu=
+ot;,serif"></span></p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-h=
+eight:normal;background-image:initial;background-position:initial;backgroun=
+d-size:initial;background-repeat:initial;background-origin:initial;backgrou=
+nd-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"><span style=
+=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif;color:blac=
+k">PORT OF REGISTRY : PANAMA</span><span style=3D"font-size:12pt;font-famil=
+y:&quot;Times New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" styl=
+e=3D"margin:6pt 0in;line-height:normal;background-image:initial;background-=
+position:initial;background-size:initial;background-repeat:initial;backgrou=
+nd-origin:initial;background-clip:initial;font-size:11pt;font-family:Calibr=
+i,sans-serif"><span style=3D"font-size:12pt;font-family:&quot;Times New Rom=
+an&quot;,serif;color:black">NEVIGATION : OCEAN GOING</span><span style=3D"f=
+ont-size:12pt;font-family:&quot;Times New Roman&quot;,serif"></span></p><p =
+class=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;background-i=
+mage:initial;background-position:initial;background-size:initial;background=
+-repeat:initial;background-origin:initial;background-clip:initial;font-size=
+:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;font-fa=
+mily:&quot;Times New Roman&quot;,serif;color:black">HOLDS: 2 / HATCHES: 2, =
+STEEL MACGEGOR HATCH COVERS</span><span style=3D"font-size:12pt;font-family=
+:&quot;Times New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" style=
+=3D"margin:6pt 0in;line-height:normal;background-image:initial;background-p=
+osition:initial;background-size:initial;background-repeat:initial;backgroun=
+d-origin:initial;background-clip:initial;font-size:11pt;font-family:Calibri=
+,sans-serif"><span style=3D"font-size:12pt;font-family:&quot;Times New Roma=
+n&quot;,serif;color:black">GRT/NRT/DWT: 4738/2196/ 7869.21 MT</span><span s=
+tyle=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"></spa=
+n></p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;bac=
+kground-image:initial;background-position:initial;background-size:initial;b=
+ackground-repeat:initial;background-origin:initial;background-clip:initial;=
+font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif;color:black">LOA/BM/DEPTH: =
+96.7/ 17,4M/ 11,6 M</span><span style=3D"font-size:12pt;font-family:&quot;T=
+imes New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" style=3D"marg=
+in:6pt 0in;line-height:normal;background-image:initial;background-position:=
+initial;background-size:initial;background-repeat:initial;background-origin=
+:initial;background-clip:initial;font-size:11pt;font-family:Calibri,sans-se=
+rif"><span style=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,=
+serif;color:black">HOLD/HATCH: 2HO/2HA,(TWEEN DECK/=C2=A0PONTOOO)</span><sp=
+an style=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><=
+/span></p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal=
+;background-image:initial;background-position:initial;background-size:initi=
+al;background-repeat:initial;background-origin:initial;background-clip:init=
+ial;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size=
+:12pt;font-family:&quot;Times New Roman&quot;,serif;color:black">HOLD GRAIN=
+ / BALE: 10595.63/10102.54 CBM=C2=A0</span><span style=3D"font-size:12pt;fo=
+nt-family:&quot;Times New Roman&quot;,serif"></span></p><p class=3D"MsoNorm=
+al" style=3D"margin:6pt 0in;line-height:normal;background-image:initial;bac=
+kground-position:initial;background-size:initial;background-repeat:initial;=
+background-origin:initial;background-clip:initial;font-size:11pt;font-famil=
+y:Calibri,sans-serif"><span style=3D"font-size:12pt;font-family:&quot;Times=
+ New Roman&quot;,serif;color:black">HATCH SIZE (L X B)=C2=A0 No 1 H/C 14.7 =
+X 12.6 // No2=C2=A0 H/C 28.0 X 12,6 MTRS</span><span style=3D"font-size:12p=
+t;font-family:&quot;Times New Roman&quot;,serif"></span></p><p class=3D"Mso=
+Normal" style=3D"margin:6pt 0in;line-height:normal;background-image:initial=
+;background-position:initial;background-size:initial;background-repeat:init=
+ial;background-origin:initial;background-clip:initial;font-size:11pt;font-f=
+amily:Calibri,sans-serif"><span style=3D"font-size:12pt;font-family:&quot;T=
+imes New Roman&quot;,serif;color:black">DERRICKS 25 TONES X 3 SETS, P&amp;I=
+ CLUB : MARITIME MUTUAL NZ</span><span style=3D"font-size:12pt;font-family:=
+&quot;Times New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" style=
+=3D"margin:6pt 0in;line-height:normal;background-image:initial;background-p=
+osition:initial;background-size:initial;background-repeat:initial;backgroun=
+d-origin:initial;background-clip:initial;font-size:11pt;font-family:Calibri=
+,sans-serif"><span style=3D"font-size:13pt;font-family:&quot;Times New Roma=
+n&quot;,serif">=C2=A0</span></p><p class=3D"MsoNormal" style=3D"margin:0in;=
+line-height:normal;background-image:initial;background-position:initial;bac=
+kground-size:initial;background-repeat:initial;background-origin:initial;ba=
+ckground-clip:initial"><a name=3D"m_8434095073941023294_m_-7181760935298836=
+153_m_-2943155415489952952_m_9145506727469989074_m_-7328220026476527765_m_2=
+334332075604204345_m_-2539970246733195887_m_-2807378868491861981_m_-3059678=
+731226131382_m_-2444836481464027092_m_-4129899385858821763_m_-3861691948415=
+018432_m_-575040941516379959_m_6639244163671243044_m_-3081757338468697602_m=
+_1692633067866387215_m_4805026078756689817_m_4465001316924890469_m_43384324=
+30427253521_m_9198200985634069702_m_-6607216709916356828_m_8580097314474017=
+477_m_-4364378704077407821_m_1142397788081984273_m_-1233013780023478138_m_4=
+901974378138724108_m_-8771049863563895167_m_6449001436325471333_m_-26565566=
+08688107027_m_-6936640680715305788_m_-1003757365232544104_m_-90624494790677=
+37044_m_-5349737945235356507_m_3530298615202017185_m_2718682062444465772_m_=
+-4539283215852981207_m_6488333712573545431_m_-2972764229583788016_m_-351363=
+6654235573137_m_-1306559606862169592_m_-340316615293051448_m_-2299651325555=
+583017_m_-1504599944713987084_m_-6556657017979042127_m_-7273220093560106750=
+_m_8308077227923828330_m_7617655879786890409_m_2739524555523422841_m_202201=
+5671185550182_m_-6171789602508521283_m_7622198356422074085_m_64955968904213=
+86385_m_-1103198810523760453_m_4046703974644339199_m_-1031841166113069979_m=
+_375625166156613273_m_-3729137362635949834_m_5500018806596630669_m_20150393=
+78925600679_m_2194224539558165524_m_-7160159858883148836_m_5819487055350080=
+502_m_-327214694106764446_m_5498907467815829857_m_-2623910960192319935_m_-2=
+19570109024389868_m_6808777695229891937_m_3041252058603637516_m_-4355785458=
+69745250_m_-7305541165768833808_m_259327119457513128_m_8281593774192647171_=
+m_-6779894111140355582_m_804907966090705623_m_-2742781999951513832_m_528723=
+9069366334334_m_4082507495192594317_m_6906795036447129877_m_622251744407421=
+263_m_-2301558871656407282_m_-2115143004360420224_m_-3922169515489031682_m_=
+-5658252086841424246_m_8166700874912149304_m_-2420795594924961451_m_6600599=
+387511189346_m_-8518202553198687875_m_-722662721685569969_m_527022307258013=
+1899_m_9171770081885697950_m_3391791219448013676_m_3996039341476979309_m_-5=
+629938797291703705_m_-1200549387049449404_m_1737802507308400584_m_380394154=
+8382945766_m_-886034417668330339_m_5036600146014341416_m_284900804389846657=
+_m_3794426372839364345_m_-2468217014390232529_m_-6539981691135714634_m_1671=
+538455271738231_m_303116885501072844_m_-8552806571223190366_m_1623744619881=
+423666_m_-1427465771923445561_m_8346123876809486986__Hlk121554943"><span st=
+yle=3D"font-family:&quot;Times New Roman&quot;,serif;font-size:13pt;font-we=
+ight:bold;color:black">3/ MV. GREEN=C2=A0STAR=C2=A0</span><span style=3D"fo=
+nt-family:&quot;Times New Roman&quot;,serif;font-size:13pt;color:black"><b>=
+=E2=80=93=C2=A0</b></span></a><b><span style=3D"font-size:13pt;font-family:=
+&quot;Times New Roman&quot;,serif;color:black">BUTUAN=C2=A0</span><span sty=
+le=3D"color:rgb(0,0,0);font-family:&quot;Times New Roman&quot;,serif;font-s=
+ize:17.3333px">PHILIPPINES=C2=A0</span><span style=3D"font-size:13pt;font-f=
+amily:&quot;Times New Roman&quot;,serif;color:black">/ EARLY OCTOBER=C2=A0<=
+/span><span style=3D"font-size:13pt;font-family:&quot;Times New Roman&quot;=
+,serif;color:black">2024</span></b></p><p class=3D"MsoNormal" style=3D"marg=
+in:0in 0in 6pt;line-height:normal;background-image:initial;background-posit=
+ion:initial;background-size:initial;background-repeat:initial;background-or=
+igin:initial;background-clip:initial;font-size:11pt;font-family:Calibri,san=
+s-serif"><span style=3D"font-size:12pt;font-family:&quot;Times New Roman&qu=
+ot;,serif">=C2=A0</span></p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;=
+line-height:normal;background-image:initial;background-position:initial;bac=
+kground-size:initial;background-repeat:initial;background-origin:initial;ba=
+ckground-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"><span =
+style=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif;color=
+:black">TYPE OF SHIP: M.BULK CARRIER / SINGLE DECK</span><span style=3D"fon=
+t-size:12pt;font-family:&quot;Times New Roman&quot;,serif"></span></p><p cl=
+ass=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;background-ima=
+ge:initial;background-position:initial;background-size:initial;background-r=
+epeat:initial;background-origin:initial;background-clip:initial;font-size:1=
+1pt;font-family:Calibri,sans-serif"><span style=3D"font-size:13pt;font-fami=
+ly:&quot;Times New Roman&quot;,serif;color:black">VIETNAM FLAG<b>,=C2=A0</b=
+></span><span style=3D"font-size:12pt;font-family:&quot;Times New Roman&quo=
+t;,serif;color:black">GENERAL CGO VSL YEAR BUILT: 2009</span><span style=3D=
+"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"></span></p><=
+p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;background=
+-image:initial;background-position:initial;background-size:initial;backgrou=
+nd-repeat:initial;background-origin:initial;background-clip:initial;font-si=
+ze:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;font-=
+family:&quot;Times New Roman&quot;,serif;color:black">CLASS: VR (Vietnam Re=
+gister )</span><span style=3D"font-size:12pt;font-family:&quot;Times New Ro=
+man&quot;,serif"></span></p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;=
+line-height:normal;background-image:initial;background-position:initial;bac=
+kground-size:initial;background-repeat:initial;background-origin:initial;ba=
+ckground-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"><span =
+style=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif;color=
+:black">HOLDS: 2 / HATCHES: 2, STEEL MACGEGOR HATCH COVERS</span><span styl=
+e=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"></span><=
+/p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;backgr=
+ound-image:initial;background-position:initial;background-size:initial;back=
+ground-repeat:initial;background-origin:initial;background-clip:initial;fon=
+t-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;f=
+ont-family:&quot;Times New Roman&quot;,serif;color:black">GRT/NRT/DWT: 1.59=
+6/1023/ 3,113.80 MT</span><span style=3D"font-size:12pt;font-family:&quot;T=
+imes New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" style=3D"marg=
+in:6pt 0in;line-height:normal;background-image:initial;background-position:=
+initial;background-size:initial;background-repeat:initial;background-origin=
+:initial;background-clip:initial;font-size:11pt;font-family:Calibri,sans-se=
+rif"><span style=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,=
+serif;color:black">LOA/BM/DRAFT: 78.630/ 12.624/ 5,220M</span><span style=
+=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"></span></=
+p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;backgro=
+und-image:initial;background-position:initial;background-size:initial;backg=
+round-repeat:initial;background-origin:initial;background-clip:initial;font=
+-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;fo=
+nt-family:&quot;Times New Roman&quot;,serif;color:black">HOLD/HATCH: 2HO/2H=
+A</span><span style=3D"font-size:12pt;font-family:&quot;Times New Roman&quo=
+t;,serif"></span></p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-he=
+ight:normal;background-image:initial;background-position:initial;background=
+-size:initial;background-repeat:initial;background-origin:initial;backgroun=
+d-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"><span style=
+=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif;color:blac=
+k">HOLD GRAIN/BALE: 3709.7/3635.5</span><span style=3D"font-size:12pt;font-=
+family:&quot;Times New Roman&quot;,serif"></span></p><p class=3D"MsoNormal"=
+ style=3D"margin:6pt 0in;line-height:normal;background-image:initial;backgr=
+ound-position:initial;background-size:initial;background-repeat:initial;bac=
+kground-origin:initial;background-clip:initial;font-size:11pt;font-family:C=
+alibri,sans-serif"><span style=3D"font-size:12pt;font-family:&quot;Times Ne=
+w Roman&quot;,serif;color:black;background-image:initial;background-positio=
+n:initial;background-size:initial;background-repeat:initial;background-orig=
+in:initial;background-clip:initial">Hold dimensions (L x B x H )=C2=A0 No.1=
+ =3D 25.80 x 12.60=C2=A0 x 5.03M=C2=A0 No.2 =3D 25.80 x 12.60=C2=A0 x 5.00 =
+M</span><span style=3D"font-size:12pt;font-family:&quot;Times New Roman&quo=
+t;,serif;color:black"><br><span style=3D"background-image:initial;backgroun=
+d-position:initial;background-size:initial;background-repeat:initial;backgr=
+ound-origin:initial;background-clip:initial">Hatches size(L x B x H ):No.1 =
+=3D 19.80 x 8.40 x=C2=A0 1.38 M=C2=A0 No.2 =3D 19.32 x 8.40 x=C2=A0 1.40 M<=
+/span></span><span style=3D"font-size:12pt;font-family:&quot;Times New Roma=
+n&quot;,serif"></span></p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;li=
+ne-height:normal;background-image:initial;background-position:initial;backg=
+round-size:initial;background-repeat:initial;background-origin:initial;back=
+ground-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"><span st=
+yle=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif;color:b=
+lack">VSL&#39;S GEAR: 1 X 10 MT, P&amp; I CLB WOE=C2=A0 =C2=A0</span><span =
+style=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"></sp=
+an></p><p class=3D"MsoNormal" style=3D"margin:0in 0in 6pt;line-height:norma=
+l;background-image:initial;background-position:initial;background-size:init=
+ial;background-repeat:initial;background-origin:initial;background-clip:ini=
+tial;font-size:11pt;font-family:Calibri,sans-serif"><br></p><p class=3D"Mso=
+Normal" style=3D"margin:6pt 0in 12pt;line-height:normal;background-image:in=
+itial;background-position:initial;background-size:initial;background-repeat=
+:initial;background-origin:initial;background-clip:initial;font-size:11pt;f=
+ont-family:Calibri,sans-serif"><b><span style=3D"font-size:13pt;font-family=
+:&quot;Times New Roman&quot;,serif;color:black">4/ MV. GREEN SKY -=C2=A0</s=
+pan><span style=3D"font-family:&quot;Times New Roman&quot;,serif;font-size:=
+13pt;color:black">HO CHI MINH, VIET NAM/ 05TH-=C2=A0</span><span style=3D"f=
+ont-size:13pt;font-family:&quot;Times New Roman&quot;,serif;color:black">OC=
+TOBER=C2=A0</span><span style=3D"font-size:13pt;font-family:&quot;Times New=
+ Roman&quot;,serif;color:black">2024</span></b></p><p class=3D"MsoNormal" s=
+tyle=3D"margin:0in 0in 6pt;line-height:normal;background-image:initial;back=
+ground-position:initial;background-size:initial;background-repeat:initial;b=
+ackground-origin:initial;background-clip:initial;font-size:11pt;font-family=
+:Calibri,sans-serif"><span style=3D"font-size:12pt;font-family:&quot;Times =
+New Roman&quot;,serif;color:black">TYPE OF SHIP: M.BULK CARRIER / SINGLE DE=
+CK</span><span style=3D"font-size:12pt;font-family:&quot;Times New Roman&qu=
+ot;,serif"></span></p><p class=3D"MsoNormal" style=3D"margin:0in 0in 6pt;li=
+ne-height:normal;background-image:initial;background-position:initial;backg=
+round-size:initial;background-repeat:initial;background-origin:initial;back=
+ground-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"><span st=
+yle=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif;color:b=
+lack">VIETNAM FLAG, GENERAL CGO VSL YEAR BUILT: 2012</span><span style=3D"f=
+ont-size:12pt;font-family:&quot;Times New Roman&quot;,serif"></span></p><p =
+class=3D"MsoNormal" style=3D"margin:6pt 0in;line-height:normal;background-i=
+mage:initial;background-position:initial;background-size:initial;background=
+-repeat:initial;background-origin:initial;background-clip:initial;font-size=
+:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;font-fa=
+mily:&quot;Times New Roman&quot;,serif;color:black">DWT/GRT/NRT : 5,170.0/2=
+,999/1,860</span><span style=3D"font-size:12pt;font-family:&quot;Times New =
+Roman&quot;,serif"></span></p><p class=3D"MsoNormal" style=3D"margin:6pt 0i=
+n;line-height:normal;background-image:initial;background-position:initial;b=
+ackground-size:initial;background-repeat:initial;background-origin:initial;=
+background-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"><spa=
+n style=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif;col=
+or:black">LOA 91.94, LBP 15.3 DRAFT: 6.3 M</span><span style=3D"font-size:1=
+2pt;font-family:&quot;Times New Roman&quot;,serif"></span></p><p class=3D"M=
+soNormal" style=3D"margin:0in 0in 6pt;line-height:normal;background-image:i=
+nitial;background-position:initial;background-size:initial;background-repea=
+t:initial;background-origin:initial;background-clip:initial;font-size:11pt;=
+font-family:Calibri,sans-serif"><span style=3D"font-size:12pt;font-family:&=
+quot;Times New Roman&quot;,serif;color:black">HOLD/HATCH: 2HO/2HA</span><sp=
+an style=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif"><=
+/span></p><p class=3D"MsoNormal" style=3D"margin:0in 0in 6pt;line-height:no=
+rmal;background-image:initial;background-position:initial;background-size:i=
+nitial;background-repeat:initial;background-origin:initial;background-clip:=
+initial;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-=
+size:12pt;font-family:&quot;Times New Roman&quot;,serif;color:black">HOLD G=
+RAIN / BALE: 6959/6750 CBM=C2=A0=C2=A0</span><span style=3D"font-size:12pt;=
+font-family:&quot;Times New Roman&quot;,serif"></span></p><p class=3D"MsoNo=
+rmal" style=3D"margin:0in;line-height:normal;background-image:initial;backg=
+round-position:initial;background-size:initial;background-repeat:initial;ba=
+ckground-origin:initial;background-clip:initial;font-size:11pt;font-family:=
+Calibri,sans-serif"><span style=3D"font-size:13pt;font-family:&quot;Times N=
+ew Roman&quot;,serif;color:black">Hold dimensions ( L x B X H ) : No.1 =3D =
+29.4 x 15.3=C2=A0 x 6.8M ;=C2=A0 No.2 =3D 28.4 x 15.3 x 6.8 M</span><span s=
+tyle=3D"font-size:13pt;font-family:&quot;Times New Roman&quot;,serif"></spa=
+n></p><p class=3D"MsoNormal" style=3D"margin:0in;line-height:normal;backgro=
+und-image:initial;background-position:initial;background-size:initial;backg=
+round-repeat:initial;background-origin:initial;background-clip:initial;font=
+-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:13pt;fo=
+nt-family:&quot;Times New Roman&quot;,serif;color:black">Hatches size (L x =
+B x H ) : No.1 =3D 21.0 x 10.0 x 1.5 M ;=C2=A0 No.2 =3D 20.0 x 10.0 x 1.5 M=
+4.</span><span style=3D"font-size:13pt;font-family:&quot;Times New Roman&qu=
+ot;,serif"></span></p><p class=3D"MsoNormal" style=3D"margin:6pt 0in;line-h=
+eight:normal;background-image:initial;background-position:initial;backgroun=
+d-size:initial;background-repeat:initial;background-origin:initial;backgrou=
+nd-clip:initial;font-size:11pt;font-family:Calibri,sans-serif"><span style=
+=3D"font-size:12pt;font-family:&quot;Times New Roman&quot;,serif;color:blac=
+k">VSL&#39;S GEAR: 2 X 15 MT</span><span style=3D"font-size:12pt;font-famil=
+y:&quot;Times New Roman&quot;,serif"></span></p><p class=3D"MsoNormal" styl=
+e=3D"margin:0in 0in 6pt;line-height:normal;background-image:initial;backgro=
+und-position:initial;background-size:initial;background-repeat:initial;back=
+ground-origin:initial;background-clip:initial;font-size:11pt;font-family:Ca=
+libri,sans-serif"><span style=3D"font-size:12pt;font-family:&quot;Times New=
+ Roman&quot;,serif;color:black">=C2=A0 =C2=A0=C2=A0</span><span style=3D"fo=
+nt-size:12pt;font-family:&quot;Times New Roman&quot;,serif;color:black">=C2=
+=A0</span></p><p class=3D"MsoNormal" style=3D"margin:0in 0in 6pt;line-heigh=
+t:normal;background-image:initial;background-position:initial;background-si=
+ze:initial;background-repeat:initial;background-origin:initial;background-c=
+lip:initial;font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"c=
+olor:black;font-family:&quot;Times New Roman&quot;,serif;font-size:12pt">Pl=
+s to hear in shortly,</span></p><div>--<br></div><div dir=3D"ltr" class=3D"=
+gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><div d=
+ir=3D"ltr"><div><p class=3D"MsoNormal" style=3D"margin-bottom:0in;line-heig=
+ht:normal;background-image:initial;background-position:initial;background-r=
+epeat:initial"><b><i><span style=3D"font-size:12.0pt;font-family:&quot;Time=
+s New Roman&quot;,serif;color:black">THANKS
+&amp; BEST REGARDS,</span></i></b><span style=3D"font-size:12.0pt;color:#22=
+2222"></span></p><p class=3D"MsoNormal" style=3D"margin-bottom:0in;line-hei=
+ght:normal;background-image:initial;background-position:initial;background-=
+repeat:initial"><span style=3D"font-size:12.0pt;color:#222222">=C2=A0</span=
+></p><p class=3D"MsoNormal" style=3D"margin-bottom:10pt;line-height:16.1pt;=
+background-image:initial;background-position:initial;background-repeat:init=
+ial"><span style=3D"font-size:12.0pt;font-family:&quot;Times New Roman&quot=
+;,serif;color:#001a33">Mobile:=C2=A0 =C2=A0 Mr. Kevin.Thanh=C2=A0 =C2=A0 =
+=C2=A0
++84.982148569</span><span style=3D"font-size:12.0pt;font-family:&quot;Arial=
+&quot;,sans-serif;color:#222222"></span></p><p class=3D"MsoNormal" style=3D=
+"margin-bottom:10pt;line-height:16.1pt;background-image:initial;background-=
+position:initial;background-repeat:initial"><span style=3D"font-size:12.0pt=
+;font-family:&quot;Times New Roman&quot;,serif;color:#001a33">=C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0
+=C2=A0Mr. Kiem=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0
++84.904642998</span><span style=3D"font-size:12.0pt;font-family:&quot;Arial=
+&quot;,sans-serif;color:#222222"></span></p><p class=3D"MsoNormal" style=3D=
+"margin-bottom:10pt;line-height:16.1pt;background-image:initial;background-=
+position:initial;background-repeat:initial"><span style=3D"font-size:12.0pt=
+;font-family:&quot;Times New Roman&quot;,serif;color:#001a33">=C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0
+=C2=A0Mr. Sun. Nhat=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0+84.967032873</=
+span><span style=3D"font-size:12.0pt;font-family:&quot;Arial&quot;,sans-ser=
+if;color:#222222"></span></p><p class=3D"MsoNormal" style=3D"margin-bottom:=
+10pt;line-height:16.1pt;background-image:initial;background-position:initia=
+l;background-repeat:initial"><span style=3D"font-size:12.0pt;font-family:&q=
+uot;Times New Roman&quot;,serif;color:#001a33">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0
+=C2=A0Ms. Helen.Ha=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0+84.912698858</s=
+pan><span style=3D"font-size:12.0pt;font-family:&quot;Arial&quot;,sans-seri=
+f;color:#222222"></span></p><p class=3D"MsoNormal" style=3D"margin-bottom:1=
+0pt;line-height:16.1pt;background-image:initial;background-position:initial=
+;background-repeat:initial"><span style=3D"font-size:12.0pt;font-family:&qu=
+ot;Times New Roman&quot;,serif;color:#001a33">=C2=A0(Zalo/Viber/Whatsapp)</=
+span><span style=3D"font-size:12.0pt;font-family:&quot;Arial&quot;,sans-ser=
+if;color:#222222"></span></p><p class=3D"MsoNormal" style=3D"margin-bottom:=
+10pt;line-height:16.1pt;background-image:initial;background-position:initia=
+l;background-repeat:initial"><span style=3D"color:rgb(31,73,125);background=
+-image:initial;background-position:initial;background-repeat:initial">-----=
+------------------------------</span>--------------------------------------=
+-------------------<span style=3D"font-size:12.0pt;font-family:&quot;Arial&=
+quot;,sans-serif;color:#222222"></span></p><p class=3D"MsoNormal"><b><span =
+style=3D"font-family:&quot;Times New Roman&quot;,serif;color:#2f5597">HAI T=
+IN
+INTERNATIONAL TRANSPORT TRADING COMPANY LIMITED</span></b></p><p class=3D"M=
+soNormal"><span style=3D"font-family:&quot;Times New Roman&quot;,serif">Hea=
+d
+office add: =C2=A0No. 37, Street No. 17, Ward
+11, Go Vap District, Ho Chi Minh City, Vietnam</span></p><p class=3D"MsoNor=
+mal"><span style=3D"font-family:&quot;Times New Roman&quot;,serif">Branch
+office add: 574 Nguyen Cong Hoan Street, Dong Khe Ward, Ngo Quyen=C2=A0 Dis=
+trict, Hai
+Phong, Vietnam</span></p><p class=3D"MsoNormal" style=3D"margin-bottom:0in;=
+line-height:normal;background-image:initial;background-position:initial;bac=
+kground-repeat:initial">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p><p class=3D"MsoNormal"><span style=3D"font-family:&quot;Times New Roman=
+&quot;,serif">Email : <a href=3D"mailto:haitintracoship@gmail.com" target=
+=3D"_blank">haitintracoship@gmail.com</a>=C2=A0 =C2=A0=C2=A0<a href=3D"http=
+://www.haitintraco.com" target=3D"_blank">www.haitintraco.com</a></span></p=
+></div><div><font color=3D"#0000ff" face=3D"Arial" size=3D"2"><u><br></u></=
+font></div></div></div></div></div>
+
+--0000000000009fc3650621ba43d6--

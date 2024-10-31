@@ -1,0 +1,184 @@
+Received-SPF: pass (spfCheck: domain of vip.163.com designates 220.197.30.222 as permitted sender) client-ip=220.197.30.222; envelope-from=auto_abba+chartering=jahline.com@vip.163.com; helo=mail-m16.vip.163.com;
+Received: from mail-m16.vip.163.com (unknown [220.197.30.222])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 2387C4C06D4
+	for <chartering@jahline.com>; Tue, 10 Sep 2024 14:55:00 +0800 (CST)
+Received: from mail-oa1-f62.google.com (unknown [209.85.160.62])
+	by gzmx5 (Coremail) with SMTP id Vc8vCgAnB75A7d9mxNGLAA--.26615S3;
+	Tue, 10 Sep 2024 14:54:58 +0800 (CST)
+Received: by mail-oa1-f62.google.com with SMTP id 586e51a60fabf-27b703c9603sf4042620fac.0
+        for <abba@vip.163.com>; Mon, 09 Sep 2024 23:54:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20230601; t=1725951296; x=1726556096; darn=vip.163.com;
+        h=list-unsubscribe:list-archive:list-help:list-post:list-id
+         :mailing-list:precedence:reply-to:x-original-sender:mime-version
+         :subject:message-id:to:from:date:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JFzQ8dhH4gaBmijz37asGRqqTM7WfRVeexX73w89jIo=;
+        b=fcUkVBH6BAdTjdOXza4nDJ148lRP1MsTCNqe5YPdvkmZxUQaTAHkSUXaRtnMhC/H8D
+         SnewyzzG8U6bJa1jDonxL1iJgbrBsHrWxhDbhyb5xQrn0Km7Zt8c9zBRBHStVxk4bpFm
+         iuy9Y8CNwK3a88ONd8DI9I01ZpJyu6YL1djIGU32N7wqtgWzJVtQh2lMeg7xth0cSsW1
+         RfX62z5BN19XZ1Bn871hkNAB9nUfViGeGUr3kXivto4nDYS0vthOr9Qwi8+UYXXhVdTz
+         1JtDPj097APJ8hnNfmTAYuXqA++BW4dL6PZWiNEgg7phfBJKb8Ka29IvdPi3sFDV6psM
+         bjUQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725951296; x=1726556096; darn=vip.163.com;
+        h=list-unsubscribe:list-archive:list-help:list-post:list-id
+         :mailing-list:precedence:reply-to:x-original-sender:mime-version
+         :subject:message-id:to:from:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JFzQ8dhH4gaBmijz37asGRqqTM7WfRVeexX73w89jIo=;
+        b=RhPyfL9cR/p1Lq/azJpghO8+qMCQUwPiInBMWzDM6SRy/trip4xZQ7Zr54Acp2asnr
+         DxeXoib+zyqvwVZHWojb+8IIPlxv5yTTfZzlv+jZ78GgiJFmK1+YJwSBdcpZqMGMS0SM
+         zwSolV7lezufBVW367MCd2e0f48W1crH1ViPd5PU93o0kRHxdkPv1aG7ZxW67uaMMU9J
+         oVayOS9idfMlEygOKKZnm3wWco5HfquV27Xk8GlnsLZx8O7i2vg5M78iTB3BNq7pFe8t
+         nzatfc+yFhdGl9JZJXKgSUGubSAmY51m54vVGyWMmj8Xm4Pp0JnjlW28FHPwDA2phELp
+         45Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725951296; x=1726556096;
+        h=list-unsubscribe:list-archive:list-help:list-post
+         :x-spam-checked-in-group:list-id:mailing-list:precedence:reply-to
+         :x-original-sender:mime-version:subject:message-id:to:from:date
+         :x-beenthere:x-gm-message-state:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JFzQ8dhH4gaBmijz37asGRqqTM7WfRVeexX73w89jIo=;
+        b=VagjQqjqF0gGwN8v9tLgX1cQR/vCgKRkoYfztGYpHGMdouSLfsJLmu31mSB67zMr8M
+         gwDplspz48YJ8g7JVFsxCxZC64JUP0i3uHfuWez0Hy31efBbOveAL/lGuxYTKvwjvu91
+         X670H+6z0sc01gbDJOgQ2BaDIrtQ4KBpTDup4h4XofHh7/+PZOaiuUOR0iskFn1emvGL
+         HcbtrprF/8VGODQSvXh9ZUkhLPQWjqCLwlwrirxzLeLM1osKRF1RXevqH31s/ytGmN/o
+         gfZQXAHvH3w7ILbCM5r//OHqCITx3oPskC02De157QmxKl99EQFg6z7sThFd0/PNau0E
+         m4WA==
+X-Forwarded-Encrypted: i=1; AJvYcCVB4e9wRlm0nRVlhkUZ35NJdBfk+FKFtm811lqzngW5UyRl/ZGOMN7EGTvxSFeYv49OMu5W@vip.163.com
+X-Gm-Message-State: AOJu0YzHjWEPNUvNOUnUIEVoJ0cf6kCWR3a7b/Q1tkuB0D0DxpjFmF17
+	YN3XdJYn4HYwb2nZtU1bTelIK+BuPAcsJEFZ0lHl1DnYr2hrIdg+
+X-Google-Smtp-Source: AGHT+IFJGympX94K6XLFyCQVUETAogghv3lRLpjdYn+dDuPkmNywBoyTb/2HUoKg5gNnvicshQ0Gpw==
+X-Received: by 2002:a05:6870:1c6:b0:277:e457:604a with SMTP id 586e51a60fabf-27be6ab70d7mr898209fac.3.1725951296083;
+        Mon, 09 Sep 2024 23:54:56 -0700 (PDT)
+X-BeenThere: brokerchartering@googlegroups.com
+Received: by 2002:a05:6870:9f05:b0:277:f2fe:7da9 with SMTP id
+ 586e51a60fabf-27b81eea048ls2268123fac.0.-pod-prod-08-us; Mon, 09 Sep 2024
+ 23:54:48 -0700 (PDT)
+X-Received: by 2002:a05:6808:13d3:b0:3d6:331d:b511 with SMTP id 5614622812f47-3e02a031bc3mr10126822b6e.32.1725951288142;
+        Mon, 09 Sep 2024 23:54:48 -0700 (PDT)
+Date: Mon, 9 Sep 2024 23:54:47 -0700 (PDT)
+From: FREDDY  CHEN/CHINA FORTUNE SHIPPING <fortuneshipping@gmail.com>
+To: CHARTERING BUSINESS <brokerchartering@googlegroups.com>
+Message-Id: <649395a5-fcd6-41e2-8fe0-a7db0d21d7d1n@googlegroups.com>
+Subject: NEED  DWCC 7000MT  GEARED  VSL OPEN IN HAIPHONG AREA
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_207294_2103906193.1725951287157"
+X-Original-Sender: fortuneshipping@gmail.com
+Reply-To: fortuneshipping@gmail.com
+Precedence: list
+Mailing-list: list brokerchartering@googlegroups.com; contact brokerchartering+owners@googlegroups.com
+List-ID: <brokerchartering.googlegroups.com>
+X-Spam-Checked-In-Group: brokerchartering@googlegroups.com
+X-Google-Group-Id: 835732625360
+List-Post: <https://groups.google.com/group/brokerchartering/post>, <mailto:brokerchartering@googlegroups.com>
+List-Help: <https://groups.google.com/support/>, <mailto:brokerchartering+help@googlegroups.com>
+List-Archive: <https://groups.google.com/group/brokerchartering
+List-Unsubscribe: <mailto:googlegroups-manage+835732625360+unsubscribe@googlegroups.com>,
+ <https://groups.google.com/group/brokerchartering/subscribe>
+X-CM-TRANSID: Vc8vCgAnB75A7d9mxNGLAA--.26615S3.fw
+Authentication-Results: gzmx5; spf=pass smtp.mail=brokerchartering+bnc
+	bdv7ja5lridrboo2763amgqe6rdisjy@googlegroups.com;
+X-Coremail-Antispam: 1Uf129KBjvdXoW7XFW8GF18CF48Zw1UGFyDKFg_yoWfZrb_W3
+	Wj9rZrW398Zr4UZrnFv3Z8try2vFy0vrZIya4UX398AFySkrWfCanru3Z0gry3XrZ8X3yS
+	yrySyr4Yy3sxWjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUjrOz5UUUUU==
+Return-path: auto_abba+chartering=jahline.com@vip.163.com
+Errors-to: auto_abba+chartering=jahline.com@vip.163.com
+Resent-Message-Id: <66DFED42.07AA0B.04848>
+Resent-Date: Tue, 10 Sep 2024 14:54:58 +0800 (CST)
+Resent-From: abba@vip.163.com
+Resent-To: chartering@jahline.com
+X-CM-SenderInfo: pdeetqxylshiywtou0bp/
+Delivered-To: abba@vip.163.com
+X-CM-Forward-Sender: brokerchartering+bncbdv7ja5lridrboo2763amgqe6rdisjy@googlegroups.com
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWTYjWV
+	dZCAsdC1lBS1dZKFlBTk43V1ktWUFJV1kPCRoVCBIfWUFZQ0MeTFZKH05IGBpKSEtDSEJWFRQJFh
+	oXVRMBExYaEhckEhVZV1kYEgtZQVlJSUtVSkJMVUhLVUlJSVlXWRYaDxIVHRRZQVlLVUtVS1VLWQ
+	Y+
+Sender: auto_abba+chartering=jahline.com@vip.163.com
+X-HM-Tid: 0a91dab6d2350377kunm2387c4c06d4
+X-HM-MType: 1
+
+------=_Part_207294_2103906193.1725951287157
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_207295_440548587.1725951287157"
+
+------=_Part_207295_440548587.1725951287157
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+
+CHARTERING DESK
+FM: CFS
+
+
+6000MT FERT IN BULK SF:1.6
+L/D: HAIPHONG ,VN/DAVAO,PHL
+L/D RATE:3000/1000 PWWD
+PPT TRY VSL'S DATE
+GEARED VSL NEEDED
+COM:2.5%TTL
+
+--=20
+TKS.
+B.RGDS.
+FREDDY  CHEN
+MP:13901594606,18120187885
+TEL:0086-25- 86633467
+E-MAIL:fortuneshipping@gmail.com, fortuneshpg@163.com   =20
+ WECHAT for business : 1297734436
+  QQ:1297734436(for CHINESE OWNER)
+  SKYPE: chenfortuner
+  Zalo:+86-13901594606(for VIETNAMESE OWNER)=20
+CHINA FORTUNE SHIPPING CO.,LTD
+---=20
+Hai ricevuto questo messaggio perch=C3=A9 sei iscritto al gruppo "CHARTERIN=
+G BUSINESS" di Google Gruppi.
+Per annullare l'iscrizione a questo gruppo e non ricevere pi=C3=B9 le sue e=
+mail, invia un'email a brokerchartering+unsubscribe@googlegroups.com.
+Per visualizzare questa discussione sul Web, visita https://groups.google.c=
+om/d/msgid/brokerchartering/649395a5-fcd6-41e2-8fe0-a7db0d21d7d1n%40googleg=
+roups.com.
+
+------=_Part_207295_440548587.1725951287157
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<br />CHARTERING DESK<br />FM: CFS<br /><br /><br />6000MT FERT IN BULK SF:=
+1.6<br />L/D: HAIPHONG ,VN/DAVAO,PHL<br />L/D RATE:3000/1000 PWWD<br />PPT =
+TRY VSL'S DATE<br />GEARED VSL NEEDED<br />COM:2.5%TTL<br /><br />
+
+<p></p>
+
+-- <br />
+TKS.<br />
+B.RGDS.<br />
+FREDDY  CHEN<br />
+MP:13901594606,18120187885<br />
+TEL:0086-25- 86633467<br />
+E-MAIL:fortuneshipping@gmail.com, fortuneshpg@163.com    <br />
+ WECHAT for business : 1297734436<br />
+  QQ:1297734436(for CHINESE OWNER)<br />
+  SKYPE: chenfortuner<br />
+  Zalo:+86-13901594606(for VIETNAMESE OWNER) <br />
+CHINA FORTUNE SHIPPING CO.,LTD<br />
+--- <br />
+Hai ricevuto questo messaggio perch=C3=A9 sei iscritto al gruppo &quot;CHAR=
+TERING BUSINESS&quot; di Google Gruppi.<br />
+Per annullare l'iscrizione a questo gruppo e non ricevere pi=C3=B9 le sue e=
+mail, invia un'email a <a href=3D"mailto:brokerchartering+unsubscribe@googl=
+egroups.com">brokerchartering+unsubscribe@googlegroups.com</a>.<br />
+Per visualizzare questa discussione sul Web, visita <a href=3D"https://grou=
+ps.google.com/d/msgid/brokerchartering/649395a5-fcd6-41e2-8fe0-a7db0d21d7d1=
+n%40googlegroups.com?utm_medium=3Demail&utm_source=3Dfooter">https://groups=
+.google.com/d/msgid/brokerchartering/649395a5-fcd6-41e2-8fe0-a7db0d21d7d1n%=
+40googlegroups.com</a>.<br />
+
+------=_Part_207295_440548587.1725951287157--
+
+------=_Part_207294_2103906193.1725951287157--
+

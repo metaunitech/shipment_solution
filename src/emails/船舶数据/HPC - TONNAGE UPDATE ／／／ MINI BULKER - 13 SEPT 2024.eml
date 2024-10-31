@@ -1,0 +1,311 @@
+Received-SPF: none (spfCheck: 209.85.216.45 is neither permitted nor denied by domain of haiphuongship.com.vn) client-ip=209.85.216.45; envelope-from=chartering@haiphuongship.com.vn; helo=mail-pj1-f45.google.com;
+Received: from mail-pj1-f45.google.com (unknown [209.85.216.45])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 6D2174C06ED
+	for <chartering@jahline.com>; Fri, 13 Sep 2024 09:41:39 +0800 (CST)
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2d8a54f1250so1140288a91.0
+        for <chartering@jahline.com>; Thu, 12 Sep 2024 18:41:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=haiphuongship-com-vn.20230601.gappssmtp.com; s=20230601; t=1726191696; x=1726796496; darn=jahline.com;
+        h=cc:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=8+uivuZNOdU1gNugbfP8WmuLngz4z/FvfrsXFo/DKfE=;
+        b=PMM+iz41sy7FmeTRL+m7Ax0Ir6WkUe7rApKwBxgRX8XvSj7t2O6dPHyhxLUHuL3Myc
+         i82mLp85Q7q+p61Wa2HyNzJ5t4w/VD21/jrLs60lFjjNkqn9Nx145drtZR8hrqsJKRbp
+         mPVjtSQjPWsg5O3oIjCArcBznVIBBFUNqw4QA4QQzKInYsYuV3aWUCT6Qk6W5Mtk6SUG
+         x8VLx5SB0mjuzWIPY7i54jLMGHU6Q9y3AlvseTfpAIHT4AWQ/69idu9+OHXy6Q3J2t/m
+         CJbK4n5Lpmkxi7zQAfn5a5UgfEs3eTxLxahnAPNVvElB8622Rn5+kkNvFpMjTK71ompJ
+         ufJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726191696; x=1726796496;
+        h=cc:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8+uivuZNOdU1gNugbfP8WmuLngz4z/FvfrsXFo/DKfE=;
+        b=kKtCTw3scn4fIF0slMhcnwWUYpRjn4YqMHO1K8KVgWPcQVj27WzlTu+eJu5SwVdw3T
+         g+lNdQxTISNO7a0hIzEQeDerUYupTUQAwefBQsBNQVrhJEmEJGn5Q+keWm5t450tfHkO
+         JtF3QtTPLx5cUStIyGLNs1DF8bfwC6VOMRjNA+TJIBA6G/rsRtLHV2O5QkF04U9U9KmX
+         xSQ9wbP5HedrxIDezzfM78KBMS9gb05iWJa+uXNKbp9IcPd7Dz/6XXbmRyAINSgww2XM
+         hGp3cpSK2Idjeug7je89ZjQLBprXIr3bWTJSBiRK+pFy6IVqp0WPnK+SfaYBLYS99NdF
+         Qu4g==
+X-Forwarded-Encrypted: i=1; AJvYcCWZs6PzVeE17gqEmFWs9QOUK9M3c6dIwfI2tCD5KzktKlnQI1NcMwxFtQ0IoX+QtSIUF5DGYlTETMem@jahline.com
+X-Gm-Message-State: AOJu0YxpxqkBXwCazgfVzvvsfm10ySD70LYnZbO6JSJ8/RezqWCgBE8i
+	kZ5jgsLoaIiN8IxNz2d0jA2/cOin4pVvXtXYWmeAuPELZGaboCjkPKTGLzLzMPVLlm0fYWtYX+2
+	u9f+42hhjC8piL8Iy3dd3NVmIT7y+Nggu7ZCD
+X-Received: by 2002:a17:90a:a00a:b0:2c9:5c67:dd9e with SMTP id
+ 98e67ed59e1d1-2db9ffee495mt5275758a91.19.1726191695965; Thu, 12 Sep 2024
+ 18:41:35 -0700 (PDT)
+MIME-Version: 1.0
+From: Hai Phuong Chartering <chartering@haiphuongship.com.vn>
+Date: Fri, 13 Sep 2024 08:41:23 +0700
+Message-ID: <CACa1Yf4FB0RzTpObJrTib4ZvHnw0Wmx9j0-EWCe9Lz-qVmfZfQ@mail.gmail.com>
+Subject: HPC - TONNAGE UPDATE /// MINI BULKER - 13 SEPT 2024
+Cc: wendy <wendy@haiphuongship.vn>
+Content-Type: multipart/alternative; boundary="000000000000dcbe510621f65200"
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWTYjWV
+	dZCAsdC1lBS1dZKFlBTk43V1ktWUFJV1kPCRoVCBIfWUFZQhlNTlYYTR0eGR5CHU9OS0lWFRQJFh
+	oXVRMBExYaEhckEhVZV1kYEgtZQVlJS0JVQ05VSUpNVU9OWVdZFhoPEhUdFFlBWU5LSFVKS0pLQk
+	NDVUpLS1VKQlkG
+X-HM-Tid: 0a91e90b05f80377kunm6d2174c06ed
+X-HM-MType: 1
+
+--000000000000dcbe510621f65200
+Content-Type: text/plain; charset="UTF-8"
+
+Dear Sir/ Madam, Good morning !
+
+Pls offer cargo to these vsls below
+*HAI PHUONG SKY // OPEN PALEMBANG 15 OCT  2024*
+Class: VR / Dwt 4,902 MT / GRT 2,756 / NT 1,654
+Flag Vietnam / Built 2010 (year) / Single deck
+LOA 92.05m / BM 15m / Draft 6.0m
+Gearless/ / Hold: 02 / Hatch: Macgregor
+Grain Capa: 6,000 Cbm / Speed: 9.0 knots (AA-WOG
+
+
+*HPC LUCKY// OPEN BANGKOK 05 OCT 2024*Class: VR / Dwt 5,234.2 MT / GRT
+2,995/ NT 1,860
+Flag Vietnam / Built 2013 (year) / Single deck
+LOA 91.94m / BM 15.3m / Draft 6.3m
+Gearless/ Hold: 02 / Hatch: Macgregor
+Grain Capa: 6.590 Cbm / Speed:9.0 knots (AA-WOG)
+
+
+
+[image: Logo] <https://haiphuongship.vn/> [image: Line]
+Phuong Phan( Phoenix)
+
+M: (84) 973 857 840
+Skype : phuongphan03 ( closed, can not check )
+*New Skype : live:.cid.8ca902ff12fcd14a*
+*E: *chartering@haiphuongship.com.vn <ops@haiphuongship.com.vn>
+     phoenix@haiphuongship.vn
+*Hai Phuong Company Limited <http://haiphuongship.vn/>*
+Hai Phong City | 180000, Viet Nam
+
+--000000000000dcbe510621f65200
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font-size:small"><di=
+v style=3D"color:rgb(80,0,80);font-size:0.875rem;font-family:&quot;Google S=
+ans&quot;,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;padding:20px 0px 0p=
+x"><span style=3D"font-family:Calibri;font-size:12pt;color:rgb(0,0,0)">Dear=
+ Sir/ Madam, Good morning !<br><br>Pls offer cargo to these vsls below=C2=
+=A0</span></div><div style=3D"font-size:medium;font-family:&quot;Google San=
+s&quot;,Roboto,RobotoDraft,Helvetica,Arial,sans-serif"><div id=3D"m_2880321=
+940603451910m_2324066972187723842m_6387046350429032304m_-336807730485447469=
+1m_3328818025996853765m_-7148229184966937838m_1124901247860750513m_-8064248=
+282367991142m_6800151207547111034m_-8917941483583388814m_-21681782373601553=
+53m_-7512019638068830074m_-6585315391566983659m_-3496045767275167140m_37853=
+46609735807548m_2836438309575660634m_947789539967333791m_856373594430481992=
+1m_1018523789570991406m_-3334639378205983547m_-4583202440627435704m_-787623=
+0402116369726m_5038404617813941601m_2992576238700400333m_-32570368407280614=
+32m_1231007295564146434m_-8406262981901603961m_-2697904432426084202m_291402=
+2046364883750m_5565539752822987552m_6375832060089739570m_526653374659509228=
+5m_-7845833407663803707m_634450141514362185m_-1020280345761801331m_-3021218=
+201150940660m_3416886612445297356m_-2899658785179946484m_-70226860426035355=
+35m_2953683401228885386m_7286695049688669703m_8897161046583753099m_28794510=
+23044537064m_-1794147533303013001m_6477419700110795039m_4429085019259997165=
+m_2361580409014164190m_379468105770019550m_7413775315722103107m_-9099648772=
+379928249m_-5682266653012709241m_7743928933909964965m_2303766129588080530m_=
+-3626909591325007775m_-5116121623998384267m_8931875796616476030m_-805735796=
+6037126352m_8441547940118206713m_-6250485895791291317m_8071406906556529550m=
+_8798563107383764687m_-3709286825032171717m_4439801216226618698m_7089695251=
+503733610m_-1231524829389651362m_6162407783907592257m_-8550536676169195055m=
+_1388913967497506742m_4752379424146140908m_12917224282406813m_8258712962830=
+277136m_-1766914734020901762m_-4400665523690469767m_-9065700920967083770m_-=
+7753529228805083457m_-7118553505974885722m_-5830777019300750112m_-711013726=
+8822139795m_-6254570388976831208m_-7454954928923779103m_-218910149935624944=
+1m_-743295067921211919m_1538750833282430725m_5877159202639580176m_-65701003=
+36625884440m_-7240857638729348121m_-6540888307076662817m_-26822533449744662=
+4m_7102299805815843626m_248334894547896m_-2806557358432856506m_554705990548=
+625529m_-8658489799500578063m_9144084108419132368m_2548659232777070868m_-35=
+03114162909348687m_-1414368738369174940m_4089539832873704846m_6527491018226=
+808180m_-1310715332354166531m_-1354368984229270136m_8570084534420633165m_-5=
+144964697000126968m_195636076958978521m_-2720149183053168326m_6523103789926=
+623349m_-3304989960355952819m_6958873269353686674m_-5910844194570236174m_-4=
+829848337919260692m_198794827393742543m_-125707189825241120m_17397801333948=
+87020m_-5014433547767939073m_-962517849035879845m_6692064679295249671m_-424=
+4023484497418382m_-2111406708992491392m_-92533812499491591m_-37125614846888=
+92009m_-1930074199650366631m_-8406663549073378866m_-6347155012088124815m_52=
+95241994143116019m_-6315730304531099496m_4523996165915246380m_-113802456825=
+4093203m_-1889597571468964259m_-7196142276693476829m_553045615975874007m_-8=
+673224687483228065m_-4369188682943878321m_-4370532991054434909m_-6715212199=
+358422843m_3190210618572320259m_7117178997826602927m_-179392131180822763m_3=
+473408262406486680m_-7795922578930185700m_7564249468825925351m_413228480300=
+4587532m_9051551894750462782m_8622980133768105747m_-832474663548828379m_-43=
+52278871301045998m_-187370451790236447m_1327357163881151943gmail-:2ek" styl=
+e=3D"direction:ltr;margin:8px 0px 0px;padding:0px;font-size:0.875rem"><div =
+id=3D"m_2880321940603451910m_2324066972187723842m_6387046350429032304m_-336=
+8077304854474691m_3328818025996853765m_-7148229184966937838m_11249012478607=
+50513m_-8064248282367991142m_6800151207547111034m_-8917941483583388814m_-21=
+68178237360155353m_-7512019638068830074m_-6585315391566983659m_-34960457672=
+75167140m_3785346609735807548m_2836438309575660634m_947789539967333791m_856=
+3735944304819921m_1018523789570991406m_-3334639378205983547m_-4583202440627=
+435704m_-7876230402116369726m_5038404617813941601m_2992576238700400333m_-32=
+57036840728061432m_1231007295564146434m_-8406262981901603961m_-269790443242=
+6084202m_2914022046364883750m_5565539752822987552m_6375832060089739570m_526=
+6533746595092285m_-7845833407663803707m_634450141514362185m_-10202803457618=
+01331m_-3021218201150940660m_3416886612445297356m_-2899658785179946484m_-70=
+22686042603535535m_2953683401228885386m_7286695049688669703m_88971610465837=
+53099m_2879451023044537064m_-1794147533303013001m_6477419700110795039m_4429=
+085019259997165m_2361580409014164190m_379468105770019550m_74137753157221031=
+07m_-9099648772379928249m_-5682266653012709241m_7743928933909964965m_230376=
+6129588080530m_-3626909591325007775m_-5116121623998384267m_8931875796616476=
+030m_-8057357966037126352m_8441547940118206713m_-6250485895791291317m_80714=
+06906556529550m_8798563107383764687m_-3709286825032171717m_4439801216226618=
+698m_7089695251503733610m_-1231524829389651362m_6162407783907592257m_-85505=
+36676169195055m_1388913967497506742m_4752379424146140908m_12917224282406813=
+m_8258712962830277136m_-1766914734020901762m_-4400665523690469767m_-9065700=
+920967083770m_-7753529228805083457m_-7118553505974885722m_-5830777019300750=
+112m_-7110137268822139795m_-6254570388976831208m_-7454954928923779103m_-218=
+9101499356249441m_-743295067921211919m_1538750833282430725m_587715920263958=
+0176m_-6570100336625884440m_-7240857638729348121m_-6540888307076662817m_-26=
+8225334497446624m_7102299805815843626m_248334894547896m_-280655735843285650=
+6m_554705990548625529m_-8658489799500578063m_9144084108419132368m_254865923=
+2777070868m_-3503114162909348687m_-1414368738369174940m_4089539832873704846=
+m_6527491018226808180m_-1310715332354166531m_-1354368984229270136m_85700845=
+34420633165m_-5144964697000126968m_195636076958978521m_-2720149183053168326=
+m_6523103789926623349m_-3304989960355952819m_6958873269353686674m_-59108441=
+94570236174m_-4829848337919260692m_198794827393742543m_-125707189825241120m=
+_1739780133394887020m_-5014433547767939073m_-962517849035879845m_6692064679=
+295249671m_-4244023484497418382m_-2111406708992491392m_-92533812499491591m_=
+-3712561484688892009m_-1930074199650366631m_-8406663549073378866m_-63471550=
+12088124815m_5295241994143116019m_-6315730304531099496m_4523996165915246380=
+m_-1138024568254093203m_-1889597571468964259m_-7196142276693476829m_5530456=
+15975874007m_-8673224687483228065m_-4369188682943878321m_-43705329910544349=
+09m_-6715212199358422843m_3190210618572320259m_7117178997826602927m_-179392=
+131180822763m_3473408262406486680m_-7795922578930185700m_756424946882592535=
+1m_4132284803004587532m_9051551894750462782m_8622980133768105747m_-83247466=
+3548828379m_-4352278871301045998m_-187370451790236447m_1327357163881151943g=
+mail-:2el" style=3D"font-variant-numeric:normal;font-variant-east-asian:nor=
+mal;font-variant-alternates:normal;font-kerning:auto;font-feature-settings:=
+normal;font-stretch:normal;font-size:small;line-height:1.5;font-family:Aria=
+l,Helvetica,sans-serif;overflow:hidden"><div dir=3D"ltr"><div><div dir=3D"l=
+tr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div dir=3D"ltr"><div st=
+yle=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div =
+dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"fo=
+nt-size:12pt"><div dir=3D"ltr"><div dir=3D"ltr"><div style=3D"font-size:12p=
+t"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div sty=
+le=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div d=
+ir=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"fon=
+t-size:12pt"><div dir=3D"ltr"><div dir=3D"ltr"><div style=3D"font-size:12pt=
+"><div dir=3D"ltr"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=
+=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"font-=
+size:12pt"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr">=
+<div style=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"font-size:12pt=
+"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div styl=
+e=3D"font-size:small;display:inline"><div dir=3D"ltr"><div style=3D"font-si=
+ze:12pt"><div style=3D"font-size:small;display:inline"><div dir=3D"ltr"><di=
+v style=3D"font-size:12pt"><div style=3D"font-size:small;display:inline"><d=
+iv dir=3D"ltr"><div style=3D"display:inline"><div dir=3D"ltr"><div style=3D=
+"font-size:12pt"><div style=3D"font-size:small;display:inline"><div style=
+=3D"display:inline"><div style=3D"display:inline"><div dir=3D"ltr"><div sty=
+le=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div d=
+ir=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"fon=
+t-size:12pt"><div dir=3D"ltr"><div dir=3D"ltr"><div style=3D"font-size:12pt=
+"><div style=3D"font-size:small;display:inline"><div style=3D"display:inlin=
+e"><div style=3D"display:inline"><div style=3D"display:inline"><div style=
+=3D"display:inline"><div style=3D"display:inline"><div style=3D"display:inl=
+ine"><div style=3D"display:inline"><div style=3D"display:inline"><div style=
+=3D"display:inline"><div style=3D"display:inline"><div style=3D"display:inl=
+ine"><div style=3D"display:inline"><div style=3D"display:inline"><div style=
+=3D"display:inline"><div style=3D"display:inline"><div style=3D"display:inl=
+ine"><div style=3D"display:inline"><div style=3D"display:inline"><div style=
+=3D"display:inline"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=
+=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div dir=3D"ltr"><d=
+iv style=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"font-size:12pt">=
+<div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div dir=3D=
+"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"font-siz=
+e:12pt"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><di=
+v style=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"font-size:12pt"><=
+div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div style=
+=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=
+=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"font-=
+size:12pt"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr">=
+<div style=3D"font-size:12pt"><div dir=3D"ltr"><div dir=3D"ltr"><div style=
+=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=
+=3D"ltr"><div style=3D"font-size:12pt"><div style=3D"font-family:&quot;Time=
+s New Roman&quot;"><div style=3D"font-size:small;font-family:Calibri;displa=
+y:inline"><div style=3D"display:inline"><div style=3D"display:inline"><div =
+style=3D"display:inline"><div style=3D"display:inline"><div style=3D"displa=
+y:inline"><div style=3D"display:inline"><div style=3D"display:inline"><div =
+style=3D"display:inline"><div style=3D"display:inline"><div style=3D"displa=
+y:inline"><div style=3D"display:inline"><div style=3D"display:inline"><div =
+style=3D"display:inline"><div dir=3D"ltr"><div style=3D"font-size:12pt;font=
+-family:&quot;Times New Roman&quot;"><div dir=3D"ltr"><div dir=3D"ltr"><div=
+ style=3D"font-size:12pt"><div dir=3D"ltr"><div dir=3D"ltr"><div style=3D"f=
+ont-size:12pt"><div dir=3D"ltr"><div dir=3D"ltr"><div style=3D"font-size:12=
+pt"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div di=
+r=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div style=3D"font=
+-size:12pt"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"=
+><div dir=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div dir=
+=3D"ltr"><div style=3D"font-size:12pt"><div dir=3D"ltr"><div dir=3D"ltr"><d=
+iv style=3D"font-size:12pt"><div dir=3D"ltr"><div dir=3D"ltr"><div style=3D=
+"font-size:12pt"><div dir=3D"ltr"><div dir=3D"ltr"><div style=3D"font-size:=
+12pt"><div dir=3D"ltr"><div style=3D"font-size:12pt"><div><strong><font col=
+or=3D"#0000ff">HAI PHUONG SKY // OPEN PALEMBANG 15 OCT=C2=A0 2024</font></s=
+trong></div><div style=3D"color:rgb(0,0,0)">Class: VR / Dwt 4,902 MT / GRT =
+2,756 / NT 1,654<br>Flag Vietnam / Built 2010 (year) / Single deck<br>LOA 9=
+2.05m / BM 15m / Draft 6.0m<br><font style=3D"background-color:rgb(255,255,=
+0)">Gearless</font>/ / Hold: 02 / Hatch: Macgregor<br>Grain Capa: 6,000 Cbm=
+ / Speed: 9.0 knots (AA-WOG</div><div style=3D"color:rgb(80,0,80)"><font co=
+lor=3D"#0000ff">=C2=A0</font></div><div><strong><font color=3D"#0000ff">HPC=
+=C2=A0LUCKY// OPEN BANGKOK 05 OCT 2024</font><br></strong><font style=3D"co=
+lor:rgb(80,0,80)">Class: VR / Dwt 5,234.2 MT / GRT 2,995/ NT 1,860</font><b=
+r></div><div style=3D"color:rgb(0,0,0)">Flag Vietnam / Built 2013 (year) / =
+Single deck<br>LOA 91.94m / BM 15.3m / Draft 6.3m<br><font style=3D"backgro=
+und-color:rgb(255,255,0)">Gearless/</font>=C2=A0Hold: 02 / Hatch: Macgregor=
+</div><div style=3D"color:rgb(0,0,0)">Grain Capa: 6.590 Cbm / Speed:9.0 kno=
+ts (AA-WOG)</div><div style=3D"color:rgb(0,0,0)"><br></div><div style=3D"co=
+lor:rgb(0,0,0)"><br></div></div></div></div></div></div></div></div></div><=
+/div></div></div></div></div></div></div></div></div></div></div></div></di=
+v></div></div></div></div></div></div></div></div></div></div></div></div><=
+/div></div></div></div></div></div></div></div></div></div></div></div></di=
+v></div></div></div></div></div></div></div></div></div></div></div></div><=
+/div></div></div></div></div></div></div></div></div></div></div></div></di=
+v></div></div></div></div></div></div></div></div></div></div></div></div><=
+/div></div></div></div></div></div></div></div></div></div></div></div></di=
+v></div></div></div></div></div></div></div></div></div></div></div></div><=
+/div></div></div></div></div></div></div></div></div></div></div></div></di=
+v></div></div></div></div></div></div></div></div></div></div></div></div><=
+/div></div></div></div></div></div></div></div></div></div></div></div></di=
+v></div></div></div></div></div></div></div></div></div></div></div></div><=
+/div></div></div></div></div></div></div></div></div></div></div></div></di=
+v></div></div></div></div></div></div></div></div></div></div></div></div><=
+/div></div></div></div></div></div><br clear=3D"all"><div><div dir=3D"ltr" =
+class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"lt=
+r"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing:0px;b=
+order-collapse:collapse;color:rgb(68,68,68);width:430px;font-size:12px;font=
+-family:Arial,sans-serif;line-height:normal"><tbody><tr><td valign=3D"top" =
+style=3D"padding:0px;width:92px;vertical-align:top"><a href=3D"https://haip=
+huongship.vn/" style=3D"background-color:transparent;color:rgb(51,122,183)"=
+ target=3D"_blank"><img border=3D"0" alt=3D"Logo" height=3D"91" width=3D"92=
+" src=3D"https://ci3.googleusercontent.com/mail-sig/AIorK4wPAwghQ_i2Xl2xS68=
+PgWxEpzKdzTv4ekq2_SjIID_h-W7xlRqEqpqfIZapI-KEE2wlrc_gjlI" style=3D"border:0=
+px;vertical-align:middle;width:92px;height:91px"></a></td><td valign=3D"top=
+" style=3D"padding:0px;width:44px;text-align:center;vertical-align:top"><im=
+g border=3D"0" alt=3D"Line" width=3D"11" src=3D"https://www.mail-signatures=
+.com/signature-generator/img/templates//medium-banner/line.png" style=3D"bo=
+rder:0px;vertical-align:middle;width:11px;height:85px"></td><td valign=3D"t=
+op" style=3D"padding:0px;width:294px;vertical-align:top"><table cellpadding=
+=3D"0" cellspacing=3D"0" style=3D"border-spacing:0px;border-collapse:collap=
+se;background-color:transparent"><tbody><tr><td style=3D"padding:0px 0px 5p=
+x;font-size:13px;font-weight:bold;color:rgb(60,60,59)">Phuong Phan( Phoenix=
+)=C2=A0</td></tr><tr><td style=3D"padding:0px 0px 5px;font-size:13px;font-w=
+eight:bold;color:rgb(60,60,59)"><br></td></tr><tr><td style=3D"padding:0px =
+0px 1px;color:rgb(60,60,59)"><span style=3D"font-weight:bold">M:=C2=A0</spa=
+n>(84) 973 857 840<br>Skype : phuongphan03 ( closed, can not check )<br></t=
+d></tr><tr><td style=3D"padding:0px 0px 1px"><font color=3D"#3c3c3b"><b>New=
+ Skype : live:.cid.8ca902ff12fcd14a</b></font><br><font color=3D"#3c3c3b"><=
+b>E:=C2=A0</b></font><a href=3D"mailto:ops@haiphuongship.com.vn" style=3D"c=
+olor:rgb(60,60,59)" target=3D"_blank">chartering@haiphuongship.com.vn</a><b=
+r><font color=3D"#3c3c3b">=C2=A0 =C2=A0 =C2=A0</font><a href=3D"mailto:phoe=
+nix@haiphuongship.vn" style=3D"color:rgb(60,60,59)" target=3D"_blank">phoen=
+ix@haiphuongship.vn</a><font color=3D"#3c3c3b">=C2=A0</font></td></tr><tr><=
+td style=3D"padding:0px 0px 1px"><font color=3D"#50906e"><b><a href=3D"http=
+://haiphuongship.vn/" target=3D"_blank">Hai Phuong Company Limited</a></b><=
+/font></td></tr><tr><td style=3D"padding:0px 0px 1px;color:rgb(60,60,59)">H=
+ai Phong City=C2=A0|=C2=A0180000, Viet Nam</td></tr></tbody></table><br><br=
+></td></tr></tbody></table></div></div></div></div>
+
+--000000000000dcbe510621f65200--

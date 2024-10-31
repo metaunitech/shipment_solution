@@ -1,0 +1,454 @@
+Received-SPF: pass (spfCheck: domain of goldenmaritime.net designates 209.85.167.72 as permitted sender) client-ip=209.85.167.72; envelope-from=golden+bncBDUKPNWD5IMRBKMQ5O3AMGQE7X4U2II@goldenmaritime.net; helo=mail-lf1-f72.google.com;
+Received: from mail-lf1-f72.google.com (unknown [209.85.167.72])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 88E341004A4
+	for <chartering@jahline.com>; Fri,  6 Sep 2024 17:15:32 +0800 (CST)
+Received: by mail-lf1-f72.google.com with SMTP id 2adb3069b0e04-5365a82e3dfsf230387e87.2
+        for <chartering@jahline.com>; Fri, 06 Sep 2024 02:15:32 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1725614130; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=Bxp3izRRM1TFzR7UtP3TuisOAXux38UgbYG4Xz6bpFXEuY47lWBBckbIuaZONcsrpx
+         b+VhGDSlZy3M66TGfWwm1O1kGTTQStaHkGUd7MuhZKA/UOx2c6UXCyCnAjemRiOlOWT1
+         k8k1KcnB9w8yOAW7THzRGJQouMzBVjSVS0P/sMaf/kX7oeWXJyoeemKe8vPW1ka5GCZ3
+         +hs0iQ6AAZgV4kU/803MMgrcD06xgqujLQJ9KCUQNg0piT5pc8FNV5825IYypw5B2d1f
+         VhnjgdAqqjYCd2OqZTHDFVqQUp0GAlFAUVGrvuYImw3JnHoQuJqRX1j1j7eiG4CQl5B7
+         rP7Q==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=list-unsubscribe:list-subscribe:list-archive:list-help:list-post
+         :list-id:mailing-list:precedence:in-reply-to:from:to:references
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :dkim-signature;
+        bh=ytk8A7NnevkaNXgjzti+esAlNtyxlE9cpFlXTYwPmag=;
+        fh=8l0V+baOfo3k0c9cyZ14BwMGL0n3FSuo2EC0dsuzlmU=;
+        b=Rq6iVlmO1M0R/zi2vN6toO1kqD1ra3VcZVQxBMRkvlgdJy3uR+rZqnyfbuBum8Rhv2
+         6oOlGmtQGCZnVarmmg7SUZBYgq5/vGQxVXo21DpWAOzFWcZTUTyPs9c49Q3Wg1jqDV0H
+         JVHj6X5SUSxPo6lGf2nZkOqLSj3iAEy3idCKDQ5JcceY56mlTvNDgeBzx/mFNoNINTB5
+         Z3L262EzDIHH97jxlxuZPyNrM3SQlsQBfQBao5dQSInHBUTY7sdhjQyE0D+MYzzKj+MP
+         oOTOXoF6cYqSJ5jpTwxoNjoaAEXav89+Y015kDGUkhGt4DEK4/G/B4bjdwZZNuSkI8hn
+         NIbQ==;
+        darn=jahline.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@goldenmaritime-net.20230601.gappssmtp.com header.s=20230601 header.b=q09xTX29;
+       spf=pass (google.com: domain of pacific@goldenmaritime.net designates 209.85.220.41 as permitted sender) smtp.mailfrom=pacific@goldenmaritime.net;
+       dara=pass header.i=@goldenmaritime.net
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=goldenmaritime-net.20230601.gappssmtp.com; s=20230601; t=1725614130; x=1726218930; darn=jahline.com;
+        h=list-unsubscribe:list-subscribe:list-archive:list-help:list-post
+         :list-id:mailing-list:precedence:x-original-authentication-results
+         :x-original-sender:in-reply-to:from:to:references:content-language
+         :subject:user-agent:mime-version:date:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ytk8A7NnevkaNXgjzti+esAlNtyxlE9cpFlXTYwPmag=;
+        b=qz37WaimWc+TWFEYrMOwMN2wOiD+x3ycGYcKDUVXwU8AiUW4RBLNAgUhGqpCGdhwNt
+         +PaRC0nWezgW+mvCX+0vO0fSqlGK/G9k5q/5m0UfHq+57X5hxnnPuuyGRQ/PICm8KkNi
+         CPiTli1glQeB+SPPecWtmC9dNDdew+rcFHKHKbmcNnSb7wjQIa8G6s+1bOibeYBI+Cqp
+         ZotSiETxmZOZSct+iLBetyhux6fUZMh7NhvjZ3j4I2LCBaMGtbgQpAxtv3W9Td1N1j4R
+         oHeSczdrAF3ix52OD2Nhxr1dN1FhhbQ8JZYD+hMJcbBWCACa2TNkwr+WF5Y5igC69kV5
+         H4uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725614130; x=1726218930;
+        h=list-unsubscribe:list-subscribe:list-archive:list-help:list-post
+         :x-spam-checked-in-group:list-id:mailing-list:precedence
+         :x-original-authentication-results:x-original-sender:in-reply-to
+         :from:to:references:content-language:subject:user-agent:mime-version
+         :date:message-id:x-beenthere:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ytk8A7NnevkaNXgjzti+esAlNtyxlE9cpFlXTYwPmag=;
+        b=R33MpXdiz8Pp9dt4M7bEfuwFChyxS54Ew/d8FIMwqLJCzy6TXcyMLFWpQEHY+c/UT8
+         YYAORyeQ9YSMiOQN1OjCnBXuUQVeuomxBDbUDmG1NhLv6exwbPiF7yTpnA4B9V5zsbKr
+         WltwKhKBnX2ZgoZPRJhyVPgx7isG8bkDe1yGA11ArUvagEgr9xinyGlpa5D/c5V/jkN/
+         43rn7nhTO1QjcJHeW+1Tvs3jF1oI0r5azXlUptLUAG5ZhwanG8VmlSFZcYBMV22koFAx
+         JChRhh/8GTulema2gw5gj8YXogyG7gsJ6c60bh7eHZuYLKsswpBN1HjMKHSQ6vi9fwQ+
+         jvwA==
+X-Forwarded-Encrypted: i=2; AJvYcCUfbK4BQ8OdMbmW2iW5u9BCp2I25Vfyhpr+gPoWouot4/dAQwn8PBYVSLPjz//wynx7MvGGMKBT6/15@jahline.com
+X-Gm-Message-State: AOJu0Yw11a842+lkKlsnOwa+YUNXxpiJMgxVZrLhDdgrk6xS2tBV/3Ov
+	gYqCpai4+4tntOuYcu5JxfnrnrAnD/6B6wVzXnjVNamj4rWT+SbNH30TeUG2i3M=
+X-Google-Smtp-Source: AGHT+IGzwFXnZEDznP5BkVEpZv3jmLOpJKy9e2iB5t7uWu17Twd+OJEBlxsGhMREqlCCzXnvF7ziBA==
+X-Received: by 2002:a05:6512:1392:b0:52f:89aa:c344 with SMTP id 2adb3069b0e04-536587aac6bmr1110143e87.16.1725614129422;
+        Fri, 06 Sep 2024 02:15:29 -0700 (PDT)
+X-BeenThere: golden@goldenmaritime.net
+Received: by 2002:a05:6512:b1d:b0:536:53c2:bc54 with SMTP id
+ 2adb3069b0e04-53657849cb7ls323917e87.1.-pod-prod-01-eu; Fri, 06 Sep 2024
+ 02:15:19 -0700 (PDT)
+X-Forwarded-Encrypted: i=2; AJvYcCWmdcUi//y6kzYPEznu3g+UvVmB1ZYTo06TCqj0y61HQzoIqy0T8mqaHYQj14clE5njrAfupXA=@goldenmaritime.net
+X-Received: by 2002:a05:6512:ba6:b0:52f:cc06:c483 with SMTP id 2adb3069b0e04-536587abeafmr1058381e87.24.1725614119399;
+        Fri, 06 Sep 2024 02:15:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1725614119; cv=none;
+        d=google.com; s=arc-20160816;
+        b=ymhiQYZbmmb+gTYCOxv41nQY/rx24s+O1/UFl/NzibeoIAidaEpqtFX9q6ulHKtjvr
+         mLioEr9wDbWIUOpDBqaNOmgGLUr7dIOr9lxpp+DjQscv0SYv/5JSNQ3DcfUskXMJn/vh
+         ekuY/ip/BfUQePxC8oJfd6KDe7xBa4IcrjFiAbe3yVhWErNtk3n52Q2tBaBCxktsEMYo
+         Tx3brFpwWVLk+HOdgNQklQRmCAbPCTgt5O2hoPb1hVh921MexQuk8yedh9uHUXDX3XHH
+         i4QbruiqR07AYbu/I+cpq237NlkFaDh7RY8t5fJtux83AVdF2igJSNePuXr1guEe1F6R
+         F9yA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=in-reply-to:from:to:references:content-language:subject:user-agent
+         :mime-version:date:message-id:dkim-signature;
+        bh=1Cions4O4uO4/MDW5OqY3LL52HCJlL3OPlKChVMq6Fk=;
+        fh=7uWBZwNnBeDWI+hal4Vzz1LgBiHi3Nmboeg0rC4F/wQ=;
+        b=KHY5JkTCneiTlucHNbbfZ/P5mjvb4kxJaGx5mLBk1NTiAyCGbeNm/EnVBmdxKdSYJq
+         NEjGds6AbUNGUe58keeELgYcGnxlyI+IrSrGESv5KTj7ktMj01wXrYWehgSoda+Aa/XL
+         WJf8Pv0dvuU4WBW3krNIsBSPA7kPY3xTbWfnaQdTFbShMCKE8CgHWGX03aC8l2Sw3p5V
+         PGK2Y/JCzOVw0cDCrLtFixmIbkUFBMmsfbyMbkhUsOvPEvqLgbbB4lRQ9sGlR4bMtyXj
+         sCPtMELWTRagZUMtSo5F7hBjLJTKvArs6j7q5TyzYSWxYHlgd4I01RjungR2HE0dsVJQ
+         Rf4g==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@goldenmaritime-net.20230601.gappssmtp.com header.s=20230601 header.b=q09xTX29;
+       spf=pass (google.com: domain of pacific@goldenmaritime.net designates 209.85.220.41 as permitted sender) smtp.mailfrom=pacific@goldenmaritime.net;
+       dara=pass header.i=@goldenmaritime.net
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 2adb3069b0e04-535407727bfsor5579955e87.2.2024.09.06.02.15.19
+        for <GOLDEN@goldenmaritime.net>
+        (Google Transport Security);
+        Fri, 06 Sep 2024 02:15:19 -0700 (PDT)
+Received-SPF: pass (google.com: domain of pacific@goldenmaritime.net designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+X-Forwarded-Encrypted: i=1; AJvYcCXK7tew4i1Fr841Oyt7YW2i54+eYiHylPEdF0HlcPv9pxWeU24zUc4LD+A2EBcFZw4zNaq6lQw=@goldenmaritime.net
+X-Received: by 2002:a05:651c:198e:b0:2f0:1e0a:4696 with SMTP id 38308e7fff4ca-2f751eb20edmr13346471fa.7.1725614118109;
+        Fri, 06 Sep 2024 02:15:18 -0700 (PDT)
+Received: from [192.168.1.244] ([124.29.240.250])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c3cc56baedsm2224005a12.58.2024.09.06.02.15.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Sep 2024 02:15:17 -0700 (PDT)
+Content-Type: multipart/alternative;
+ boundary="------------3N0rIZ0q0J19bmt2jkdE61zO"
+Message-ID: <3d20ad4a-0295-482b-8666-8dd4956e0b73@goldenmaritime.net>
+Date: Fri, 6 Sep 2024 14:15:16 +0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: =?UTF-8?Q?MV_AP_SVETI_VLAHO_=E2=80=93_53K_DWT/_09_BLT_=E2=80=93_OPE?=
+ =?UTF-8?Q?N_TANGA=2C_TANZANIA_13-14TH_SEPTEMBER=2C_2024?=
+Content-Language: en-US
+References: <0ed682a0-4c0e-4596-b687-e4533db4d30a@goldenmaritime.net>
+To: pacific@goldenmaritime.net
+From: "pacific@goldenmaritime.net" <pacific@goldenmaritime.net>
+In-Reply-To: <0ed682a0-4c0e-4596-b687-e4533db4d30a@goldenmaritime.net>
+X-Forwarded-Message-Id: <0ed682a0-4c0e-4596-b687-e4533db4d30a@goldenmaritime.net>
+X-Original-Sender: pacific@goldenmaritime.net
+X-Original-Authentication-Results: mx.google.com;       dkim=pass
+ header.i=@goldenmaritime-net.20230601.gappssmtp.com header.s=20230601
+ header.b=q09xTX29;       spf=pass (google.com: domain of pacific@goldenmaritime.net
+ designates 209.85.220.41 as permitted sender) smtp.mailfrom=pacific@goldenmaritime.net;
+       dara=pass header.i=@goldenmaritime.net
+Precedence: list
+Mailing-list: list golden@goldenmaritime.net; contact golden+owners@goldenmaritime.net
+List-ID: <golden.goldenmaritime.net>
+X-Spam-Checked-In-Group: golden@goldenmaritime.net
+X-Google-Group-Id: 609231178789
+List-Post: <https://groups.google.com/a/goldenmaritime.net/group/golden/post>, <mailto:golden@goldenmaritime.net>
+List-Help: <https://support.google.com/a/goldenmaritime.net/bin/topic.py?topic=25838>,
+ <mailto:golden+help@goldenmaritime.net>
+List-Archive: <https://groups.google.com/a/goldenmaritime.net/group/golden/>
+List-Subscribe: <https://groups.google.com/a/goldenmaritime.net/group/golden/subscribe>,
+ <mailto:golden+subscribe@goldenmaritime.net>
+List-Unsubscribe: <mailto:googlegroups-manage+609231178789+unsubscribe@googlegroups.com>,
+ <https://groups.google.com/a/goldenmaritime.net/group/golden/subscribe>
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWTYjWV
+	dZCAsdC1lBS1dZKFlBTk43V1ktWUFJV1kPCRoVCBIfWUFZQ0tNSlYfGhlMTx4ZTU9DQ09WFRQJFh
+	oXVRMBExYaEhckEhVZV1kYEgtZQVlJS0JVQ05VSk1MVUxJWVdZFhoPEhUdFFlBWUtVS1VLVUtZBg
+	++
+Sender: golden+bncBDUKPNWD5IMRBKMQ5O3AMGQE7X4U2II@goldenmaritime.net
+X-HM-Tid: 0a91c69e0d510376kunm88e341004a4
+X-HM-MType: 1
+
+This is a multi-part message in MIME format.
+--------------3N0rIZ0q0J19bmt2jkdE61zO
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: quoted-printable
+
+ =C2=A0// FAHAD
+
+MV AP SVETI VLAHO =E2=80=93 53K DWT/ 09 BLT =E2=80=93 OPEN TANGA, TANZANIA =
+13-14TH=20
+SEPTEMBER, 2024
+
+
+ETA NACALA 16 SEPTEMBER
+
+ETA BEIRA 17 SEPTEMBER
+
+ETA RBCT/DURBAN/MAPUTO 19 SEPTEMBER
+
+ETA PORT ELIZABETH 21 SEPTEMBER
+
+ETA SALDHANA BAY 22 SEPTEMBER
+
+
+BOD DLOSP TANGA : VLSFO 600 MTS, LSMGO 65 MTS .
+
+
+CAN DO: ANY DIRECTION INCLUDING FH/BH OK. CHROME ORE/MANGANESE=20
+ORE/CONCENTRATES OK=C2=A0 . ECO GTEED. NIGERIA, IRAQ, VENEZUELA OK.ITF APPR=
+OVED.
+
+CANNOT DO: GULF OF ADEN, RED SEA, UKRAINE, RUSSIA, YEMEN , ISRAEL ,=20
+IRAN, CLINKER , PERIOD.
+
+- MV AP SVETI VLAHO
+
+- BUILT : OCT 2009
+- FLAG : MARSHALL ISLAND
+- LOA/BEAM : ABT 190,00 M / ABT 32,26 M
+- DWAT / SW DRAFT:
+
+SUMMER  : 53.529 MT / 12,62 M
+WINTER  : 52.023 MT / 12,357 M
+TROPICAL: 55.038 MT / 12,883 M
+
+- TPC ON SSW DRAFT :ABT 57,32 MT
+- GRT / NRT:
+
+INTERNATIONAL: 32.578 / 18.070
+SUEZ: 33.152 /29.764
+
+-TYPE OF HATCH COVERS : FOLDING TYPE HYDRAULICALLY OPERATED
+-CUBIC FEET CAPACITY  : TOTAL : =3D 2.328.826 (65.945,00 CUM)
+
+- CARGO GEAR:
+
+NUMBER OF CRANES: 4 ELECTRO-HYDRAULICALLY OPERATED CRANES
+CAPACITY (WITH HOOK)-(SWL): 36MT CAPACITY (WITH GRAB) - SWL): 28 MT
+
+GRABS:
+
+NUMBER OF GRABS: 4
+MANUFACTURER: GUVEN Grab & Machine Inc.
+GRAB MODEL: GUVEN Radio Remote Control Grab
+EMPTY WEIGHT (TARE): 9.400 KG
+CAPACITY: 5-13 CUM
+
+- SPEED / CONSUMPTION:
+BALLAST - ABT 13,5 KNTS / ABT 26,5 MT VLSFO + ABT 2,5 MT VLSFO AUX.ENGINE C=
+ONSUMPTION AT SEA.
+LADEN - ABT 12,5 KNTS / ABT 27,0 MT VLSFO + ABT 2,5 MT VLSFO AUX.ENGINE CON=
+SUMPTION AT SEA.
+
+- VSL'S ECO SPEED / CONSUMPTION
+
+BALLAST - ABT 12,0KNTS / ABT 23,5 MT VLSFO + ABT 2,5 MT VLSFO AUX.ENGINE CO=
+NSUMPTION AT SEA.
+LADEN - ABT 11,5 KNTS / ABT 23,5 MT VLSFO + ABT 2,5 MT VLSFO AUX.ENGINE CON=
+SUMPTION AT SEA.
+
+- PORT CONSUMPTION :
+IDLE: ABT. 4,5 MT VLSFO (380 CST),
+
+4 GEARS WORKING: ABT 6,0 MT VLSFO (380 CST)
+
+ALL DETAILS ABOUT.
+
+--=20
+Thanks and Best regards
+
+Fahad Mahmood
+(as brokers only)
+Golden Maritime
+
+EML:pacific@goldenmaritime.net
+PH#:       00922138682834
+MOB:       00923218270053
+MOB / WHATSAPP:  00923332237322
+
+
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to golden+unsubscribe@goldenmaritime.net.
+
+--------------3N0rIZ0q0J19bmt2jkdE61zO
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DUTF-8=
+">
+  </head>
+  <body>
+    <div class=3D"moz-forward-container">
+      <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DUTF=
+-8">
+      <div class=3D"moz-text-html" lang=3D"x-unicode">
+        <div class=3D"moz-text-html" lang=3D"x-unicode">
+          <div class=3D"moz-text-html" lang=3D"x-unicode">
+            <div class=3D"moz-forward-container">
+              <div class=3D"moz-forward-container">
+                <div class=3D"moz-forward-container">
+                  <div class=3D"moz-forward-container">
+                    <p
+style=3D"text-align:left;text-indent:0pt;margin:0pt 0pt 0pt 0pt;"><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:normal;font-style:normal;">=C2=A0//
+                        FAHAD <br>
+                        <br>
+                      </span></p>
+                    <p
+style=3D"text-align:left;text-indent:0pt;margin:0pt 0pt 0pt 0pt;"><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:bold;font-style:normal;">MV
+                        AP SVETI VLAHO =E2=80=93 53K DWT/ 09 BLT =E2=80=93 =
+OPEN TANGA,
+                        TANZANIA 13-14TH SEPTEMBER, 2024</span></p>
+                    <p
+style=3D"text-align:left;text-indent:0pt;margin:0pt 0pt 0pt 0pt;"><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:bold;font-style:normal;"><br>
+                      </span></p>
+                    <p
+style=3D"text-align:left;text-indent:0pt;margin:0pt 0pt 0pt 0pt;"><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:bold;font-style:normal;">ETA
+                        NACALA 16 SEPTEMBER<br>
+                      </span></p>
+                    <p
+style=3D"text-align:left;text-indent:0pt;margin:0pt 0pt 0pt 0pt;"><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:bold;font-style:normal;">ETA
+                        BEIRA 17 SEPTEMBER<br>
+                      </span></p>
+                    <p
+style=3D"text-align:left;text-indent:0pt;margin:0pt 0pt 0pt 0pt;"><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:bold;font-style:normal;">ETA
+                        RBCT/DURBAN/MAPUTO 19 SEPTEMBER</span></p>
+                    <p
+style=3D"text-align:left;text-indent:0pt;margin:0pt 0pt 0pt 0pt;"><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:bold;font-style:normal;">ETA
+                        PORT ELIZABETH 21 SEPTEMBER <br>
+                      </span></p>
+                    <p
+style=3D"text-align:left;text-indent:0pt;margin:0pt 0pt 0pt 0pt;"><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:bold;font-style:normal;">
+                        ETA SALDHANA BAY 22 SEPTEMBER<br>
+                      </span></p>
+                    <p
+style=3D"text-align:left;text-indent:0pt;margin:0pt 0pt 0pt 0pt;"><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:bold;font-style:normal;"><br>
+                      </span></p>
+                    <p
+style=3D"text-align:left;text-indent:0pt;margin:0pt 0pt 0pt 0pt;"><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:bold;font-style:normal;text-decoration: underli=
+ne;">BOD
+                        DLOSP TANGA </span><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:normal;font-style:normal;">:=C2=A0
+                        VLSFO 600 MTS, LSMGO 65 MTS .</span></p>
+                    <p
+style=3D"text-align:left;text-indent:0pt;margin:0pt 0pt 0pt 0pt;"><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:normal;font-style:normal;"><br>
+                      </span><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:bold;font-style:normal;text-decoration: underli=
+ne;">CAN
+                        DO</span><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:normal;font-style:normal;">
+                        : ANY DIRECTION INCLUDING FH/BH OK. CHROME
+                        ORE/MANGANESE ORE/CONCENTRATES OK=C2=A0 . ECO GTEED=
+.
+                        NIGERIA, IRAQ, VENEZUELA OK.ITF APPROVED.<br>
+                        <br>
+                      </span><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:bold;font-style:normal;text-decoration: underli=
+ne;">CANNOT
+                        DO</span><span
+style=3D"color:#000000;background-color:#FFFFFF;font-family:'Courier New';f=
+ont-size:10.5pt;font-weight:normal;font-style:normal;">
+                        : GULF OF ADEN, RED SEA, UKRAINE, RUSSIA, YEMEN
+                        , ISRAEL , IRAN, CLINKER , PERIOD.<br>
+                        <br>
+                      </span></p>
+                    <pre class=3D"moz-signature" cols=3D"72">- MV AP SVETI =
+VLAHO
+
+- BUILT : OCT 2009
+- FLAG : MARSHALL ISLAND
+- LOA/BEAM : ABT 190,00 M / ABT 32,26 M
+- DWAT / SW DRAFT:
+
+SUMMER  : 53.529 MT / 12,62 M
+WINTER  : 52.023 MT / 12,357 M
+TROPICAL: 55.038 MT / 12,883 M
+
+- TPC ON SSW DRAFT :ABT 57,32 MT
+- GRT / NRT:
+
+INTERNATIONAL: 32.578 / 18.070
+SUEZ: 33.152 /29.764
+
+-TYPE OF HATCH COVERS : FOLDING TYPE HYDRAULICALLY OPERATED
+-CUBIC FEET CAPACITY  : TOTAL : =3D 2.328.826 (65.945,00 CUM)
+
+- CARGO GEAR:
+
+NUMBER OF CRANES: 4 ELECTRO-HYDRAULICALLY OPERATED CRANES
+CAPACITY (WITH HOOK)-(SWL): 36MT CAPACITY (WITH GRAB) - SWL): 28 MT
+
+GRABS:
+
+NUMBER OF GRABS: 4
+MANUFACTURER: GUVEN Grab &amp; Machine Inc.
+GRAB MODEL: GUVEN Radio Remote Control Grab
+EMPTY WEIGHT (TARE): 9.400 KG
+CAPACITY: 5-13 CUM
+
+- SPEED / CONSUMPTION:
+BALLAST - ABT 13,5 KNTS / ABT 26,5 MT VLSFO + ABT 2,5 MT VLSFO AUX.ENGINE C=
+ONSUMPTION AT SEA.
+LADEN - ABT 12,5 KNTS / ABT 27,0 MT VLSFO + ABT 2,5 MT VLSFO AUX.ENGINE CON=
+SUMPTION AT SEA.
+
+- VSL'S ECO SPEED / CONSUMPTION
+
+BALLAST - ABT 12,0KNTS / ABT 23,5 MT VLSFO + ABT 2,5 MT VLSFO AUX.ENGINE CO=
+NSUMPTION AT SEA.
+LADEN - ABT 11,5 KNTS / ABT 23,5 MT VLSFO + ABT 2,5 MT VLSFO AUX.ENGINE CON=
+SUMPTION AT SEA.
+
+- PORT CONSUMPTION :
+IDLE: ABT. 4,5 MT VLSFO (380 CST),
+
+4 GEARS WORKING: ABT 6,0 MT VLSFO (380 CST)
+
+ALL DETAILS ABOUT.
+
+--=20
+Thanks and Best regards
+
+Fahad Mahmood
+(as brokers only)
+Golden Maritime
+
+EML:       <a class=3D"moz-txt-link-freetext"
+                    href=3D"mailto:pacific@goldenmaritime.net"
+                    moz-do-not-send=3D"true">pacific@goldenmaritime.net</a>
+PH#:       00922138682834
+MOB:       00923218270053
+MOB / WHATSAPP:  00923332237322
+
+
+
+</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<p></p>
+
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to <a href=3D"mailto:golden+unsubscribe@goldenmaritime.net">golden+uns=
+ubscribe@goldenmaritime.net</a>.<br />
+
+--------------3N0rIZ0q0J19bmt2jkdE61zO--

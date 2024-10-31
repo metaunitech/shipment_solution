@@ -1,0 +1,322 @@
+Received-SPF: pass (spfCheck: domain of _spf.google.com designates 209.85.208.193 as permitted sender) client-ip=209.85.208.193; envelope-from=graceocean.gm@gmail.com; helo=mail-lj1-f193.google.com;
+Received: from mail-lj1-f193.google.com (unknown [209.85.208.193])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 145354C0362
+	for <chartering@jahline.com>; Tue, 10 Sep 2024 09:25:49 +0800 (CST)
+Received: by mail-lj1-f193.google.com with SMTP id 38308e7fff4ca-2f75e5f3debso23701681fa.1
+        for <chartering@jahline.com>; Mon, 09 Sep 2024 18:25:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725931546; x=1726536346; darn=jahline.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kF33fCMBWkPgRN8X7durqedU2d5cgVkmOW7yMr188fM=;
+        b=GUpiXPD77RqCf5MiWiK9xsRpMGF3GDYFgjujku6mQdId6t3OOZdun97jbxxeL/y5ir
+         led2HeOTlc43klljmiavR4JMxlkSHf0cYWAdPYPB38Fz/xohe09UWXBgq4CEFQ6aVbEL
+         uxkpfx4i0PbVCmkw0NMRIp/YOssJhMhYmHxq3hA77Z0gMN52k8z22kcDg2J1WchRCCAw
+         C0hhfYTd7Kgwpjp4OGjgwxpNB0kUi9Jd60MHT6DzRFhYZwes7mgM5ImODwFZtVK5oniN
+         IGvdZuy+wZ2GcYdSZSD7GhGbFM8FNXrqqVVHwNoxZGxIxhZWPAGTGYeUptAX8xqsL7Rx
+         Iidw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725931546; x=1726536346;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kF33fCMBWkPgRN8X7durqedU2d5cgVkmOW7yMr188fM=;
+        b=IJOLTolab05eud9uuvDg4kw7PwN3kIBMRe3lHe2ObWTWZZWLGL4vE6q96b+8kgrrWX
+         1g/KHEGU6ZICCWeM8Em9BW6ZTSg+28Q9qcaWPvLsRMAYbo3SiDERESlG3/V2mPcrr/1E
+         jaeTHQN4jndf9bKG7gTZf9KLseFz1NygFDGWd9++29VbkCzhhqxcxVSyshdYNS/p3qLE
+         9AyPXUPTPYtDUadfbWziMKVcJBFuZq0TSbM1r8qv6OzRdO89oX1s6ieQJ4Q3pTDRTKJU
+         J93ehJQQ+/vuNhm/EbfQ0SKYKm3vZxjNwQFcKZKj0EHFChYsTjQ09Ihv7IcYh/MiCvBC
+         4OyA==
+X-Forwarded-Encrypted: i=1; AJvYcCXMBIRJq4DL7AoE80bBfpdejdtJ1KWy9OCOUOJjoEgjFWKDgSzW6OC2Bhgriad5uxwQ6KBDyWp1v7S9@jahline.com
+X-Gm-Message-State: AOJu0YwwMlY7j+5oQMhJdS+hR8Y6LR/Z2FPMRUBYgYzcKQ3Bd5scXQQW
+	a36JmSjYmffqvHTGr0aDhljWO3E31hBZBPFozcgxwxAeQi206oZfo8zWesRoSD3NmT8jzrCedgM
+	XKvQW3wzAEecDvXmW7zd2pJFDMT8=
+X-Google-Smtp-Source: AGHT+IGZCK4ttGcObCWPXLWr+7RZ1bAB+cwhESZ+wSg9xqmMn3j5F+IB4+k1dUxL/w+k9dlX8P8th3fDx2KFFs9vJb8=
+X-Received: by 2002:a2e:bc0d:0:b0:2f7:5367:5c1b with SMTP id
+ 38308e7fff4ca-2f75b890672mr65012571fa.11.1725931545071; Mon, 09 Sep 2024
+ 18:25:45 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAJcmkAmmwbNrM+fn2EzpsnQx5MOXNPVP_zvUGuEMD_DD3X1NcQ@mail.gmail.com>
+ <CAJcmkAk+ftUnpotTZSjWc6f--BspJ-ZsR-RiPFrkjECUoNNvPw@mail.gmail.com>
+ <CAJcmkAkakFDE_A_eYgfb_JAOjhzORFUTjhJEb8zCzE_sqbE48A@mail.gmail.com>
+ <CAJcmkAmFHbEe0Hwo9xoKVtCDoR2ktdp6ihHsUfpLoR8hUWE=yw@mail.gmail.com>
+ <CAJcmkAmC6TKFSw1dNg52Bo4OCkkuCtvYSx8U1rvR0SuS_=J2eg@mail.gmail.com>
+ <CAJcmkAn3R4FLghRh=mRrf6nBqsmDnSk=HY+esL4nyCuUWyh=Fw@mail.gmail.com>
+ <CAJcmkAkodnYFPYLuE_MvzimOL=_a8KRJ633bk+Z1+uTxVrtwEg@mail.gmail.com>
+ <CAJcmkAmmXsiMFrv-3-JjNWA657YGdhFMgrpD7CE86ytzR4=w6w@mail.gmail.com>
+ <CAJcmkAnJCKrNCWgUn7LETTBZa9G=32qTgzyVm7ntNyiF-tNxBA@mail.gmail.com>
+ <CAJcmkA=b6uwjnQpW2cCASfHyLv7qA+dEb=KPdtWFp1TqcPSFKg@mail.gmail.com>
+ <CAJcmkA=1su+XygkKF2JB6LtH8g52Cino7rOYi=qnmwDdsXRgVw@mail.gmail.com>
+ <CAJcmkAk8z+mTHkmz_C_3ZP6GRn_UANf1rVdeqMrmv8WkA6qC_g@mail.gmail.com>
+ <CAJcmkAm1hTy+50eHAi_FA6AmaOUOYyz2wv+ikROcqAaK=zr3Ng@mail.gmail.com>
+ <CAJcmkAnHekWjEJPvJDJsFQLHEHOFbMz6+g+sBizEigWgJewZjA@mail.gmail.com>
+ <CAJcmkA=R=MBuK0EOwuE_6Mch3Mb6pdDFZ_4Q3n3SEcjzrezn4g@mail.gmail.com>
+ <CAJcmkAnur-SGTa27HnGyEZrpGd=UUhEuUaF=PjxLJB0ZRCoCpw@mail.gmail.com>
+ <CAJcmkA=TWtxF1DFmHEqFCdYKUhpqwfAznDiKLgZ8qByuS7tY0Q@mail.gmail.com>
+ <CAJcmkAnmu1wihpunw5oE9igbFBQbmFFV8S=TqARGGtKRHO1RPA@mail.gmail.com>
+ <CAJcmkAnO8AQGWWWinua487UCBdgG43=hDHfSAMfG3SGFcy3Vbg@mail.gmail.com>
+ <CAJcmkA=fWo9weVv4FjksG5bsg8bYMVsM+CuvbUgYCKoDY0sMCQ@mail.gmail.com>
+ <CAJcmkA=yOuD0ff4NKwJHJ_JLdoQC6dPyVVdKt5cPUkON70TZ+w@mail.gmail.com>
+ <CAJcmkA=OW9i8eqaMacevtfsK_F_6cBPpWRKNjvDg84ayoHxwSQ@mail.gmail.com>
+ <CAJcmkAkc_3_74b1FhVfYenV9MULW=cO8xngxd-qGkAG1z8Y2NA@mail.gmail.com>
+ <CAJcmkAkYx-EPHVg76b5Fx3pTPCmjHJb1ksfT80pDdCWzOkJkFA@mail.gmail.com>
+ <CAJcmkA=86G_owi66rdAODNQkSir5qc9vwgCZhyCaK1XVnVvmbQ@mail.gmail.com>
+ <CAJcmkAn_VjNrfq+GMib3DNvLXKg6U=3ezj_Y94=AmdkHC8OagQ@mail.gmail.com>
+ <CAJcmkAnVjcZzRY04fct2V0JTqa+Un0P80LwmoGMwCj5x4MGgBA@mail.gmail.com>
+ <CAJcmkAkm0uFQcd31dYWbmG4gsTJzATN7KmJM6ypvxKPAdWFOFA@mail.gmail.com>
+ <CAJcmkAnYU3g4KkY1KNsgeHXz4XGUpHkr2ezb4bn-tOq4p-fB2Q@mail.gmail.com>
+ <CAJcmkAnhMnCB5k6+xVzMM1AquS+Mo9TAjMRo42N11dgxC2_bEQ@mail.gmail.com>
+ <CAJcmkAk5TkfNqvS+basXGg2t49-JmF0AijvhMDMoAa34k3xqZg@mail.gmail.com>
+ <CAJcmkAnqEdWaLRo1AMspFk0f8nzD6MuNvNpdSgcXVqrTTpPdvw@mail.gmail.com>
+ <CAJcmkA=9Ph-Sa3xNSLqRv7SLrdgY-LYa2bT7QS54GabB3Pk5Uw@mail.gmail.com> <CAJcmkAknPO8n3fFkrCXg-yiyWD1OPw0+muiorzVU-Cppigh1Uw@mail.gmail.com>
+In-Reply-To: <CAJcmkAknPO8n3fFkrCXg-yiyWD1OPw0+muiorzVU-Cppigh1Uw@mail.gmail.com>
+From: =?UTF-8?B?6YeH5rSL55Kw55CD?= <graceocean.gm@gmail.com>
+Date: Tue, 10 Sep 2024 09:25:32 +0800
+Message-ID: <CAJcmkA=_NezMzgpMGrRLHd20DhWHZTTuTW7V1WG2Z1aguWRsDg@mail.gmail.com>
+Subject: GOGM OPEN TONNAGE DATED 2024/09/10
+To: =?UTF-8?B?6YeH5rSL55Kw55CD?= <graceocean.gm@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000a69e540621b9c01f"
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWTYjWV
+	dZCAsdC1lBS1dZKFlBTkM3V1ktWUFJV1kPCRoVCBIfWUFZGRkeSlZJGR0aTEpMQ0lOGBpWFRQJFh
+	oXVRMBExYaEhckEhVZV1kYEgtZQVlJS0JVQ05VSUtDVUpCSFlXWRYaDxIVHRRZQVlOS0hVSktKSk
+	xOSlVKS0tVSkJLS1kG
+X-HM-Tid: 0a91d989719b0377kunm145354c0362
+X-HM-MType: 1
+
+--000000000000a69e540621b9c01f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear Sir,
+
+Please kindly find suitable cargo for our open tonnage as below:
+
+*MV =E2=80=9DFAITHE=E2=80=9D =E2=80=93 OPEN HONG KONG O/A SEPT. 26, 2024*
+
+
+HONG KONG FLAG, BLT 1997, GENERAL CARGO/WOOD CHIP CARRIER
+
+DWT/GRT/NRT 48,181/39,901/20,152 TONS
+LOA/BM/DFT 199.9/32.2/11.272M, GRAIN CAPA 102,217.6CBM
+6H/6H, CRNS 14.5T X3, GRAB/BUCKET 4X15 CBM,
+
+CONVEYOR SYSTEM ON BOARD
+
+
+
+Sincerely yours,
+GRACE OCEAN GLOBAL MARINE CO., LTD.
+EMAIL: graceocean.gm@gmail.com
+BELLA WANG | MP: 886-929633497 | SKYPE: bella.wang888
+KRIS YU | MP: 886-921108312 | SKYPE: yuhsiuli
+
+--000000000000a69e540621b9c01f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"=
+gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><=
+div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div =
+dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail=
+_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div c=
+lass=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=
+=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_qu=
+ote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div clas=
+s=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"l=
+tr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote">=
+<div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"=
+gmail_quote"><div dir=3D"ltr"><div><div dir=3D"ltr" class=3D"gmail_signatur=
+e" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr=
+"><div><div dir=3D"ltr"><div dir=3D"ltr"><span style=3D"font-family:arial,s=
+ans-serif">Dear Sir,</span><br></div></div></div></div></div></div></div></=
+div><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote">=
+<div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"=
+gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><=
+div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div =
+dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail=
+_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div c=
+lass=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=
+=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_qu=
+ote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div clas=
+s=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"l=
+tr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote">=
+<div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"=
+gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><=
+div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div =
+dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail=
+_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div c=
+lass=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=
+=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_qu=
+ote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div clas=
+s=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"l=
+tr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote">=
+<div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"=
+gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><=
+div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div =
+dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail=
+_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div c=
+lass=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=
+=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_qu=
+ote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div clas=
+s=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"l=
+tr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div dir=3D"ltr"><font face=
+=3D"arial, sans-serif"><br></font></div><div dir=3D"ltr"><div class=3D"gmai=
+l_quote"><div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_quote"><div =
+dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail=
+_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div c=
+lass=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=
+=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_qu=
+ote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div clas=
+s=3D"gmail_quote"><div dir=3D"ltr"><div dir=3D"auto"><div dir=3D"ltr"><div =
+dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail=
+_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div c=
+lass=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=
+=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_qu=
+ote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div clas=
+s=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"l=
+tr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote">=
+<div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"=
+gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><=
+div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div =
+dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail=
+_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div c=
+lass=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=
+=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_qu=
+ote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div clas=
+s=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"l=
+tr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote">=
+<div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"=
+gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><=
+div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div =
+dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail=
+_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div c=
+lass=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=
+=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_qu=
+ote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div clas=
+s=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"l=
+tr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote">=
+<div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"=
+gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><=
+div class=3D"gmail_quote"><div dir=3D"ltr"><div class=3D"gmail_quote"><div =
+dir=3D"ltr"><font face=3D"arial, sans-serif">Please kindly find suitable ca=
+rgo for our=C2=A0<span>open</span>=C2=A0<span>tonnage</span>=C2=A0as below:=
+</font></div><div dir=3D"ltr"><br></div><div dir=3D"ltr"><div dir=3D"ltr"><=
+p class=3D"MsoNormal" style=3D"margin:0cm;background-image:initial;backgrou=
+nd-position:initial;background-size:initial;background-repeat:initial;backg=
+round-origin:initial;background-clip:initial"><font face=3D"arial, sans-ser=
+if"><b><span lang=3D"EN-US"><font color=3D"#0000ff">MV =E2=80=9DFAITHE=E2=
+=80=9D =E2=80=93=C2=A0OPEN HONG KONG O/A SEPT. 26, 2024</font></span></b></=
+font></p><p class=3D"MsoNormal" style=3D"margin:0cm;background-image:initia=
+l;background-position:initial;background-size:initial;background-repeat:ini=
+tial;background-origin:initial;background-clip:initial"><font face=3D"arial=
+, sans-serif"><b><span lang=3D"EN-US" style=3D"color:blue"><br></span></b><=
+span lang=3D"EN-US">HONG KONG FLAG, BLT 1997, GENERAL CARGO/WOOD CHIP CARRI=
+ER</span></font></p><p class=3D"MsoNormal" style=3D"margin:0cm;background-i=
+mage:initial;background-position:initial;background-size:initial;background=
+-repeat:initial;background-origin:initial;background-clip:initial"><span la=
+ng=3D"EN-US"><font face=3D"arial, sans-serif">DWT/GRT/NRT 48,181/39,901/20,=
+152 TONS<br>LOA/BM/DFT 199.9/32.2/11.272M, GRAIN CAPA 102,217.6CBM<br>6H/6H=
+, CRNS 14.5T X3, GRAB/BUCKET 4X15 CBM,</font></span></p><p class=3D"MsoNorm=
+al" style=3D"margin:0cm"><span lang=3D"EN-US"></span></p><p class=3D"MsoNor=
+mal" style=3D"margin:0cm;background-image:initial;background-position:initi=
+al;background-size:initial;background-repeat:initial;background-origin:init=
+ial;background-clip:initial"><span lang=3D"EN-US"><font face=3D"arial, sans=
+-serif">CONVEYOR SYSTEM ON BOARD</font></span></p><p class=3D"MsoNormal" st=
+yle=3D"margin:0cm;background-image:initial;background-position:initial;back=
+ground-size:initial;background-repeat:initial;background-origin:initial;bac=
+kground-clip:initial"><br></p><div dir=3D"ltr"><br></div>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm"><span style=3D"font-family:aria=
+l,sans-serif">Sincerely yours,</span><br></p></div></div><div dir=3D"ltr"><=
+div dir=3D"ltr"><div dir=3D"ltr"><font face=3D"arial, sans-serif">GRACE OCE=
+AN GLOBAL MARINE CO., LTD.</font></div><div dir=3D"ltr"><font face=3D"arial=
+, sans-serif">EMAIL:=C2=A0<a href=3D"mailto:graceocean.gm@gmail.com" target=
+=3D"_blank">graceocean.gm@gmail.com</a></font></div><div dir=3D"ltr"><font =
+face=3D"arial, sans-serif"><span>BELLA</span>=C2=A0WANG | MP: 886-929633497=
+=C2=A0</font><span style=3D"font-family:arial,sans-serif">|</span><span sty=
+le=3D"font-family:arial,sans-serif">=C2=A0SKYPE:=C2=A0<span>bella</span>.wa=
+ng888</span></div><div><div dir=3D"ltr"><font face=3D"arial, sans-serif">KR=
+IS YU=C2=A0|=C2=A0MP: 886-921108312=C2=A0|=C2=A0SKYPE: yuhsiuli=C2=A0=C2=A0=
+</font></div></div></div></div></div></div></div></div></div></div></div></=
+div></div></div></div></div></div></div></div></div></div></div></div></div=
+></div></div></div></div></div></div></div></div></div></div></div></div></=
+div></div></div></div></div></div></div></div></div></div></div></div></div=
+></div></div></div></div></div></div></div></div></div></div></div></div></=
+div></div></div></div></div></div></div></div></div></div></div></div></div=
+></div></div></div></div></div></div></div></div></div></div></div></div></=
+div></div></div></div></div></div></div></div></div></div></div></div></div=
+></div></div></div></div></div></div></div></div></div></div></div></div></=
+div></div></div></div></div></div></div></div></div></div></div></div></div=
+></div></div></div></div></div></div></div></div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+</div></div>
+
+--000000000000a69e540621b9c01f--

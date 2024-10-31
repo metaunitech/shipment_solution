@@ -145,6 +145,10 @@ class FeishuMessageHandler(FeishuApp):
             lark.logger.error(
                 f"client.im.v1.message_resource.get failed, code: {response.code}, msg: {response.msg}, log_id: {response.get_log_id()}")
 
+            # 处理业务结果
+        f = open(str(store_path), "wb")
+        f.write(response.file.read())
+        f.close()
 
 
 

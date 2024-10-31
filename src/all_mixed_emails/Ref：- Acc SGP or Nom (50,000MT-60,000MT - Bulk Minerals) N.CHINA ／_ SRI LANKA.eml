@@ -1,0 +1,138 @@
+Received-SPF: pass (spfCheck: domain of peacemaritime.com designates 209.85.128.171 as permitted sender) client-ip=209.85.128.171; envelope-from=chartering@peacemaritime.com; helo=mail-yw1-f171.google.com;
+Received: from mail-yw1-f171.google.com (unknown [209.85.128.171])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 4BE794C074B
+	for <chartering@jahline.com>; Sat, 14 Sep 2024 15:35:47 +0800 (CST)
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6dbc9a60480so15635767b3.0
+        for <chartering@jahline.com>; Sat, 14 Sep 2024 00:35:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=peacemaritime.com; s=google; t=1726299345; x=1726904145; darn=jahline.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=PGNkVQn0Jd5HKVTTwwUQHbghMjzJH/RfE30hgo6/hlU=;
+        b=F5WxciMWV/qc4q9F7Pq1y8psSLVgVuBUJSlOftlFMBxhzT8mYBJjPxc9sNBY94jKnV
+         qnFZbTXeT0bAEP8A2HUGmGrkzLENMzJb/891Uq994YNaLaz/OifGoFXnjfGBYfq8oWN8
+         Qk6UZ5WjIqAzj8HwTb2GhhrEGQpKUzZ9RVmi9NNGsQ6PonqyQvVdsbIXxcsx9S7jxd0R
+         7yS2ypg2cmp4lzyJ2gcsjZx3seQ7VwZkROdONdZxp1Eg2wzgpVg91tLjM5Ceghpa8s0f
+         wxXrehbb+BxceCsnNiMMazd2QV4n5rP7+vJ5hOfHsbB0tTSjV0zJjmG1VU0fIMfJBZHU
+         ESZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726299345; x=1726904145;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PGNkVQn0Jd5HKVTTwwUQHbghMjzJH/RfE30hgo6/hlU=;
+        b=d34ERraSjwxceHLuzMnBH0JxBVZyGjSBCj1ek4aBCv0dyrkiUAIJjgWEYqiSLkCHXv
+         GjSIArjniG7ng3BjM7YenrluSwxcs1BB6is488+XbrfoHhvIEA6eY6GiutsfdVweFn6/
+         c6dFqPMetPgzd5J4mWqem9uPaYH7WqJWMpZoblsqnIwprqmHeMTLXnDvBwFWzZqESx6N
+         Td6b33y8wGmaxQfW14B2KkQXU/uicnoEz+MAw1Ea2Aj86dAtyMlHxZGBk12kgusNVd+P
+         a/xdpAgwH7QDSCOzcvJpfScaqTdmtfr9TVLYrmIe3hULpMjX+yOISvPx4Ekaw/1hWFKS
+         wrAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXfQv+9AirbrRzP+JeCeA7xNW9n8Iv7iGfMctYGEDwfne9bWN46Xp29NspX9Wl3kZRsMlqp3/nxHFlp@jahline.com
+X-Gm-Message-State: AOJu0Yxma4bjjAS4ambjjsiNWBqsLZi84WmGQJaJVyi/ugyjJKFFFmAo
+	6lcrQKShMX13bOOnDGzNTegm9hOHwuIYGVMX26W4mIPL1CgZjYq/TXFgab83onJL/pS4bhKTr48
+	AOGWy3W9U5TqI5eZRKH0IxwqQUgxyWtZMPEyimw==
+X-Google-Smtp-Source: AGHT+IG6lUYNleIDSOqWDxFHZxjRSDoV31E1MaEliFuWVYLq3kW+zC43qfjfKlNaxHWX9T4Y+F729k+Ijpbh0ALYvB0=
+X-Received: by 2002:a05:690c:6483:b0:6dc:45ef:d933 with SMTP id
+ 00721157ae682-6dc45efdc03mr5898077b3.43.1726299344795; Sat, 14 Sep 2024
+ 00:35:44 -0700 (PDT)
+MIME-Version: 1.0
+From: Peace Maritime <chartering@peacemaritime.com>
+Date: Sat, 14 Sep 2024 12:35:31 +0500
+Message-ID: <CAJX-KUUDJNB=V8Qfsj+2-+Ex3dS9KWh1xZ96JC9BTjBysGCdHw@mail.gmail.com>
+Subject: Ref:- Acc SGP or Nom (50,000MT-60,000MT - Bulk Minerals) N.CHINA /
+ SRI LANKA
+To: undisclosed-recipients:;
+Content-Type: multipart/alternative; boundary="00000000000039180f06220f63af"
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWTYjWV
+	dZCAsdC1lBS1dZKFlBTk43V1ktWUFJV1kPCRoVCBIfWUFZGR9MTFZJHU1ITU5OTk5JHRlWFRQJFh
+	oXVRMBExYaEhckEhVZV1kYEgtZQVlJS0JVQ05VSklDVUpMSllXWRYaDxIVHRRZQVlLVUtVS1VLWQ
+	Y+
+X-HM-Tid: 0a91ef75996f0377kunm4be794c074b
+X-HM-MType: 1
+
+--00000000000039180f06220f63af
+Content-Type: text/plain; charset="UTF-8"
+
+Kindly add our email id in your list pls: *chartering@peacemaritime.com
+<chartering@peacemaritime.com>*
+
+To  :Chartering desk
+From:Peace Maritime
+
+Dear Sir / Joshua
+
+Good day!
+
+*Ref:- Acc SGP or Nom (50,000MT-60,000MT - Bulk Minerals) N.CHINA / SRI
+LANKA*
+
+Pls ppse suitable rated tng for below direct charts firm reqmt.
+
+Reqmt:
+
+ACCT SGP or NOMINEE
+50,000- 60,000 MTS +/- 10% MOLOO BULK MINERALS
+1 N.CHINA /  1 SRILANKA
+18,000 SSHINC / 8,000 FHINC 12 HRS TT BENDS
+17-22 SEPT TRY VSL DATES
+1.25% ADDCOM + 1.25% PM ON F/D/D
+
+
+-- 
+Thanks & Best Regards
+
+Joshua
+=================================
+*Peace Maritime*
+(As brokers Only)
+Email: chartering@peacemaritime.com
+Private: peacemaritimepk@gmail.com
+Mobile: +92-3404873850
+Skype: live:.cid.8ee029017f4e7e5a
+Wechat: kjosh777
+==========================================================
+
+--00000000000039180f06220f63af
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Kindly add our email id in your list pls: <b><font size=3D=
+"4"><a href=3D"mailto:chartering@peacemaritime.com">chartering@peacemaritim=
+e.com</a></font></b><div><br></div><div>To=C2=A0 :Chartering desk</div><div=
+>From:Peace Maritime</div><div><br></div><div>Dear Sir / Joshua</div><div><=
+br></div><div>Good day!</div><div><br></div><div><b>Ref:- Acc SGP or Nom (5=
+0,000MT-60,000MT - Bulk Minerals) N.CHINA / SRI LANKA</b></div><div><br></d=
+iv><div>Pls ppse suitable rated tng for below direct charts=C2=A0firm reqmt=
+.</div><div><br></div><div>Reqmt:</div><div><br></div><div><div style=3D"fo=
+nt-family:Aptos,sans-serif;box-sizing:unset;margin:0px;font-size:medium">AC=
+CT=C2=A0<span class=3D"gmail-il">SGP</span>=C2=A0or NOMINEE=C2=A0</div><div=
+ style=3D"font-family:Aptos,sans-serif;box-sizing:unset;margin:0px;font-siz=
+e:medium"><span style=3D"box-sizing:unset;margin:0px">50,000- 60,000 MTS +/=
+- 10% MOLOO BULK=C2=A0<span style=3D"box-sizing:unset">MINERALS</span>=C2=
+=A0</span></div><div style=3D"font-family:Aptos,sans-serif;box-sizing:unset=
+;margin:0px;font-size:medium"><span style=3D"box-sizing:unset;margin:0px">1=
+ N.CHINA /=C2=A0 1 SRILANKA=C2=A0</span></div><div style=3D"font-family:Apt=
+os,sans-serif;box-sizing:unset;margin:0px;font-size:medium"><span style=3D"=
+box-sizing:unset;margin:0px">18,000 SSHINC / 8,000 FHINC 12 HRS TT BENDS=C2=
+=A0</span></div><div style=3D"font-family:Aptos,sans-serif;box-sizing:unset=
+;margin:0px;font-size:medium">17-22 SEPT TRY VSL DATES=C2=A0</div><div styl=
+e=3D"font-family:Aptos,sans-serif;box-sizing:unset;margin:0px;font-size:med=
+ium"><span style=3D"box-sizing:unset;margin:0px">1.25% ADDCOM=C2=A0+ 1.25% =
+PM ON F/D/D</span></div></div><div style=3D"font-family:Aptos,sans-serif;bo=
+x-sizing:unset;margin:0px;font-size:medium"><span style=3D"box-sizing:unset=
+;margin:0px"><br></span></div><div><div><br></div><span class=3D"gmail_sign=
+ature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature" data=
+-smartmail=3D"gmail_signature"><div dir=3D"ltr">Thanks &amp; Best Regards<d=
+iv><br></div><div><font face=3D"tahoma, sans-serif" size=3D"4">Joshua</font=
+></div><div><font face=3D"tahoma, sans-serif" size=3D"4">=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D</font></div><div><b><u><font size=3D"4">Peace Maritime</font></u></b=
+></div><div>(As brokers Only)</div><div>Email: <a href=3D"mailto:chartering=
+@peacemaritime.com" target=3D"_blank">chartering@peacemaritime.com</a></div=
+><div>Private: <a href=3D"mailto:peacemaritimepk@gmail.com" target=3D"_blan=
+k">peacemaritimepk@gmail.com</a></div><div>Mobile: +92-3404873850</div><div=
+>Skype: live:.cid.8ee029017f4e7e5a</div><div>Wechat: kjosh777</div><div>=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D</div></div></div></div></div>
+
+--00000000000039180f06220f63af--
