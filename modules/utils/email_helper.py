@@ -8,9 +8,9 @@ email_configs = [
     #     "password": "your_password1"
     # },
     {
-        "server": "smtp.163.com",
+        "server": "smtp.qiye.163.com",
         "user": "CHARTERING@JAH-LINE.COM",
-        "password": "GXTBBCkN53zAGt1a"
+        "password": "BUb4R2u2Z7ac15wN"
     }
 ]
 
@@ -21,7 +21,7 @@ def fetch_new_emails(config):
     password = config["password"]
 
     # 创建邮件服务对象
-    server = zmail.server(user, password, smtp_host=server, smtp_port=465)
+    server = zmail.server(user, password, smtp_host=server, smtp_port=25)
 
     # 获取最新邮件
     mails = server.get_latest()

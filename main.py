@@ -77,7 +77,7 @@ class ShipmentFlow:
             if chat_type == 'p2p':
                 sender_id = event.get('sender', {}).get('sender_id', {}).get('open_id')
                 receive_id = sender_id
-                receive_type = 'open_id'
+                receive_type = 'chat_id'
             elif chat_type == 'group':
                 receive_id = message.get('chat_id')
                 receive_type = 'chat_id'
@@ -340,6 +340,7 @@ class ShipmentFlow:
         task_status_chat_id = self.chat_ids.get("task_status")
         template_id = self.templates.get('rich_text_general_id')
         message_id = None
+
         if receive_type and receive_id:
             total, content = self.get_data_loader_context(document_loader)
             rich_text_log = (
