@@ -145,10 +145,15 @@ class FeishuMessageHandler(FeishuApp):
             lark.logger.error(
                 f"client.im.v1.message_resource.get failed, code: {response.code}, msg: {response.msg}, log_id: {response.get_log_id()}")
 
-            # 处理业务结果
-        f = open(str(store_path), "wb")
+        # 处理业务结果
+        file_name = response.file_name if response.file_name else f"{int(time.time() * 1000)}.jpg"
+        stored_path = store_path / file_name
+        if stored_path.exists():
+            return stored_path
+        f = open(stored_path, "wb")
         f.write(response.file.read())
         f.close()
+        return stored_path
 
 
 
