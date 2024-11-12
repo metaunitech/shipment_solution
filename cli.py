@@ -74,14 +74,18 @@
 #     return response.data.message_id
 #
 
-from modules.Feishu.Feishu_messages import FeishuMessageHandler
+# from modules.Feishu.Feishu_messages import FeishuMessageHandler
+#
+# ins = FeishuMessageHandler(config_yaml_path=r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml',
+#                            )
+# ins.send_message_by_template('oc_a139f3e04b26d37d347a4736bbaa0b0a',
+#                              'AAq7OhvOhSJB2',
+#
+#                              {'log_rich_text': 'h'})
+#
+# # if __name__ == "__main__":
+# #     main()
 
-ins = FeishuMessageHandler(config_yaml_path=r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml',
-                           )
-ins.send_message_by_template('oc_a139f3e04b26d37d347a4736bbaa0b0a',
-                             'AAq7OhvOhSJB2',
-
-                             {'log_rich_text': 'h'})
-
-# if __name__ == "__main__":
-#     main()
+import requests
+res = requests.get('http://47.106.198.93:8080/Api/token?appid=bx48H864BV4Z2NX8X8&secret=A9C0DA0868E94F9680444103FF98ACC8')
+print(res)
