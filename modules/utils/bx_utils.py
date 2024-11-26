@@ -270,7 +270,7 @@ if __name__ == "__main__":
 
     # 示例船舶信息
     vessel_payload = {
-        "VesselCode": "lzb1117",
+        "VesselCode": "lzb1117a",
         "VesselName": "ZIM PANAMA",
         "VesselNamec": "以斯塔巴拿马",
         "IMOCode": "9231781",
@@ -329,14 +329,14 @@ if __name__ == "__main__":
     add_vessel_result = bx_apis.add_vessel(vessel_payload)
     print(add_vessel_result)
 
-    add_vessel_voy_dt_result = bx_apis.add_vessel_voy_dt(vessel_voy_dt_payload)
-    print(add_vessel_voy_dt_result)
-
-    get_sa_job_list_result = bx_apis.get_sa_job_list()
-    print(get_sa_job_list_result)
-
-    get_sa_job_result = bx_apis.get_sa_job(job_id)
-    print(get_sa_job_result)
-
-    add_sa_job_result = bx_apis.add_sa_job(sa_job_payload)
-    print(add_sa_job_result)
+    # add_vessel_voy_dt_result = bx_apis.add_vessel_voy_dt(vessel_voy_dt_payload)
+    # print(add_vessel_voy_dt_result)
+    #
+    # get_sa_job_list_result = bx_apis.get_sa_job_list()
+    # print(get_sa_job_list_result)
+    #
+    # get_sa_job_result = bx_apis.get_sa_job(job_id)
+    # print(get_sa_job_result)
+    #
+    # add_sa_job_result = bx_apis.add_sa_job(sa_job_payload)
+    # print(add_sa_job_result)

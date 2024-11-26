@@ -17,3 +17,4 @@ unstructured
 python-magic-bin
 flask
 lark_oapi
+fuzzywuzzy
