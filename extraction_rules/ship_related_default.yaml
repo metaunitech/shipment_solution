@@ -25,11 +25,11 @@ keys:
   - 净吨位-NRT:
       - 直接返回float结果
   - 船长-LOA:
-      - 直接返回float结果
+      - 直接返回float结果, 默认单位是M
   - 船宽-BM:
-      - 直接返回float结果
+      - 直接返回float结果, 默认单位是M
   - 型深-DEPTH:
-      - 直接返回float结果
+      - 直接返回float结果, 默认单位是M
   - 船级-CLASS
   - 舱口数量-HATCH:
       - 直接返回int结果
@@ -38,7 +38,7 @@ keys:
   - 吊机-GEAR
   - 抓斗-GRAB
   - 夏季海水吃水-DRAFT:
-      - 直接返回float结果
+      - 直接返回float结果, 默认单位是M
   - 甲板数-DECK
   - P&I
 #  - 船舶名称-VSL-NAME

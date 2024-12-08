@@ -25,6 +25,8 @@ class VehicleDeduplicator:
 
     @staticmethod
     def util_remove_common_prefixes(name):
+        if not name:
+            return name
         prefixes = ['MV ', 'MS ', 'SS ']
         for prefix in prefixes:
             if name.startswith(prefix):
@@ -32,6 +34,8 @@ class VehicleDeduplicator:
         return name
 
     def step_PreprocessName(self, name):
+        if not name:
+            return name
         p_name = self.util_remove_common_prefixes(name)
         logger.debug(f'{name}->{p_name}')
         p_name = self.util_remove_symbols_and_spaces(p_name)

@@ -383,27 +383,38 @@ class ShipmentFlow:
                             # "IMOCode": None,
                             "VslType": data.get('船舶类型-TYPE'),
                             "VslCreateYear": data.get('建造年份-BUILT-YEAR'),
-                            "CarryTonSJ": float(data.get('载货吨-DWCC', 0)),
-                            "CarryTon": float(data.get('载重吨-DWT', 0)),
-                            "Tons": float(data.get('总吨位-GRT', 0)),
-                            "NetTon": float(data.get('净吨位-NRT', 0)),
+                            "CarryTonSJ": data.get('载货吨-DWCC', 0),
+                            "CarryTon": data.get('载重吨-DWT', 0),
+                            "Tons": data.get('总吨位-GRT', 0),
+                            "NetTon": data.get('净吨位-NRT', 0),
                             "HoldCapacity2": 0.000000,
                             # "GoodsVolumeSZ": data.get('船舶中文名称-CHINESE-NAME'),
                             # "DSKX": data.get('夏季海水吃水-DRAFT'),
-                            "Length": float(data.get('船长-LOA', 0)),
-                            "Width": float(data.get('船宽-BM', 0)),
-                            "XDeep": float(data.get('型深-DEPTH', 0)),
+                            "Length": data.get('船长-LOA', 0),
+                            "Width": data.get('船宽-BM', 0),
+                            "XDeep": data.get('型深-DEPTH', 0),
                             "Step": data.get('船级-CLASS'),
-                            "HoldSize": int(data.get('舱口数量-HATCH', 0)),
-                            "CabinCount": int(data.get('舱位数量-HOLD', 0)),
+                            "HoldSize": data.get('舱口数量-HATCH', 0),
+                            "CabinCount": data.get('舱位数量-HOLD', 0),
                             "Crane": data.get('吊机-GEAR'),
                             "Grab": data.get('抓斗-GRAB'),
-                            "FFill": float(data.get('夏季海水吃水-DRAFT', 0)),
+                            "FFill": data.get('夏季海水吃水-DRAFT', 0),
                             "DeckCount": data.get('甲板数-DECK', 0),
                             "PAndI": data.get('P&I'),
                             "Carrier": data.get('船东-OWNER'),
                             "Remark": raw_text
                         }
+                        for keyname in ["CarryTonSJ", "CarryTon", "Tons", "NetTon", "Length", "Width", "XDeep"
+                                        "FFill"]:
+                            try:
+                                payload[keyname] = float(payload[keyname])
+                            except:
+                                payload[keyname] = None
+                        for keyname in ["HoldSize", "CabinCount"]:
+                            try:
+                                payload[keyname] = int(payload[keyname])
+                            except:
+                                payload[keyname] = None
                         res = self.bx_handler.add_vessel(payload)
                         logger.success(res)
                         payload2 = {'VesselCode': vessel_name,
@@ -433,7 +444,7 @@ class ShipmentFlow:
                                'PortDischarge': data.get('卸货港口-D-PORT'),
                                'ZL': data.get('装率-L-RATE'),
                                'XL': data.get('卸率-D-RATE'),
-                               'WeightHT2': data.get('最小货量-QUANTITY', ),
+                               'WeightHT2': data.get('最小货量-QUANTITY', 0),
                                'BeginDate': data.get('装运开始日期-LAY-DATE',
                                                      datetime.datetime.now().strftime('%Y-%m-%d')),
                                'EndDate': data.get('装运结束日期-CANCELING-DATE',
