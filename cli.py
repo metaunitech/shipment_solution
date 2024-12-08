@@ -1,7 +1,89 @@
 # SHIPMENTFLOW
 from main import ShipmentFlow
-ins = ShipmentFlow('/Users/anthonyf/Desktop/MetaInFlow/shipment_solution/configs/feishu_config.yaml')
-ins.unit_flow(content='Gd mrng\r\n\r\nLooking for TWEEN DECKER\r\n\r\nGemlik / Jeddah\r\n4.000 / 5.000 dwcc  Twn/Glss/Oa ok  (size can be tick less/bigger)\r\nFor loading Project cgoes + steels + gens\r\nSpot/ppt\r\n6 ttld\r\nGcn 2.5 %\r\n\r\nTry free d/a’s all ends\r\n\r\nAny candidate pls ?\r\n\r\n\r\nBrgds\r\nMohamed\r\nEgymar\r\n\r\nGet Outlook for iOS<https://aka.ms/o0ukef>\r\n\r\n-- \r\nTo unsubscribe from this group, send email to egymar_unsubscribe@googlegroups.com\r\nView this message at https://groups.google.com/a/googlegroups.com/d/msg/egymar/topic-id/message-id\r\n--- \r\nYou received this message because you are subscribed to the Google Groups "hammam6" group.\r\nTo unsubscribe from this group and stop receiving emails from it, send an email to egymar+unsubscribe@googlegroups.com.\r\nTo view this discussion visit https://groups.google.com/d/msgid/egymar/DB9P189MB1756BC4FCA59C09D79D8DF33FD322%40DB9P189MB1756.EURP189.PROD.OUTLOOK.COM.\r\n')
+ins = ShipmentFlow(r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml')
+ins.unit_flow(content="""FM: GRAIN COMPASS KFT
+
+TO: CHARTERING DEPARTMENT
+
+
+
+M/V EURO BAND /'09/BC/58K DWT/ 30MT+GR - OPEN WARF INT CONAKRY 16-25 DEC 2024 AGW WP UCE
+
+
+GOOD DAY,
+DEAR COLLEAGUES,
+
+
+
+M/V EURO BAND /'09/BC/58K DWT/ 30MT+GR - OPEN WARF INT CONAKRY 16-25 DEC 2024 AGW WP UCE
+
+
+
+- FLEXIBLE CARGO/TRADING
+- BSEA HRA/GOA/WAFR HRA/VENEZVELA OK
+- 2*25, DECK, HBI OK
+- NO USA/EU PORTS
+
+
+
+VESSEL’S DESCRIPTION
+
+MV EURO BAND
+TYPE OF VESSEL: BULK CARRIER
+BUILT: APRIL 2009, FLAG: PANAMA
+DWT / DRAFT: SUMMER SALT WATER: 58,761 MT / 12.828 M
+GROSS TONNAGE: 32,379 NET TONNAGE: 19,353
+LOA: 189.99 M BEAM: 32.26 M LBP: 185.60 M DEPTH MOULDED: 18.00 M
+CARGO GEAR: YES X 4 X 30 MT SWL
+CARGO GEAR WITH GRABS: 4X 24 MT SWL
+GRABS: YES
+
+GRAIN CAPACITY:
+NO. 1: 12,361.2 CBM
+NO. 2: 15,976.4 CBM
+NO. 3: 14,510.6 CBM
+NO. 4: 15,971.0 CBM
+NO. 5: 13,541.1 CBM
+BALE CAPACITY:
+NO. 1: 11,900.5 CBM
+NO. 2: 15,625.2 CBM
+NO. 3: 14,163.7 CBM
+NO. 4: 15,608.8 CBM
+NO. 5: 13,259.6 CBM
+
+SPEED / CONSUMPTION:
+
+LADEN VOYAGE
+11.00 KNOTS ON 20.0 MT VLSFO + 0.1 MT LSMGO
+12.00 KNOTS ON 24.0 MT VLSFO + 0.1 MT LSMGO
+
+BALLAST VOYAGE
+12.00 KNOTS ON 18.0 MT VLSFO + 0.1 MT LSMGO
+13.00 KNOTS ON 21.0 MT VLSFO + 0.1 MT LSMGO
+
+IDLE: 2.5 MT/DAY VLSFO + 0.1 MT/DAY LSMGO
+WORKING: 5.5 MT/DAY VLSFO + 0.5 MT/DAY LSMGO
+ALL DETAILS ABOUT WOG
+
+
+
+LOOKING FORWARD TO YOUR FIRM OFFERS.
+
+KIND AND BEST REGARDS
+
+ANDRII POGORELOV
+VOLODYMYR LYTVYNENKO
+
+CHARTERING DEPARTMENT
+(AS AGENTS ONLY)
+FOR AND ON BEHALF OF
+============================================
+GRAIN COMPASS KFT
+E-MAIL: chartering@graincom-shipping.com
+============================================
+
+
+Click here to leave mailing list""")
 
 # from modules.key_information_extraction import TextKIE
 # from langchain_openai import ChatOpenAI

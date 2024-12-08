@@ -16,23 +16,35 @@ keys:
       - 通常以MV开头，返回MV后面的名字，例如：对于MV ELIJAH，船英文名为：ELIJAH
   - 船舶中文名称-CHINESE-NAME
   - 建造年份-BUILT-YEAR
-  - 载货吨-DWCC
-  - 载重吨-DWT
-  - 总吨位-GRT
-  - 净吨位-NRT
-  - 船长-LOA
-  - 船宽-BM
-  - 型深-DEPTH
+  - 载货吨-DWCC:
+      - 直接返回Decimal(18,6)结果
+  - 载重吨-DWT:
+      - 直接返回float结果
+  - 总吨位-GRT:
+      - 直接返回float结果
+  - 净吨位-NRT:
+      - 直接返回float结果
+  - 船长-LOA:
+      - 直接返回float结果
+  - 船宽-BM:
+      - 直接返回float结果
+  - 型深-DEPTH:
+      - 直接返回float结果
   - 船级-CLASS
-  - 舱口数量-HATCH
-  - 舱位数量-HOLD
+  - 舱口数量-HATCH:
+      - 直接返回int结果
+  - 舱位数量-HOLD:
+      - 直接返回int结果
   - 吊机-GEAR
   - 抓斗-GRAB
-  - 夏季海水吃水-DRAFT
+  - 夏季海水吃水-DRAFT:
+      - 直接返回float结果
   - 甲板数-DECK
   - P&I
-  - 船舶名称-VSL-NAME
+#  - 船舶名称-VSL-NAME
   - 空船港口-OPEN-PORT
+  - 船东-OWNER:
+    - Ocean Shipping Co.默认邮箱里的公司或窗口输入船东后的公司名
   - 空船日期-OPEN-DATE:
-    - 在船舶邮件里肯定存在，是日期或日期区间，表示船只空闲可供租赁的日期，是一个时间区间或者具体的日期。例如：OPEN KANMON-BUSAN RANGE 2TH ／OCT的空船日期是10-02~10-02
-    - \%Y-\%m-\%d~\%Y-\%m-\%d
+    - 在船舶邮件里肯定存在，是日期或日期区间，表示船只空闲可供租赁的日期，是一个时间区间或者具体的日期。例如：OPEN KANMON-BUSAN RANGE 2TH ／OCT的空船日期是10-02
+    - \%Y-\%m-\%d

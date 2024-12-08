@@ -14,6 +14,9 @@ from modules.message_segmentation import MessageSegmenter
 from modules.key_information_extraction import TextKIE
 from modules.key_information_validation import KIValidation
 
+from modules.utils.bx_utils import BXApis
+from modules.vehicle_deduplication import VehicleDeduplicator
+
 from modules.Feishu.Feishu_spreadsheet import FeishuSpreadsheetHandler
 from modules.Feishu.Feishu_messages import FeishuMessageHandler
 from glob import glob
@@ -48,6 +51,8 @@ class ShipmentFlow:
         self.ki_validator = KIValidation()
         self.feishu_spreadsheet_handler = FeishuSpreadsheetHandler(feishu_config_path)
         self.feishu_message_handler = FeishuMessageHandler(feishu_config_path)
+        self.bx_handler = BXApis()
+        self.shipment_dedup = VehicleDeduplicator()
 
         with open(feishu_config_path, 'r') as f:
             configs = yaml.load(f, Loader=yaml.FullLoader)
@@ -279,33 +284,172 @@ class ShipmentFlow:
     def mark_finish(self):
         pass
 
+    # def insert_data_to_spreadsheet(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
+    #                                raw_text=None):
+    #     data_to_insert = []
+    #     for data in extraction_res:
+    #         cur_res = data[0]
+    #         if raw_text and '备注-REMARK' in cur_res:
+    #             cur_res['备注-REMARK'] = raw_text
+    #         cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
+    #         if raw_text:
+    #             cur_res['原文依据'] = raw_text
+    #         if event_id:
+    #             cur_res['source_name'] = event_id
+    #         else:
+    #             cur_res['source_name'] = document_path.name if document_path else 'PureText'
+    #         data_to_insert.append(cur_res)
+    #
+    #     logger.info(f"Inserting {data_to_insert}")
+    #     if document_type == 'ship_info':
+    #         table_id = 'tbly9gtTypeOLQ8Q'
+    #     elif document_type == 'cargo_info':
+    #         table_id = 'tblSsCLLIEXguHpk'
+    #     else:
+    #         return
+    #     self.feishu_spreadsheet_handler.add_records(app_token='B7XnbQTtLapDfDsJj27c7ZgQnLd',
+    #                                                 table_id=table_id,
+    #                                                 records=data_to_insert)
+    #     logger.success(f"Inserted for {document_path}")
 
     def insert_data_to_spreadsheet(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
                                    raw_text=None):
-        data_to_insert = []
-        for data in extraction_res:
-            cur_res = data[0]
-            if raw_text and '备注-REMARK' in cur_res:
-                cur_res['备注-REMARK'] = raw_text
-            cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
-            if raw_text:
-                cur_res['原文依据'] = raw_text
-            if event_id:
-                cur_res['source_name'] = event_id
-            else:
-                cur_res['source_name'] = document_path.name if document_path else 'PureText'
-            data_to_insert.append(cur_res)
-
-        logger.info(f"Inserting {data_to_insert}")
         if document_type == 'ship_info':
-            table_id = 'tbly9gtTypeOLQ8Q'
+            data_to_insert = []
+            for data in extraction_res:
+                cur_res = data[0]
+                vessel_name = cur_res.get('船舶英文名称-ENGLISH-NAME')
+                vid = self.shipment_dedup.main(vessel_name)
+                if not vid:
+                    cur_res['船舶代码-ID'] = vessel_name
+                    logger.error(traceback.format_exc())
+
+                else:
+                    vessel_code = self.bx_handler.get_vessel(vid).get('job_info', {}).get('VesselCode')
+                    logger.success(f"{vessel_code} already exists")
+                    cur_res['船舶代码-ID'] = vessel_code
+                if raw_text and '备注-REMARK' in cur_res:
+                    cur_res['备注-REMARK'] = raw_text
+                cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
+                if raw_text:
+                    cur_res['原文依据'] = raw_text
+                if event_id:
+                    cur_res['source_name'] = event_id
+                else:
+                    cur_res['source_name'] = document_path.name if document_path else 'PureText'
+                data_to_insert.append(cur_res)
+            self.feishu_spreadsheet_handler.add_records(app_token='B7XnbQTtLapDfDsJj27c7ZgQnLd',
+                                                        table_id='tbly9gtTypeOLQ8Q',
+                                                        records=data_to_insert)
         elif document_type == 'cargo_info':
-            table_id = 'tblSsCLLIEXguHpk'
+            data_to_insert = []
+            for data in extraction_res:
+                cur_res = data[0]
+                if raw_text and '备注-REMARK' in cur_res:
+                    cur_res['备注-REMARK'] = raw_text
+                cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
+                if raw_text:
+                    cur_res['原文依据'] = raw_text
+                if event_id:
+                    cur_res['source_name'] = event_id
+                else:
+                    cur_res['source_name'] = document_path.name if document_path else 'PureText'
+                data_to_insert.append(cur_res)
+            self.feishu_spreadsheet_handler.add_records(app_token='B7XnbQTtLapDfDsJj27c7ZgQnLd',
+                                                        table_id='tblSsCLLIEXguHpk',
+                                                        records=data_to_insert)
         else:
             return
-        self.feishu_spreadsheet_handler.add_records(app_token='B7XnbQTtLapDfDsJj27c7ZgQnLd',
-                                                    table_id=table_id,
-                                                    records=data_to_insert)
+
+        logger.success(f"Inserted for {document_path}")
+
+    def insert_data_to_bx(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
+                          raw_text=None):
+        # logger.info(f"Inserting {data_to_insert}")
+
+        if document_type == 'ship_info':
+            for data in extraction_res:
+                cur_res = data[0]
+                data = cur_res
+                vessel_name = data.get('船舶英文名称-ENGLISH-NAME')
+                vid = self.shipment_dedup.main(vessel_name)
+                if not vid:
+                    # NEW
+                    try:
+                        payload = {
+                            "VesselCode": vessel_name,
+                            "VesselName": vessel_name,
+                            "VesselNamec": data.get('船舶中文名称-CHINESE-NAME'),
+                            # "IMOCode": None,
+                            "VslType": data.get('船舶类型-TYPE'),
+                            "VslCreateYear": data.get('建造年份-BUILT-YEAR'),
+                            "CarryTonSJ": float(data.get('载货吨-DWCC', 0)),
+                            "CarryTon": float(data.get('载重吨-DWT', 0)),
+                            "Tons": float(data.get('总吨位-GRT', 0)),
+                            "NetTon": float(data.get('净吨位-NRT', 0)),
+                            "HoldCapacity2": 0.000000,
+                            # "GoodsVolumeSZ": data.get('船舶中文名称-CHINESE-NAME'),
+                            # "DSKX": data.get('夏季海水吃水-DRAFT'),
+                            "Length": float(data.get('船长-LOA', 0)),
+                            "Width": float(data.get('船宽-BM', 0)),
+                            "XDeep": float(data.get('型深-DEPTH', 0)),
+                            "Step": data.get('船级-CLASS'),
+                            "HoldSize": int(data.get('舱口数量-HATCH', 0)),
+                            "CabinCount": int(data.get('舱位数量-HOLD', 0)),
+                            "Crane": data.get('吊机-GEAR'),
+                            "Grab": data.get('抓斗-GRAB'),
+                            "FFill": float(data.get('夏季海水吃水-DRAFT', 0)),
+                            "DeckCount": data.get('甲板数-DECK', 0),
+                            "PAndI": data.get('P&I'),
+                            "Carrier": data.get('船东-OWNER'),
+                            "Remark": raw_text
+                        }
+                        res = self.bx_handler.add_vessel(payload)
+                        logger.success(res)
+                        payload2 = {'VesselCode': vessel_name,
+                                    'PortNameE': data.get('空船港口-OPEN-PORT'),
+                                    'DTDate': data.get('空船日期-OPEN-DATE')}
+                        res = self.bx_handler.add_vessel_voy_dt(payload2)
+                        logger.success(f"voy_dt ADD to BX: {res}")
+                    except:
+                        logger.error(traceback.format_exc())
+
+                else:
+                    vessel_code = self.bx_handler.get_vessel(vid).get('job_info', {}).get('VesselCode')
+                    logger.success(f"{vessel_code} already exists")
+                    payload = {'VesselCode': vessel_code,
+                               'PortNameE': data.get('空船港口-OPEN-PORT'),
+                               'DTDate': data.get('空船日期-OPEN-DATE')}
+                    res = self.bx_handler.add_vessel_voy_dt(payload)
+                    logger.success(f"voy_dt ADD to BX: {res}")
+        elif document_type == 'cargo_info':
+            for data in extraction_res:
+                cur_res = data[0]
+                data = cur_res
+                try:
+                    payload = {'GoodsName': data.get('货物名称-CARGO-NAME'),
+                               'Package': data.get('积载包装-SF-PACKAGE'),
+                               'PortLoading': data.get('装货港口-L-PORT'),
+                               'PortDischarge': data.get('卸货港口-D-PORT'),
+                               'ZL': data.get('装率-L-RATE'),
+                               'XL': data.get('卸率-D-RATE'),
+                               'WeightHT2': data.get('最小货量-QUANTITY', ),
+                               'BeginDate': data.get('装运开始日期-LAY-DATE',
+                                                     datetime.datetime.now().strftime('%Y-%m-%d')),
+                               'EndDate': data.get('装运结束日期-CANCELING-DATE',
+                                                   datetime.datetime.now().strftime('%Y-%m-%d')),
+                               'YJBL': float(data.get('佣金-COMM')),
+                               'BPCompany': data.get('报盘公司-COMPANY'),
+                               'Remark_DZ': raw_text}
+                    res = self.bx_handler.add_sa_job(payload=payload)
+                    logger.success(f"sa_job ADD to BX: {res}")
+
+                except:
+                    logger.error(traceback.format_exc())
+
+        else:
+            return
+
         logger.success(f"Inserted for {document_path}")
 
     def debug_data_insert(self, data):
@@ -347,17 +491,17 @@ class ShipmentFlow:
 
         # if receive_type and receive_id:
         #     total, content = self.get_data_loader_context(document_loader)
-            # rich_text_log = (
-            #     f'<b>【task_id: {task_id}】</b>\n'
-            #     f'{self.json_to_code_block(total)}\n'
-            # )
-            # for idx, c in enumerate(content):
-            #     rich_text_log += f'\n' + c
-            # message_id = self.feishu_message_handler.send_message_by_template(receive_id=task_status_chat_id,
-            #                                                                   template_id=template_id,
-            #                                                                   template_variable={
-            #                                                                       'log_rich_text': rich_text_log},
-            #                                                                   receive_id_type=receive_type)
+        # rich_text_log = (
+        #     f'<b>【task_id: {task_id}】</b>\n'
+        #     f'{self.json_to_code_block(total)}\n'
+        # )
+        # for idx, c in enumerate(content):
+        #     rich_text_log += f'\n' + c
+        # message_id = self.feishu_message_handler.send_message_by_template(receive_id=task_status_chat_id,
+        #                                                                   template_id=template_id,
+        #                                                                   template_variable={
+        #                                                                       'log_rich_text': rich_text_log},
+        #                                                                   receive_id_type=receive_type)
 
         # Classify
         try:
@@ -374,7 +518,7 @@ class ShipmentFlow:
                     f'<b>正在进行步骤：<font color="blue"><b>关键信息提取</b></font></b>\n'
                     f'<b>【时间】</b>: {current_time}'
                 )
-                self.feishu_spreadsheet_handler.add_records()
+                # self.feishu_spreadsheet_handler.add_records()
                 self.feishu_message_handler.reply_message_by_template(message_id=message_id,
                                                                       template_id=template_id,
                                                                       template_variable={
@@ -425,46 +569,50 @@ class ShipmentFlow:
                                                                   in_thread=True
                                                                   )
 
-            # INSERTION
-            try:
-                total, content = self.get_data_loader_context(document_loader)
-                self.insert_data_to_spreadsheet(Path(document_path) if document_path else None,
-                                                document_type,
-                                                extraction_res,
-                                                raw_text='\n'.join(content))
-                logger.success(f"=>      Data Inserted.")
-                # if receive_type and receive_id:
-                #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                #     rich_text_log = (
-                #         f'<b>【关键信息插入多维表成功】</b>\n'
-                #         f'<b><font color="green"><b>关键信息插入成功</b></font>\n'
-                #         f'<b>【时间】</b>: {current_time}'
-                #     )
-                #     self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-                #                                                           template_id=template_id,
-                #                                                           template_variable={
-                #                                                               'log_rich_text': rich_text_log},
-                #                                                           in_thread=True
-                #                                                           )
-            except Exception as e:
-                logger.error(traceback.format_exc())
-                if receive_type and receive_id:
-                    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    rich_text_log = (
-                        f'<b>【分类数据插入失败】</b>\n'
-                        # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
-                        f'<b>失败原因：<font color="red"><b>{str(e)}</b></font>\n'
-                        f'<b>【时间】</b>: {current_time}'
-                    )
-                    self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-                                                                          template_id=template_id,
-                                                                          template_variable={
-                                                                              'log_rich_text': rich_text_log},
-                                                                          in_thread=True
-                                                                          )
-                return
-            self.mark_finish()
-            return extraction_res
+        # INSERTION
+        try:
+            total, content = self.get_data_loader_context(document_loader)
+            self.insert_data_to_spreadsheet(Path(document_path) if document_path else None,
+                                            document_type,
+                                            extraction_res,
+                                            raw_text='\n'.join(content))
+            self.insert_data_to_bx(Path(document_path) if document_path else None,
+                                   document_type,
+                                   extraction_res,
+                                   raw_text='\n'.join(content))
+            logger.success(f"=>      Data Inserted.")
+            # if receive_type and receive_id:
+            #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            #     rich_text_log = (
+            #         f'<b>【关键信息插入多维表成功】</b>\n'
+            #         f'<b><font color="green"><b>关键信息插入成功</b></font>\n'
+            #         f'<b>【时间】</b>: {current_time}'
+            #     )
+            #     self.feishu_message_handler.reply_message_by_template(message_id=message_id,
+            #                                                           template_id=template_id,
+            #                                                           template_variable={
+            #                                                               'log_rich_text': rich_text_log},
+            #                                                           in_thread=True
+            #                                                           )
+        except Exception as e:
+            logger.error(traceback.format_exc())
+            if receive_type and receive_id:
+                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                rich_text_log = (
+                    f'<b>【分类数据插入失败】</b>\n'
+                    # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
+                    f'<b>失败原因：<font color="red"><b>{str(e)}</b></font>\n'
+                    f'<b>【时间】</b>: {current_time}'
+                )
+                self.feishu_message_handler.reply_message_by_template(message_id=message_id,
+                                                                      template_id=template_id,
+                                                                      template_variable={
+                                                                          'log_rich_text': rich_text_log},
+                                                                      in_thread=True
+                                                                      )
+            return
+        self.mark_finish()
+        return extraction_res
 
     def main(self, document_paths=None):
         if not document_paths:
