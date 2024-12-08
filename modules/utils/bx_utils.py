@@ -55,6 +55,33 @@ class BXApis:
             if token_result['status'] != 'success':
                 raise Exception(f"Failed to generate token: {token_result['message']}")
 
+    def get_vessel(self, vid):
+        self.__ensure_token_valid()
+
+        url = "http://47.106.198.93:8080/api/api/Vessel/GetVessel"
+        headers = {"token": self.token}
+        params = {"id": vid}
+
+        try:
+            response = requests.get(url, headers=headers, params=params)
+            response.raise_for_status()  # 如果响应状态码不是 200，将抛出 HTTPError 异常
+            res = response.json()
+            if 'data' in res and isinstance(res['data'], dict):
+                return {'status': 'success', 'job_info': res['data']}
+            else:
+                return {'status': 'error', 'message': 'Invalid response format'}
+        except requests.exceptions.HTTPError as http_err:
+            return {'status': 'error', 'message': f"HTTP error occurred: {http_err}"}
+        except requests.exceptions.ConnectionError as conn_err:
+            return {'status': 'error', 'message': f"Connection error occurred: {conn_err}"}
+        except requests.exceptions.Timeout as timeout_err:
+            return {'status': 'error', 'message': f"Timeout error occurred: {timeout_err}"}
+        except requests.exceptions.RequestException as req_err:
+            return {'status': 'error', 'message': f"An error occurred: {req_err}"}
+        except ValueError as json_err:  # JSON 解析错误
+            return {'status': 'error', 'message': f"JSON decode error: {json_err}"}
+
+
     def get_vessel_list(self):
         """
         获取船舶列表。

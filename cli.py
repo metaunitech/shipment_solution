@@ -1,3 +1,8 @@
+# SHIPMENTFLOW
+from main import ShipmentFlow
+ins = ShipmentFlow('/Users/anthonyf/Desktop/MetaInFlow/shipment_solution/configs/feishu_config.yaml')
+ins.unit_flow(content='Gd mrng\r\n\r\nLooking for TWEEN DECKER\r\n\r\nGemlik / Jeddah\r\n4.000 / 5.000 dwcc  Twn/Glss/Oa ok  (size can be tick less/bigger)\r\nFor loading Project cgoes + steels + gens\r\nSpot/ppt\r\n6 ttld\r\nGcn 2.5 %\r\n\r\nTry free d/a’s all ends\r\n\r\nAny candidate pls ?\r\n\r\n\r\nBrgds\r\nMohamed\r\nEgymar\r\n\r\nGet Outlook for iOS<https://aka.ms/o0ukef>\r\n\r\n-- \r\nTo unsubscribe from this group, send email to egymar_unsubscribe@googlegroups.com\r\nView this message at https://groups.google.com/a/googlegroups.com/d/msg/egymar/topic-id/message-id\r\n--- \r\nYou received this message because you are subscribed to the Google Groups "hammam6" group.\r\nTo unsubscribe from this group and stop receiving emails from it, send an email to egymar+unsubscribe@googlegroups.com.\r\nTo view this discussion visit https://groups.google.com/d/msgid/egymar/DB9P189MB1756BC4FCA59C09D79D8DF33FD322%40DB9P189MB1756.EURP189.PROD.OUTLOOK.COM.\r\n')
+
 # from modules.key_information_extraction import TextKIE
 # from langchain_openai import ChatOpenAI
 #
@@ -91,9 +96,9 @@ import json
 import requests
 
 # res = requests.get('http://47.106.198.93:8080/Api/token?appid=bx48H864BV4Z2NX8X8&secret=A9C0DA0868E94F9680444103FF98ACC8')
-res = requests.get('http://47.106.198.93:8080/api/api/Vessel/GetVesselList', headers={
-    'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHBpZCI6ImJ4NDhIODY0QlY0WjJOWDhYOCIsInNlY3JldCI6IkE5QzBEQTA4NjhFOTRGOTY4MDQ0NDEwM0ZGOThBQ0M4IiwidXNlcmlkIjoiNEFERDYzNUY1RDJENDlGRDgyMEUyRTIyNEE4NTM0RkQiLCJleHAiOjE3MzE5MDI4NzguMH0.nKiLTcWEIgycRsqZZ3rqwt2VUV2KwNzetaAQva1JkBw',
-    'Content-Type': 'application/json',
-    'User-Agent': 'My User Agent 1.0'
-})
-print(res.text)
+# res = requests.get('http://47.106.198.93:8080/api/api/Vessel/GetVesselList', headers={
+#     'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHBpZCI6ImJ4NDhIODY0QlY0WjJOWDhYOCIsInNlY3JldCI6IkE5QzBEQTA4NjhFOTRGOTY4MDQ0NDEwM0ZGOThBQ0M4IiwidXNlcmlkIjoiNEFERDYzNUY1RDJENDlGRDgyMEUyRTIyNEE4NTM0RkQiLCJleHAiOjE3MzE5MDI4NzguMH0.nKiLTcWEIgycRsqZZ3rqwt2VUV2KwNzetaAQva1JkBw',
+#     'Content-Type': 'application/json',
+#     'User-Agent': 'My User Agent 1.0'
+# })
+# print(res.text)

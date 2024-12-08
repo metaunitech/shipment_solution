@@ -14,7 +14,8 @@ opencv-python
 paddlepaddle
 retrying
 unstructured
-python-magic-bin
+# python-magic-bin
 flask
 lark_oapi
 fuzzywuzzy
+zmail

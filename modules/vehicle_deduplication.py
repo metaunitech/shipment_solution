@@ -1,3 +1,5 @@
+import json
+
 from modules.utils.bx_utils import BXApis
 from fuzzywuzzy import fuzz
 import re
@@ -78,6 +80,8 @@ class VehicleDeduplicator:
                     is_same = self.check_if_same(vid, **kwargs)
                     if is_same:
                         logger.success(f"Found exact previous vehicle. {vid}")
+                        details = self.bx_api.get_vessel(vid)
+                        logger.info(json.dumps(details, indent=2, ensure_ascii=False))
                         return vid
 
                 logger.warning("Not exact vehicle.")
@@ -102,5 +106,5 @@ class VehicleDeduplicator:
 
 if __name__ == "__main__":
     ins = VehicleDeduplicator()
-    res = ins.main('21 glORY')
+    res = ins.main('OCEANWINGLORY')
     print(res)
