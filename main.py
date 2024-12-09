@@ -449,9 +449,15 @@ class ShipmentFlow:
                                                      datetime.datetime.now().strftime('%Y-%m-%d')),
                                'EndDate': data.get('装运结束日期-CANCELING-DATE',
                                                    datetime.datetime.now().strftime('%Y-%m-%d')),
-                               'YJBL': float(data.get('佣金-COMM')),
+                               'YJBL': data.get('佣金-COMM'),
                                'BPCompany': data.get('报盘公司-COMPANY'),
                                'Remark_DZ': raw_text}
+                    for keyname in ['YJBL']:
+                        try:
+                            payload[keyname] = float(payload[keyname])
+                        except:
+                            payload[keyname] = payload[keyname]
+
                     res = self.bx_handler.add_sa_job(payload=payload)
                     logger.success(f"sa_job ADD to BX: {res}")
 
