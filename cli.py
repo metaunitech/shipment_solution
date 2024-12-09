@@ -1,6 +1,6 @@
 # SHIPMENTFLOW
 from main import ShipmentFlow
-ins = ShipmentFlow(r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml')
+ins = ShipmentFlow(r'/Users/anthonyf/Desktop/MetaInFlow/shipment_solution/configs/feishu_config.yaml')
 ins.unit_flow(content="""FM: GRAIN COMPASS KFT
 
 TO: CHARTERING DEPARTMENT

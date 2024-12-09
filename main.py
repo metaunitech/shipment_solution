@@ -156,6 +156,17 @@ class ShipmentFlow:
                                      receive_type=receive_type)
                 if res:
                     msgs.append(res)
+            elif message_type == 'post':
+                content_str = message.get('content')
+                content = json.loads(content_str) if content_str else {}
+                content = content.get('text')
+                with open(target_folder / 'input_text.txt', 'w', encoding='utf-8') as f:
+                    f.write(content)
+
+                res = self.unit_flow(document_path=None, content=content, receive_id=receive_id,
+                                     receive_type=receive_type)
+                if res:
+                    msgs.append(res)
             else:
                 logger.error(f"Unknown message_type: {message_type}")
                 continue
