@@ -6,7 +6,8 @@ app_secret: Mu1PbrmU763wmcWisQQWVbQTQWiXWDHr
 #app_token: B7XnbQTtLapDfDsJj27c7ZgQnLd
 app_token: O2Q6bNHULa3HxusXxCNc9J9KnHg
 template:
-  rich_text_general_id: AAq7OhvOhSJB2
+#  rich_text_general_id: AAq7OhvOhSJB2
+  rich_text_general_id: AAqjLmvtfKQNo
 table:
 #  ship_info: tbly9gtTypeOLQ8Q
   ship_info: tblxWMRi7KAWhPDp

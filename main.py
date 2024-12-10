@@ -83,7 +83,7 @@ class ShipmentFlow:
             if chat_type == 'p2p':
                 sender_id = event.get('sender', {}).get('sender_id', {}).get('open_id')
                 receive_id = sender_id
-                receive_type = 'chat_id'
+                receive_type = 'open_id'
             elif chat_type == 'group':
                 receive_id = message.get('chat_id')
                 receive_type = 'chat_id'
@@ -92,8 +92,8 @@ class ShipmentFlow:
                     logger.error(f"Not mention current bot. Skipped.{[i.get('name', 'Unknown') for i in mentions]}")
                     continue
             elif chat_type == 'post':
-                receive_id = message.get('chat_id')
-                receive_type = 'chat_id'
+                receive_id = event.get('sender', {}).get('sender_id', {}).get('open_id')
+                receive_type = 'open_id'
 
             else:
                 logger.error(f"Unknown chat_type: {chat_type}")
@@ -119,16 +119,16 @@ class ShipmentFlow:
                 # os.makedirs(target_folder, exist_ok=True)
                 file_path = self.feishu_message_handler.retrieve_file(message_id, file_key, target_folder)
                 logger.info(f"Document {file_path.name} received.")
-                # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                # rich_text_log = (
-                #     f'<b>【上传文件接收成功】</b>\n'
-                #     f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
-                #     f'<b>【时间】</b>: {current_time}'
-                # )
-                # self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
-                #                                                      template_id='AAq7OhvOhSJB2',
-                #                                                      template_variable={'log_rich_text': rich_text_log},
-                #                                                      receive_id_type=receive_type)
+                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                rich_text_log = (
+                    f'<b>【上传文件接收成功】</b>\n'
+                    f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
+                    f'<b>【时间】</b>: {current_time}'
+                )
+                self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
+                                                                     template_id=self.templates['rich_text_general_id'],
+                                                                     template_variable={'log_rich_text': rich_text_log},
+                                                                     receive_id_type=receive_type)
                 res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
                                      receive_type=receive_type)
                 if res:
@@ -144,15 +144,15 @@ class ShipmentFlow:
                                                                       file_type='image')
                 logger.info(f"Document {file_path.name} received.")
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                # rich_text_log = (
-                #     f'<b>【上传文件接收成功】</b>\n'
-                #     f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
-                #     f'<b>【时间】</b>: {current_time}'
-                # )
-                # self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
-                #                                                      template_id='AAq7OhvOhSJB2',
-                #                                                      template_variable={'log_rich_text': rich_text_log},
-                #                                                      receive_id_type=receive_type)
+                rich_text_log = (
+                    f'<b>【上传文件接收成功】</b>\n'
+                    f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
+                    f'<b>【时间】</b>: {current_time}'
+                )
+                self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
+                                                                     template_id=self.templates['rich_text_general_id'],
+                                                                     template_variable={'log_rich_text': rich_text_log},
+                                                                     receive_id_type=receive_type)
                 res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
                                      receive_type=receive_type)
                 if res:
@@ -160,7 +160,11 @@ class ShipmentFlow:
             elif message_type == 'post':
                 content_str = message.get('content')
                 content = json.loads(content_str) if content_str else {}
-                content = content.get('text')
+                content_parts = content.get('content')
+                content = []
+                for part in content_parts:
+                    content.append(' '.join([i.get('text', '') for i in part]))
+                content = '\n'.join(content)
                 with open(target_folder / 'input_text.txt', 'w', encoding='utf-8') as f:
                     f.write(content)
 
@@ -520,17 +524,17 @@ class ShipmentFlow:
 
         # if receive_type and receive_id:
         #     total, content = self.get_data_loader_context(document_loader)
-        # rich_text_log = (
-        #     f'<b>【task_id: {task_id}】</b>\n'
-        #     f'{self.json_to_code_block(total)}\n'
-        # )
-        # for idx, c in enumerate(content):
-        #     rich_text_log += f'\n' + c
-        # message_id = self.feishu_message_handler.send_message_by_template(receive_id=task_status_chat_id,
-        #                                                                   template_id=template_id,
-        #                                                                   template_variable={
-        #                                                                       'log_rich_text': rich_text_log},
-        #                                                                   receive_id_type=receive_type)
+        #     rich_text_log = (
+        #         f'<b>【task_id: {task_id}】</b>\n'
+        #         f'{self.json_to_code_block(total)}\n'
+        #     )
+        #     for idx, c in enumerate(content):
+        #         rich_text_log += f'\n' + c
+        #     message_id = self.feishu_message_handler.send_message_by_template(receive_id=task_status_chat_id,
+        #                                                                       template_id=template_id,
+        #                                                                       template_variable={
+        #                                                                           'log_rich_text': rich_text_log},
+        #                                                                       receive_id_type=receive_type)
 
         # Classify
         try:
@@ -539,37 +543,37 @@ class ShipmentFlow:
                 f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
             if receive_type and receive_id:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                # rich_text_log = (
-                #     f'<b>【邮件主体分类成功】</b>\n'
-                #     # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
-                #     f'<b>邮件分类：<font color="green"><b>{document_type}</b></font>\n'
-                #     f'<b>分类原因：<font color="grey"><b>{reason}</b></font>\n'
-                #     f'<b>正在进行步骤：<font color="blue"><b>关键信息提取</b></font></b>\n'
-                #     f'<b>【时间】</b>: {current_time}'
-                # )
-                # # self.feishu_spreadsheet_handler.add_records()
-                # self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-                #                                                       template_id=template_id,
-                #                                                       template_variable={
-                #                                                           'log_rich_text': rich_text_log},
-                #                                                       in_thread=True
-                #                                                       )
+                rich_text_log = (
+                    f'<b>【邮件主体分类成功】</b>\n'
+                    # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
+                    f'<b>邮件分类：<font color="green"><b>{document_type}</b></font>\n'
+                    f'<b>分类原因：<font color="grey"><b>{reason}</b></font>\n'
+                    f'<b>正在进行步骤：<font color="blue"><b>关键信息提取</b></font></b>\n'
+                    f'<b>【时间】</b>: {current_time}'
+                )
+                # self.feishu_spreadsheet_handler.add_records()
+                self.feishu_message_handler.reply_message_by_template(message_id=message_id,
+                                                                      template_id=template_id,
+                                                                      template_variable={
+                                                                          'log_rich_text': rich_text_log},
+                                                                      in_thread=True
+                                                                      )
         except Exception as e:
             logger.error(traceback.format_exc())
             if receive_type and receive_id:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                # rich_text_log = (
-                #     f'<b>【邮件主体分类失败】</b>\n'
-                #     # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
-                #     f'<b>失败原因：<font color="red"><b>{str(e)}</b></font></b>\n'
-                #     f'<b>【时间】</b>: {current_time}'
-                # )
-                # self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-                #                                                       template_id=template_id,
-                #                                                       template_variable={
-                #                                                           'log_rich_text': rich_text_log},
-                #                                                       in_thread=True
-                #                                                       )
+                rich_text_log = (
+                    f'<b>【邮件主体分类失败】</b>\n'
+                    # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
+                    f'<b>失败原因：<font color="red"><b>{str(e)}</b></font></b>\n'
+                    f'<b>【时间】</b>: {current_time}'
+                )
+                self.feishu_message_handler.reply_message_by_template(message_id=message_id,
+                                                                      template_id=template_id,
+                                                                      template_variable={
+                                                                          'log_rich_text': rich_text_log},
+                                                                      in_thread=True
+                                                                      )
             return
 
         # Extraction
@@ -584,19 +588,19 @@ class ShipmentFlow:
         extraction_res = self.validate_key_information(document_type, extraction_res)
         # Display
         logger.success(f"=>      KIE Extraction results: {json.dumps(extraction_res, ensure_ascii=False, indent=2)}")
-        # if receive_type and receive_id:
-        #     rich_text_log = f'<b>【邮件关键信息提取成功】</b>\n'
-        #     for idx, i in enumerate(extraction_res):
-        #         rich_text_log += f'---------片段 {idx}---------' + '\n' + i[2] + "\n" + i[1]
-        #         rich_text_log += "\n\n" + self.json_to_code_block(i[0])
-        #     logger.warning(rich_text_log)
-        #
-        #     self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-        #                                                           template_id=template_id,
-        #                                                           template_variable={
-        #                                                               'log_rich_text': rich_text_log},
-        #                                                           in_thread=True
-        #                                                           )
+        if receive_type and receive_id:
+            rich_text_log = f'<b>【邮件关键信息提取成功】</b>\n'
+            for idx, i in enumerate(extraction_res):
+                rich_text_log += f'---------片段 {idx}---------' + '\n' + i[2] + "\n" + i[1]
+                rich_text_log += "\n\n" + self.json_to_code_block(i[0])
+            logger.warning(rich_text_log)
+
+            self.feishu_message_handler.reply_message_by_template(message_id=message_id,
+                                                                  template_id=template_id,
+                                                                  template_variable={
+                                                                      'log_rich_text': rich_text_log},
+                                                                  in_thread=True
+                                                                  )
 
         # INSERTION
         try:
@@ -610,35 +614,35 @@ class ShipmentFlow:
                                    extraction_res,
                                    raw_text='\n'.join(content))
             logger.success(f"=>      Data Inserted.")
-            # if receive_type and receive_id:
-            #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            #     rich_text_log = (
-            #         f'<b>【关键信息插入多维表成功】</b>\n'
-            #         f'<b><font color="green"><b>关键信息插入成功</b></font>\n'
-            #         f'<b>【时间】</b>: {current_time}'
-            #     )
-            #     self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-            #                                                           template_id=template_id,
-            #                                                           template_variable={
-            #                                                               'log_rich_text': rich_text_log},
-            #                                                           in_thread=True
-            #                                                           )
+            if receive_type and receive_id:
+                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                rich_text_log = (
+                    f'<b>【关键信息插入多维表成功】</b>\n'
+                    f'<b><font color="green"><b>关键信息插入成功</b></font>\n'
+                    f'<b>【时间】</b>: {current_time}'
+                )
+                self.feishu_message_handler.reply_message_by_template(message_id=message_id,
+                                                                      template_id=template_id,
+                                                                      template_variable={
+                                                                          'log_rich_text': rich_text_log},
+                                                                      in_thread=True
+                                                                      )
         except Exception as e:
             logger.error(traceback.format_exc())
             if receive_type and receive_id:
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                # rich_text_log = (
-                #     f'<b>【分类数据插入失败】</b>\n'
-                #     # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
-                #     f'<b>失败原因：<font color="red"><b>{str(e)}</b></font>\n'
-                #     f'<b>【时间】</b>: {current_time}'
-                # )
-                # self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-                #                                                       template_id=template_id,
-                #                                                       template_variable={
-                #                                                           'log_rich_text': rich_text_log},
-                #                                                       in_thread=True
-                #                                                       )
+                rich_text_log = (
+                    f'<b>【分类数据插入失败】</b>\n'
+                    # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
+                    f'<b>失败原因：<font color="red"><b>{str(e)}</b></font>\n'
+                    f'<b>【时间】</b>: {current_time}'
+                )
+                self.feishu_message_handler.reply_message_by_template(message_id=message_id,
+                                                                      template_id=template_id,
+                                                                      template_variable={
+                                                                          'log_rich_text': rich_text_log},
+                                                                      in_thread=True
+                                                                      )
             return
         self.mark_finish()
         return extraction_res
