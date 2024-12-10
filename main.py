@@ -519,9 +519,9 @@ class ShipmentFlow:
         document_loader = self.load_document(document_path=Path(document_path) if document_path else None,
                                              content=content)
         # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        task_status_chat_id = self.chat_ids.get("task_status")
+        # task_status_chat_id = self.chat_ids.get("task_status")
         template_id = self.templates.get('rich_text_general_id')
-        message_id = None
+        message_id = receive_id
 
         # if receive_type and receive_id:
         #     total, content = self.get_data_loader_context(document_loader)
@@ -557,8 +557,7 @@ class ShipmentFlow:
                                                                       template_id=template_id,
                                                                       template_variable={
                                                                           'log_rich_text': rich_text_log},
-                                                                      in_thread=True
-                                                                      )
+                                                                      in_thread=True)
         except Exception as e:
             logger.error(traceback.format_exc())
             if receive_type and receive_id:

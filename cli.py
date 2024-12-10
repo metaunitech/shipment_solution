@@ -83,7 +83,7 @@ E-MAIL: chartering@graincom-shipping.com
 ============================================
 
 
-Click here to leave mailing list""")
+Click here to leave mailing list""",receive_id='om_752d3a80e23d19daf5bda61e2473eef5', receive_type='chat_id')
 
 # from modules.key_information_extraction import TextKIE
 # from langchain_openai import ChatOpenAI
