@@ -88,7 +88,7 @@ class ShipmentFlow:
                 receive_id = message.get('chat_id')
                 receive_type = 'chat_id'
                 mentions = message.get('mentions', [])
-                if message_type == 'text' and '16c5228b4a88575e' not in [i.get('tenant_key', '') for i in mentions]:
+                if message_type == 'text' and '1303f8a4a54f575f' not in [i.get('tenant_key', '') for i in mentions]:
                     logger.error(f"Not mention current bot. Skipped.{[i.get('name', 'Unknown') for i in mentions]}")
                     continue
             elif chat_type == 'post':
@@ -515,6 +515,7 @@ class ShipmentFlow:
 
     def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, receive_type=None,
                   task_id=None):
+        logger.info(f"Current receive_type: {receive_type}m receive_id: {receive_id}")
         document_loader = self.load_document(document_path=Path(document_path) if document_path else None,
                                              content=content)
         # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
