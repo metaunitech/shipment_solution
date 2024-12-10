@@ -37,9 +37,9 @@ class VehicleDeduplicator:
         if not name:
             return name
         p_name = self.util_remove_common_prefixes(name)
-        logger.debug(f'{name}->{p_name}')
+        # logger.debug(f'{name}->{p_name}')
         p_name = self.util_remove_symbols_and_spaces(p_name)
-        logger.debug(f'{name}->{p_name}')
+        # logger.debug(f'{name}->{p_name}')
         return p_name
 
     def refresh_vehicle_list(self):
