@@ -1,11 +1,17 @@
-app_id: cli_a67a6821cb7e100d
-app_secret: ewQv9QsRP82WsHATIHS8egqVvcTSNlc8
-app_token: B7XnbQTtLapDfDsJj27c7ZgQnLd
+#app_id: cli_a67a6821cb7e100d
+app_id: cli_a7dc48ca347c900d
+
+#app_secret: ewQv9QsRP82WsHATIHS8egqVvcTSNlc8
+app_secret: Mu1PbrmU763wmcWisQQWVbQTQWiXWDHr
+#app_token: B7XnbQTtLapDfDsJj27c7ZgQnLd
+app_token: O2Q6bNHULa3HxusXxCNc9J9KnHg
 template:
   rich_text_general_id: AAq7OhvOhSJB2
 table:
-  ship_info: tbly9gtTypeOLQ8Q
-  cargo_info: tblSsCLLIEXguHpk
-  inputs_status: tbluKPhZcCMTMpWS
+#  ship_info: tbly9gtTypeOLQ8Q
+  ship_info: tblxWMRi7KAWhPDp
+#  cargo_info: tblSsCLLIEXguHpk
+  cargo_info: tblbEvfQAM577e3J
+#  inputs_status: tbluKPhZcCMTMpWS
 chat_id:
   task_status: oc_a139f3e04b26d37d347a4736bbaa0b0a
