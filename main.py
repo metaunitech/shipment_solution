@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+import time
 import traceback
 from pathlib import Path
 from langchain_openai import ChatOpenAI
@@ -94,6 +95,7 @@ class ShipmentFlow:
             elif chat_type == 'post':
                 receive_id = event.get('sender', {}).get('sender_id', {}).get('open_id')
                 receive_type = 'open_id'
+                logger.error(f'{receive_id} {receive_type}')
 
             else:
                 logger.error(f"Unknown chat_type: {chat_type}")
@@ -516,6 +518,8 @@ class ShipmentFlow:
     def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, receive_type=None,
                   task_id=None):
         logger.info(f"Current receive_type: {receive_type}m receive_id: {receive_id}")
+        logger.error(f'{receive_id} {receive_type}')
+        time.sleep(10)
         document_loader = self.load_document(document_path=Path(document_path) if document_path else None,
                                              content=content)
         # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
