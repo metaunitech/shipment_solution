@@ -337,7 +337,10 @@ class ShipmentFlow:
             for data in extraction_res:
                 cur_res = data[0]
                 vessel_name = cur_res.get('船舶英文名称-ENGLISH-NAME')
-                vid = self.shipment_dedup.main(vessel_name)
+                try:
+                    vid = self.shipment_dedup.main(vessel_name)
+                except:
+                    vid = None
                 if not vid:
                     cur_res['船舶代码-ID'] = vessel_name
                     logger.error(traceback.format_exc())
@@ -390,7 +393,10 @@ class ShipmentFlow:
                 cur_res = data[0]
                 data = cur_res
                 vessel_name = data.get('船舶英文名称-ENGLISH-NAME')
-                vid = self.shipment_dedup.main(vessel_name)
+                try:
+                    vid = self.shipment_dedup.main(vessel_name)
+                except:
+                    vid = None
                 if not vid:
                     # NEW
                     try:
