@@ -14,7 +14,7 @@ class VehicleDeduplicator:
 
     @staticmethod
     def util_FuzzyMatch(name1, name2):
-        return fuzz.ratio(name1, name2) > 80  # 根据需要调整阈值
+        return fuzz.ratio(name1, name2) > 90  # 根据需要调整阈值
 
     @staticmethod
     def util_remove_symbols_and_spaces(name):
