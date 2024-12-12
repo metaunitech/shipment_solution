@@ -9,6 +9,8 @@ import yaml
 import tqdm
 from langchain_community.document_loaders import UnstructuredEmailLoader, OutlookMessageLoader
 from langchain_core.document_loaders import BaseLoader
+from sqlalchemy import modifier
+
 from modules.utils.ocr_handler import OCRHandler
 from modules.message_classification import MessageClassifier
 from modules.message_segmentation import MessageSegmenter
@@ -274,8 +276,10 @@ class ShipmentFlow:
     @retry(stop_max_attempt_number=2, wait_fixed=2000)
     def validate_key_information(self, document_type, extraction_res):
         logger.info("Starts to Validate results.")
-        modified_res = self.ki_validator.validate(document_type=document_type,
+        modified_res = self.ki_validator.bulk_validate(document_type=document_type,
                                                   extraction_res=extraction_res)
+        modified_res = self.ki_validator.validate(document_type=document_type,
+                                                  extraction_res=modified_res)
         logger.info("=>         Validation finished.")
         return modified_res
 
@@ -383,6 +387,7 @@ class ShipmentFlow:
             return
 
         logger.success(f"Inserted for {document_path}")
+
 
     def insert_data_to_bx(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
                           raw_text=None):

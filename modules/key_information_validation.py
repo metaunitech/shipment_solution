@@ -9,6 +9,7 @@ import json
 from loguru import logger
 from pathlib import Path
 from retrying import retry
+from typing import Dict
 
 MODEL_NAME = 'glm-4-flash'
 API_TOKEN = 'a9d2815b090f143cdac247d7600a127f.WSDK8WqwJzZtCmBK'
@@ -20,6 +21,11 @@ class Date(BaseModel):
     )
     reason: str = Field(
         description='格式化的原因'
+    )
+
+class RefinedDict(BaseModel):
+    refined_dict: Dict = Field(
+        description='按照要求修改过值的dict'
     )
 
 
@@ -75,6 +81,48 @@ class KIValidation:
     def validate_number(self, input, comments=None):
         pass
 
+    @retry(stop_max_attempt_number=2, wait_fixed=2000)
+    def unit_bulk_validate(self, document_type, res):
+        llm_ins = self.create_llm_instance()
+        parser = PydanticOutputParser(pydantic_object=RefinedDict)
+        retry_parser = OutputFixingParser.from_llm(parser=parser, llm=llm_ins)
+        key_requirement_parts_texts = []
+        for key in self.requirements.get(document_type, {}).keys():
+            details_vals = self.requirements.get(document_type, {})[key]
+            text = f'字段<{key}>,需要的字段类型是:<{details_vals["type"]}>.'
+            comments = details_vals.get('comments')
+            examples = details_vals.get('examples')
+            if comments:
+                text += f'对于该字段，{comments}.'
+            if examples:
+                text += f'例如：{str(examples)}'
+            key_requirement_parts_texts.append(text)
+        key_requirement_text = "\n".join(key_requirement_parts_texts)
+        format_instruction = parser.get_format_instructions()
+        prompt = (
+            f'# TASK: \n我现在有一个字典需要通过API上传，但是字典里有的字段的值不满足字段格式要求。我需要你按照字段的格式要求将我的字典修正下并返回我JSON格式。\n'
+            f'# KeyValueRequirements:\n{key_requirement_text}\n'
+            f"# INPUT:\n"
+            f"输入字典：{json.dumps(res, indent=2, ensure_ascii=False)}\n"
+            f"YOUR ANSWER:\n"
+            f"请按照如下格式要求返回我JSON\n"
+            f"{format_instruction}\n"
+            f"TS:{str(time.time() * 1000)}")
+        res_raw = llm_ins.invoke(prompt)
+        res_content = res_raw.content
+        logger.debug(res_content)
+        answer_instance = retry_parser.parse(res_content)
+        refined_dict = answer_instance.refined_dict
+        return refined_dict
+
+    def bulk_validate(self, document_type, extraction_res):
+        output_res = []
+        for res_all in extraction_res:
+            res, body, mutual_body = tuple(res_all)
+            refined_dict = self.unit_bulk_validate(document_type, res)
+            output_res.append([refined_dict, body, mutual_body])
+        return output_res
+
     def validate(self, document_type, extraction_res):
         output_res = []
         todo_keys = list(self.requirements.get(document_type, {}).keys())
@@ -82,7 +130,7 @@ class KIValidation:
             res, body, mutual_body = tuple(res_all)
             cur_res = {}
             for key in res:
-                if key in todo_keys:
+                if key in todo_keys and self.requirements.get(document_type, {}).get(key, {}).get('function'):
                     logger.info(f"Validate: {key}")
                     validate_method_name = self.requirements[document_type][key].get('function')
                     comments = self.requirements[document_type][key].get('comments')

@@ -1,89 +1,38 @@
 # SHIPMENTFLOW
 from main import ShipmentFlow
 ins = ShipmentFlow(r'/Users/anthonyf/Desktop/MetaInFlow/shipment_solution/configs/feishu_config.yaml')
-ins.unit_flow(content="""FM: GRAIN COMPASS KFT
+ins.unit_flow(content="""  
+Acct: HongKong Changcheng Mining Development  Company Limited
+50-65k mt ilmenite sand in ows option
+2 SAP in Quelimane, Mozambique/ Caofedian, China
+4000mt per calendar day/17k shinc
+24-28/Dec, 2024
+1.25% only
+TBN is ok, Prefer named vsl with gears and grabs.
 
-TO: CHARTERING DEPARTMENT
+Local headows and thanks.
+Mv Dong Fang Wei Ye 35k/2010  4*30mt crane Open Pohang  12/Dec
+-Vanino ok
+-bod: abt 250/80mt
 
+Mv Shuo Long  618 (55k/2011) Gless Open Son Duong, Vietnam 13-15/Dec
+-cis ok
+-Bod: abt 290/30mt
 
+Mv HMT Fortune (53k/2005) 4*36mt+13cbm EH grabs Open Nantong Shipyard 17-20/Dec
+-Nickel ore Ok, deck/hatch, 2*25mt OK.
+-Bod: abt 590/100
 
-M/V EURO BAND /'09/BC/58K DWT/ 30MT+GR - OPEN WARF INT CONAKRY 16-25 DEC 2024 AGW WP UCE
-
-
-GOOD DAY,
-DEAR COLLEAGUES,
-
-
-
-M/V EURO BAND /'09/BC/58K DWT/ 30MT+GR - OPEN WARF INT CONAKRY 16-25 DEC 2024 AGW WP UCE
-
-
-
-- FLEXIBLE CARGO/TRADING
-- BSEA HRA/GOA/WAFR HRA/VENEZVELA OK
-- 2*25, DECK, HBI OK
-- NO USA/EU PORTS
-
-
-
-VESSEL’S DESCRIPTION
-
-MV EURO BAND
-TYPE OF VESSEL: BULK CARRIER
-BUILT: APRIL 2009, FLAG: PANAMA
-DWT / DRAFT: SUMMER SALT WATER: 58,761 MT / 12.828 M
-GROSS TONNAGE: 32,379 NET TONNAGE: 19,353
-LOA: 189.99 M BEAM: 32.26 M LBP: 185.60 M DEPTH MOULDED: 18.00 M
-CARGO GEAR: YES X 4 X 30 MT SWL
-CARGO GEAR WITH GRABS: 4X 24 MT SWL
-GRABS: YES
-
-GRAIN CAPACITY:
-NO. 1: 12,361.2 CBM
-NO. 2: 15,976.4 CBM
-NO. 3: 14,510.6 CBM
-NO. 4: 15,971.0 CBM
-NO. 5: 13,541.1 CBM
-BALE CAPACITY:
-NO. 1: 11,900.5 CBM
-NO. 2: 15,625.2 CBM
-NO. 3: 14,163.7 CBM
-NO. 4: 15,608.8 CBM
-NO. 5: 13,259.6 CBM
-
-SPEED / CONSUMPTION:
-
-LADEN VOYAGE
-11.00 KNOTS ON 20.0 MT VLSFO + 0.1 MT LSMGO
-12.00 KNOTS ON 24.0 MT VLSFO + 0.1 MT LSMGO
-
-BALLAST VOYAGE
-12.00 KNOTS ON 18.0 MT VLSFO + 0.1 MT LSMGO
-13.00 KNOTS ON 21.0 MT VLSFO + 0.1 MT LSMGO
-
-IDLE: 2.5 MT/DAY VLSFO + 0.1 MT/DAY LSMGO
-WORKING: 5.5 MT/DAY VLSFO + 0.5 MT/DAY LSMGO
-ALL DETAILS ABOUT WOG
+Mv Sea Plain 8 (33k/2004)  Open CJK 18-20/Dec
+-Logger. w.w, red sea/waf, Russia 
 
 
 
-LOOKING FORWARD TO YOUR FIRM OFFERS.
 
-KIND AND BEST REGARDS
+Best Regards.
+Tracy Gao
 
-ANDRII POGORELOV
-VOLODYMYR LYTVYNENKO
-
-CHARTERING DEPARTMENT
-(AS AGENTS ONLY)
-FOR AND ON BEHALF OF
-============================================
-GRAIN COMPASS KFT
-E-MAIL: chartering@graincom-shipping.com
-============================================
-
-
-Click here to leave mailing list""",receive_id='om_752d3a80e23d19daf5bda61e2473eef5', receive_type='chat_id')
+Meridian Shipping Co.,Limited""",receive_id='om_752d3a80e23d19daf5bda61e2473eef5', receive_type='chat_id')
 
 # from modules.key_information_extraction import TextKIE
 # from langchain_openai import ChatOpenAI

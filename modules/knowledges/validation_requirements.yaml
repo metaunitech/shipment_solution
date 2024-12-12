@@ -1,16 +1,55 @@
 cargo_info:
   装运开始日期-LAY-DATE:
+    type: datetime
     function: validate_date
     comments: 通常是时间区间的开始日期（不要输出区间），对于装运开始日期的返回格式根据如下例子：EAR SEP-END SEP返回09-01，MID SEP/EAR OCT返回09-15
     examples:
       - { "4-5 SEPT 2024": "2024-09-04" }
   装运结束日期-CANCELING-DATE:
+    type: datetime
     function: validate_date
     comments: 通常是时间区间的结尾（不要输出区间），对于装运结束日期的返回格式根据如下例子：EAR SEP-END SEP返回09-30，MID SEP/EAR OCT返回10-01
     examples:
       - { "3-5 SEPT 2024": "2024-09-05" }
       - { "EAR SEP-END SEP": '2024-09-30' }
+  装货港口-L-PORT:
+    type: str
+    comments: 返回大写英文
+  卸货港口-L-PORT:
+    type: str
+    comments: 返回大写英文
+  最小货量-QUANTITY:
+    type: float
+  最大货量-QUANTITY:
+    type: float
+  佣金-COMM:
+    type: float
+    comments: 只用返回百分比值，不用带百分号%
+  运费单价-FRT-RATE:
+    type: float
+
 ship_info:
   空船日期-OPEN-DATE:
+    type: datetime
     function: validate_date
     comments: 船只空闲的日期
+  载货吨-DWCC:
+    type: float
+  载重吨-DWT:
+    type: float
+  总吨位-GRT:
+    type: float
+  净吨位-NRT:
+    type: float
+  船长-LOA:
+    type: float
+  船宽-BM:
+    type: float
+  型深-DEPTH:
+    type: float
+  夏季海水吃水-DRAFT:
+    type: float
+  舱口数量-HATCH:
+    type: int
+  舱位数量-HOLD:
+    type: int
