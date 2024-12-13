@@ -363,6 +363,8 @@ class ShipmentFlow:
                     cur_res['source_name'] = event_id
                 else:
                     cur_res['source_name'] = document_path.name if document_path else 'PureText'
+                for k in cur_res:
+                    cur_res[k] = str(cur_res[k])
                 data_to_insert.append(cur_res)
             self.feishu_spreadsheet_handler.add_records(app_token=self.app_token,
                                                         table_id=self.tables['ship_info'],
