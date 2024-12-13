@@ -17,9 +17,9 @@ keys:
   - 船舶中文名称-CHINESE-NAME
   - 建造年份-BUILT-YEAR
   - 载货吨-DWCC:
-      - 直接返回Decimal(18,6)结果
+      - 直接返回Decimal(18,6)结果，DWCC的数字就是载货吨
   - 载重吨-DWT:
-      - 直接返回float结果
+      - 直接返回float结果，通常是DWT附近的数字
   - 总吨位-GRT:
       - 直接返回float结果
   - 净吨位-NRT:
