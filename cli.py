@@ -1,38 +1,11 @@
 # SHIPMENTFLOW
 from main import ShipmentFlow
 ins = ShipmentFlow(r'/Users/anthonyf/Desktop/MetaInFlow/shipment_solution/configs/feishu_config.yaml')
-ins.unit_flow(content="""  
-Acct: HongKong Changcheng Mining Development  Company Limited
-50-65k mt ilmenite sand in ows option
-2 SAP in Quelimane, Mozambique/ Caofedian, China
-4000mt per calendar day/17k shinc
-24-28/Dec, 2024
-1.25% only
-TBN is ok, Prefer named vsl with gears and grabs.
+ins.unit_flow(content="""KANGHUA5 DWCC 17500MT 23200CBM-OPEN-HAIPHONG，VN 28TH DEC--HOT TO FIX
 
-Local headows and thanks.
-Mv Dong Fang Wei Ye 35k/2010  4*30mt crane Open Pohang  12/Dec
--Vanino ok
--bod: abt 250/80mt
+ HAOXIANG11 DWCC 18520MT 24900CBM  PORT KLANG, MY .PPT  PPT--HOT TO FIX 
 
-Mv Shuo Long  618 (55k/2011) Gless Open Son Duong, Vietnam 13-15/Dec
--cis ok
--Bod: abt 290/30mt
-
-Mv HMT Fortune (53k/2005) 4*36mt+13cbm EH grabs Open Nantong Shipyard 17-20/Dec
--Nickel ore Ok, deck/hatch, 2*25mt OK.
--Bod: abt 590/100
-
-Mv Sea Plain 8 (33k/2004)  Open CJK 18-20/Dec
--Logger. w.w, red sea/waf, Russia 
-
-
-
-
-Best Regards.
-Tracy Gao
-
-Meridian Shipping Co.,Limited""",receive_id='om_752d3a80e23d19daf5bda61e2473eef5', receive_type='chat_id')
+HONGSHUN 27 DWCC 10341MT 12994CBM OPEN INCHON ，KR .30TH/DEC--HOT TO FIX""",receive_id='om_752d3a80e23d19daf5bda61e2473eef5', receive_type='chat_id')
 
 # from modules.key_information_extraction import TextKIE
 # from langchain_openai import ChatOpenAI

@@ -340,6 +340,7 @@ class ShipmentFlow:
             data_to_insert = []
             for data in extraction_res:
                 cur_res = data[0]
+                logger.warning(f"Starts to insert: {cur_res}")
                 vessel_name = cur_res.get('船舶英文名称-ENGLISH-NAME')
                 try:
                     vid = self.shipment_dedup.main(vessel_name)
