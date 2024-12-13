@@ -1,11 +1,13 @@
 # SHIPMENTFLOW
 from main import ShipmentFlow
 ins = ShipmentFlow(r'/Users/anthonyf/Desktop/MetaInFlow/shipment_solution/configs/feishu_config.yaml')
-ins.unit_flow(content="""KANGHUA5 DWCC 17500MT 23200CBM-OPEN-HAIPHONG，VN 28TH DEC--HOT TO FIX
+ins.unit_flow(content="""大连荣恩
 
- HAOXIANG11 DWCC 18520MT 24900CBM  PORT KLANG, MY .PPT  PPT--HOT TO FIX 
+DWCC 5000MT SD 2H/2H GEARLESS CAPA 6500CBM OPEN LANQIAO,18TH DEC
 
-HONGSHUN 27 DWCC 10341MT 12994CBM OPEN INCHON ，KR .30TH/DEC--HOT TO FIX""",receive_id='om_752d3a80e23d19daf5bda61e2473eef5', receive_type='chat_id')
+DWCC 8000MT SD MPP BOX 480TEU 3H/3H GEARLESS CAPA 12000/11200CBM OPEN NINGBO,CN 26TH DEC (DG CLASS 8&9 FITTED)
+
+DWT 12200 TD BOX 2H/2H CRANE 2*30MT COMBINE 55MT CAPA 18100CBM OPEN KASHIMA,JP 25TH DEC""",receive_id='om_752d3a80e23d19daf5bda61e2473eef5', receive_type='chat_id')
 
 # from modules.key_information_extraction import TextKIE
 # from langchain_openai import ChatOpenAI
