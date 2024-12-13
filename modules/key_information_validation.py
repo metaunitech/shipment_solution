@@ -100,20 +100,39 @@ class KIValidation:
         key_requirement_text = "\n".join(key_requirement_parts_texts)
         format_instruction = parser.get_format_instructions()
         prompt = (
-            f'# TASK: \n我现在有一个字典需要通过API上传，但是字典里有的字段的值不满足字段格式要求。我需要你按照字段的格式要求将我的字典修正下并返回我JSON格式。\n'
+            f'# TASK: \n我现在有一个字典需要通过API上传，但是字典里有的字段的值不满足字段格式要求。我需要你按照字段的格式要求将我的字典值进行修正，字段名都保持不变。并返回我JSON格式。\n'
             f'# KeyValueRequirements:\n{key_requirement_text}\n'
             f"# INPUT:\n"
             f"输入字典：{json.dumps(res, indent=2, ensure_ascii=False)}\n"
             f"YOUR ANSWER:\n"
-            f"请按照如下格式要求返回我JSON\n"
+            f"请按照如下格式要求返回我JSON（注意字段名不要发生变动）\n"
             f"{format_instruction}\n"
             f"TS:{str(time.time() * 1000)}")
-        res_raw = llm_ins.invoke(prompt)
-        res_content = res_raw.content
-        logger.debug(res_content)
-        answer_instance = retry_parser.parse(res_content)
-        refined_dict = answer_instance.refined_dict
-        return refined_dict
+        try:
+            # Invoke the LLM and parse the result
+            res_raw = llm_ins.invoke(prompt)
+            res_content = res_raw.content
+            logger.debug(res_content)
+            answer_instance = retry_parser.parse(res_content)
+            refined_dict = answer_instance.refined_dict
+            to_remove_keyname = []
+            for i in refined_dict:
+                if i not in res:
+                    to_remove_keyname.append(i)
+
+            for i in to_remove_keyname:
+                logger.error(f"{i} value {res[i]} need to be removed. It is not in res.")
+                del refined_dict[i]
+            # Check if the keys are modified
+            # if any([i not in res.keys() for i in refined_dict.keys()]):
+            #     raise ValueError(
+            #         f"Fields modified. {set(refined_dict.keys()) - set(res.keys())}, {set(res.keys()) - set(refined_dict.keys())}")
+
+            return refined_dict
+
+        except Exception as e:
+            logger.error(f"Error during validation: {e}")
+            raise
 
     def bulk_validate(self, document_type, extraction_res):
         output_res = []

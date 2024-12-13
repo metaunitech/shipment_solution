@@ -9,13 +9,20 @@ background:
   - PIC：Point of Contact，联系人。
   - CQD/3DAYS TO HEAVUP：CQD（Cargo Quantity Discharged），3天内完成卸货
   - CQD BE (TRY DISRATE)：CQD（Cargo Quantity Discharged）Bends，尝试卸货速率。
+  - DWT,DWCC或货量 显示类似42.5K，则数据提变成42500，K是表示1000
+  - DWT,DWCC,GRT,NRT,如果这样有遇到类似这样表示时，32，225或32.225 ,则取值为32225
+  - 船盘最前面或最后面有的公司名，一般是指OWNR COMPANY;如果一条信息包含多条船舶，则每个船舶的OWNR COMANY都是一样的
+  - 空船时间或货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那OPEN DATE 就是2025-1-1而不2024-1-1
+  - DWT,DWCC,GRT ,NRT,LOA,DRAFT,BM,DEPTH,BM都只要取数字，不要单位MT或M
 keys:
 #  - 船舶代码-ID
   - 船舶类型-TYPE
   - 船舶英文名称-ENGLISH-NAME:
-      - 一定会出现在船盘中，必须获得。通常以MV开头（也有可能不是），返回MV后面的名字，例如：对于MV ELIJAH，船英文名为：ELIJAH
-  - 船舶中文名称-CHINESE-NAME
-  - 建造年份-BUILT-YEAR
+      - 一定会出现在船盘中，必须获得。通常以MV开头，或者其他部分是船的参数而有一个很像名字的词语，返回MV后面的名字，例如：对于MV ELIJAH，船英文名为：ELIJAH
+  - 船舶中文名称-CHINESE-NAME:
+      - 如果原文中没有则默认和英文名称一样
+  - 建造年份-BUILT-YEAR:
+      - 直接返回年份（4位数字），忽略月份
   - 载货吨-DWCC:
       - 直接返回Decimal(18,6)结果，DWCC的数字就是载货吨
   - 载重吨-DWT:
@@ -32,14 +39,16 @@ keys:
       - 直接返回float结果, 默认单位是M
   - 船级-CLASS
   - 舱口数量-HATCH:
-      - 直接返回int结果
+      - 直接返回int结果。如果船舶资料上没有明显的几H几H的，可以根据如 NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH.
   - 舱位数量-HOLD:
       - 直接返回int结果
-  - 吊机-GEAR
+  - 吊机-GEAR:
+      - 船舶资料里的如果体现GEARLESS 或G.LESS或GLESS, 则GEAR 值填 None
   - 抓斗-GRAB
   - 夏季海水吃水-DRAFT:
       - 直接返回float结果, 默认单位是M
-  - 甲板数-DECK
+  - 甲板数-DECK:
+      - 船舶资料上若体现SINGLE DECK或SD,DECCK取值为SD; 资料上若显示TWEEN DECK 或TD或双甲板,DECK取值为TD; 若资料上显示 TRIPLE DECT或TRD或三甲板，DECK 取值为TRD
   - P&I
 #  - 船舶名称-VSL-NAME
   - 空船港口-OPEN-PORT

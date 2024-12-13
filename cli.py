@@ -1,15 +1,26 @@
 # SHIPMENTFLOW
 from main import ShipmentFlow
 ins = ShipmentFlow(r'/Users/anthonyf/Desktop/MetaInFlow/shipment_solution/configs/feishu_config.yaml')
-# ins.unit_flow(content="""大连荣恩
-#
-# DWCC 5000MT SD 2H/2H GEARLESS CAPA 6500CBM OPEN LANQIAO,18TH DEC
-#
-# DWCC 8000MT SD MPP BOX 480TEU 3H/3H GEARLESS CAPA 12000/11200CBM OPEN NINGBO,CN 26TH DEC (DG CLASS 8&9 FITTED)
-#
-# DWT 12200 TD BOX 2H/2H CRANE 2*30MT COMBINE 55MT CAPA 18100CBM OPEN KASHIMA,JP 25TH DEC""",receive_id='om_752d3a80e23d19daf5bda61e2473eef5', receive_type='chat_id')
+ins.unit_flow(content="""need named vsl to fix
 
-ins.debug_data_insert(data={"载货吨-DWCC": 5000.0, "空船港口-OPEN-PORT": "LANQIAO", "空船日期-OPEN-DATE": "2023-12-18", "船舶代码-ID": "", "原文依据": "大连荣恩\n\nDWCC 5000MT SD 2H/2H GEARLESS CAPA 6500CBM OPEN LANQIAO,18TH DEC\n\nDWCC 8000MT SD MPP BOX 480TEU 3H/3H GEARLESS CAPA 12000/11200CBM OPEN NINGBO,CN 26TH DEC (DG CLASS 8&9 FITTED)\n\nDWT 12200 TD BOX 2H/2H CRANE 2*30MT COMBINE 55MT CAPA 18100CBM OPEN KASHIMA,JP 25TH DEC", "source_name": "PureText"})
+—freight $ 80k
+—2,200mt hot rolled coils, 10pct molco
+—son duong, vietnam / belawan, indonesa
+—laycan:ppt onwards
+—invite bst fio or filo
+—cqd term
+—com 2.5
+
+
+
+—freight $ 20 pmt
+—5,000mt bulk clay
+—p.kelang / taipei, taiwan
+—dec 15-20 try vsl date
+—invite bst fio
+—com 2.5""",receive_id='om_752d3a80e23d19daf5bda61e2473eef5', receive_type='chat_id')
+
+# ins.debug_data_insert(data=[{"货物名称-CARGO-NAME": "hot rolled coils", "最大货量-QUANTITY": "2200.0", "装货港口-L-PORT": "SON DUONG, VIETNAM", "卸货港口-L-PORT": "BELAWAN, INDONESIA", "装运开始日期-LAY-DATE": "2024-09-01", "佣金-COMM": "2.5", "运费单价-FRT-RATE": "80000.0", "原文依据": "need named vsl to fix\n\n—freight $ 80k\n—2,200mt hot rolled coils, 10pct molco\n—son duong, vietnam / belawan, indonesa\n—laycan:ppt onwards\n—invite bst fio or filo\n—cqd term\n—com 2.5\n\n\n\n—freight $ 20 pmt\n—5,000mt bulk clay\n—p.kelang / taipei, taiwan\n—dec 15-20 try vsl date\n—invite bst fio\n—com 2.5", "source_name": "PureText"}])
 # from modules.key_information_extraction import TextKIE
 # from langchain_openai import ChatOpenAI
 #

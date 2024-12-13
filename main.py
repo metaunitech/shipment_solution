@@ -354,8 +354,8 @@ class ShipmentFlow:
                     vessel_code = self.bx_handler.get_vessel(vid).get('job_info', {}).get('VesselCode')
                     logger.success(f"{vessel_code} already exists")
                     cur_res['船舶代码-ID'] = vessel_code
-                if raw_text and '备注-REMARK' in cur_res:
-                    cur_res['备注-REMARK'] = raw_text
+                # if raw_text and '备注-REMARK' in cur_res:
+                #     cur_res['备注-REMARK'] = raw_text
                 cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
                 if raw_text:
                     cur_res['原文依据'] = raw_text
@@ -373,8 +373,8 @@ class ShipmentFlow:
             data_to_insert = []
             for data in extraction_res:
                 cur_res = data[0]
-                if raw_text and '备注-REMARK' in cur_res:
-                    cur_res['备注-REMARK'] = raw_text
+                # if raw_text and '备注-REMARK' in cur_res:
+                #     cur_res['备注-REMARK'] = raw_text
                 cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
                 if raw_text:
                     cur_res['原文依据'] = raw_text
@@ -382,6 +382,8 @@ class ShipmentFlow:
                     cur_res['source_name'] = event_id
                 else:
                     cur_res['source_name'] = document_path.name if document_path else 'PureText'
+                for k in cur_res:
+                    cur_res[k] = str(cur_res[k])
                 data_to_insert.append(cur_res)
             self.feishu_spreadsheet_handler.add_records(app_token=self.app_token,
                                                         table_id=self.tables['cargo_info'],
@@ -502,7 +504,7 @@ class ShipmentFlow:
         logger.success(f"Inserted for {document_path}")
 
     def debug_data_insert(self, data):
-        self.insert_data_to_spreadsheet(Path('demo'), 'ship_info', data)
+        self.insert_data_to_spreadsheet(Path('demo'), 'cargo_offer', data)
 
     @staticmethod
     def json_to_code_block(json_data):
@@ -603,8 +605,7 @@ class ShipmentFlow:
         extraction_res = [] if not extraction_res else extraction_res
         # Validation
         extraction_res = self.validate_key_information(document_type, extraction_res)
-        # Display
-        logger.success(f"=>      KIE Extraction results: {json.dumps(extraction_res, ensure_ascii=False, indent=2)}")
+
         # if receive_type and receive_id:
         #     rich_text_log = f'<b>【邮件关键信息提取成功】</b>\n'
         #     for idx, i in enumerate(extraction_res):
