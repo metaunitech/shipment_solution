@@ -624,10 +624,10 @@ class ShipmentFlow:
                                             document_type,
                                             extraction_res,
                                             raw_text='\n'.join(content))
-            self.insert_data_to_bx(Path(document_path) if document_path else None,
-                                   document_type,
-                                   extraction_res,
-                                   raw_text='\n'.join(content))
+            # self.insert_data_to_bx(Path(document_path) if document_path else None,
+            #                        document_type,
+            #                        extraction_res,
+            #                        raw_text='\n'.join(content))
             logger.success(f"=>      Data Inserted.")
             # if receive_type and receive_id:
             #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
