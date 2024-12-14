@@ -75,9 +75,9 @@ def add_data_to_bx():
 
     # 打印接收到的数据
     logger.info(f"Received Form Data: {data}")
-
+    res = SHIPMENT_FLOW_INS.bx_handler.add_sa_job(payload=data)
     # 返回 JSON 响应
-    return jsonify({"Status": 1, "ReceivedData": data}), 200
+    return jsonify(res), 200
 
 
 if __name__ == '__main__':
