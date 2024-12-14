@@ -70,10 +70,9 @@ def receive_data():
 @app.route('/api/add_bx', methods=['POST'])
 def add_data_to_bx():
     data = request.get_json()
-
     # 打印接收到的数据
     logger.info(f"Received Data: {data}")
-
+    return jsonify({"Status": 1}), 200
 
 
 if __name__ == '__main__':
