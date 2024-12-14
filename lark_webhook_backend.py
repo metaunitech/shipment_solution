@@ -67,12 +67,17 @@ def receive_data():
                                                                                    "challenge": data.get('challenge')}
     return jsonify(response), 200
 
+
 @app.route('/api/add_bx', methods=['POST'])
 def add_data_to_bx():
-    data = request.get_json()
+    # 从 Form Data 获取数据
+    data = request.form.to_dict()  # 转为 Python 字典
+
     # 打印接收到的数据
-    logger.info(f"Received Data: {data}")
-    return jsonify({"Status": 1}), 200
+    logger.info(f"Received Form Data: {data}")
+
+    # 返回 JSON 响应
+    return jsonify({"Status": 1, "ReceivedData": data}), 200
 
 
 if __name__ == '__main__':
