@@ -67,6 +67,14 @@ def receive_data():
                                                                                    "challenge": data.get('challenge')}
     return jsonify(response), 200
 
+@app.route('/api/add_bx', methods=['POST'])
+def add_data_to_bx():
+    data = request.get_json()
+
+    # 打印接收到的数据
+    logger.info(f"Received Data: {data}")
+
+
 
 if __name__ == '__main__':
     app.run("0.0.0.0", port=WEB_PORT)
