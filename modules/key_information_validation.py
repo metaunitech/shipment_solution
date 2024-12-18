@@ -121,8 +121,13 @@ class KIValidation:
                     to_remove_keyname.append(i)
 
             for i in to_remove_keyname:
-                logger.error(f"{i} value {res[i]} need to be removed. It is not in res.")
+                logger.error(f"{i} value {refined_dict[i]} need to be removed. It is not in res.")
                 del refined_dict[i]
+
+            for j in res:
+                if j not in refined_dict:
+                    logger.error(f"{j} value {res[j]} need to be added. It is not in res.")
+                    refined_dict[j] = res[j]
             # Check if the keys are modified
             # if any([i not in res.keys() for i in refined_dict.keys()]):
             #     raise ValueError(

@@ -9,7 +9,6 @@ from main import ShipmentFlow
 
 app = Flask(__name__)
 
-
 CONFIG_PATH = Path(__file__).parent / 'configs' / 'backend_configs.yaml'
 with open(CONFIG_PATH, 'r', encoding='utf-8') as f:
     config_data = yaml.load(f, Loader=yaml.FullLoader)
@@ -27,6 +26,7 @@ app.config['data_queue'] = []
 app.config['previous_id'] = None
 
 SHIPMENT_FLOW_INS = ShipmentFlow(FEISHU_CONFIG_PATH)
+
 
 @app.route('/api/lark_event', methods=['POST'])
 def receive_data():
@@ -75,7 +75,29 @@ def add_data_to_bx():
 
     # 打印接收到的数据
     logger.info(f"Received Form Data: {data}")
+    for keyname in ['YJBL']:
+        try:
+            data[keyname] = float(data[keyname])
+        except:
+            data[keyname] = data[keyname]
     res = SHIPMENT_FLOW_INS.bx_handler.add_sa_job(payload=data)
+    # 返回 JSON 响应
+    return jsonify(res), 200
+
+
+@app.route('/api/add_bx_vessel', methods=['POST'])
+def add_data_to_bx_vessel():
+    # 从 Form Data 获取数据
+    data = request.form.to_dict()  # 转为 Python 字典
+    # 打印接收到的数据
+    logger.info(f"Received Form Data: {data}")
+    raw_text = data.get('原文依据')
+    extraction_res = [[data, raw_text]]
+    res = SHIPMENT_FLOW_INS.insert_data_to_bx(document_path=None,
+                                              document_type='ship_info',
+                                              extraction_res=extraction_res,
+                                              event_id=None,
+                                              raw_text=raw_text)
     # 返回 JSON 响应
     return jsonify(res), 200
 
