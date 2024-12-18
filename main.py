@@ -532,7 +532,7 @@ class ShipmentFlow:
         return to_html_table(json_data)
 
     def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, receive_type=None,
-                  task_id=None):
+                  task_id=None, debug=False):
         logger.info(f"Current receive_type: {receive_type} receive_id: {receive_id}")
         logger.error(f'{receive_id} {receive_type}')
         document_loader = self.load_document(document_path=Path(document_path) if document_path else None,
@@ -621,47 +621,50 @@ class ShipmentFlow:
         #                                                           )
 
         # INSERTION
-        try:
-            total, content = self.get_data_loader_context(document_loader)
-            self.insert_data_to_spreadsheet(Path(document_path) if document_path else None,
-                                            document_type,
-                                            extraction_res,
-                                            raw_text='\n'.join(content))
-            # self.insert_data_to_bx(Path(document_path) if document_path else None,
-            #                        document_type,
-            #                        extraction_res,
-            #                        raw_text='\n'.join(content))
-            logger.success(f"=>      Data Inserted.")
-            # if receive_type and receive_id:
-            #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            #     rich_text_log = (
-            #         f'<b>【关键信息插入多维表成功】</b>\n'
-            #         f'<b><font color="green"><b>关键信息插入成功</b></font>\n'
-            #         f'<b>【时间】</b>: {current_time}'
-            #     )
-            #     self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-            #                                                           template_id=template_id,
-            #                                                           template_variable={
-            #                                                               'log_rich_text': rich_text_log},
-            #                                                           in_thread=True
-            #                                                           )
-        except Exception as e:
-            logger.error(traceback.format_exc())
-            # if receive_type and receive_id:
-            #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            #     rich_text_log = (
-            #         f'<b>【分类数据插入失败】</b>\n'
-            #         # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
-            #         f'<b>失败原因：<font color="red"><b>{str(e)}</b></font>\n'
-            #         f'<b>【时间】</b>: {current_time}'
-            #     )
-            #     self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-            #                                                           template_id=template_id,
-            #                                                           template_variable={
-            #                                                               'log_rich_text': rich_text_log},
-            #                                                           in_thread=True
-            #                                                           )
-            return
+        if not debug:
+            try:
+                total, content = self.get_data_loader_context(document_loader)
+                self.insert_data_to_spreadsheet(Path(document_path) if document_path else None,
+                                                document_type,
+                                                extraction_res,
+                                                raw_text='\n'.join(content))
+                # self.insert_data_to_bx(Path(document_path) if document_path else None,
+                #                        document_type,
+                #                        extraction_res,
+                #                        raw_text='\n'.join(content))
+                logger.success(f"=>      Data Inserted.")
+                # if receive_type and receive_id:
+                #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                #     rich_text_log = (
+                #         f'<b>【关键信息插入多维表成功】</b>\n'
+                #         f'<b><font color="green"><b>关键信息插入成功</b></font>\n'
+                #         f'<b>【时间】</b>: {current_time}'
+                #     )
+                #     self.feishu_message_handler.reply_message_by_template(message_id=message_id,
+                #                                                           template_id=template_id,
+                #                                                           template_variable={
+                #                                                               'log_rich_text': rich_text_log},
+                #                                                           in_thread=True
+                #                                                           )
+            except Exception as e:
+                logger.error(traceback.format_exc())
+                # if receive_type and receive_id:
+                #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                #     rich_text_log = (
+                #         f'<b>【分类数据插入失败】</b>\n'
+                #         # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
+                #         f'<b>失败原因：<font color="red"><b>{str(e)}</b></font>\n'
+                #         f'<b>【时间】</b>: {current_time}'
+                #     )
+                #     self.feishu_message_handler.reply_message_by_template(message_id=message_id,
+                #                                                           template_id=template_id,
+                #                                                           template_variable={
+                #                                                               'log_rich_text': rich_text_log},
+                #                                                           in_thread=True
+                #                                                           )
+                return
+        else:
+            logger.success(json.dumps(extraction_res, indent=4, ensure_ascii=False))
         self.mark_finish()
         return extraction_res
 

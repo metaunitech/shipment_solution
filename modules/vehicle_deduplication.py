@@ -69,8 +69,8 @@ class VehicleDeduplicator:
         return [self.current_vehicles[i] for i in self.current_vehicles.keys() if self.util_FuzzyMatch(name, i)]
 
     def check_existing_vehicle(self, name, **kwargs):
-        for method in [self.method_ExactMatch,
-                       self.method_FuzzyMatch]:
+        for method in [self.method_ExactMatch]:
+                       # self.method_FuzzyMatch]:
             vid = method(name=self.util_remove_symbols_and_spaces(name))
             if vid:
                 if isinstance(vid, str):

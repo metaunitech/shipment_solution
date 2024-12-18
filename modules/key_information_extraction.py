@@ -1,3 +1,4 @@
+import datetime
 import random
 import re
 import traceback
@@ -88,6 +89,8 @@ class TextKIE:
         if background_infos is None:
             background_infos = []
 
+        today_ts = datetime.datetime.now().strftime('%Y-%m-%d')
+
         background_info_str = "\n".join(background_infos)
 
         format_instructions = parser.get_format_instructions()
@@ -95,12 +98,15 @@ class TextKIE:
         required_key_info = str(keys)
 
         if key_definitions:
-            prompt = f"""我会给你一段{file_type}的内容，
+            prompt = f"""# TASK： 我会给你一段{file_type}的内容，
 {extraction_method_description}
 我需要你帮我从内容中根据我提供的信息做关键信息提取的任务。
             
 我所需要的关键信息字段如下：
 {required_key_info}。
+
+# BACKGROUND
+今天日期：{today_ts}
 
 原文中的一些背景知识如下，你或许会用上：
 {background_info_str}
@@ -109,7 +115,7 @@ class TextKIE:
 {key_definitions_str}
             
 如果需要提取的字段没有给你定义，请按照你的常识进行提取。
-
+# INPUT
 你所需要处理的文件内容为：
 [文件内容开始]
 {raw_text}
@@ -124,27 +130,30 @@ class TextKIE:
 6）对于数字，比例等具体的值必须在原文中出现才提取出来，不要自己捏造。
 7）并不是所有字段都能在原文中找到，对于文中没有提及的字段，返回‘无’
 8）在原文中|是用来隔开可能的不同列。请结合列的位置信息找到对应的关键信息。尤其注意表格的表头和内容。
-9）对于可能是表格的数据，例如价格，库存，单价等，单位可能以表头的形式出现，请结合上下文语义提取信息。
-10）如果没有提供具体的合同内容，返回{{}}
 
 请结合注意事项、背景知识、目标字段的解释 Step by Step从我提供的原文中提取出目标字段。
 
 
 你做的关键信息提取的结果以JSON格式返回给我。 {format_instructions}
+YOUR ANSWER:
             """
-            # logger.debug(prompt)
+            logger.debug(prompt)
             res_content = self.llm_engine.predict(prompt)
         else:
-            prompt = f"""我会给你一段{file_type}类型文件的内容，我需要你帮我从内容中根据我提供的信息做关键信息提取的任务。
+            prompt = f"""# TASK： 我会给你一段{file_type}类型文件的内容，我需要你帮我从内容中根据我提供的信息做关键信息提取的任务。
 {extraction_method_description}
 我需要你帮我从内容中根据我提供的信息做关键信息提取的任务。
-            
+
+# BACKGROUND       
+今天日期：{today_ts}
+     
 原文中的一些背景知识如下，你或许会用上：
 {background_info_str}
 
 我所需要的关键信息字段如下：
 {required_key_info}。
 
+# INPUT
 你所需要处理的文件内容为：
 [文件内容开始]
 {raw_text}
@@ -159,12 +168,11 @@ class TextKIE:
 6）对于数字，比例等具体的值必须在原文中出现才提取出来，不要自己捏造。
 7）并不是所有字段都能在原文中找到，对于文中没有提及的字段，返回‘无’
 8）在原文中|是用来隔开可能的不同列。请结合列的位置信息找到对应的关键信息。尤其注意表格的表头和内容。
-9）对于可能是表格的数据，例如价格，库存，单价等，单位可能以表头的形式出现，请结合上下文语义提取信息。
-10）如果没有提供具体的合同内容，返回{{}}
             
 请结合注意事项、背景知识、目标字段的解释 Step by Step从我提供的原文中提取出目标字段。
 
 你做的关键信息提取的结果以JSON格式返回给我。 {format_instructions}
+YOUR ANSWER:
             """
             logger.debug(prompt)
             res_content = self.llm_engine.predict(prompt)
@@ -194,7 +202,7 @@ class TextKIE:
                     pass
 
         pairs = {i: pairs[i] for i in pairs.keys() if
-                 pairs[i] not in ['NAN', 'N/A', '无', '未提及', '未定义', '未提供', 'plaintext', '未知', '无明确描述', 'Not specified', '无明确说明'] and pairs[
+                 pairs[i] not in ['NAN', 'N/A', '无', '未提及', '未定义', '未提供', 'plaintext', '未知', '无明确描述', 'Not specified', '无明确说明', 'YES'] and pairs[
                      i] != i}
 
         for i in pairs:
@@ -341,7 +349,7 @@ class TextKIE:
             raw_text_lines=text_lines,
             target_key_raw=target_key_raw,
             key_definition_max_length=kwargs.get('key_definition_max_length',
-                                                 10),
+                                                 15),
             text_line_max=kwargs.get('text_line_max', 60),
             method_description_dict=kwargs.get('method_description_dict',
                                                {}),

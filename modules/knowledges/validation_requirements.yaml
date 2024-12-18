@@ -53,3 +53,17 @@ ship_info:
     type: int
   舱位数量-HOLD:
     type: int
+  抓斗-GRAB:
+    type: str
+    comments: 船舶资料只写了YES就返回None，例如：“GRABS：YES”。如果船舶资料中有类似：GRAB:2*8CBM,2*12CBM，输出2*12+2*12；如果是GRAB4*8,输出4*8,一般GRAB在4个以下
+    examples:
+      - {"GRABS：YES": "None"}
+      - {"GRAB:2*8CBM,2*12CBM": "2*12+2*12"}
+  吊机-GEAR:
+    type: str
+    comments: 船舶资料里的如果体现GEARLESS 或G.LESS或GLESS, 则GEAR 值填 None. 如果仅说了YES，返回None，例如：“GEAR：YES”。如果原文类似：<CARGO GEAR： YES X 4 X 30 MT SWL> 返回 G4*30，以此类推。如果仅说了YES，返回None
+    examples:
+      - {"GEARLESS": "None"}
+      - {"G.LESS或GLESS": "None"}
+      - {"CARGO GEAR：YES": "None"}
+      - {"CARGO GEAR：YES X 4 X 30 MT SWL": "G4*30"}
