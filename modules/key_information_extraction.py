@@ -137,7 +137,7 @@ class TextKIE:
 你做的关键信息提取的结果以JSON格式返回给我。 {format_instructions}
 YOUR ANSWER:
             """
-            logger.debug(prompt)
+            # logger.debug(prompt)
             res_content = self.llm_engine.predict(prompt)
         else:
             prompt = f"""# TASK： 我会给你一段{file_type}类型文件的内容，我需要你帮我从内容中根据我提供的信息做关键信息提取的任务。
@@ -202,12 +202,13 @@ YOUR ANSWER:
                     pass
 
         pairs = {i: pairs[i] for i in pairs.keys() if
-                 pairs[i] not in ['NAN', 'N/A', '无', '未提及', '未定义', '未提供', 'plaintext', '未知', '无明确描述', 'Not specified', '无明确说明', 'YES'] and pairs[
+                 pairs[i] not in ['NAN', 'N/A', '无', '未提及', '未定义', '未提供', 'plaintext', '未知', '无明确描述', 'Not specified', '无明确说明', 'YES', 'None'] and pairs[
                      i] != i}
 
         for i in pairs:
             if not isinstance(pairs[i], str):
-                raise KIEException(f"Output should be string. {pairs[i]}")
+                pairs[i] = str(pairs[i])
+                # raise KIEException(f"Output should be string. {pairs[i]}")
 
         logger.success("Pairs extracted.")
         logger.success(json.dumps(pairs, ensure_ascii=False, indent=4))
@@ -344,12 +345,16 @@ YOUR ANSWER:
         target_key_raw, background_infos = self.parse_extraction_rule_configs(rule_config_path)
         text_lines = kwargs.get("text_lines") if not args else args[1]
 
+        extra_knowledge = kwargs.get('extra_knowledge', None)
+        logger.info(f"Starts to use extra_knowledge: {extra_knowledge}")
+        if extra_knowledge:
+            background_infos.append(extra_knowledge)
         modified_outputs, modified_conflicts = self.extract(
             file_type=kwargs.get("file_type"),
             raw_text_lines=text_lines,
             target_key_raw=target_key_raw,
             key_definition_max_length=kwargs.get('key_definition_max_length',
-                                                 15),
+                                                 10),
             text_line_max=kwargs.get('text_line_max', 60),
             method_description_dict=kwargs.get('method_description_dict',
                                                {}),

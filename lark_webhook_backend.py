@@ -1,3 +1,5 @@
+import json
+import time
 import traceback
 
 from flask import Flask, request, jsonify
@@ -117,6 +119,62 @@ def add_data_to_bx_vessel():
                                               raw_text=raw_text)
     # 返回 JSON 响应
     return jsonify(res), 200
+
+
+@app.route('/api/update_knowledge', methods=['POST'])
+def update_knowledge():
+    # 从 Form Data 获取数据
+    data = request.form.to_dict()  # 转为 Python 字典
+    # 打印接收到的数据
+    logger.info(f"Received Form Data: {data}")
+    knowledge_json_path = Path(__file__).parent / 'modules' / 'knowledges' / 'uploaded_knowledge.json'
+    knowledge = {}
+    if knowledge_json_path.exists():
+        with open(knowledge_json_path, 'r', encoding='utf-8') as f:
+            knowledge = json.load(f)
+    knowledge[data['知识类型']] = data['知识主体']
+    with open(knowledge_json_path, 'w', encoding='utf-8') as f:
+        json.dump(knowledge, f, indent=2, ensure_ascii=False)
+    SHIPMENT_FLOW_INS.extra_knowledge = knowledge
+    return jsonify(knowledge), 200
+
+
+@app.route('/api/rerun', methods=['POST'])
+def rerun():
+    # 从 Form Data 获取数据
+    data = request.form.to_dict()  # 转为 Python 字典
+    # 打印接收到的数据
+    logger.info(f"Received Form Data: {data}")
+    if data.get('content') and data.get('task_id'):
+        res = SHIPMENT_FLOW_INS.unit_flow(document_path=None,
+                                          content=data.get("content"),
+                                          task_id=data.get('task_id'),
+                                          receive_type='rerun',
+                                          skip_success=False)
+        if res:
+            return jsonify(res), 200
+    return jsonify({"STATUS": "NO RESULT"}), 200
+
+
+@app.route('/api/single_rerun', methods=['POST'])
+def single_rerun():
+    # 从 Form Data 获取数据
+    data = request.form.to_dict()  # 转为 Python 字典
+    # 打印接收到的数据
+    logger.info(f"Received Form Data: {data}")
+    if data.get('content'):
+        _id = data.get('id')
+        document_type = data.get("document_type")
+        task_id = f"{document_type}_single_rerun_{_id}_{int(time.time() * 1000)}"
+        res = SHIPMENT_FLOW_INS.unit_flow(document_path=None,
+                                          content=data.get("content"),
+                                          task_id=task_id,
+                                          document_type=document_type,
+                                          receive_type='single_rerun',
+                                          skip_success=False)
+        if res:
+            return jsonify(res), 200
+    return jsonify({"STATUS": "NO RESULT"}), 200
 
 
 if __name__ == '__main__':

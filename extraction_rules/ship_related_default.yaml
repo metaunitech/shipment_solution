@@ -18,11 +18,14 @@ background:
   - DEPTH MOULDED表示船深
   - SUMMER SALT WATER表达夏季海水，DWT / DRAFT SUMMER SALT WATER 58,761 MT / 12.828 M中前一个表示DWT，后一个表示夏季海水吃水。
   - SWL 表示安全工作负荷（SWL，Safe Working Load）。例如：4 x 30 MT SWL 表示船舶配备了4台起重机（或吊机），每台的安全工作负荷（SWL，Safe Working Load）为30吨（MT，Metric Ton）。
+  - 如果船盘里有写RTVG, RVG都是表示待通知的意思 不知道什么时候空，OPEN DATE值为空，
+  - 船盘里类似 16K/08LT，前面表示的是DWCC  16000  /后面表示BUILD YEAR:2008;同理20K/09LT， DWCC 22000，BUILD YEAR： 2009
+  - 对于DWT 11,200 MT ON 7.0M, 7.0指的是吃水为7
 keys:
 #  - 船舶代码-ID
   - 船舶类型-TYPE
   - 船舶英文名称-ENGLISH-NAME:
-      - 一定会出现在船盘中，必须获得。通常以MV开头，或者其他部分是船的参数而有一个很像名字的词语，返回MV后面的名字，例如：对于MV ELIJAH，船英文名为：ELIJAH；对于MV GAO XIN 15 DWCC 6700 OPEN NIIGATA，船英文名为：GAO XIN 15
+      - 可租赁船的英文名，一定会出现在船盘中, 通常在每个片段的开头，取值取到明显的分隔符例如逗号等。通常以MV开头MV <英文>+<数字>或者MV <英文>，也会有中文的船名，返回MV后面的名字.MV或MV.或M/V是动力船舶的标记，经常会出现在船名的前面，提取时船名时不要显示。例如：对于MV ELIJAH，船舶英文名称为：ELIJAH；对于MV GAO XIN 15 DWCC 6700 OPEN NIIGATA，船舶英文名称为：GAO XIN 15；ORIENTAL SOURCES 10.3K HAIPHONG,VIETNAM 24 DEC KRIS TWEEN DECK/FE-SEA，船舶英文名称为：ORIENTAL SOURCES;MV ZHE HAI 515, 50K,  WILL OPEN MINA ZAYED，船舶英文名称为：ZHE HAI 515
   - 船舶中文名称-CHINESE-NAME:
       - 如果原文中没有则默认和英文名称一样
   - 建造年份-BUILT-YEAR:
@@ -30,7 +33,7 @@ keys:
   - 载货吨-DWCC:
       - 直接返回Decimal(18,6)结果，DWCC的数字就是载货吨
   - 载重吨-DWT:
-      - 直接返回float结果，通常是DWT附近的数字
+      - 直接返回float结果，通常是DWT附近的数字.如果文中没出现DWT，和重量相关的数值如果没有说明默认为DWT。
   - 总吨位-GRT:
       - 直接返回float结果
   - 净吨位-NRT:
@@ -55,13 +58,19 @@ keys:
   - 夏季海水吃水-DRAFT:
       - 直接返回float结果, 默认单位是M。SUMMER SALT WATER表达夏季海水，DWT / DRAFT SUMMER SALT WATER 58,761 MT / 12.828 M中前一个表示DWT，后一个表示夏季海水吃水。
   - 甲板数-DECK:
-      - 船舶资料上若体现SINGLE DECK或SD,DECCK取值为SD; 资料上若显示TWEEN DECK 或TD或双甲板,DECK取值为TD; 若资料上显示 TRIPLE DECT或TRD或三甲板，DECK 取值为TRD
+      - 船舶资料上若体现SINGLE DECK或SD,DECCK返回”SD“; 资料上若显示TWEEN DECK 或TD或双甲板,DECK，返回”TD“; 若资料上显示 TRIPLE DECT或TRD或三甲板，DECK 返回”TRD“
   - P&I
 #  - 船舶名称-VSL-NAME
   - 空船港口-OPEN-PORT:
-      - 返回大写的港口名字
+      - 返回大写的港口名字，通常船盘文档中出现的港口就是空船港口。
   - 船东-OWNER:
-    - 船盘最前面或最后面有的公司名，一般是指OWNR COMPANY; 如果一条信息包含多条船舶，则每个船舶的OWNR COMANY都是一样的.如果没有提及返回None
+    - 船盘最前面或最后面有的公司名，一般是指OWNR COMPANY; 如果一条信息包含多条船舶，则每个船舶的OWNR COMPANY都是一样的.如果没有提及返回None
   - 空船日期-OPEN-DATE:
-    - 注意：在船舶邮件里肯定存在, 必须要提取出来。是日期或日期区间，表示船只空闲可供租赁的日期，是一个时间区间或者具体的日期, 船盘如果写PPT，而默认空船日期是当天。 如果空船日期是一段时间的 如19-22JAN, 则空船日期取最前面的日期 2025-1-19; OPEN KANMON-BUSAN RANGE 2TH ／OCT的空船日期是10-02.船盘空船日期  EAR JAN,EAR FEB,默认空船日期为2025-1-1,2025-2-1以此类推.船盘空船日期   MIDJAN,MID FEB,默认空船日期为2025-1-15,2025-2-15以此类推.船盘空船日期  END JAN,END FEB,默认空船日期为2025-1-25,2025-2-25以此类推
+    - 注意：在船舶邮件里肯定存在, 必须要提取出来，如果文中没有提到，则为今日当天日期。船只空闲的日期,是一个日期，表示船只空闲可供租赁的日期，是一个时间区间的最开始（如果最开始比今天早，就取今天）或者具体的日期, 船盘如果写PPT，默认空船日期是当天。如果空船日期是一段时间的 如19-22JAN, 则空船日期取最前面的日期1-19; OPEN KANMON-BUSAN RANGE 2TH ／OCT的空船日期是10-02. 注意：如果日期没有提到年份，结合当前时间推算年份。船盘空船日期 EAR JAN,EAR FEB, 如果今天是2025-12-20则空船日期为2025-1-1,2025-2-1以此类推，因为2024-1-1已经过去了，所以是2025年.
     - \%Y-\%m-\%d
+  - 散装舱容-GRAIN-CAPACITY:
+      - 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B 18390/17526cbm：G表示散装舱容：18390，返回18390数字。CBM是单位表示立方，不用输出单位
+  - 包装舱容-BALE-CAPACITY:
+      - 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B 18390/17526cbm：B表示包装舱容：17526，返回17526数字。CBM是单位表示立方，不用输出单位
+  - IMO-CODE:
+      - 一串像船舶ID的号码，可能不存在，例如：IMO:9604653

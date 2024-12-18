@@ -2,6 +2,7 @@ import datetime
 import json
 import os
 import time
+
 import traceback
 from pathlib import Path
 from langchain_openai import ChatOpenAI
@@ -9,7 +10,7 @@ import yaml
 import tqdm
 from langchain_community.document_loaders import UnstructuredEmailLoader, OutlookMessageLoader
 from langchain_core.document_loaders import BaseLoader
-from sqlalchemy import modifier
+import hashlib
 
 from modules.utils.ocr_handler import OCRHandler
 from modules.message_classification import MessageClassifier
@@ -60,9 +61,41 @@ class ShipmentFlow:
         with open(feishu_config_path, 'r') as f:
             configs = yaml.load(f, Loader=yaml.FullLoader)
         self.tables = configs.get('table', {})
+        self.views = configs.get('view', {})
         self.templates = configs.get('template', {})
         self.chat_ids = configs.get('chat_id', {})
         self.app_token = configs.get('app_token')
+        extra_knowledge_path = Path(__file__).parent / 'modules' / 'knowledges' / 'uploaded_knowledge.json'
+        if extra_knowledge_path.exists():
+            with open(extra_knowledge_path, 'r', encoding='utf-8') as f:
+                self.extra_knowledge = json.load(f)
+        else:
+            self.extra_knowledge = {}
+
+    @staticmethod
+    def generate_md5_hash(input_data):
+        """
+        根据文本内容或文件路径生成唯一的 MD5 哈希字符串。
+
+        参数:
+        - input_data (str or Path): 输入的文本或文件路径。
+
+        返回:
+        - str: 生成的 MD5 哈希值（十六进制字符串）。
+        """
+        hasher = hashlib.md5()
+
+        if isinstance(input_data, (str, Path)):
+            # 如果输入是文件路径，则直接对路径字符串进行哈希
+            path_str = str(input_data)
+            hasher.update(path_str.encode('utf-8'))
+        else:
+            # 如果输入是文本，则直接计算文本的哈希
+            if isinstance(input_data, str):
+                input_data = input_data.encode('utf-8')
+            hasher.update(input_data)
+
+        return hasher.hexdigest()
 
     def process_msg_dicts(self, msg_dicts):
         msgs = []
@@ -79,6 +112,7 @@ class ShipmentFlow:
             message = event.get('message', {})
             chat_type = message.get('chat_type')
             message_type = message.get('message_type')
+            task_id_components = [chat_type, message_type]
             logger.info([event, event_id, chat_type, message_type])
             if not chat_type:
                 logger.error("Chat type is not mentioned.")
@@ -102,16 +136,17 @@ class ShipmentFlow:
             else:
                 logger.error(f"Unknown chat_type: {chat_type}")
                 continue
-
+            receive_type = chat_type
             if message_type == 'text':
                 content_str = message.get('content')
                 content = json.loads(content_str) if content_str else {}
                 content = content.get('text')
                 with open(target_folder / 'input_text.txt', 'w', encoding='utf-8') as f:
                     f.write(content)
-
+                content_hash = self.generate_md5_hash(content)
+                task_id_components.append(content_hash)
                 res = self.unit_flow(document_path=None, content=content, receive_id=receive_id,
-                                     receive_type=receive_type)
+                                     receive_type=receive_type, task_id='_'.join(task_id_components))
                 if res:
                     msgs.append(res)
             elif message_type == 'file':
@@ -123,18 +158,20 @@ class ShipmentFlow:
                 # os.makedirs(target_folder, exist_ok=True)
                 file_path = self.feishu_message_handler.retrieve_file(message_id, file_key, target_folder)
                 logger.info(f"Document {file_path.name} received.")
-                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                rich_text_log = (
-                    f'<b>【上传文件接收成功】</b>\n'
-                    f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
-                    f'<b>【时间】</b>: {current_time}'
-                )
-                self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
-                                                                     template_id=self.templates['rich_text_general_id'],
-                                                                     template_variable={'log_rich_text': rich_text_log},
-                                                                     receive_id_type=receive_type)
+                # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                # rich_text_log = (
+                #     f'<b>【上传文件接收成功】</b>\n'
+                #     f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
+                #     f'<b>【时间】</b>: {current_time}'
+                # )
+                # self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
+                #                                                      template_id=self.templates['rich_text_general_id'],
+                #                                                      template_variable={'log_rich_text': rich_text_log},
+                #                                                      receive_id_type=receive_type)
+                file_path_hash = self.generate_md5_hash(file_path)
+                task_id_components.append(file_path_hash)
                 res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
-                                     receive_type=receive_type)
+                                     receive_type=receive_type, task_id='_'.join(task_id_components))
                 if res:
                     msgs.append(res)
             elif message_type == 'image':
@@ -147,33 +184,53 @@ class ShipmentFlow:
                 file_path = self.feishu_message_handler.retrieve_file(message_id, file_key, target_folder,
                                                                       file_type='image')
                 logger.info(f"Document {file_path.name} received.")
-                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                rich_text_log = (
-                    f'<b>【上传文件接收成功】</b>\n'
-                    f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
-                    f'<b>【时间】</b>: {current_time}'
-                )
-                self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
-                                                                     template_id=self.templates['rich_text_general_id'],
-                                                                     template_variable={'log_rich_text': rich_text_log},
-                                                                     receive_id_type=receive_type)
+                # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                # rich_text_log = (
+                #     f'<b>【上传文件接收成功】</b>\n'
+                #     f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
+                #     f'<b>【时间】</b>: {current_time}'
+                # )
+                # self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
+                #                                                      template_id=self.templates['rich_text_general_id'],
+                #                                                      template_variable={'log_rich_text': rich_text_log},
+                #                                                      receive_id_type=receive_type)
+                file_path_hash = self.generate_md5_hash(file_path)
+                task_id_components.append(file_path_hash)
                 res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
-                                     receive_type=receive_type)
+                                     receive_type=receive_type, task_id='_'.join(task_id_components))
                 if res:
                     msgs.append(res)
             elif message_type == 'post':
                 content_str = message.get('content')
                 content = json.loads(content_str) if content_str else {}
                 content_parts = content.get('content')
+                message_id = message.get('message_id')
                 content = []
+                contain_img = False
                 for part in content_parts:
-                    content.append(' '.join([i.get('text', '') for i in part]))
+                    img_keys = [i.get('image_key', None) for i in part if i.get('tag') == 'img']
+                    if img_keys:
+                        contain_img = True
+                        file_path = self.feishu_message_handler.retrieve_file(message_id, img_keys[0], target_folder,
+                                                                              file_type='image')
+                        logger.info(f"Document {file_path.name} received.")
+                        file_path_hash = self.generate_md5_hash(file_path)
+                        _task_id_components = task_id_components + [file_path_hash]
+                        res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
+                                             receive_type=receive_type, task_id='_'.join(_task_id_components))
+                        if res:
+                            msgs.append(res)
+                    else:
+                        content.append(' '.join([i.get('text', '') for i in part]))
+                if contain_img:
+                    continue
                 content = '\n'.join(content)
                 with open(target_folder / 'input_text.txt', 'w', encoding='utf-8') as f:
                     f.write(content)
-
+                content_hash = self.generate_md5_hash(content)
+                task_id_components.append(content_hash)
                 res = self.unit_flow(document_path=None, content=content, receive_id=receive_id,
-                                     receive_type=receive_type)
+                                     receive_type=receive_type, task_id='_'.join(task_id_components))
                 if res:
                     msgs.append(res)
             else:
@@ -224,21 +281,40 @@ class ShipmentFlow:
     @retry(stop_max_attempt_number=2, wait_fixed=2000)
     def classify_document(self, document_loader):
         data = document_loader.load()
-        contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
+        # contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
+        # content_str = '\n'.join(contents_list)
+        contents_list = [i.page_content for i in data]
         content_str = '\n'.join(contents_list)
-        document_type, reason, entry_count = self.message_classifier.classify(content_str)
+        extra_knowledge_list = []
+        if self.extra_knowledge.get('Step_邮件分类'):
+            extra_knowledge_list.append(self.extra_knowledge.get('Step_邮件分类'))
+        if self.extra_knowledge.get('General_专业名词'):
+            extra_knowledge_list.append(self.extra_knowledge.get('General_专业名词'))
+
+        extra_knowledge = '\n'.join(extra_knowledge_list) if extra_knowledge_list else None
+        document_type, reason, entry_count = self.message_classifier.classify(content_str,
+                                                                              extra_knowledge=extra_knowledge)
 
         return document_type, reason, entry_count
 
     def extract_key_information(self, document_loader, document_type, entry_count: int, extra_info: str):
         logger.info(f"->     Starts to extract key information from {document_type}.")
+        extra_knowledge_list = []
         if document_type == 'others':
             logger.warning("Message type is OTHER. DO NOT PARSE. SKIPPED.")
             return None
         elif document_type == 'ship_info':
             config_path = self.rule_config_path / 'ship_related_default.yaml'
+            if self.extra_knowledge.get('Step_船盘提取'):
+                extra_knowledge_list.append(self.extra_knowledge.get('Step_船盘提取'))
+            if self.extra_knowledge.get('General_专业名词'):
+                extra_knowledge_list.append(self.extra_knowledge.get('General_专业名词'))
         elif document_type == 'cargo_info':
             config_path = self.rule_config_path / 'cargo_offer_default.yaml'
+            if self.extra_knowledge.get('Step_货盘提取'):
+                extra_knowledge_list.append(self.extra_knowledge.get('Step_货盘提取'))
+            if self.extra_knowledge.get('General_专业名词'):
+                extra_knowledge_list.append(self.extra_knowledge.get('General_专业名词'))
         logger.info(f"Config_path: {config_path}")
         # Message Segmentation
         # data = document_loader.load()
@@ -261,13 +337,18 @@ class ShipmentFlow:
         # Do extraction:
         ## By serial
         outs = []
+
+        extra_knowledge = '\n'.join(extra_knowledge_list) if extra_knowledge_list else None
         for vessel_info_chunk in tqdm.tqdm(vessel_info_chunks):
-            text_lines = ["参考原文：" + content_str,
-                          '本次提取任务重点放在下面的部分: ' + vessel_info_chunk] if entry_count > 1 else [content_str]
+            text_lines = [
+                "参考原文：" + content_str,
+                '本次提取任务从原文中以下部分提取一个: \n' + vessel_info_chunk
+            ] if entry_count > 1 else [content_str]
             modified_outputs = self.kie_instance(rule_config_path=str(config_path),
                                                  file_type=document_type,
                                                  # text_lines=[mutual_info, vessel_info_chunk]
-                                                 text_lines=text_lines
+                                                 text_lines=text_lines,
+                                                 extra_knowledge=extra_knowledge
                                                  )
             outs.append([modified_outputs[0], vessel_info_chunk, mutual_info])
         logger.success(json.dumps(outs, indent=2, ensure_ascii=False))
@@ -276,8 +357,23 @@ class ShipmentFlow:
     @retry(stop_max_attempt_number=2, wait_fixed=2000)
     def validate_key_information(self, document_type, extraction_res):
         logger.info("Starts to Validate results.")
+        extra_knowledge_list = []
+        if document_type == 'others':
+            logger.warning("Message type is OTHER. DO NOT PARSE. SKIPPED.")
+            return None
+        elif document_type == 'ship_info':
+            if self.extra_knowledge.get('Step_船盘校验'):
+                extra_knowledge_list.append(self.extra_knowledge.get('Step_船盘校验'))
+            if self.extra_knowledge.get('General_专业名词'):
+                extra_knowledge_list.append(self.extra_knowledge.get('General_专业名词'))
+        elif document_type == 'cargo_info':
+            if self.extra_knowledge.get('Step_货盘校验'):
+                extra_knowledge_list.append(self.extra_knowledge.get('Step_货盘校验'))
+            if self.extra_knowledge.get('General_专业名词'):
+                extra_knowledge_list.append(self.extra_knowledge.get('General_专业名词'))
         modified_res = self.ki_validator.bulk_validate(document_type=document_type,
-                                                  extraction_res=extraction_res)
+                                                       extraction_res=extraction_res,
+                                                       extra_knowledge='\n'.join(extra_knowledge_list))
         modified_res = self.ki_validator.validate(document_type=document_type,
                                                   extraction_res=modified_res)
         logger.info("=>         Validation finished.")
@@ -300,11 +396,66 @@ class ShipmentFlow:
             if steps and 2 not in steps:
                 continue
 
-    def add_todo(self):
-        pass
+    def add_job(self, job_id, msg_body, source, force_new=False):
+        logger.info(f"Adding job: {job_id}")
+        n_records = {
+            'id': job_id,
+            '消息主体': msg_body,
+            '数据源': source,
+            '状态': '未运行',
+        }
+        if not force_new:
+            records, _ = self.feishu_spreadsheet_handler.get_records(self.app_token, self.tables['inputs_status'],
+                                                                     view_id=self.views['inputs_status'],
+                                                                     show_fields=['状态'], id=job_id)
+            if not records:
+                logger.info("Initializing new records.")
+                self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], [n_records])
+                logger.success(f"Added {job_id}")
+                return
+            else:
+                logger.warning(f"Job exists. {records}")
+                return records[0]
+        else:
+            # NEW RECORDS
+            logger.info("Initializing new records.")
+            self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], [n_records])
+            logger.success(f"Added {job_id}")
+            return
 
-    def mark_finish(self):
-        pass
+    def update_jobs(self, job_id, msg_body, source, status, records_ids=None, document_type=None, logs=None, force_new=False):
+        n_records = {
+            'id': job_id,
+            '消息主体': msg_body,
+            '数据源': source,
+            '状态': status,
+            'logs': logs if logs else "",
+            '任务最近更新时间': int(time.time()*1000)
+        }
+        if records_ids and document_type:
+            table_id = self.tables[document_type]
+            record_link_list = [i for i in records_ids]
+            n_records['目标记录：record ID'] = '\n'.join(record_link_list)
+        if document_type:
+            n_records['内容分类'] = document_type
+        if not force_new:
+            records, _ = self.feishu_spreadsheet_handler.get_records(self.app_token, self.tables['inputs_status'],
+                                                                     view_id=self.views['inputs_status'], id=job_id)
+            if not records:
+                logger.info("Initializing new records.")
+                self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], n_records)
+            else:
+                record_ids = [i['record_id'] for i in records]
+                for record_id in record_ids:
+                    self.feishu_spreadsheet_handler.update_records(self.app_token,
+                                                                   self.tables['inputs_status'],
+                                                                   record_id,
+                                                                   n_records)
+
+        else:
+            # NEW RECORDS
+            logger.info("Initializing new records.")
+            self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], n_records)
 
     # def insert_data_to_spreadsheet(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
     #                                raw_text=None):
@@ -335,7 +486,7 @@ class ShipmentFlow:
     #     logger.success(f"Inserted for {document_path}")
 
     def insert_data_to_spreadsheet(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
-                                   raw_text=None):
+                                   raw_text=None, source_name="PureText"):
         if document_type == 'ship_info':
             data_to_insert = []
             for data in extraction_res:
@@ -349,35 +500,37 @@ class ShipmentFlow:
                 if not vid:
                     cur_res['船舶代码-ID'] = vessel_name
                     logger.error(traceback.format_exc())
+                    cur_res['备注-REMARK'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[2] else ''])
 
                 else:
                     vessel_code = self.bx_handler.get_vessel(vid).get('job_info', {}).get('VesselCode')
                     logger.success(f"{vessel_code} already exists")
                     cur_res['船舶代码-ID'] = vessel_code
-                # if raw_text and '备注-REMARK' in cur_res:
-                #     cur_res['备注-REMARK'] = raw_text
-                cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
+                    cur_res['备注-REMARK'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[2] else ''])+f'\n无需新建船舶，{vessel_code}已存在。'
                 if raw_text:
                     cur_res['原文依据'] = raw_text
+
+                # if raw_text:
+                #     cur_res['原文依据'] = raw_text
                 if event_id:
                     cur_res['source_name'] = event_id
                 else:
-                    cur_res['source_name'] = document_path.name if document_path else 'PureText'
+                    cur_res['source_name'] = document_path.name if document_path else source_name
                 for k in cur_res:
                     cur_res[k] = str(cur_res[k])
                 data_to_insert.append(cur_res)
-            self.feishu_spreadsheet_handler.add_records(app_token=self.app_token,
-                                                        table_id=self.tables['ship_info'],
-                                                        records=data_to_insert)
+            records_ids = self.feishu_spreadsheet_handler.add_records(app_token=self.app_token,
+                                                                      table_id=self.tables['ship_info'],
+                                                                      records=data_to_insert)
         elif document_type == 'cargo_info':
             data_to_insert = []
             for data in extraction_res:
                 cur_res = data[0]
-                # if raw_text and '备注-REMARK' in cur_res:
-                #     cur_res['备注-REMARK'] = raw_text
-                cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
                 if raw_text:
                     cur_res['原文依据'] = raw_text
+                cur_res['备注-REMARK'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[2] else ''])
+                # if raw_text:
+                #     cur_res['原文依据'] = raw_text
                 if event_id:
                     cur_res['source_name'] = event_id
                 else:
@@ -385,14 +538,14 @@ class ShipmentFlow:
                 for k in cur_res:
                     cur_res[k] = str(cur_res[k])
                 data_to_insert.append(cur_res)
-            self.feishu_spreadsheet_handler.add_records(app_token=self.app_token,
-                                                        table_id=self.tables['cargo_info'],
-                                                        records=data_to_insert)
+            records_ids = self.feishu_spreadsheet_handler.add_records(app_token=self.app_token,
+                                                                      table_id=self.tables['cargo_info'],
+                                                                      records=data_to_insert)
         else:
             return
 
-        logger.success(f"Inserted for {document_path}")
-
+        logger.success(f"Inserted for {document_path}. Records_ids: {records_ids}")
+        return records_ids
 
     def insert_data_to_bx(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
                           raw_text=None):
@@ -414,16 +567,16 @@ class ShipmentFlow:
                             "VesselCode": vessel_name,
                             "VesselName": vessel_name,
                             "VesselNamec": data.get('船舶中文名称-CHINESE-NAME'),
-                            # "IMOCode": None,
+                            "IMOCode": data.get('IMO-CODE'),
                             "VslType": data.get('船舶类型-TYPE'),
                             "VslCreateYear": data.get('建造年份-BUILT-YEAR'),
                             "CarryTonSJ": data.get('载货吨-DWCC', 0),
                             "CarryTon": data.get('载重吨-DWT', 0),
                             "Tons": data.get('总吨位-GRT', 0),
                             "NetTon": data.get('净吨位-NRT', 0),
-                            "HoldCapacity2": 0.000000,
-                            # "GoodsVolumeSZ": data.get('船舶中文名称-CHINESE-NAME'),
-                            # "DSKX": data.get('夏季海水吃水-DRAFT'),
+                            "HoldCapacity2": data.get('散装舱容-GRAIN-CAPACITY', 0),
+                            "GoodsVolumeSZ": data.get('包装舱容-BALE-CAPACITY', 0),
+                            # "DSKX": data.get('夏季海水吃水-DRAFT', 0),
                             "Length": data.get('船长-LOA', 0),
                             "Width": data.get('船宽-BM', 0),
                             "XDeep": data.get('型深-DEPTH', 0),
@@ -436,10 +589,10 @@ class ShipmentFlow:
                             "DeckCount": data.get('甲板数-DECK', 0),
                             "PAndI": data.get('P&I'),
                             "Carrier": data.get('船东-OWNER'),
-                            "Remark": raw_text
+                            "Remark": data.get('备注-REMARK')
                         }
                         for keyname in ["CarryTonSJ", "CarryTon", "Tons", "NetTon", "Length", "Width", "XDeep"
-                                        "FFill"]:
+                                                                                                       "FFill"]:
                             try:
                                 payload[keyname] = float(payload[keyname])
                             except:
@@ -458,6 +611,7 @@ class ShipmentFlow:
                         logger.success(f"voy_dt ADD to BX: {res}")
                     except:
                         logger.error(traceback.format_exc())
+                        return {"status": 'error', "log": str(traceback.format_exc())}
 
                 else:
                     vessel_code = self.bx_handler.get_vessel(vid).get('job_info', {}).get('VesselCode')
@@ -467,6 +621,7 @@ class ShipmentFlow:
                                'DTDate': data.get('空船日期-OPEN-DATE')}
                     res = self.bx_handler.add_vessel_voy_dt(payload)
                     logger.success(f"voy_dt ADD to BX: {res}")
+                    return res
         elif document_type == 'cargo_info':
             for data in extraction_res:
                 cur_res = data[0]
@@ -479,14 +634,17 @@ class ShipmentFlow:
                                'ZL': data.get('装率-L-RATE'),
                                'XL': data.get('卸率-D-RATE'),
                                'WeightHT2': data.get('最小货量-QUANTITY', 0),
+                               'WeightHT4': data.get('最大货量-QUANTITY', 0),
                                'BeginDate': data.get('装运开始日期-LAY-DATE',
                                                      datetime.datetime.now().strftime('%Y-%m-%d')),
                                'EndDate': data.get('装运结束日期-CANCELING-DATE',
-                                                   datetime.datetime.now().strftime('%Y-%m-%d')),
+                                                   (datetime.datetime.now() + datetime.timedelta(days=5)).strftime(
+                                                       '%Y-%m-%d')),
                                'YJBL': data.get('佣金-COMM'),
                                'BPCompany': data.get('报盘公司-COMPANY'),
-                               'Remark_DZ': raw_text}
-                    for keyname in ['YJBL']:
+                               'CarrierPrice': data.get('运费单价-FRT-RATE', 0),
+                               'Remark_DZ': data.get('备注-REMARK')}
+                    for keyname in ['YJBL', 'WeightHT2', 'WeightHT4', 'CarrierPrice']:
                         try:
                             payload[keyname] = float(payload[keyname])
                         except:
@@ -494,10 +652,11 @@ class ShipmentFlow:
 
                     res = self.bx_handler.add_sa_job(payload=payload)
                     logger.success(f"sa_job ADD to BX: {res}")
+                    return res
 
                 except:
                     logger.error(traceback.format_exc())
-
+                    return {"status": 'error', "log": str(traceback.format_exc())}
         else:
             return
 
@@ -532,147 +691,146 @@ class ShipmentFlow:
         return to_html_table(json_data)
 
     def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, receive_type=None,
-                  task_id=None, debug=False):
+                  task_id=None, debug=False, skip_success=True, document_type=None):
+        output_res = None
         logger.info(f"Current receive_type: {receive_type} receive_id: {receive_id}")
         logger.error(f'{receive_id} {receive_type}')
         document_loader = self.load_document(document_path=Path(document_path) if document_path else None,
                                              content=content)
-        # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        # task_status_chat_id = self.chat_ids.get("task_status")
-        template_id = self.templates.get('rich_text_general_id')
-        message_id = receive_id
-
-        # if receive_type and receive_id:
-        #     total, content = self.get_data_loader_context(document_loader)
-        #     rich_text_log = (
-        #         f'<b>【task_id: {task_id}】</b>\n'
-        #         f'{self.json_to_code_block(total)}\n'
-        #     )
-        #     for idx, c in enumerate(content):
-        #         rich_text_log += f'\n' + c
-        #     message_id = self.feishu_message_handler.send_message_by_template(receive_id=task_status_chat_id,
-        #                                                                       template_id=template_id,
-        #                                                                       template_variable={
-        #                                                                           'log_rich_text': rich_text_log},
-        #                                                                       receive_id_type=receive_type)
-
+        data = document_loader.load()
+        contents_list = [i.page_content for i in data]
+        content_str = '\n'.join(contents_list)
+        job_id = task_id if task_id else f"{receive_type}_{receive_id}"
+        existing_job = self.add_job(job_id=job_id, msg_body=content_str, source=receive_type)
+        if existing_job:
+            if skip_success and existing_job['fields']['状态'] == '成功':
+                logger.error(f"Job exists and success. Skipped")
+                return output_res
         # Classify
-        try:
-            document_type, reason, entry_count = self.classify_document(document_loader)
-            logger.success(
-                f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
-            # if receive_type and receive_id:
-            #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            #     rich_text_log = (
-            #         f'<b>【邮件主体分类成功】</b>\n'
-            #         # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
-            #         f'<b>邮件分类：<font color="green"><b>{document_type}</b></font>\n'
-            #         f'<b>分类原因：<font color="grey"><b>{reason}</b></font>\n'
-            #         f'<b>正在进行步骤：<font color="blue"><b>关键信息提取</b></font></b>\n'
-            #         f'<b>【时间】</b>: {current_time}'
-            #     )
-            #     # self.feishu_spreadsheet_handler.add_records()
-            #     self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-            #                                                           template_id=template_id,
-            #                                                           template_variable={
-            #                                                               'log_rich_text': rich_text_log},
-            #                                                           in_thread=True)
-        except Exception as e:
-            logger.error(traceback.format_exc())
-            # if receive_type and receive_id:
-            #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            #     rich_text_log = (
-            #         f'<b>【邮件主体分类失败】</b>\n'
-            #         # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
-            #         f'<b>失败原因：<font color="red"><b>{str(e)}</b></font></b>\n'
-            #         f'<b>【时间】</b>: {current_time}'
-            #     )
-            #     self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-            #                                                           template_id=template_id,
-            #                                                           template_variable={
-            #                                                               'log_rich_text': rich_text_log},
-            #                                                           in_thread=True
-            #                                                           )
-            return
+        if document_type:
+            logger.info(f"Skip classification. Document type: {document_type}")
+            document_type, reason, entry_count = document_type, '', 1
+        else:
+            try:
+                self.update_jobs(job_id=job_id,
+                                 msg_body=content_str,
+                                 source=receive_type,
+                                 status='分类中',
+                                 logs=f"开始邮件分类")
+                document_type, reason, entry_count = self.classify_document(document_loader)
+                logger.success(
+                    f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
+                self.update_jobs(job_id=job_id,
+                                 msg_body=content_str,
+                                 source=receive_type,
+                                 status='分类中',
+                                 logs=f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
 
+            except Exception as e:
+                document_type = None
+                logger.error(traceback.format_exc())
+                self.update_jobs(job_id=job_id,
+                                 msg_body=content_str,
+                                 source=receive_type,
+                                 status='异常',
+                                 logs=traceback.format_exc())
+                return output_res
         # Extraction
+        if document_type == 'others':
+            self.update_jobs(job_id=job_id,
+                             msg_body=content_str,
+                             source=receive_type,
+                             status='成功',
+                             logs=f"不属于船盘/货盘邮件")
+            return output_res
+        self.update_jobs(job_id=job_id,
+                         msg_body=content_str,
+                         source=receive_type,
+                         document_type=document_type,
+                         status='提取中',
+                         logs=f"开始邮件信息提取")
         extraction_res = self.extract_key_information(document_loader=document_loader,
                                                       document_type=document_type,
                                                       entry_count=entry_count,
                                                       extra_info=reason)
+        output_res = {'extraction_res': extraction_res}
         if not extraction_res:
+            self.update_jobs(job_id=job_id,
+                             msg_body=content_str,
+                             source=receive_type,
+                             status='分类中',
+                             logs=f"未曾成功提取出结果。{extraction_res}")
             return
         extraction_res = [] if not extraction_res else extraction_res
+        self.update_jobs(job_id=job_id,
+                         msg_body=content_str,
+                         source=receive_type,
+                         status='分类中',
+                         logs=f"=>     初次提取成功：{extraction_res}")
         # Validation
+        self.update_jobs(job_id=job_id,
+                         msg_body=content_str,
+                         source=receive_type,
+                         status='结果校验中',
+                         logs=f"开始校验结果")
         extraction_res = self.validate_key_information(document_type, extraction_res)
-
-        # if receive_type and receive_id:
-        #     rich_text_log = f'<b>【邮件关键信息提取成功】</b>\n'
-        #     for idx, i in enumerate(extraction_res):
-        #         rich_text_log += f'---------片段 {idx}---------' + '\n' + i[2] + "\n" + i[1]
-        #         rich_text_log += "\n\n" + self.json_to_code_block(i[0])
-        #     logger.warning(rich_text_log)
-        #
-        #     self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-        #                                                           template_id=template_id,
-        #                                                           template_variable={
-        #                                                               'log_rich_text': rich_text_log},
-        #                                                           in_thread=True
-        #                                                           )
+        output_res = {'extraction_res': extraction_res}
+        self.update_jobs(job_id=job_id,
+                         msg_body=content_str,
+                         source=receive_type,
+                         status='结果校验中',
+                         logs=f"=>     结果校验成功：{extraction_res}")
 
         # INSERTION
         if not debug:
             try:
+                self.update_jobs(job_id=job_id,
+                                 msg_body=content_str,
+                                 source=receive_type,
+                                 status='插入数据',
+                                 logs=f"开始插入数据")
                 total, content = self.get_data_loader_context(document_loader)
-                self.insert_data_to_spreadsheet(Path(document_path) if document_path else None,
-                                                document_type,
-                                                extraction_res,
-                                                raw_text='\n'.join(content))
-                # self.insert_data_to_bx(Path(document_path) if document_path else None,
-                #                        document_type,
-                #                        extraction_res,
-                #                        raw_text='\n'.join(content))
+                records_ids = self.insert_data_to_spreadsheet(Path(document_path) if document_path else None,
+                                                              document_type,
+                                                              extraction_res,
+                                                              raw_text='\n'.join(content))
+                output_res = {'extraction_res': extraction_res,
+                              'records_ids': records_ids}
+                self.update_jobs(job_id=job_id,
+                                 msg_body=content_str,
+                                 source=receive_type,
+                                 records_ids = records_ids,
+                                 document_type=document_type,
+                                 status='插入数据',
+                                 logs=f"数据成功插入飞书表")
+
                 logger.success(f"=>      Data Inserted.")
-                # if receive_type and receive_id:
-                #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                #     rich_text_log = (
-                #         f'<b>【关键信息插入多维表成功】</b>\n'
-                #         f'<b><font color="green"><b>关键信息插入成功</b></font>\n'
-                #         f'<b>【时间】</b>: {current_time}'
-                #     )
-                #     self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-                #                                                           template_id=template_id,
-                #                                                           template_variable={
-                #                                                               'log_rich_text': rich_text_log},
-                #                                                           in_thread=True
-                #                                                           )
             except Exception as e:
                 logger.error(traceback.format_exc())
-                # if receive_type and receive_id:
-                #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                #     rich_text_log = (
-                #         f'<b>【分类数据插入失败】</b>\n'
-                #         # f'<i>{document_path if document_path else content[:50] + "..."}</i>\n'
-                #         f'<b>失败原因：<font color="red"><b>{str(e)}</b></font>\n'
-                #         f'<b>【时间】</b>: {current_time}'
-                #     )
-                #     self.feishu_message_handler.reply_message_by_template(message_id=message_id,
-                #                                                           template_id=template_id,
-                #                                                           template_variable={
-                #                                                               'log_rich_text': rich_text_log},
-                #                                                           in_thread=True
-                #                                                           )
+                self.update_jobs(job_id=job_id,
+                                 msg_body=content_str,
+                                 source=receive_type,
+                                 status='插入数据',
+                                 logs=f"飞书表插入失败，失败报错：{traceback.format_exc()}")
+
                 return
         else:
             logger.success(json.dumps(extraction_res, indent=4, ensure_ascii=False))
-        self.mark_finish()
-        return extraction_res
+        self.update_jobs(job_id=job_id,
+                         msg_body=content_str,
+                         source=receive_type,
+                         status='成功',
+                         logs=json.dumps(extraction_res, indent=2, ensure_ascii=False))
+        return output_res
 
     def main(self, document_paths=None):
         if not document_paths:
             document_paths = self.collect_emails()
         for document_path in tqdm.tqdm(document_paths):
-            self.unit_flow(document_path)
+            res = self.unit_flow(document_path)
+            if res is False:
+                logger.error("Job exists.")
+                continue
 
 
 if __name__ == "__main__":

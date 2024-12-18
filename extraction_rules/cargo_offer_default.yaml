@@ -1,5 +1,6 @@
 background:
   - cargo offer原始信息，一般都是用英文的。
+  - 5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，是表达重量的。
   - EAR SEP 录入9.1号， END SEP 默认9.20， MID,SEP 默认 9.15
   - SEIYO FORTUNE    10514MT    2007   NINGDE   18-25TH SEP 这种时间是区间的，就录最前面的9.18
   - 10pct 10% (percent)指的是货物质量占据总船容的10%
@@ -7,6 +8,8 @@ background:
   - F.I.O.S.T.：free in,out,stowed and trimmed 船方不负担装船，卸船，理仓，以及平仓费用
   - 3,000MT 5PCT MOLCO：3,000公吨，允许5%的增减。
   - PIC：Point of Contact，联系人。
+  - CQD 表示一种卸率或者装率
+  - FIO表示Free In and Out免装卸货费用，船方不负责装卸货费用
   - CQD/3DAYS TO HEAVUP：CQD（Cargo Quantity Discharged），3天内完成卸货
   - CQD BE (TRY DISRATE)：CQD（Cargo Quantity Discharged）Bends，尝试卸货速率。
   - Gcn 3,75% pu iac -> Gcn：佣金（General Commission）。3,75%：佣金率为3.75%。pu iac：按发票金额计算（Per Unit Invoice Amount）
@@ -15,30 +18,31 @@ background:
   - 货盘里有看到USD标识的表示运价，也只要数据不要单位，如USD10/MT FIOST, FRT -RATE只要10 ;另外如果有遇到USD80K的，FRT -RATE取值应80000，K表示的是1000
   - 货盘里遇到货量类似这样的 50-65k mt， 最小货量取值是   50000， 最大货量取值是  65000
   - 货盘里如果看到CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD
-  - 空船时间或货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那OPEN DATE 就是2025-1-1而不2024-1-1
+  - 注意：如果文中出现xxx MT /CQD 或者  CQD/xxx MT,左边的是装率，右边的是卸率
+  - 货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024年12月，资料上显示是1-1，那OPEN DATE 就是2025-1-1而不2024-1-1因为2024年1-1已经过去了，应该指的是2025年的1-1
   - 货盘前面后面或最后的公司名，或接在报货公司后面的公司名， 是指报货公司，如果一条信息里包含多个货盘，则每个货盘的报货公司都取一样的
   - 货物名称里一般都是字母，不会有数字
   - 货量里如果有22000/25000或22000-25000，表示最少货量是22000，最多货量是25000
-
+  - dwcc指的是Dead Weight Cargo Capacity
 keys:
   - 货物名称-CARGO-NAME:
-      - 返回需要运输的货物名称，例如ilmenite sand in ows option货物名称为ilmenite sand
+      - 返回需要运输的货物名称, 保留原名，不要翻译，例如ilmenite sand in ows option货物名称为ilmenite sand
   - 最小货量-QUANTITY:
-      - 返回最小的货量。货量在文中一般是个区间，例如：4.000 / 5.000 dwcc指的是Dead Weight Cargo Capacity，其中最小需要的货量为4吨
+      - 返回最小的货量。货量在文中一般是个区间或者在货物名前面，例如：4.000 / 5.000 dwcc，其中最小需要的货量为4吨。也有可能是一个值例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最小货量为5000
   - 最大货量-QUANTITY:
-      - 返回最大的货量。货量在文中一般是个区间，例如：4.000 / 5.000 dwcc指的是Dead Weight Cargo Capacity，其中最大需要的货量为5吨
+      - 返回最大的货量。货量在文中一般是个区间或者在货物名前面，例如：4.000 / 5.000 dwcc，其中最大需要的货量为5吨.也有可能是一个值例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最大货量也为5000
   - 积载包装-SF-PACKAGE:
       - 货盘里出现BULK,BLK,IN BULK 都是表示货物包装是BULK; 货盘BAG,BAGS,IN BAGS,IN BAG,都是表示货物包装是BAG
   - 装货港口-L-PORT:
-      - 始发的港口，通常在如下格式中是左边那个：<港口缩写>/<港口缩写>，例如：文中如果是DANGJIN/OSAKA，DANGJIN就是装货港口;或者<港口>to<港口>中的左边那个。例如：dangjing to OSAKA, DANGJIN就是装港港口
+      - 始发的港口，通常在如下格式中是左边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，DANGJIN就是装货港口;或者<港口>to<港口>中的左边那个。例如：dangjing to OSAKA, DANGJIN就是装港港口
   - 卸货港口-D-PORT:
-      - 目标的港口，通常在如下格式中是右边那个：<港口缩写>/<港口缩写>，例如：文中如果是DANGJIN/OSAKA，OSAKA就是卸货港口;或者<港口>to<港口>中的右边那个。例如：dangjing to OSAKA, OSAKA就是装港港口
+      - 目标的港口，通常在如下格式中是右边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，OSAKA就是卸货港口;或者<港口>to<港口>中的右边那个。例如：dangjing to OSAKA, OSAKA就是装港港口
   - 装率-L-RATE:
-      - 装卸率里若有/或-隔开的/-前面的表示装港，后面的表示卸港，前面的表示装率，后面的表示卸率
+      - 装卸率(DIS RATE)里若有/或-隔开的,/-前面的表示装率，后面的表示卸率,例如："DIS RATE 1 000 MT PWWD SHINC/CQD"装率 '1 000 MT PWWD SHINC' 如果描述CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD
   - 卸率-D-RATE:
-      - 装卸率里若有/或-隔开的/-前面的表示装港，后面的表示卸港，前面的表示装率，后面的表示卸率
+      - 装卸率(DIS RATE)里若有/或-隔开的,/-前面的表示装率，后面的表示卸率,例如："DIS RATE 1 000 MT PWWD SHINC/CQD"卸率 'CQD'；如果描述CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD
   - 装运开始日期-LAY-DATE:
-      - 在货盘邮件里肯定存在，通常是出现的日期区间的开始日期，例如：28-30 AUG 2024里，装运开始时间为：2024-08-28; MID-END SEP里，装运开始时间为：09-15;LAYCAN EAR-MID SEP,装运开始时间为：09-01。货盘装载期EAR JAH，默认为1-5TH JAN,装期开始为2025-1-1，结束日期为2025-1-5;货盘装载期MID JAH，默认为是15-20TH JAN,装期开始为2025-1-15，结束日期为2025-1-20;货盘装载期END JAH，默认为是25-30TH JAN,装期开始为2025-1-25，结束日期为2025-1-30
+      - 在货盘邮件里肯定存在，通常是出现的日期区间的开始日期，例如：28-30 AUG 2024里，装运开始时间为：2024-08-28; MID-END SEP里，装运开始时间为：09-15;LAYCAN EAR-MID SEP,装运开始时间为：09-01。货盘装载期EAR JAH，默认为1-5TH JAN,装期开始为2025-1-1，结束日期为2025-1-5;货盘装载期MID JAH，默认为是15-20TH JAN,装期开始为2025-1-15，结束日期为2025-1-20;货盘装载期END JAH，默认为是25-30TH JAN,装期开始为2025-1-25，结束日期为2025-1-30. 货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那LAY-DATE 就是2025-1-1而不2024-1-1
       - \%Y-\%m-\%d
   - 佣金-COMM:
       - 只用返回百分值，例如2.5%只用返回2.5即可
@@ -47,5 +51,5 @@ keys:
   - 备注-REMARK
   - 报盘公司-COMPANY
   - 装运结束日期-CANCELING-DATE:
-      - 在货盘邮件里肯定存在，通常是出现的日期区间的结尾日期，例如：28-30 AUG 2024里，装运结束时间为：2024-08-30; MID-END SEP里，装运结束时间为：09-30;LAYCAN EAR-MID SEP里，装运结束时间为：09-15。如果实在无法判断，返回日期区间
+      - 在货盘邮件里肯定存在，通常是出现的日期区间的结尾日期，例如：28-30 AUG 2024里，装运结束时间为：2024-08-30; MID-END SEP里，装运结束时间为：09-30;LAYCAN EAR-MID SEP里，装运结束时间为：09-15。货盘装载期EAR JAH，默认为1-5TH JAN,装期开始为2025-1-1，结束日期为2025-1-5;货盘装载期MID JAH，默认为是15-20TH JAN,装期开始为2025-1-15，结束日期为2025-1-20;货盘装载期END JAH，默认为是25-30TH JAN,装期开始为2025-1-25，结束日期为2025-1-30.货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那CANCELING-DATE 就是2025-1-1而不2024-1-1
       - \%Y-\%m-\%d
