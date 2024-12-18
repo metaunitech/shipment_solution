@@ -137,7 +137,7 @@ class TextKIE:
 你做的关键信息提取的结果以JSON格式返回给我。 {format_instructions}
 YOUR ANSWER:
             """
-            logger.debug(prompt)
+            # logger.debug(prompt)
             res_content = self.llm_engine.predict(prompt)
         else:
             prompt = f"""# TASK： 我会给你一段{file_type}类型文件的内容，我需要你帮我从内容中根据我提供的信息做关键信息提取的任务。
