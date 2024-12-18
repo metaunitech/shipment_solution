@@ -70,3 +70,6 @@ ship_info:
   船舶英文名称-ENGLISH-NAME:
     type: str
     comment: 必须提取到值,通常在每个片段的开头。通常以MV开头，或者其他部分是船的参数而有一个很像名字的词语，返回MV后面的名字
+  空船港口-OPEN-PORT:
+    type: str
+    comment: 必须提取到值, 返回大写的港口名字

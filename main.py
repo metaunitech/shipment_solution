@@ -483,7 +483,7 @@ class ShipmentFlow:
                                'BeginDate': data.get('装运开始日期-LAY-DATE',
                                                      datetime.datetime.now().strftime('%Y-%m-%d')),
                                'EndDate': data.get('装运结束日期-CANCELING-DATE',
-                                                   datetime.datetime.now().strftime('%Y-%m-%d')),
+                                                   (datetime.datetime.now()+datetime.timedelta(days=5)).strftime('%Y-%m-%d')),
                                'YJBL': data.get('佣金-COMM'),
                                'BPCompany': data.get('报盘公司-COMPANY'),
                                'Remark_DZ': raw_text}
