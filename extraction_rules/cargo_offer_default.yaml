@@ -22,7 +22,7 @@ background:
 
 keys:
   - 货物名称-CARGO-NAME:
-      - 返回需要运输的货物名称，例如ilmenite sand in ows option货物名称为ilmenite sand
+      - 返回需要运输的货物名称, 保留原名，不要翻译，例如ilmenite sand in ows option货物名称为ilmenite sand
   - 最小货量-QUANTITY:
       - 返回最小的货量。货量在文中一般是个区间，例如：4.000 / 5.000 dwcc指的是Dead Weight Cargo Capacity，其中最小需要的货量为4吨
   - 最大货量-QUANTITY:
@@ -30,9 +30,9 @@ keys:
   - 积载包装-SF-PACKAGE:
       - 货盘里出现BULK,BLK,IN BULK 都是表示货物包装是BULK; 货盘BAG,BAGS,IN BAGS,IN BAG,都是表示货物包装是BAG
   - 装货港口-L-PORT:
-      - 始发的港口，通常在如下格式中是左边那个：<港口缩写>/<港口缩写>，例如：文中如果是DANGJIN/OSAKA，DANGJIN就是装货港口;或者<港口>to<港口>中的左边那个。例如：dangjing to OSAKA, DANGJIN就是装港港口
+      - 始发的港口，通常在如下格式中是左边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，DANGJIN就是装货港口;或者<港口>to<港口>中的左边那个。例如：dangjing to OSAKA, DANGJIN就是装港港口
   - 卸货港口-D-PORT:
-      - 目标的港口，通常在如下格式中是右边那个：<港口缩写>/<港口缩写>，例如：文中如果是DANGJIN/OSAKA，OSAKA就是卸货港口;或者<港口>to<港口>中的右边那个。例如：dangjing to OSAKA, OSAKA就是装港港口
+      - 目标的港口，通常在如下格式中是右边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，OSAKA就是卸货港口;或者<港口>to<港口>中的右边那个。例如：dangjing to OSAKA, OSAKA就是装港港口
   - 装率-L-RATE:
       - 装卸率里若有/或-隔开的/-前面的表示装港，后面的表示卸港，前面的表示装率，后面的表示卸率
   - 卸率-D-RATE:
@@ -47,5 +47,5 @@ keys:
   - 备注-REMARK
   - 报盘公司-COMPANY
   - 装运结束日期-CANCELING-DATE:
-      - 在货盘邮件里肯定存在，通常是出现的日期区间的结尾日期，例如：28-30 AUG 2024里，装运结束时间为：2024-08-30; MID-END SEP里，装运结束时间为：09-30;LAYCAN EAR-MID SEP里，装运结束时间为：09-15。如果实在无法判断，返回日期区间
+      - 在货盘邮件里肯定存在，通常是出现的日期区间的结尾日期，例如：28-30 AUG 2024里，装运结束时间为：2024-08-30; MID-END SEP里，装运结束时间为：09-30;LAYCAN EAR-MID SEP里，装运结束时间为：09-15。货盘装载期EAR JAH，默认为1-5TH JAN,装期开始为2025-1-1，结束日期为2025-1-5;货盘装载期MID JAH，默认为是15-20TH JAN,装期开始为2025-1-15，结束日期为2025-1-20;货盘装载期END JAH，默认为是25-30TH JAN,装期开始为2025-1-25，结束日期为2025-1-30
       - \%Y-\%m-\%d

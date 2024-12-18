@@ -81,7 +81,7 @@ class KIValidation:
     def validate_number(self, input, comments=None):
         pass
 
-    @retry(stop_max_attempt_number=2, wait_fixed=2000)
+    @retry(stop_max_attempt_number=3, wait_fixed=2000)
     def unit_bulk_validate(self, document_type, res, content=None, mutual_content=None):
         llm_ins = self.create_llm_instance()
         parser = PydanticOutputParser(pydantic_object=RefinedDict)
