@@ -18,7 +18,7 @@ class KeyValuePair(BaseModel):
 
 class KeyValuePairDict(BaseModel):
     key_value_pairs: dict = Field(
-        description='关键信息提取结果中所有关键信息的键值对,key是关键信息字段，value是对应的值。注意，如果原文中无法提取到的字段请删除。仅保留能提取出结果的键值对。'
+        description='关键信息提取结果中所有关键信息的键值对,key是关键信息字段，value是对应的值(float/str/datetime)。注意，如果原文中无法提取到的字段请删除。仅保留能提取出结果的键值对。'
     )
 
 

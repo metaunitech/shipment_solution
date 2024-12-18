@@ -2,13 +2,13 @@ cargo_info:
   装运开始日期-LAY-DATE:
     type: datetime
     function: validate_date
-    comments: 必须提取到值,通常是时间区间的开始日期（不要输出区间），对于装运开始日期的返回格式根据如下例子：EAR SEP-END SEP返回09-01，MID SEP/EAR OCT返回09-15
+    comments: 必须提取到值,通常是时间区间的开始日期（不要输出区间），对于装运开始日期的返回格式根据如下例子：EAR SEP-END SEP返回09-01，MID SEP/EAR OCT返回09-15.货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那LAY-DATE 就是2025-1-1而不2024-1-1
     examples:
       - { "4-5 SEPT 2024": "2024-09-04" }
   装运结束日期-CANCELING-DATE:
     type: datetime
     function: validate_date
-    comments: 必须提取到值,通常是时间区间的结尾（不要输出区间），对于装运结束日期的返回格式根据如下例子：EAR SEP-END SEP返回09-30，MID SEP/EAR OCT返回10-01
+    comments: 必须提取到值,通常是时间区间的结尾（不要输出区间），对于装运结束日期的返回格式根据如下例子：EAR SEP-END SEP返回09-30，MID SEP/EAR OCT返回10-01.货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那CANCELING-DATE 就是2025-1-1而不2024-1-1
     examples:
       - { "3-5 SEPT 2024": "2024-09-05" }
       - { "EAR SEP-END SEP": '2024-09-30' }
@@ -33,6 +33,21 @@ cargo_info:
     comments: 只用返回百分比值，不用带百分号%
   运费单价-FRT-RATE:
     type: float
+    comments: 只用返回百分比值，不用带币符号
+  卸率-D-RATE:
+    type: str
+    comments: 必须提取到值.装卸率(DIS RATE)里若有/或-隔开的,/-前面的表示装率，后面的表示卸率.如果看到CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD.
+    examples:
+      - {"DIS RATE 1 000 MT PWWD SHINC/CQD": 'CQD'}
+      - {"CQD BENDS": "CQD"}
+      - {"Load and Discharge rate: 8,000 / 5,000 MT PWWD SHEX UU": "5,000 MT PWWD SHEX UU"}
+  装率-L-RATE:
+    type: str
+    comments: 必须提取到值.装卸率(DIS RATE)里若有/或-隔开的,/-前面的表示装率，后面的表示卸率.如果看到CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD
+    examples:
+      - {"DIS RATE 1 000 MT PWWD SHINC/CQD": '1 000 MT PWWD SHINC'}
+      - { "CQD BENDS": "CQD" }
+      - {"Load and Discharge rate: 8,000 / 5,000 MT PWWD SHEX UU": "8,000 MT PWWD SHEX UU"}
 
 ship_info:
   空船日期-OPEN-DATE:
