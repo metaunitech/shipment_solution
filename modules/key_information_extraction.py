@@ -207,7 +207,8 @@ YOUR ANSWER:
 
         for i in pairs:
             if not isinstance(pairs[i], str):
-                raise KIEException(f"Output should be string. {pairs[i]}")
+                pairs[i] = str(pairs[i])
+                # raise KIEException(f"Output should be string. {pairs[i]}")
 
         logger.success("Pairs extracted.")
         logger.success(json.dumps(pairs, ensure_ascii=False, indent=4))
@@ -349,7 +350,7 @@ YOUR ANSWER:
             raw_text_lines=text_lines,
             target_key_raw=target_key_raw,
             key_definition_max_length=kwargs.get('key_definition_max_length',
-                                                 15),
+                                                 10),
             text_line_max=kwargs.get('text_line_max', 60),
             method_description_dict=kwargs.get('method_description_dict',
                                                {}),

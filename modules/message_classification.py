@@ -63,7 +63,7 @@ class MessageClassifier:
                                         other_type_examples=other_examples_str,
                                         format_instruction=format_instruction,
                                         input_content=content)
-        logger.debug(prompt)
+        # logger.debug(prompt)
         res_raw = llm_ins.invoke(prompt)
         res_content = res_raw.content
         logger.debug(res_content)

@@ -262,8 +262,10 @@ class ShipmentFlow:
         ## By serial
         outs = []
         for vessel_info_chunk in tqdm.tqdm(vessel_info_chunks):
-            text_lines = ["参考原文：" + content_str,
-                          '本次提取任务重点放在下面的部分: ' + vessel_info_chunk] if entry_count > 1 else [content_str]
+            text_lines = [
+                "参考原文：" + content_str,
+                '本次提取任务从原文中以下部分提取一个: \n' + vessel_info_chunk
+            ] if entry_count > 1 else [content_str]
             modified_outputs = self.kie_instance(rule_config_path=str(config_path),
                                                  file_type=document_type,
                                                  # text_lines=[mutual_info, vessel_info_chunk]
@@ -277,7 +279,7 @@ class ShipmentFlow:
     def validate_key_information(self, document_type, extraction_res):
         logger.info("Starts to Validate results.")
         modified_res = self.ki_validator.bulk_validate(document_type=document_type,
-                                                  extraction_res=extraction_res)
+                                                       extraction_res=extraction_res)
         modified_res = self.ki_validator.validate(document_type=document_type,
                                                   extraction_res=modified_res)
         logger.info("=>         Validation finished.")
@@ -354,11 +356,11 @@ class ShipmentFlow:
                     vessel_code = self.bx_handler.get_vessel(vid).get('job_info', {}).get('VesselCode')
                     logger.success(f"{vessel_code} already exists")
                     cur_res['船舶代码-ID'] = vessel_code
-                # if raw_text and '备注-REMARK' in cur_res:
-                #     cur_res['备注-REMARK'] = raw_text
-                cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
-                if raw_text:
-                    cur_res['原文依据'] = raw_text
+                if raw_text and '备注-REMARK' in cur_res:
+                    cur_res['备注-REMARK'] = raw_text
+                cur_res['原文依据'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[2] else ''])
+                # if raw_text:
+                #     cur_res['原文依据'] = raw_text
                 if event_id:
                     cur_res['source_name'] = event_id
                 else:
@@ -373,11 +375,11 @@ class ShipmentFlow:
             data_to_insert = []
             for data in extraction_res:
                 cur_res = data[0]
-                # if raw_text and '备注-REMARK' in cur_res:
-                #     cur_res['备注-REMARK'] = raw_text
-                cur_res['原文依据'] = '\n'.join([data[1] if data[1] else '', data[2] if data[2] else ''])
-                if raw_text:
-                    cur_res['原文依据'] = raw_text
+                if raw_text and '备注-REMARK' in cur_res:
+                    cur_res['备注-REMARK'] = raw_text
+                cur_res['原文依据'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[2] else ''])
+                # if raw_text:
+                #     cur_res['原文依据'] = raw_text
                 if event_id:
                     cur_res['source_name'] = event_id
                 else:
@@ -392,7 +394,6 @@ class ShipmentFlow:
             return
 
         logger.success(f"Inserted for {document_path}")
-
 
     def insert_data_to_bx(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
                           raw_text=None):
@@ -439,7 +440,7 @@ class ShipmentFlow:
                             "Remark": raw_text
                         }
                         for keyname in ["CarryTonSJ", "CarryTon", "Tons", "NetTon", "Length", "Width", "XDeep"
-                                        "FFill"]:
+                                                                                                       "FFill"]:
                             try:
                                 payload[keyname] = float(payload[keyname])
                             except:

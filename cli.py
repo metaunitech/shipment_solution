@@ -1,21 +1,13 @@
 # SHIPMENTFLOW
 from main import ShipmentFlow
 ins = ShipmentFlow(r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml')
-ins.unit_flow(content="""MV LUCKY SOURCE ---- 53411DWT/12.540M/4X36/4X13 ---Open VUNG TAU, VIETNAM on/abt 15th Dec 2024
-2*25MT COIL/ CLINKER/DECK CARGO/NICKEL ORE/BAUXITE OK   
+ins.unit_flow(content="""
+ORIENTAL SOURCES 10.3K HAIPHONG,VIETNAM 24 DEC KRIS TWEEN DECK/FE-SEA 
+ORIENTAL PHOENIX 42.5K DANGJIN,KOREA 16 DEC KRIS FE 
+ORIENTAL PROMOTION 74.4K CJK,CHINA 24 DEC TYRONE 
 
-MV LUCKY SOURCE 
-BUILT 2007, FLAG SINGAPORE, CLASS BV
-GRT/NRT/DWT/DWCC: 32,505/17,674/53,411 ON 12.54M SSW
-GRAIN/BALE: 65752/64837 CBM 
-LOA/BM/DEPTH: 189.89/32.26/17.50M 
-GEARS: 4 SETS (TSU JI ELECT-HYD DECK CRANE 36MT 
-GRABS:4 SETS SMAG PEINER MOTOR GRABS，
-CAPACITY: 13CBM/EACH GRAB
-(ALL DETAILS ABOUT)
-
-
-B.rgds/Mr. Albert Zhang""",receive_id='om_752d3a80e23d19daf5bda61e2473eef5', receive_type='chat_id',debug=True)
+HUAN YA 1 22.2K CJK,CHINA EARLY JAN KRIS BOX SHAPE/GEARLESS 
+TAI ZE XING 319 16.0K PYEONGTAEK,KOREA 28 DEC TYRONE GEARLESS/FE-SEA@_user_1""",receive_id='om_752d3a80e23d19daf5bda61e2473eef5', receive_type='chat_id',debug=True)
 #####
 # ins.debug_data_insert(data=[{"货物名称-CARGO-NAME": "hot rolled coils", "最大货量-QUANTITY": "2200.0", "装货港口-L-PORT": "SON DUONG, VIETNAM", "卸货港口-L-PORT": "BELAWAN, INDONESIA", "装运开始日期-LAY-DATE": "2024-09-01", "佣金-COMM": "2.5", "运费单价-FRT-RATE": "80000.0", "原文依据": "need named vsl to fix\n\n—freight $ 80k\n—2,200mt hot rolled coils, 10pct molco\n—son duong, vietnam / belawan, indonesa\n—laycan:ppt onwards\n—invite bst fio or filo\n—cqd term\n—com 2.5\n\n\n\n—freight $ 20 pmt\n—5,000mt bulk clay\n—p.kelang / taipei, taiwan\n—dec 15-20 try vsl date\n—invite bst fio\n—com 2.5", "source_name": "PureText"}])
 # from modules.key_information_extraction import TextKIE

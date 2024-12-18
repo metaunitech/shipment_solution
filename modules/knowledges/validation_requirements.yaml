@@ -32,7 +32,7 @@ ship_info:
   空船日期-OPEN-DATE:
     type: datetime
     function: validate_date
-    comments: 船只空闲的日期
+    comments: 船只空闲的日期，必须提取到值
   载货吨-DWCC:
     type: float
   载重吨-DWT:
@@ -67,3 +67,6 @@ ship_info:
       - {"G.LESS或GLESS": "None"}
       - {"CARGO GEAR：YES": "None"}
       - {"CARGO GEAR：YES X 4 X 30 MT SWL": "G4*30"}
+  船舶英文名称-ENGLISH-NAME:
+    type: str
+    comment: 必须提取到值,通常在每个片段的开头。通常以MV开头，或者其他部分是船的参数而有一个很像名字的词语，返回MV后面的名字

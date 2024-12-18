@@ -82,7 +82,7 @@ class KIValidation:
         pass
 
     @retry(stop_max_attempt_number=2, wait_fixed=2000)
-    def unit_bulk_validate(self, document_type, res):
+    def unit_bulk_validate(self, document_type, res, content=None, mutual_content=None):
         llm_ins = self.create_llm_instance()
         parser = PydanticOutputParser(pydantic_object=RefinedDict)
         retry_parser = OutputFixingParser.from_llm(parser=parser, llm=llm_ins)
@@ -100,9 +100,11 @@ class KIValidation:
         key_requirement_text = "\n".join(key_requirement_parts_texts)
         format_instruction = parser.get_format_instructions()
         prompt = (
-            f'# TASK: \n我现在有一个字典需要通过API上传，但是字典里有的字段的值不满足字段格式要求。我需要你按照字段的格式要求将我的字典值进行修正，字段名都保持不变。并返回我JSON格式。\n'
+            f'# TASK: \n我现在有一个字典需要通过API上传，但是字典里有的字段的值不满足字段格式要求。我需要你按照字段的格式要求将我的字典值进行修正，字段名都保持不变'
+            f'\n注意：对于KeyValueRequirements提到必须提取到值的字段，如果当前字典中为None或者字典中不存在，则从原文依据中重新提取字段值并加入字典。返回我JSON格式。\n'
             f'# KeyValueRequirements:\n{key_requirement_text}\n'
             f"# INPUT:\n"
+            f"原文依据: {str(content)+';'+str(mutual_content)}"
             f"输入字典：{json.dumps(res, indent=2, ensure_ascii=False)}\n"
             f"YOUR ANSWER:\n"
             f"请按照如下格式要求返回我JSON（注意字段名不要发生变动）\n"
