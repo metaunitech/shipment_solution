@@ -1,24 +1,22 @@
 # SHIPMENTFLOW
 from main import ShipmentFlow
 ins = ShipmentFlow(r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml')
-ins.unit_flow(content="""++++++
+ins.unit_flow(content="""Mv Truong Minh Star (10,287 DWT) Open Kohsichang, Thailand o/a 05th – 10th January 2025
+Mv Truong Minh Dragon (13,254 DWT) open Vung Tau, Vietnam o/a 23rd December 2024
+--------------------------------------------------------------------------------------------------
 
-   6000 MT+/-5% OF STEEL SCRAP IN BULK WITH SF 2.3 WOG
+Mv Truong Minh Star (10,287 DWT)
+Bulk Carrier, Built 2012, Flag Vietnam, Class Rina
+DWT 10287, GT 6649, NT 3861, Summer Draft 7.6m, LOA 118.83m, Beam 19.9m
+Geared 2 Cranes x 25mt each, 3 Holds 3 Hatches, Capacity G/B 13282/12713cbm                                                                                                                                           
+ADA WOG
 
-   POL: NAKHODKA, RUSSIA
-  POD: SUAO, TAIWAN
-  LAYCAN: 12TH-25TH DEC
-  LD/DIS RATE 1 000 MT PWWD SHINC/CQD
-  2.5% TTL COMM
-  ++++++
-
-  ABT 3000MT CALCIUM CHLORIDE IN TON BAGS SF ABT 1.5-1.6 
-LONGKOU,CHINA/SLAVYANKA,RUSSIA
-20-25TH DEC
-CQD BENDS
-CAN COMBINE CGO
-COMM 2.5%
-USD8.00/MT""",receive_id='om_752d3a80e23d19daf5bda61e2473eef5', receive_type='chat_id',debug=True)
+Mv Truong Minh Dragon (13,254 DWT)
+General Cargo, Built 2015, Flag Vietnam, Class Rina
+DWT 13,254.32, GT 8223, NT 5214, Summer Draft 8.365m, LOA 136.4m, Beam 20.2m
+Geared 3 Cranes x 25mt each, 4 Holds 4 Hatches, Capacity G/B 18390/17526cbm
+Mc GREGOR HATCH COVERS / W.O.E P&I CLUB
+ADA WOG""",receive_id='om_752d3a80e23d19daf5bda61e2473eef5', receive_type='chat_id',debug=True)
 #####
 # ins.debug_data_insert(data=[{"货物名称-CARGO-NAME": "hot rolled coils", "最大货量-QUANTITY": "2200.0", "装货港口-L-PORT": "SON DUONG, VIETNAM", "卸货港口-L-PORT": "BELAWAN, INDONESIA", "装运开始日期-LAY-DATE": "2024-09-01", "佣金-COMM": "2.5", "运费单价-FRT-RATE": "80000.0", "原文依据": "need named vsl to fix\n\n—freight $ 80k\n—2,200mt hot rolled coils, 10pct molco\n—son duong, vietnam / belawan, indonesa\n—laycan:ppt onwards\n—invite bst fio or filo\n—cqd term\n—com 2.5\n\n\n\n—freight $ 20 pmt\n—5,000mt bulk clay\n—p.kelang / taipei, taiwan\n—dec 15-20 try vsl date\n—invite bst fio\n—com 2.5", "source_name": "PureText"}])
 # from modules.key_information_extraction import TextKIE

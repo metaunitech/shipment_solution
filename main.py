@@ -351,15 +351,16 @@ class ShipmentFlow:
                 if not vid:
                     cur_res['船舶代码-ID'] = vessel_name
                     logger.error(traceback.format_exc())
+                    cur_res['备注-REMARK'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[2] else ''])
 
                 else:
                     vessel_code = self.bx_handler.get_vessel(vid).get('job_info', {}).get('VesselCode')
                     logger.success(f"{vessel_code} already exists")
                     cur_res['船舶代码-ID'] = vessel_code
+                    cur_res['备注-REMARK'] = f'无需新建船舶，{vessel_code}已存在。'
                 if raw_text:
                     cur_res['原文依据'] = raw_text
-                if not vid:
-                    cur_res['备注-REMARK'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[2] else ''])
+
                 # if raw_text:
                 #     cur_res['原文依据'] = raw_text
                 if event_id:

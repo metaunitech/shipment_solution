@@ -109,11 +109,11 @@ ship_info:
     mandatory: 1
   散装舱容-GRAIN-CAPACITY:
     type: float
-    comment: 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B 18390/17526cbm：G表示散装舱容：18390，返回18390数字。CBM是单位表示立方，不用输出单位
+    comment: 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B <散装舱容>/<包装舱容>cbm.G表示散装舱容,返回/左边的数字。CBM是单位表示立方，不用输出单位
     examples:
       - {'Capacity G/B 18390/17526cbm': '18390'}
   包装舱容-BALE-CAPACITY:
     type: float
-    comment: 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B 18390/17526cbm：B表示包装舱容：17526，返回17526数字。CBM是单位表示立方，不用输出单位
+    comment: 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B <散装舱容>/<包装舱容>cbm.B表示包装舱容,返回/右边的数字。CBM是单位表示立方，不用输出单位
     examples:
       - { 'Capacity G/B 18390/17526cbm': '17526' }
