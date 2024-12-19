@@ -337,7 +337,7 @@ class ShipmentFlow:
     #     logger.success(f"Inserted for {document_path}")
 
     def insert_data_to_spreadsheet(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
-                                   raw_text=None):
+                                   raw_text=None, source_name="PureText"):
         if document_type == 'ship_info':
             data_to_insert = []
             for data in extraction_res:
@@ -356,15 +356,16 @@ class ShipmentFlow:
                     vessel_code = self.bx_handler.get_vessel(vid).get('job_info', {}).get('VesselCode')
                     logger.success(f"{vessel_code} already exists")
                     cur_res['船舶代码-ID'] = vessel_code
-                if raw_text and '备注-REMARK' in cur_res:
-                    cur_res['备注-REMARK'] = raw_text
-                cur_res['原文依据'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[2] else ''])
+                if raw_text:
+                    cur_res['原文依据'] = raw_text
+                if not vid:
+                    cur_res['备注-REMARK'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[2] else ''])
                 # if raw_text:
                 #     cur_res['原文依据'] = raw_text
                 if event_id:
                     cur_res['source_name'] = event_id
                 else:
-                    cur_res['source_name'] = document_path.name if document_path else 'PureText'
+                    cur_res['source_name'] = document_path.name if document_path else source_name
                 for k in cur_res:
                     cur_res[k] = str(cur_res[k])
                 data_to_insert.append(cur_res)
@@ -375,9 +376,9 @@ class ShipmentFlow:
             data_to_insert = []
             for data in extraction_res:
                 cur_res = data[0]
-                if raw_text and '备注-REMARK' in cur_res:
-                    cur_res['备注-REMARK'] = raw_text
-                cur_res['原文依据'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[2] else ''])
+                if raw_text:
+                    cur_res['原文依据'] = raw_text
+                cur_res['备注-REMARK'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[2] else ''])
                 # if raw_text:
                 #     cur_res['原文依据'] = raw_text
                 if event_id:
@@ -543,8 +544,8 @@ class ShipmentFlow:
                                              content=content)
         # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         # task_status_chat_id = self.chat_ids.get("task_status")
-        template_id = self.templates.get('rich_text_general_id')
-        message_id = receive_id
+        # template_id = self.templates.get('rich_text_general_id')
+        # message_id = receive_id
 
         # if receive_type and receive_id:
         #     total, content = self.get_data_loader_context(document_loader)

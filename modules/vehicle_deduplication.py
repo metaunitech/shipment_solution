@@ -132,5 +132,5 @@ class VehicleDeduplicator:
 
 if __name__ == "__main__":
     ins = VehicleDeduplicator()
-    res = ins.main('OCEANWINGLORY')
+    res = ins.main('TAI ZE XING 319')
     print(res)

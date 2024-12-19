@@ -2,28 +2,34 @@ cargo_info:
   装运开始日期-LAY-DATE:
     type: datetime
     function: validate_date
-    comments: 必须提取到值,通常是时间区间的开始日期（不要输出区间），如果没有提到开始日期默认装运开始时间是今天。对于装运开始日期的返回格式根据如下例子：EAR SEP-END SEP返回09-01，MID SEP/EAR OCT返回09-15.货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那LAY-DATE 就是2025-1-1而不2024-1-1
+    comments: 必须提取到值,通常是时间区间的开始日期（不要输出区间），如果文中没有提到开始日期默认装运开始时间是今天。对于装运开始日期的返回格式根据如下例子：EAR SEP-END SEP返回09-01，MID SEP/EAR OCT返回09-15.货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那LAY-DATE 就是2025-1-1而不2024-1-1
     examples:
       - { "4-5 SEPT 2024": "2024-09-04" }
+    mandatory: 1
   装运结束日期-CANCELING-DATE:
     type: datetime
     function: validate_date
-    comments: 必须提取到值,通常是时间区间的结尾（不要输出区间），如果没有提到结束日期默认加五天。对于装运结束日期的返回格式根据如下例子：EAR SEP-END SEP返回09-30，MID SEP/EAR OCT返回10-01.货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那CANCELING-DATE 就是2025-1-1而不2024-1-1
+    comments: 必须提取到值,通常是时间区间的结尾（不要输出区间），如果文中没有提到则为结束日期默认加五天。对于装运结束日期的返回格式根据如下例子：EAR SEP-END SEP返回09-30，MID SEP/EAR OCT返回10-01.货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那CANCELING-DATE 就是2025-1-1而不2024-1-1
     examples:
       - { "3-5 SEPT 2024": "2024-09-05" }
       - { "EAR SEP-END SEP": '2024-09-30' }
+    mandatory: 1
   装货港口-L-PORT:
     type: str
-    comments: 必须提取到值,返回大写英文,通常在如下格式中是左边那个：<装货港口缩写>/<卸货港口缩写>
+    comments: 必须提取到值,返回大写英文,通常在如下格式中是左边那个：<装货港口缩写>/(-)<卸货港口缩写>
     examples:
       - {'DANGJIN/OSAKA': "DANGJIN"}
       - {"son duong, vietnam / belawan, indonesa": "SON DUONG, VIETNAM"}
+      - {" -L/D PORT :1SBP JOSSINGFJORD, NORWAY/ 1SBP ZHENJIANG OR YIZHENG OR HUANGHUA,CHINA": "JOSSINGFJORD, NORWAY"}
+    mandatory: 1
   卸货港口-D-PORT:
     type: str
-    comments: 必须提取到值,返回大写英文,通常在如下格式中是右边那个：<装货港口缩写>/<卸货港口缩写>
+    comments: 必须提取到值,返回大写英文,通常在如下格式中是右边那个：<装货港口缩写>/(-)<卸货港口缩写>
     examples:
       - { 'DANGJIN/OSAKA': "OSAKA" }
       - { "son duong, vietnam / belawan, indonesa": "BELAWAN, INDONESA" }
+      - {" -L/D PORT :1SBP JOSSINGFJORD, NORWAY/ 1SBP ZHENJIANG OR YIZHENG OR HUANGHUA,CHINA": "ZHENJIANG OR YIZHENG OR HUANGHUA,CHINA"}
+    mandatory: 1
   最小货量-QUANTITY:
     type: float
   最大货量-QUANTITY:
@@ -41,19 +47,24 @@ cargo_info:
       - {"DIS RATE 1 000 MT PWWD SHINC/CQD": 'CQD'}
       - {"CQD BENDS": "CQD"}
       - {"Load and Discharge rate: 8,000 / 5,000 MT PWWD SHEX UU": "5,000 MT PWWD SHEX UU"}
+      - {"L/D RATE:7,000 SSHEX UU/7,000MT SHINC": "7,000MT SHINC"}
+    mandatory: 1
   装率-L-RATE:
     type: str
     comments: 必须提取到值.装卸率(DIS RATE)里若有/或-隔开的,/-前面的表示装率，后面的表示卸率.如果看到CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD
     examples:
       - {"DIS RATE 1 000 MT PWWD SHINC/CQD": '1 000 MT PWWD SHINC'}
-      - { "CQD BENDS": "CQD" }
+      - {"CQD BENDS": "CQD" }
       - {"Load and Discharge rate: 8,000 / 5,000 MT PWWD SHEX UU": "8,000 MT PWWD SHEX UU"}
+      - {"L/D RATE:7,000 SSHEX UU/7,000MT SHINC": "7,000 SSHEX UU"}
+    mandatory: 1
 
 ship_info:
   空船日期-OPEN-DATE:
     type: datetime
     function: validate_date
     comments: 船只空闲的日期，必须提取到值
+    mandatory: 1
   载货吨-DWCC:
     type: float
   载重吨-DWT:
@@ -90,7 +101,9 @@ ship_info:
       - {"CARGO GEAR：YES X 4 X 30 MT SWL": "G4*30"}
   船舶英文名称-ENGLISH-NAME:
     type: str
-    comment: 必须提取到值,通常在每个片段的开头。通常以MV开头，或者其他部分是船的参数而有一个很像名字的词语，返回MV后面的名字
+    comment: 必须提取到值,通常在每个片段的开头。通常以MV/MV./M/V开头，或者其他部分是船的参数而有一个很像名字的词语，返回结果中把MV/MV./M/V省略，只输出后面的船名。
+    mandatory: 1
   空船港口-OPEN-PORT:
     type: str
     comment: 必须提取到值, 返回大写的港口名字
+    mandatory: 1
