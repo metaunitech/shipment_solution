@@ -5,18 +5,14 @@ import yaml
 from nltk.twitter.twitter_demo import yesterday
 
 # 邮箱配置列表
-email_configs = [
-    # {
-    #     "server": "smtp.gmail.com",
-    #     "user": "your_username1@gmail.com",
-    #     "password": "your_password1"
-    # },
-    {
+email_configs = {
+    'default': {
         "server": "smtp.qiye.163.com",
         "user": "CHARTERING@JAH-LINE.COM",
         "password": "BUb4R2u2Z7ac15wN"
     }
-]
+}
+
 
 class EmailHelper:
     def __init__(self, config_path):
@@ -60,10 +56,6 @@ class EmailHelper:
         today_latest_id = self.fetch_today_latest_email(name)
 
 
-
-
-
-
 def fetch_new_emails(config, target_date=None):
     if target_date is None:
         target_date = datetime.now().date()
@@ -85,6 +77,7 @@ def fetch_new_emails(config, target_date=None):
     mails = mail_server.get_mails(start_time=start_time, end_time=end_time)
 
     return mails
+
 
 def main():
     for config in email_configs:

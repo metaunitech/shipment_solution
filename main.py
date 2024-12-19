@@ -459,6 +459,7 @@ class ShipmentFlow:
                         logger.success(f"voy_dt ADD to BX: {res}")
                     except:
                         logger.error(traceback.format_exc())
+                        return {"status": 'error', "log": str(traceback.format_exc())}
 
                 else:
                     vessel_code = self.bx_handler.get_vessel(vid).get('job_info', {}).get('VesselCode')
@@ -468,6 +469,7 @@ class ShipmentFlow:
                                'DTDate': data.get('空船日期-OPEN-DATE')}
                     res = self.bx_handler.add_vessel_voy_dt(payload)
                     logger.success(f"voy_dt ADD to BX: {res}")
+                    return res
         elif document_type == 'cargo_info':
             for data in extraction_res:
                 cur_res = data[0]
@@ -495,10 +497,11 @@ class ShipmentFlow:
 
                     res = self.bx_handler.add_sa_job(payload=payload)
                     logger.success(f"sa_job ADD to BX: {res}")
+                    return res
 
                 except:
                     logger.error(traceback.format_exc())
-
+                    return {"status": 'error', "log": str(traceback.format_exc())}
         else:
             return
 
