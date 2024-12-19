@@ -14,7 +14,27 @@ class VehicleDeduplicator:
 
     @staticmethod
     def util_FuzzyMatch(name1, name2):
-        return fuzz.ratio(name1, name2) > 90  # 根据需要调整阈值
+        # 正则表达式匹配一个或多个数字
+        pattern = r'\d+'
+
+        # 查找所有匹配的数字
+        matches1 = re.findall(pattern, name1)
+        matches2 = re.findall(pattern, name2)
+
+        # 提取第一个匹配到的数字，如果没有找到则为None
+        num1 = matches1[0] if matches1 else None
+        num2 = matches2[0] if matches2 else None
+
+        # 去除原始字符串中的数字
+        clean_name1 = re.sub(pattern, '', name1).strip()
+        clean_name2 = re.sub(pattern, '', name2).strip()
+
+        # 如果两个字符串中都包含数字并且不同，返回False
+        if num1 and num2 and num1 != num2:
+            return False
+
+        # 如果数字相同或没有数字，进行模糊匹配
+        return fuzz.ratio(clean_name1, clean_name2) > 90
 
     @staticmethod
     def util_remove_symbols_and_spaces(name):
@@ -36,9 +56,11 @@ class VehicleDeduplicator:
     def step_PreprocessName(self, name):
         if not name:
             return name
-        p_name = self.util_remove_common_prefixes(name)
-        # logger.debug(f'{name}->{p_name}')
+        p_name = name
         p_name = self.util_remove_symbols_and_spaces(p_name)
+        p_name = self.util_remove_common_prefixes(p_name)
+        # logger.debug(f'{name}->{p_name}')
+
         # logger.debug(f'{name}->{p_name}')
         return p_name
 
@@ -69,8 +91,8 @@ class VehicleDeduplicator:
         return [self.current_vehicles[i] for i in self.current_vehicles.keys() if self.util_FuzzyMatch(name, i)]
 
     def check_existing_vehicle(self, name, **kwargs):
-        for method in [self.method_ExactMatch]:
-                       # self.method_FuzzyMatch]:
+        for method in [self.method_ExactMatch,
+                       self.method_FuzzyMatch]:
             vid = method(name=self.util_remove_symbols_and_spaces(name))
             if vid:
                 if isinstance(vid, str):
