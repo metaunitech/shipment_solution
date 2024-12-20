@@ -19,7 +19,7 @@ class DocumentType(BaseModel):
         description="若document_type是船盘，返回当前邮件中可供出租的船的数量，一般出现新的船名就是一个可供出租的船舶；若document_type是货盘，返回邮件中需要租赁的需求数量，一般出现一个新的商品就是一个需要租赁的需求；若是其他邮件返回0"
     )
     reason: str = Field(
-        description='做出这种分类的原因。'
+        description='这个文本片段的字面解释，以及做出这种分类的原因。'
     )
 
 
