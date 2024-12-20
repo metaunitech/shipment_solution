@@ -88,24 +88,25 @@ class KIValidation:
         rate_string = ' '.join(rate_string.upper().split())
 
         # 正则表达式定义
-        pattern = re.compile(r'([^\s/]+)\s*/\s*(CQD|[^\s/]+)')
+        pattern1 = re.compile(r'(\d+ MT)\s*/\s*CQD')
+        pattern2 = re.compile(r'CQD\s*/\s*(\d+ MT)')
 
-        match = pattern.search(rate_string)
+        # 检查是否包含 CQD BENDS
+        if 'CQD BENDS' in rate_string:
+            return 'CQD', 'CQD'
 
-        if not match:
-            return None, None  # 如果没有匹配到任何内容，则返回None
+        # 尝试匹配第一个模式：<数字> MT / CQD
+        match1 = pattern1.search(rate_string)
+        if match1:
+            return match1.group(1), 'CQD'
 
-        l_rate = match.group(1)
-        d_rate = match.group(2)
+        # 尝试匹配第二个模式：CQD / <数字> MT
+        match2 = pattern2.search(rate_string)
+        if match2:
+            return 'CQD', match2.group(1)
 
-        # 检查是否符合 CQD 或 CQD BENDS 的条件
-        if 'CQD BENDS' in rate_string or l_rate == 'CQD' or d_rate == 'CQD':
-            if 'CQD BENDS' in rate_string or l_rate == 'CQD' and d_rate == 'CQD':
-                l_rate = 'CQD'
-                d_rate = 'CQD'
-            return l_rate, d_rate
-        else:
-            return None, None
+        # 如果不符合任何条件，则返回 None, None
+        return None, None
 
     @retry(stop_max_attempt_number=3, wait_fixed=2000)
     def unit_bulk_validate(self, document_type, res, content=None, mutual_content=None, current_missing=None):
@@ -254,4 +255,5 @@ class KIValidation:
 
 if __name__ == "__main__":
     ins = KIValidation()
-    ins.validate_date('3-5 SEPT 2024')
+    res = ins.parse_rates("20,000 MT STEEL COILS\nBAHODOPI /TIANJIN\n30 DEC-05 JAN\n7000 MT /CQD\nFIO\nADCOM: 2.5% PUS\n原文得一些总结和分析：邮件内容提到了需要运输的货物，包括20,000MT钢卷，并指定了装运港（BAHODOPI /TIANJIN）和日期（30 DEC-05 JAN），同时提到了卸货量（7000 MT）和FIO条款，符合货盘邮件的特征。")
+    print(res)
