@@ -179,6 +179,10 @@ class KIValidation:
                     refined_dict['装率-L-RATE'] = l_rate
                 if d_rate:
                     refined_dict['卸率-D-RATE'] = d_rate
+            for k in ['装运开始日期-LAY-DATE', '装运结束日期-CANCELING-DATE', '空船日期-OPEN-DATE']:
+                if datetime.datetime.strptime(refined_dict[k], "%Y-%m-%d") < datetime.datetime.now():
+                    refined_dict[k] = None
+                    logger.error(f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}")
 
             # Check if the keys are modified
             # if any([i not in res.keys() for i in refined_dict.keys()]):
