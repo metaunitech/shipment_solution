@@ -127,7 +127,7 @@ class KIValidation:
             for i in refined_dict:
                 if refined_dict[i] is None:
                     to_remove_keyname.append(i)
-                if i not in res and i not in current_missing:
+                elif i not in res and i not in current_missing:
                     to_remove_keyname.append(i)
 
             for i in to_remove_keyname:
