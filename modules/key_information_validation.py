@@ -110,7 +110,7 @@ class KIValidation:
         return None, None
 
     @retry(stop_max_attempt_number=3, wait_fixed=2000)
-    def unit_bulk_validate(self, document_type, res, content=None, mutual_content=None, current_missing=None):
+    def unit_bulk_validate(self, document_type, res, content=None, mutual_content=None, current_missing=None, note=None):
         current_missing = [] if current_missing is None else current_missing
         llm_ins = self.create_llm_instance()
         parser = PydanticOutputParser(pydantic_object=RefinedDict)
@@ -139,7 +139,8 @@ class KIValidation:
             f"# INPUT:\n"
             f"原文依据: {str(content) + ';' + str(mutual_content)}"
             f"输入字典：{json.dumps(res, indent=2, ensure_ascii=False)}\n"
-            f"{missing_force_prompt}"
+            f"\n{missing_force_prompt}"
+            f"\n{note}"
             f"YOUR ANSWER:\n"
             f"请按照如下格式要求返回我JSON（注意字段名不要发生变动）\n"
             f"{format_instruction}\n"
@@ -155,7 +156,7 @@ class KIValidation:
             for i in refined_dict:
                 if refined_dict[i] is None:
                     to_remove_keyname.append(i)
-                elif i not in self.requirements[document_type].keys():
+                elif i not in self.requirements[document_type].keys() and i not in res.keys():
                     to_remove_keyname.append(i)
 
             for i in to_remove_keyname:
@@ -179,9 +180,11 @@ class KIValidation:
                     refined_dict['装率-L-RATE'] = l_rate
                 if d_rate:
                     refined_dict['卸率-D-RATE'] = d_rate
+            note = ''
             for k in ['装运开始日期-LAY-DATE', '装运结束日期-CANCELING-DATE', '空船日期-OPEN-DATE']:
-                if datetime.datetime.strptime(refined_dict[k], "%Y-%m-%d") < datetime.datetime.now():
+                if k in refined_dict.keys() and datetime.datetime.strptime(refined_dict[k], "%Y-%m-%d") < datetime.datetime.now():
                     refined_dict[k] = None
+                    note+=f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}"
                     logger.error(f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}")
 
             # Check if the keys are modified
@@ -189,7 +192,7 @@ class KIValidation:
             #     raise ValueError(
             #         f"Fields modified. {set(refined_dict.keys()) - set(res.keys())}, {set(res.keys()) - set(refined_dict.keys())}")
 
-            return refined_dict
+            return refined_dict, note
 
         except Exception as e:
             logger.error(f"Error during validation: {e}")
@@ -211,9 +214,10 @@ class KIValidation:
         for res_all in extraction_res:
             res, body, mutual_body = tuple(res_all)
             missing_keys = None
+            note = None
             refined_dict = res
             for i in range(5):
-                refined_dict = self.unit_bulk_validate(document_type, refined_dict, current_missing=missing_keys, content=body, mutual_content=mutual_body)
+                refined_dict, note = self.unit_bulk_validate(document_type, refined_dict, current_missing=missing_keys, content=body, mutual_content=mutual_body, note=note)
                 missing_keys = self.check_if_mandatory_fit(document_type, refined_dict)
 
                 if not missing_keys:
