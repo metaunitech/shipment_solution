@@ -37,11 +37,11 @@ cargo_info:
       - {'BAHODOPI /TIANJIN': 'TIANJIN'}
     mandatory: 1
   最小货量-QUANTITY:
-    comments: 货量区间中较小的那个值。货量在文中一般是个区间，例如：4.000 / 5.000 dwcc。dwcc指的是Dead Weight Cargo Capacity，其中最小货量为4吨
+    comments: 货量区间中较小的那个值。货量在文中一般是个区间，例如：4.000 / 5.000 dwcc。dwcc指的是Dead Weight Cargo Capacity，其中最小货量为4吨。也有可能是一个值例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最小货量为5000
     type: float
     mandatory: 1
   最大货量-QUANTITY:
-    comments: 货量区间中较大的那个值。货量在文中一般是个区间，例如：4.000 / 5.000 dwcc。dwcc指的是Dead Weight Cargo Capacity，其中最大货量为5吨
+    comments: 货量区间中较大的那个值。货量在文中一般是个区间，例如：4.000 / 5.000 dwcc。dwcc指的是Dead Weight Cargo Capacity，其中最大货量为5吨.也有可能是一个值例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最大货量也为5000
     type: float
   佣金-COMM:
     type: float
