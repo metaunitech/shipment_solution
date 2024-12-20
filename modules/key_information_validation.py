@@ -10,6 +10,7 @@ from loguru import logger
 from pathlib import Path
 from retrying import retry
 from typing import Dict
+import re
 
 MODEL_NAME = 'glm-4-flash'
 API_TOKEN = 'a9d2815b090f143cdac247d7600a127f.WSDK8WqwJzZtCmBK'
@@ -22,6 +23,7 @@ class Date(BaseModel):
     reason: str = Field(
         description='格式化的原因'
     )
+
 
 class RefinedDict(BaseModel):
     refined_dict: Dict = Field(
@@ -67,7 +69,7 @@ class KIValidation:
             f"YOUR ANSWER:\n"
             f"请按照如下格式要求返回我JSON\n"
             f"{format_instruction}\n"
-            f"TS:{str(time.time()*1000)}")
+            f"TS:{str(time.time() * 1000)}")
         res_raw = llm_ins.invoke(prompt)
         res_content = res_raw.content
         logger.debug(res_content)
@@ -80,6 +82,30 @@ class KIValidation:
 
     def validate_number(self, input, comments=None):
         pass
+
+    def parse_rates(self, rate_string):
+        # 将字符串转换为大写并去除多余空格
+        rate_string = ' '.join(rate_string.upper().split())
+
+        # 正则表达式定义
+        pattern = re.compile(r'([^\s/]+)\s*/\s*(CQD|[^\s/]+)')
+
+        match = pattern.search(rate_string)
+
+        if not match:
+            return None, None  # 如果没有匹配到任何内容，则返回None
+
+        l_rate = match.group(1)
+        d_rate = match.group(2)
+
+        # 检查是否符合 CQD 或 CQD BENDS 的条件
+        if 'CQD BENDS' in rate_string or l_rate == 'CQD' or d_rate == 'CQD':
+            if 'CQD BENDS' in rate_string or l_rate == 'CQD' and d_rate == 'CQD':
+                l_rate = 'CQD'
+                d_rate = 'CQD'
+            return l_rate, d_rate
+        else:
+            return None, None
 
     @retry(stop_max_attempt_number=3, wait_fixed=2000)
     def unit_bulk_validate(self, document_type, res, content=None, mutual_content=None, current_missing=None):
@@ -109,7 +135,7 @@ class KIValidation:
             f'# KeyValueRequirements:\n{key_requirement_text}\n'
             f"今天的日期是：{datetime.datetime.now().strftime('%Y-%m-%d')}"
             f"# INPUT:\n"
-            f"原文依据: {str(content)+';'+str(mutual_content)}"
+            f"原文依据: {str(content) + ';' + str(mutual_content)}"
             f"输入字典：{json.dumps(res, indent=2, ensure_ascii=False)}\n"
             f"{missing_force_prompt}"
             f"YOUR ANSWER:\n"
@@ -127,7 +153,7 @@ class KIValidation:
             for i in refined_dict:
                 if refined_dict[i] is None:
                     to_remove_keyname.append(i)
-                elif i not in res and i not in current_missing:
+                elif i not in self.requirements[document_type].keys():
                     to_remove_keyname.append(i)
 
             for i in to_remove_keyname:
@@ -138,8 +164,20 @@ class KIValidation:
                 if j not in refined_dict:
                     logger.error(f"{j} value {res[j]} need to be added. It is not in res.")
                     refined_dict[j] = res[j]
-            if document_type == 'ship_info' and not refined_dict.get('载重吨-DWT'):
-                refined_dict['载重吨-DWT'] = refined_dict.get('载货吨-DWCC')
+
+            if document_type == 'ship_info':
+                if not refined_dict.get('载重吨-DWT'):
+                    refined_dict['载重吨-DWT'] = refined_dict.get('载货吨-DWCC')
+
+            if document_type == "cargo_info":
+                if 'CQD' in (str(content) + ';' + str(mutual_content)).upper():
+                    l_rate, d_rate = self.parse_rates(rate_string=str(content) + ';' + str(mutual_content))
+                    logger.warning(f"LD RATE: {l_rate} {d_rate}")
+                    if l_rate:
+                        refined_dict['装率-L-RATE'] = l_rate
+                    if d_rate:
+                        refined_dict['卸率-D-RATE'] = d_rate
+
             # Check if the keys are modified
             # if any([i not in res.keys() for i in refined_dict.keys()]):
             #     raise ValueError(
