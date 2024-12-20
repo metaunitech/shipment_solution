@@ -47,7 +47,7 @@ cargo_info:
     comments: 只用返回百分比值，不用带币符号
   卸率-D-RATE:
     type: str
-    comments: 必须提取到值.装卸率(DIS RATE)里若有/或-隔开的,/-前面的表示装率，后面的表示卸率.如果看到CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD.
+    comments: 必须提取到值.装卸率(DIS RATE)里若有/或-隔开的,/-前面的表示装率，后面的表示卸率.如果看到CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD. 如果文中出现xxx MT /CQD,左边的xxx是装率，右边的是卸率
     examples:
       - {"DIS RATE 1 000 MT PWWD SHINC/CQD": 'CQD'}
       - {"CQD BENDS": "CQD"}
@@ -56,7 +56,7 @@ cargo_info:
     mandatory: 1
   装率-L-RATE:
     type: str
-    comments: 必须提取到值.装卸率(DIS RATE)里若有/或-隔开的,/-前面的表示装率，后面的表示卸率.如果看到CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD
+    comments: 必须提取到值.装卸率(DIS RATE)里若有/或-隔开的,/-前面的表示装率，后面的表示卸率.如果看到CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD. 如果文中出现xxx MT /CQD,左边的xxx是装率，右边的是卸率
     examples:
       - {"DIS RATE 1 000 MT PWWD SHINC/CQD": '1 000 MT PWWD SHINC'}
       - {"CQD BENDS": "CQD" }

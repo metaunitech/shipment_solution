@@ -1,3 +1,4 @@
+# encoding=utf-8
 # SHIPMENTFLOW
 from main import ShipmentFlow
 ins = ShipmentFlow(r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml')
