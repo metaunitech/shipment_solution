@@ -138,7 +138,7 @@ class KIValidation:
                 if j not in refined_dict:
                     logger.error(f"{j} value {res[j]} need to be added. It is not in res.")
                     refined_dict[j] = res[j]
-            if not refined_dict.get('载重吨-DWT'):
+            if document_type == 'ship_info' and not refined_dict.get('载重吨-DWT'):
                 refined_dict['载重吨-DWT'] = refined_dict.get('载货吨-DWCC')
             # Check if the keys are modified
             # if any([i not in res.keys() for i in refined_dict.keys()]):

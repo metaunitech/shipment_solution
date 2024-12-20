@@ -16,7 +16,7 @@ cargo_info:
     mandatory: 1
   装货港口-L-PORT:
     type: str
-    comments: 必须提取到值,返回大写英文,通常在如下格式中是左边那个：<装货港口缩写>/(-)<卸货港口缩写>
+    comments: 返回港口大写英文,通常在如下格式中是左边那个：<装货港口缩写>/(-)<卸货港口缩写>。
     examples:
       - {'DANGJIN/OSAKA': "DANGJIN"}
       - {"son duong, vietnam / belawan, indonesa": "SON DUONG, VIETNAM"}
@@ -24,7 +24,7 @@ cargo_info:
     mandatory: 1
   卸货港口-D-PORT:
     type: str
-    comments: 必须提取到值,返回大写英文,通常在如下格式中是右边那个：<装货港口缩写>/(-)<卸货港口缩写>
+    comments: 返回港口大写英文,通常在如下格式中是右边那个：<装货港口缩写>/(-)<卸货港口缩写>
     examples:
       - { 'DANGJIN/OSAKA': "OSAKA" }
       - { "son duong, vietnam / belawan, indonesa": "BELAWAN, INDONESA" }
