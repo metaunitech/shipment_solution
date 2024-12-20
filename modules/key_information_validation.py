@@ -209,7 +209,7 @@ class KIValidation:
             missing_keys = None
             refined_dict = res
             for i in range(5):
-                refined_dict = self.unit_bulk_validate(document_type, refined_dict, current_missing=missing_keys)
+                refined_dict = self.unit_bulk_validate(document_type, refined_dict, current_missing=missing_keys, content=body, mutual_content=mutual_body)
                 missing_keys = self.check_if_mandatory_fit(document_type, refined_dict)
 
                 if not missing_keys:
