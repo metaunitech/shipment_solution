@@ -86,6 +86,7 @@ class KIValidation:
     def parse_rates(self, rate_string):
         # 将字符串转换为大写并去除多余空格
         rate_string = ' '.join(rate_string.upper().split())
+        logger.info(f"Parsing : {rate_string}")
 
         # 正则表达式定义
         pattern1 = re.compile(r'(\d+ MT)\s*/\s*CQD')
@@ -171,13 +172,13 @@ class KIValidation:
                     refined_dict['载重吨-DWT'] = refined_dict.get('载货吨-DWCC')
 
             if document_type == "cargo_info":
-                if 'CQD' in (str(content) + ';' + str(mutual_content)).upper():
-                    l_rate, d_rate = self.parse_rates(rate_string=str(content) + ';' + str(mutual_content))
-                    logger.warning(f"LD RATE: {l_rate} {d_rate}")
-                    if l_rate:
-                        refined_dict['装率-L-RATE'] = l_rate
-                    if d_rate:
-                        refined_dict['卸率-D-RATE'] = d_rate
+                rate_string = str(content) + ';' + str(mutual_content)
+                l_rate, d_rate = self.parse_rates(rate_string=rate_string)
+                logger.info(f"LDRATE: {l_rate} {d_rate}")
+                if l_rate:
+                    refined_dict['装率-L-RATE'] = l_rate
+                if d_rate:
+                    refined_dict['卸率-D-RATE'] = d_rate
 
             # Check if the keys are modified
             # if any([i not in res.keys() for i in refined_dict.keys()]):
