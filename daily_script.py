@@ -15,7 +15,7 @@ class DailyFlow:
         pass
 
     def register_tasks(self, email_id_list):
-
+        pass
 
     def main(self):
         pass

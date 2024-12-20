@@ -63,7 +63,9 @@ ship_info:
   空船日期-OPEN-DATE:
     type: datetime
     function: validate_date
-    comments: 船只空闲的日期，必须提取到值
+    comments: 船只空闲的日期，在船舶邮件里肯定存在, 必须要提取出来。是日期或日期区间，表示船只空闲可供租赁的日期，是一个时间区间或者具体的日期, 船盘如果写PPT，而默认空船日期是当天。 如果空船日期是一段时间的 如19-22JAN, 则空船日期取最前面的日期1-19; OPEN KANMON-BUSAN RANGE 2TH ／OCT的空船日期是10-02. 如果没有提到年份，结合当前时间推算年份。船盘空船日期 EAR JAN,EAR FEB, 如果今天是2025-12-20则空船日期为2025-1-1,2025-2-1以此类推，因为2024-1-1已经过去了，所以是2025年.
+    examples:
+      - {"19-22JAN，今天是2024-12-20": "2025-1-19"}
     mandatory: 1
   载货吨-DWCC:
     type: float
@@ -105,8 +107,11 @@ ship_info:
     mandatory: 1
   空船港口-OPEN-PORT:
     type: str
-    comment: 必须提取到值, 返回大写的港口名字
+    comment: 必须提取到值, 返回大写的港口名字，通常船盘文档中出现的港口就是空船港口。
     mandatory: 1
+    examples:
+      - {'MV HAPPY TRADER DWCC 27,200MTS ==== SHUAIBA 23 DEC': 'SHUAIBA'}
+
   散装舱容-GRAIN-CAPACITY:
     type: float
     comment: 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B <散装舱容>/<包装舱容>cbm.G表示散装舱容,返回/左边的数字。CBM是单位表示立方，不用输出单位

@@ -202,7 +202,7 @@ YOUR ANSWER:
                     pass
 
         pairs = {i: pairs[i] for i in pairs.keys() if
-                 pairs[i] not in ['NAN', 'N/A', '无', '未提及', '未定义', '未提供', 'plaintext', '未知', '无明确描述', 'Not specified', '无明确说明', 'YES'] and pairs[
+                 pairs[i] not in ['NAN', 'N/A', '无', '未提及', '未定义', '未提供', 'plaintext', '未知', '无明确描述', 'Not specified', '无明确说明', 'YES', 'None'] and pairs[
                      i] != i}
 
         for i in pairs:
