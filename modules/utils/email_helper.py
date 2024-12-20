@@ -24,9 +24,11 @@ class EmailHelper:
         self.cache_storage = configs.get('cache_path')
 
     def check_if_parsed(self, email_id, name='default'):
+        email_id = str(email_id)
         today = datetime.date.today()
         for days_ago in range(30):  # 限制检查天数范围，防止过多循环
             date = today - datetime.timedelta(days=days_ago)
+            logger.info(f"Checking {date}")
             log_file = os.path.join(self.cache_storage, f"{date}.json")
             if os.path.exists(log_file):
                 with open(log_file, 'r') as f:
@@ -46,7 +48,7 @@ class EmailHelper:
             if name in log_data:
                 valid_ids = [int(email_id) for email_id, details in log_data[name].items() if details['status']]
                 return max(valid_ids, default=None)
-        return None
+        return 0
 
     def update_today_finished(self, email_id, parse_status, name='default'):
         today = datetime.date.today()
@@ -65,7 +67,7 @@ class EmailHelper:
             'status': parse_status,
             'ts': datetime.datetime.now().timestamp()
         }
-
+        os.makedirs(self.cache_storage, exist_ok=True)
         with open(log_file, 'w') as f:
             json.dump(log_data, f, indent=4)
 
@@ -86,10 +88,9 @@ class EmailHelper:
         # 假设 fetch_today_latest_email 提供了完整邮件 ID 列表功能，
         # 这里可以增加从昨天最大 ID 到今天最新 ID 的逻辑
         task_list = []
-        if yesterday_start_id is not None and today_latest_id is not None:
-            task_list = list(range(yesterday_start_id + 1, today_latest_id + 1))
+        if today_latest_id is not None:
+            task_list = list(range(int(yesterday_start_id) + 1, today_latest_id + 1))
         return task_list
-
 
 # def fetch_new_emails(config, target_date=None):
 #     if target_date is None:
@@ -122,5 +123,6 @@ class EmailHelper:
 
 if __name__ == "__main__":
     ins = EmailHelper(config_path=r"W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\emails.yaml")
-    res = ins.get_today_task_list('default')
+    ins.check_if_parsed(1)
+    # res = ins.get_today_task_list('default')
     print("HERE")

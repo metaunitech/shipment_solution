@@ -1,7 +1,7 @@
 from main import ShipmentFlow
 from modules.utils.email_helper import EmailHelper
 from pathlib import Path
-
+from modules.Feishu.Feishu_spreadsheet import FeishuSpreadsheetHandler
 
 class DailyFlow:
     def __init__(self):
@@ -13,6 +13,9 @@ class DailyFlow:
 
     def get_daily_input(self):
         pass
+
+    def register_tasks(self, email_id_list):
+
 
     def main(self):
         pass

@@ -424,9 +424,9 @@ class ShipmentFlow:
                             "CarryTon": data.get('载重吨-DWT', 0),
                             "Tons": data.get('总吨位-GRT', 0),
                             "NetTon": data.get('净吨位-NRT', 0),
-                            "HoldCapacity2": 0.000000,
-                            # "GoodsVolumeSZ": data.get('船舶中文名称-CHINESE-NAME'),
-                            # "DSKX": data.get('夏季海水吃水-DRAFT'),
+                            "HoldCapacity2": data.get('散装舱容-GRAIN-CAPACITY', 0),
+                            "GoodsVolumeSZ": data.get('包装舱容-BALE-CAPACITY', 0),
+                            # "DSKX": data.get('夏季海水吃水-DRAFT', 0),
                             "Length": data.get('船长-LOA', 0),
                             "Width": data.get('船宽-BM', 0),
                             "XDeep": data.get('型深-DEPTH', 0),
@@ -484,14 +484,16 @@ class ShipmentFlow:
                                'ZL': data.get('装率-L-RATE'),
                                'XL': data.get('卸率-D-RATE'),
                                'WeightHT2': data.get('最小货量-QUANTITY', 0),
+                               'WeightHT4': data.get('最大货量-QUANTITY', 0),
                                'BeginDate': data.get('装运开始日期-LAY-DATE',
                                                      datetime.datetime.now().strftime('%Y-%m-%d')),
                                'EndDate': data.get('装运结束日期-CANCELING-DATE',
                                                    (datetime.datetime.now()+datetime.timedelta(days=5)).strftime('%Y-%m-%d')),
                                'YJBL': data.get('佣金-COMM'),
                                'BPCompany': data.get('报盘公司-COMPANY'),
+                               'CarrierPrice': data.get('运费单价-FRT-RATE', 0),
                                'Remark_DZ': raw_text}
-                    for keyname in ['YJBL']:
+                    for keyname in ['YJBL', 'WeightHT2', 'WeightHT4', 'CarrierPrice']:
                         try:
                             payload[keyname] = float(payload[keyname])
                         except:
