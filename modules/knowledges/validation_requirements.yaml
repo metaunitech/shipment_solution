@@ -21,6 +21,7 @@ cargo_info:
       - {'DANGJIN/OSAKA': "DANGJIN"}
       - {"son duong, vietnam / belawan, indonesa": "SON DUONG, VIETNAM"}
       - {" -L/D PORT :1SBP JOSSINGFJORD, NORWAY/ 1SBP ZHENJIANG OR YIZHENG OR HUANGHUA,CHINA": "JOSSINGFJORD, NORWAY"}
+      - {'BAHODOPI /TIANJIN': 'BAHODOPI'}
     mandatory: 1
   卸货港口-D-PORT:
     type: str
@@ -29,6 +30,7 @@ cargo_info:
       - { 'DANGJIN/OSAKA': "OSAKA" }
       - { "son duong, vietnam / belawan, indonesa": "BELAWAN, INDONESA" }
       - {" -L/D PORT :1SBP JOSSINGFJORD, NORWAY/ 1SBP ZHENJIANG OR YIZHENG OR HUANGHUA,CHINA": "ZHENJIANG OR YIZHENG OR HUANGHUA,CHINA"}
+      - {'BAHODOPI /TIANJIN': 'TIANJIN'}
     mandatory: 1
   最小货量-QUANTITY:
     comments: 货量区间中较小的那个值。货量在文中一般是个区间，例如：4.000 / 5.000 dwcc。dwcc指的是Dead Weight Cargo Capacity，其中最小货量为4吨
