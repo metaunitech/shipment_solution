@@ -14,5 +14,7 @@ table:
 #  cargo_info: tblSsCLLIEXguHpk
   cargo_info: tblbEvfQAM577e3J
   inputs_status: tblowlKy1UIzilNU
+view:
+  inputs_status: vewPgUKpd6
 chat_id:
   task_status: oc_a139f3e04b26d37d347a4736bbaa0b0a

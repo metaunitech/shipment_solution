@@ -92,6 +92,19 @@ class EmailHelper:
             task_list = list(range(int(yesterday_start_id) + 1, today_latest_id + 1))
         return task_list
 
+    def get_email_detail(self, name, email_id):
+        server = self.all_emails[name]["server"]
+        user = self.all_emails[name]["user"]
+        password = self.all_emails[name]["password"]
+
+        # 创建邮件服务对象
+        mail_server = zmail.server(user, password, smtp_host=server, smtp_port=25)
+        try:
+            mail = mail_server.get_mail(email_id)
+            return mail['subject'], mail['content_text'], mail['from'], mail['date']
+        except:
+            return None, None, None, None
+
 # def fetch_new_emails(config, target_date=None):
 #     if target_date is None:
 #         target_date = datetime.now().date()
@@ -123,6 +136,6 @@ class EmailHelper:
 
 if __name__ == "__main__":
     ins = EmailHelper(config_path=r"W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\emails.yaml")
-    ins.check_if_parsed(1)
+    res = ins.get_email_detail('default', 3471)
     # res = ins.get_today_task_list('default')
     print("HERE")

@@ -60,6 +60,7 @@ class ShipmentFlow:
         with open(feishu_config_path, 'r') as f:
             configs = yaml.load(f, Loader=yaml.FullLoader)
         self.tables = configs.get('table', {})
+        self.views = configs.get('view', {})
         self.templates = configs.get('template', {})
         self.chat_ids = configs.get('chat_id', {})
         self.app_token = configs.get('app_token')
@@ -302,11 +303,59 @@ class ShipmentFlow:
             if steps and 2 not in steps:
                 continue
 
-    def add_todo(self):
-        pass
+    def add_job(self, job_id, msg_body, source, force_new=False):
+        logger.info(f"Adding job: {job_id}")
+        n_records = {
+            'id': job_id,
+            '消息主体': msg_body,
+            '数据源': source,
+            '状态': '未运行',
+        }
+        if not force_new:
+            records, _ = self.feishu_spreadsheet_handler.get_records(self.app_token, self.tables['inputs_status'],
+                                                                     view_id=self.views['inputs_status'],
+                                                                     show_fields=['状态'], id=job_id)
+            if not records:
+                logger.info("Initializing new records.")
+                self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], [n_records])
+                logger.success(f"Added {job_id}")
+                return
+            else:
+                logger.warning(f"Job exists. {records}")
+                return records[0]
+        else:
+            # NEW RECORDS
+            logger.info("Initializing new records.")
+            self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], [n_records])
+            logger.success(f"Added {job_id}")
+            return
 
-    def mark_finish(self):
-        pass
+    def update_jobs(self, job_id, msg_body, source, status, logs=None, force_new=False):
+        n_records = {
+            'id': job_id,
+            '消息主体': msg_body,
+            '数据源': source,
+            '状态': status,
+            'logs': logs if logs else ""
+        }
+        if not force_new:
+            records, _ = self.feishu_spreadsheet_handler.get_records(self.app_token, self.tables['inputs_status'],
+                                                                     view_id=self.views['inputs_status'], id=job_id)
+            if not records:
+                logger.info("Initializing new records.")
+                self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], n_records)
+            else:
+                record_ids = [i['record_id'] for i in records]
+                for record_id in record_ids:
+                    self.feishu_spreadsheet_handler.update_records(self.app_token,
+                                                                   self.tables['inputs_status'],
+                                                                   record_id,
+                                                                   n_records)
+
+        else:
+            # NEW RECORDS
+            logger.info("Initializing new records.")
+            self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], n_records)
 
     # def insert_data_to_spreadsheet(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
     #                                raw_text=None):
@@ -488,7 +537,8 @@ class ShipmentFlow:
                                'BeginDate': data.get('装运开始日期-LAY-DATE',
                                                      datetime.datetime.now().strftime('%Y-%m-%d')),
                                'EndDate': data.get('装运结束日期-CANCELING-DATE',
-                                                   (datetime.datetime.now()+datetime.timedelta(days=5)).strftime('%Y-%m-%d')),
+                                                   (datetime.datetime.now() + datetime.timedelta(days=5)).strftime(
+                                                       '%Y-%m-%d')),
                                'YJBL': data.get('佣金-COMM'),
                                'BPCompany': data.get('报盘公司-COMPANY'),
                                'CarrierPrice': data.get('运费单价-FRT-RATE', 0),
@@ -539,12 +589,25 @@ class ShipmentFlow:
 
         return to_html_table(json_data)
 
+    def get_job_id_status(self, job_id):
+        res = self.feishu_spreadsheet_handler.get_records()
+
     def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, receive_type=None,
-                  task_id=None, debug=False):
+                  task_id=None, debug=False, skip_success=True):
         logger.info(f"Current receive_type: {receive_type} receive_id: {receive_id}")
         logger.error(f'{receive_id} {receive_type}')
         document_loader = self.load_document(document_path=Path(document_path) if document_path else None,
                                              content=content)
+        data = document_loader.load()
+        contents_list = [i.page_content for i in data]
+        content_str = '\n'.join(contents_list)
+        job_id = task_id if task_id else f"{receive_type}_{receive_id}"
+        existing_job = self.add_job(job_id=job_id, msg_body=content_str, source=receive_type)
+        if existing_job:
+            if skip_success and existing_job['fields']['状态'] == '成功':
+                logger.error(f"Job exists and success. Skipped")
+                return
+
         # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         # task_status_chat_id = self.chat_ids.get("task_status")
         # template_id = self.templates.get('rich_text_general_id')
@@ -566,9 +629,19 @@ class ShipmentFlow:
 
         # Classify
         try:
+            self.update_jobs(job_id=job_id,
+                             msg_body=content_str,
+                             source=receive_type,
+                             status='分类中',
+                             logs=f"开始邮件分类")
             document_type, reason, entry_count = self.classify_document(document_loader)
             logger.success(
                 f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
+            self.update_jobs(job_id=job_id,
+                             msg_body=content_str,
+                             source=receive_type,
+                             status='分类中',
+                             logs=f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
             # if receive_type and receive_id:
             #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             #     rich_text_log = (
@@ -587,6 +660,11 @@ class ShipmentFlow:
             #                                                           in_thread=True)
         except Exception as e:
             logger.error(traceback.format_exc())
+            self.update_jobs(job_id=job_id,
+                             msg_body=content_str,
+                             source=receive_type,
+                             status='异常',
+                             logs=traceback.format_exc())
             # if receive_type and receive_id:
             #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             #     rich_text_log = (
@@ -604,16 +682,40 @@ class ShipmentFlow:
             return
 
         # Extraction
+        self.update_jobs(job_id=job_id,
+                         msg_body=content_str,
+                         source=receive_type,
+                         status='提取中',
+                         logs=f"开始邮件信息提取")
         extraction_res = self.extract_key_information(document_loader=document_loader,
                                                       document_type=document_type,
                                                       entry_count=entry_count,
                                                       extra_info=reason)
         if not extraction_res:
+            self.update_jobs(job_id=job_id,
+                             msg_body=content_str,
+                             source=receive_type,
+                             status='分类中',
+                             logs=f"未曾成功提取出结果。{extraction_res}")
             return
         extraction_res = [] if not extraction_res else extraction_res
+        self.update_jobs(job_id=job_id,
+                         msg_body=content_str,
+                         source=receive_type,
+                         status='分类中',
+                         logs=f"=>     初次提取成功：{extraction_res}")
         # Validation
+        self.update_jobs(job_id=job_id,
+                         msg_body=content_str,
+                         source=receive_type,
+                         status='结果校验中',
+                         logs=f"开始校验结果")
         extraction_res = self.validate_key_information(document_type, extraction_res)
-
+        self.update_jobs(job_id=job_id,
+                         msg_body=content_str,
+                         source=receive_type,
+                         status='结果校验中',
+                         logs=f"=>     结果校验成功：{extraction_res}")
         # if receive_type and receive_id:
         #     rich_text_log = f'<b>【邮件关键信息提取成功】</b>\n'
         #     for idx, i in enumerate(extraction_res):
@@ -631,11 +733,21 @@ class ShipmentFlow:
         # INSERTION
         if not debug:
             try:
+                self.update_jobs(job_id=job_id,
+                                 msg_body=content_str,
+                                 source=receive_type,
+                                 status='插入数据',
+                                 logs=f"开始插入数据")
                 total, content = self.get_data_loader_context(document_loader)
                 self.insert_data_to_spreadsheet(Path(document_path) if document_path else None,
                                                 document_type,
                                                 extraction_res,
                                                 raw_text='\n'.join(content))
+                self.update_jobs(job_id=job_id,
+                                 msg_body=content_str,
+                                 source=receive_type,
+                                 status='插入数据',
+                                 logs=f"数据成功插入飞书表")
                 # self.insert_data_to_bx(Path(document_path) if document_path else None,
                 #                        document_type,
                 #                        extraction_res,
@@ -656,6 +768,11 @@ class ShipmentFlow:
                 #                                                           )
             except Exception as e:
                 logger.error(traceback.format_exc())
+                self.update_jobs(job_id=job_id,
+                                 msg_body=content_str,
+                                 source=receive_type,
+                                 status='插入数据',
+                                 logs=f"飞书表插入失败，失败报错：{traceback.format_exc()}")
                 # if receive_type and receive_id:
                 #     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 #     rich_text_log = (
@@ -672,15 +789,23 @@ class ShipmentFlow:
                 #                                                           )
                 return
         else:
+
             logger.success(json.dumps(extraction_res, indent=4, ensure_ascii=False))
-        self.mark_finish()
+        self.update_jobs(job_id=job_id,
+                         msg_body=content_str,
+                         source=receive_type,
+                         status='成功',
+                         logs=json.dumps(extraction_res, indent=2, ensure_ascii=False))
         return extraction_res
 
     def main(self, document_paths=None):
         if not document_paths:
             document_paths = self.collect_emails()
         for document_path in tqdm.tqdm(document_paths):
-            self.unit_flow(document_path)
+            res = self.unit_flow(document_path)
+            if res is False:
+                logger.error("Job exists.")
+                continue
 
 
 if __name__ == "__main__":

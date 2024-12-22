@@ -3,6 +3,7 @@ import lark_oapi as lark
 from lark_oapi.api.bitable.v1 import *
 import yaml
 import json
+from loguru import logger
 from typing import Tuple
 
 
@@ -85,49 +86,109 @@ class FeishuSpreadsheetHandler(FeishuApp):
         # 处理业务结果
         lark.logger.info(lark.JSON.marshal(response.data, indent=4))
 
-    def get_records(self, **kwargs):
+    def unit_get_records(self, app_token, table_id, view_id, page_token=None, page_size=20, show_fields=None, **kwargs):
         client = lark.Client.builder() \
-            .app_id("YOUR_APP_ID") \
-            .app_secret("YOUR_APP_SECRET") \
+            .app_id(self.__app_id) \
+            .app_secret(self.__app_secret) \
             .log_level(lark.LogLevel.DEBUG) \
             .build()
-
-        # 构造请求对象
-        request: SearchAppTableRecordRequest = SearchAppTableRecordRequest.builder() \
-            .page_size(20) \
-            .request_body(SearchAppTableRecordRequestBody.builder()
-                          .view_id("vewqhz51lk")
-                          .field_names(["字段1", "字段2"])
-                          .sort([Sort.builder()
-                                .field_name("多行文本")
-                                .desc(True)
-                                .build()
-                                 ])
-                          .filter(FilterInfo.builder()
-                                  .conjunction("and")
-                                  .conditions([Condition.builder()
-                                              .field_name("职位")
-                                              .operator("is")
-                                              .value(["初级销售员"])
-                                              .build(),
-                                               Condition.builder()
-                                              .field_name("销售额")
-                                              .operator("isGreater")
-                                              .value(["10000.0"])
-                                              .build()
-                                               ])
-                                  .build())
-                          .automatic_fields(False)
-                          .build()) \
-            .build()
-
-        # 发起请求
+        if not page_token:
+            # 构造请求对象
+            request: SearchAppTableRecordRequest = SearchAppTableRecordRequest.builder() \
+                .page_size(page_size) \
+                .app_token(app_token) \
+                .table_id(table_id) \
+                .request_body(SearchAppTableRecordRequestBody.builder()
+                              .view_id(view_id)
+                              .field_names(list(kwargs.keys()) + show_fields if show_fields else list(kwargs.keys()))
+                              .filter(FilterInfo.builder()
+                                      .conjunction("and")
+                                      .conditions([Condition.builder()
+                                                  .field_name(i)
+                                                  .operator("is")
+                                                  .value([kwargs[i]])
+                                                  .build() for i in kwargs.keys()])
+                                      .build()) \
+                              .automatic_fields(False)
+                              .build()) \
+                .build()
+        else:
+            # 构造请求对象
+            request: SearchAppTableRecordRequest = SearchAppTableRecordRequest.builder() \
+                .page_size(page_size) \
+                .app_token(app_token) \
+                .table_id(table_id) \
+                .page_token(page_token) \
+                .request_body(SearchAppTableRecordRequestBody.builder() \
+                              .view_id(view_id)
+                              .field_names(list(kwargs.keys()))
+                              .filter(FilterInfo.builder()
+                                      .conjunction("and")
+                                      .conditions([Condition.builder()
+                                                  .field_name(i)
+                                                  .operator("is")
+                                                  .value([kwargs[i]])
+                                                  .build() for i in kwargs.keys()])
+                                      .build()) \
+                              .automatic_fields(False)
+                              .build()) \
+                .build()
         response: SearchAppTableRecordResponse = client.bitable.v1.app_table_record.search(request)
 
         # 处理失败返回
         if not response.success():
             lark.logger.error(
                 f"client.bitable.v1.app_table_record.search failed, code: {response.code}, msg: {response.msg}, log_id: {response.get_log_id()}, resp: \n{json.dumps(json.loads(response.raw.content), indent=4, ensure_ascii=False)}")
+            return None
+
+        # 处理业务结果
+        lark.logger.info(lark.JSON.marshal(response.data, indent=4))
+        return json.loads(lark.JSON.marshal(response.data))
+
+    def get_records(self, app_token, table_id, view_id, show_fields=None, **kwargs):
+        final_res = []
+        error_page_token = []
+        page_token = None
+        total = -1
+        while 1:
+            res = self.unit_get_records(app_token, table_id, view_id, page_token=page_token,show_fields=show_fields, **kwargs)
+            items = res.get("items", [])
+            final_res.extend(items)
+            total = res.get('total', total)
+            if not items and len(final_res) != total:
+                logger.error(
+                    f'Current length: {len(final_res)}. We have total: {total}. Current page_token: {page_token} has None res. Page token error.')
+                error_page_token.append(page_token)
+            has_more = res.get('has_more', False)
+            page_token = res.get('page_token', None)
+            if has_more is False:
+                return final_res, error_page_token
+
+    def update_records(self, app_token, table_id, record_id, records):
+        # 创建client
+        client = lark.Client.builder() \
+            .app_id(self.__app_id) \
+            .app_secret(self.__app_secret) \
+            .log_level(lark.LogLevel.DEBUG) \
+            .build()
+
+        # 构造请求对象
+        request: UpdateAppTableRecordRequest = UpdateAppTableRecordRequest.builder() \
+            .app_token(app_token) \
+            .table_id(table_id) \
+            .record_id(record_id) \
+            .request_body(AppTableRecord.builder()
+                          .fields(records)
+                          .build()) \
+            .build()
+
+        # 发起请求
+        response: UpdateAppTableRecordResponse = client.bitable.v1.app_table_record.update(request)
+
+        # 处理失败返回
+        if not response.success():
+            lark.logger.error(
+                f"client.bitable.v1.app_table_record.update failed, code: {response.code}, msg: {response.msg}, log_id: {response.get_log_id()}, resp: \n{json.dumps(json.loads(response.raw.content), indent=4, ensure_ascii=False)}")
             return
 
         # 处理业务结果
@@ -138,7 +199,13 @@ if __name__ == "__main__":
     ins = FeishuSpreadsheetHandler(
         r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml',
         lark.AccessTokenType.TENANT)
-    res = ins.get_table_fields(app_token='B7XnbQTtLapDfDsJj27c7ZgQnLd',
-                               table_id='tblSsCLLIEXguHpk',
-                               view_id='vewFnBR0nY')
-    print(res)
+    # res = ins.get_table_fields(app_token='B7XnbQTtLapDfDsJj27c7ZgQnLd',
+    #                            table_id='tblSsCLLIEXguHpk',
+    #                            view_id='vewFnBR0nY')
+    ins.update_records(app_token='O2Q6bNHULa3HxusXxCNc9J9KnHg', table_id='tblowlKy1UIzilNU',
+                       record_id='recuxFLRLuT1Rc', records={
+            'id': 'demo',
+            '消息主体': 'dd',
+            '数据源': 'dd',
+            '状态': '成功',
+        })
