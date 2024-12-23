@@ -3,7 +3,7 @@
 
 # Task:
 我会给你一封邮件的存储地址，标题，内容，你需要帮我判断该邮件属于船舶邮件（ship_info），货盘邮件（cargo_info）还是其他类型邮件（others）。
-请根据下面我对这三种邮件给出的定义（definitions）和给你提供的例子（examples）进行判断。
+请根据下面我对这三种邮件给出的定义（definitions）、给你提供的例子（examples）结合行业知识(Knowledge)进行判断。
 把你的判断结果和中文判断理由,根据output_schema 的要求的JSON格式返回给我。
 
 # Definitions
@@ -24,6 +24,8 @@
       - CQD BE (TRY DISRATE)：CQD（Cargo Quantity Discharged）Bends，尝试卸货速率。
       - Gcn 3,75% pu iac -> Gcn：佣金（General Commission）。3,75%：佣金率为3.75%。pu iac：按发票金额计算（Per Unit Invoice Amount）
 
+# Knowledge
+{extra_knowledge}
 
 # Examples:
 ## 船舶邮件(ship_info)

@@ -15,7 +15,7 @@ class DocumentType(BaseModel):
         description='收到消息的种类，从如下三种里选择：ship_info, cargo_info, others.',
         options=['ship_info', 'cargo_info', 'others']
     )
-    entry_count: int= Field(
+    entry_count: int = Field(
         description="若document_type是船盘，返回当前邮件中可供出租的船的数量，一般出现新的船名就是一个可供出租的船舶；若document_type是货盘，返回邮件中需要租赁的需求数量，一般出现一个新的商品就是一个需要租赁的需求；若是其他邮件返回0"
     )
     reason: str = Field(
@@ -34,7 +34,7 @@ class MessageClassifier:
                           openai_api_key=API_TOKEN,
                           openai_api_base="https://open.bigmodel.cn/api/paas/v4/")
 
-    def classify(self, content):
+    def classify(self, content, extra_knowledge=None):
         prompt_path = self.__prompt_base_dir / 'classify_document_type.txt'
         with open(prompt_path, 'r', encoding='utf-8') as f:
             prompt_template = f.read()
@@ -62,7 +62,8 @@ class MessageClassifier:
                                         cargo_info_type_examples=cargo_info_examples_str,
                                         other_type_examples=other_examples_str,
                                         format_instruction=format_instruction,
-                                        input_content=content)
+                                        input_content=content,
+                                        extra_knowledge='' if not extra_knowledge else extra_knowledge)
         # logger.debug(prompt)
         res_raw = llm_ins.invoke(prompt)
         res_content = res_raw.content

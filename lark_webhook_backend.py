@@ -1,3 +1,4 @@
+import json
 import traceback
 
 from flask import Flask, request, jsonify
@@ -117,6 +118,23 @@ def add_data_to_bx_vessel():
                                               raw_text=raw_text)
     # 返回 JSON 响应
     return jsonify(res), 200
+
+
+@app.route('/api/update_knowledge', methods=['POST'])
+def update_knowledge():
+    # 从 Form Data 获取数据
+    data = request.form.to_dict()  # 转为 Python 字典
+    # 打印接收到的数据
+    logger.info(f"Received Form Data: {data}")
+    knowledge_json_path = Path(__file__).parent/'modules'/'knowledges'/'uploaded_knowledge.json'
+    if knowledge_json_path.exists():
+        with open(knowledge_json_path, 'r', encoding='utf-8') as f:
+            knowledge = json.load(f)
+    knowledge[data['知识类型']] = data['知识主体']
+    with open(knowledge_json_path, 'w', encoding='utf-8') as f:
+        json.dump(knowledge, f, indent=2, ensure_ascii=False)
+    SHIPMENT_FLOW_INS.extra_knowledge = knowledge
+    return jsonify(knowledge), 200
 
 
 if __name__ == '__main__':

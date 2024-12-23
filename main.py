@@ -64,6 +64,12 @@ class ShipmentFlow:
         self.templates = configs.get('template', {})
         self.chat_ids = configs.get('chat_id', {})
         self.app_token = configs.get('app_token')
+        extra_knowledge_path = Path(__file__).parent / 'modules' / 'knowledges' / 'uploaded_knowledge.json'
+        if extra_knowledge_path.exists():
+            with open(extra_knowledge_path, 'r', encoding='utf-8') as f:
+                self.extra_knowledge = json.load(f)
+        else:
+            self.extra_knowledge = {}
 
     def process_msg_dicts(self, msg_dicts):
         msgs = []
@@ -225,21 +231,40 @@ class ShipmentFlow:
     @retry(stop_max_attempt_number=2, wait_fixed=2000)
     def classify_document(self, document_loader):
         data = document_loader.load()
-        contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
+        # contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
+        # content_str = '\n'.join(contents_list)
+        contents_list = [i.page_content for i in data]
         content_str = '\n'.join(contents_list)
-        document_type, reason, entry_count = self.message_classifier.classify(content_str)
+        extra_knowledge_list = []
+        if self.extra_knowledge.get('Step_邮件分类'):
+            extra_knowledge_list.append(self.extra_knowledge.get('Step_邮件分类'))
+        if self.extra_knowledge.get('General_专业名词'):
+            extra_knowledge_list.append(self.extra_knowledge.get('General_专业名词'))
+
+        extra_knowledge = '\n'.join(extra_knowledge_list) if extra_knowledge_list else None
+        document_type, reason, entry_count = self.message_classifier.classify(content_str,
+                                                                              extra_knowledge=extra_knowledge)
 
         return document_type, reason, entry_count
 
     def extract_key_information(self, document_loader, document_type, entry_count: int, extra_info: str):
         logger.info(f"->     Starts to extract key information from {document_type}.")
+        extra_knowledge_list = []
         if document_type == 'others':
             logger.warning("Message type is OTHER. DO NOT PARSE. SKIPPED.")
             return None
         elif document_type == 'ship_info':
             config_path = self.rule_config_path / 'ship_related_default.yaml'
+            if self.extra_knowledge.get('Step_船盘提取'):
+                extra_knowledge_list.append(self.extra_knowledge.get('Step_船盘提取'))
+            if self.extra_knowledge.get('General_专业名词'):
+                extra_knowledge_list.append(self.extra_knowledge.get('General_专业名词'))
         elif document_type == 'cargo_info':
             config_path = self.rule_config_path / 'cargo_offer_default.yaml'
+            if self.extra_knowledge.get('Step_货盘提取'):
+                extra_knowledge_list.append(self.extra_knowledge.get('Step_货盘提取'))
+            if self.extra_knowledge.get('General_专业名词'):
+                extra_knowledge_list.append(self.extra_knowledge.get('General_专业名词'))
         logger.info(f"Config_path: {config_path}")
         # Message Segmentation
         # data = document_loader.load()
@@ -262,6 +287,8 @@ class ShipmentFlow:
         # Do extraction:
         ## By serial
         outs = []
+
+        extra_knowledge = '\n'.join(extra_knowledge_list) if extra_knowledge_list else None
         for vessel_info_chunk in tqdm.tqdm(vessel_info_chunks):
             text_lines = [
                 "参考原文：" + content_str,
@@ -270,7 +297,8 @@ class ShipmentFlow:
             modified_outputs = self.kie_instance(rule_config_path=str(config_path),
                                                  file_type=document_type,
                                                  # text_lines=[mutual_info, vessel_info_chunk]
-                                                 text_lines=text_lines
+                                                 text_lines=text_lines,
+                                                 extra_knowledge=extra_knowledge
                                                  )
             outs.append([modified_outputs[0], vessel_info_chunk, mutual_info])
         logger.success(json.dumps(outs, indent=2, ensure_ascii=False))
@@ -279,8 +307,23 @@ class ShipmentFlow:
     @retry(stop_max_attempt_number=2, wait_fixed=2000)
     def validate_key_information(self, document_type, extraction_res):
         logger.info("Starts to Validate results.")
+        extra_knowledge_list = []
+        if document_type == 'others':
+            logger.warning("Message type is OTHER. DO NOT PARSE. SKIPPED.")
+            return None
+        elif document_type == 'ship_info':
+            if self.extra_knowledge.get('Step_船盘校验'):
+                extra_knowledge_list.append(self.extra_knowledge.get('Step_船盘校验'))
+            if self.extra_knowledge.get('General_专业名词'):
+                extra_knowledge_list.append(self.extra_knowledge.get('General_专业名词'))
+        elif document_type == 'cargo_info':
+            if self.extra_knowledge.get('Step_货盘校验'):
+                extra_knowledge_list.append(self.extra_knowledge.get('Step_货盘校验'))
+            if self.extra_knowledge.get('General_专业名词'):
+                extra_knowledge_list.append(self.extra_knowledge.get('General_专业名词'))
         modified_res = self.ki_validator.bulk_validate(document_type=document_type,
-                                                       extraction_res=extraction_res)
+                                                       extraction_res=extraction_res,
+                                                       extra_knowledge='\n'.join(extra_knowledge_list))
         modified_res = self.ki_validator.validate(document_type=document_type,
                                                   extraction_res=modified_res)
         logger.info("=>         Validation finished.")
@@ -589,8 +632,8 @@ class ShipmentFlow:
 
         return to_html_table(json_data)
 
-    def get_job_id_status(self, job_id):
-        res = self.feishu_spreadsheet_handler.get_records()
+    # def get_job_id_status(self, job_id):
+    #     res = self.feishu_spreadsheet_handler.get_records()
 
     def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, receive_type=None,
                   task_id=None, debug=False, skip_success=True):

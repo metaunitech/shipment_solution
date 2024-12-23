@@ -345,6 +345,9 @@ YOUR ANSWER:
         target_key_raw, background_infos = self.parse_extraction_rule_configs(rule_config_path)
         text_lines = kwargs.get("text_lines") if not args else args[1]
 
+        extra_knowledge = kwargs.get('extra_knowledge', None)
+        if extra_knowledge:
+            background_infos.append(extra_knowledge)
         modified_outputs, modified_conflicts = self.extract(
             file_type=kwargs.get("file_type"),
             raw_text_lines=text_lines,

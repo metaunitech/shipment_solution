@@ -67,7 +67,7 @@ class KIValidation:
             f"输入：{input}\n"
             f"注：今天是{datetime.datetime.now().strftime('%YY-%MM-%DD')}，"
             f"YOUR ANSWER:\n"
-            f"请按照如下格式要求返回我JSON\n"
+            f"请按照如下格式要求返回我**日期结果**JSON\n"
             f"{format_instruction}\n"
             f"TS:{str(time.time() * 1000)}")
         res_raw = llm_ins.invoke(prompt)
@@ -110,7 +110,8 @@ class KIValidation:
         return None, None
 
     @retry(stop_max_attempt_number=3, wait_fixed=2000)
-    def unit_bulk_validate(self, document_type, res, content=None, mutual_content=None, current_missing=None, note=None):
+    def unit_bulk_validate(self, document_type, res, content=None, mutual_content=None, current_missing=None, note=None,
+                           extra_knowledge=None):
         current_missing = [] if current_missing is None else current_missing
         llm_ins = self.create_llm_instance()
         parser = PydanticOutputParser(pydantic_object=RefinedDict)
@@ -134,6 +135,8 @@ class KIValidation:
         prompt = (
             f'# TASK: \n我现在有一个字典需要通过API上传，但是字典里有的字段的值不满足字段格式要求。我需要你按照字段的格式要求将我的字典值进行修正，字段名都保持不变\n'
             f'注意：对于KeyValueRequirements提到必须提取到值的字段{str(mandatory_keys)}，如果当前字典中为None或者字典中不存在，则从原文依据中重新提取字段值并加入字典。返回我JSON格式。\n'
+            f'# Knowledge:\n'
+            f'{"" if not extra_knowledge else extra_knowledge}'
             f'# KeyValueRequirements:\n{key_requirement_text}\n'
             f"今天的日期是：{datetime.datetime.now().strftime('%Y-%m-%d')}"
             f"# INPUT:\n"
@@ -182,9 +185,10 @@ class KIValidation:
                     refined_dict['卸率-D-RATE'] = d_rate
             note = ''
             for k in ['装运开始日期-LAY-DATE', '装运结束日期-CANCELING-DATE', '空船日期-OPEN-DATE']:
-                if k in refined_dict.keys() and datetime.datetime.strptime(refined_dict[k], "%Y-%m-%d") < datetime.datetime.now():
+                if k in refined_dict.keys() and datetime.datetime.strptime(refined_dict[k],
+                                                                           "%Y-%m-%d") < datetime.datetime.now():
                     refined_dict[k] = None
-                    note+=f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}"
+                    note += f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}"
                     logger.error(f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}")
 
             # Check if the keys are modified
@@ -208,7 +212,7 @@ class KIValidation:
                 out.append(k)
         return out
 
-    def bulk_validate(self, document_type, extraction_res):
+    def bulk_validate(self, document_type, extraction_res, extra_knowledge=None):
         output_res = []
 
         for res_all in extraction_res:
@@ -217,7 +221,8 @@ class KIValidation:
             note = None
             refined_dict = res
             for i in range(5):
-                refined_dict, note = self.unit_bulk_validate(document_type, refined_dict, current_missing=missing_keys, content=body, mutual_content=mutual_body, note=note)
+                refined_dict, note = self.unit_bulk_validate(document_type, refined_dict, current_missing=missing_keys,
+                                                             content=body, mutual_content=mutual_body, note=note)
                 missing_keys = self.check_if_mandatory_fit(document_type, refined_dict)
 
                 if not missing_keys:
@@ -264,5 +269,6 @@ class KIValidation:
 
 if __name__ == "__main__":
     ins = KIValidation()
-    res = ins.parse_rates("20,000 MT STEEL COILS\nBAHODOPI /TIANJIN\n30 DEC-05 JAN\n7000 MT /CQD\nFIO\nADCOM: 2.5% PUS\n原文得一些总结和分析：邮件内容提到了需要运输的货物，包括20,000MT钢卷，并指定了装运港（BAHODOPI /TIANJIN）和日期（30 DEC-05 JAN），同时提到了卸货量（7000 MT）和FIO条款，符合货盘邮件的特征。")
+    res = ins.parse_rates(
+        "20,000 MT STEEL COILS\nBAHODOPI /TIANJIN\n30 DEC-05 JAN\n7000 MT /CQD\nFIO\nADCOM: 2.5% PUS\n原文得一些总结和分析：邮件内容提到了需要运输的货物，包括20,000MT钢卷，并指定了装运港（BAHODOPI /TIANJIN）和日期（30 DEC-05 JAN），同时提到了卸货量（7000 MT）和FIO条款，符合货盘邮件的特征。")
     print(res)
