@@ -24,7 +24,7 @@ class DailyFlow:
             subject, m_content, sender, date = self.email_handler.get_email_detail(name, email_id)
             if subject is None:
                 continue
-            content = f"标题：{subject}\n from: {sender}\n date: {date}\n content: {m_content}"
+            content = f"标题：{subject}\n FROM: {sender}\n RECEIVE_DATE: {date}\n CONTENT: {m_content}"
             logger.info(f"Content: {content}")
             self.flow_ins.unit_flow(content=content,
                                     receive_id=email_id,

@@ -101,7 +101,7 @@ class EmailHelper:
         mail_server = zmail.server(user, password, smtp_host=server, smtp_port=25)
         try:
             mail = mail_server.get_mail(email_id)
-            return mail['subject'], mail['content_text'], mail['from'], mail['date']
+            return mail['subject'], '\n'.join(mail['content_text']), mail['from'], mail['date']
         except:
             return None, None, None, None
 
