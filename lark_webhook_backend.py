@@ -127,6 +127,7 @@ def update_knowledge():
     # 打印接收到的数据
     logger.info(f"Received Form Data: {data}")
     knowledge_json_path = Path(__file__).parent/'modules'/'knowledges'/'uploaded_knowledge.json'
+    knowledge = {}
     if knowledge_json_path.exists():
         with open(knowledge_json_path, 'r', encoding='utf-8') as f:
             knowledge = json.load(f)
