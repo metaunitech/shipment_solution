@@ -1,5 +1,5 @@
 import time
-from paddleocr.ppstructure.recovery.recovery_to_doc import sorted_layout_boxes
+# from paddleocr.ppstructure.recovery.recovery_to_doc import sorted_layout_boxes
 from paddleocr import PaddleOCR, draw_ocr, PPStructure, draw_structure_result
 from PIL import Image
 import numpy as np

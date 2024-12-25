@@ -1,7 +1,7 @@
 import datetime
 import json
 import os
-import time
+
 import traceback
 from pathlib import Path
 from langchain_openai import ChatOpenAI
@@ -9,7 +9,6 @@ import yaml
 import tqdm
 from langchain_community.document_loaders import UnstructuredEmailLoader, OutlookMessageLoader
 from langchain_core.document_loaders import BaseLoader
-from sqlalchemy import modifier
 
 from modules.utils.ocr_handler import OCRHandler
 from modules.message_classification import MessageClassifier
@@ -154,16 +153,16 @@ class ShipmentFlow:
                 file_path = self.feishu_message_handler.retrieve_file(message_id, file_key, target_folder,
                                                                       file_type='image')
                 logger.info(f"Document {file_path.name} received.")
-                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                rich_text_log = (
-                    f'<b>【上传文件接收成功】</b>\n'
-                    f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
-                    f'<b>【时间】</b>: {current_time}'
-                )
-                self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
-                                                                     template_id=self.templates['rich_text_general_id'],
-                                                                     template_variable={'log_rich_text': rich_text_log},
-                                                                     receive_id_type=receive_type)
+                # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                # rich_text_log = (
+                #     f'<b>【上传文件接收成功】</b>\n'
+                #     f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
+                #     f'<b>【时间】</b>: {current_time}'
+                # )
+                # self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
+                #                                                      template_id=self.templates['rich_text_general_id'],
+                #                                                      template_variable={'log_rich_text': rich_text_log},
+                #                                                      receive_id_type=receive_type)
                 res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
                                      receive_type=receive_type)
                 if res:
@@ -172,9 +171,24 @@ class ShipmentFlow:
                 content_str = message.get('content')
                 content = json.loads(content_str) if content_str else {}
                 content_parts = content.get('content')
+                message_id = message.get('message_id')
                 content = []
+                contain_img = False
                 for part in content_parts:
-                    content.append(' '.join([i.get('text', '') for i in part]))
+                    img_keys = [i.get('image_key', None) for i in part if i.get('tag')=='img']
+                    if img_keys:
+                        contain_img = True
+                        file_path = self.feishu_message_handler.retrieve_file(message_id, img_keys[0], target_folder,
+                                                                              file_type='image')
+                        logger.info(f"Document {file_path.name} received.")
+                        res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
+                                             receive_type=receive_type)
+                        if res:
+                            msgs.append(res)
+                    else:
+                        content.append(' '.join([i.get('text', '') for i in part]))
+                if contain_img:
+                    continue
                 content = '\n'.join(content)
                 with open(target_folder / 'input_text.txt', 'w', encoding='utf-8') as f:
                     f.write(content)
