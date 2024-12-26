@@ -147,7 +147,8 @@ def rerun():
     if data.get('content') and data.get('task_id'):
         res = SHIPMENT_FLOW_INS.unit_flow(document_path=None,
                                           content=data.get("content"),
-                                          task_id=data.get('task_id'))
+                                          task_id=data.get('task_id'),
+                                          skip_success=False)
         if res:
             return jsonify(res), 200
     return jsonify({"STATUS": "NO RESULT"}), 200
