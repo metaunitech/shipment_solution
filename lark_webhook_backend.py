@@ -138,7 +138,7 @@ def update_knowledge():
     return jsonify(knowledge), 200
 
 
-@app.route('/api/add_bx_vessel', methods=['POST'])
+@app.route('/api/rerun', methods=['POST'])
 def rerun():
     # 从 Form Data 获取数据
     data = request.form.to_dict()  # 转为 Python 字典
