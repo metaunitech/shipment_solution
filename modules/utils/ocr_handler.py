@@ -10,9 +10,10 @@ from loguru import logger
 
 class OCRHandler:
     def __init__(self):
-        self.__ppeng = PaddleOCR(use_angle_cls=True, lang='ch')
-        self._layout_engine = PPStructure(ocr=False, return_ocr_result_in_table=True)
-        self._table_engine = PPStructure(layout=False, lang='ch')
+        self.__ppeng = None
+        # self._layout_engine = PPStructure(ocr=False, return_ocr_result_in_table=True, lang='ch')
+        self._layout_engine = None
+        self._table_engine = None
         # self.__table_engine = PPStructure(
         #     layout_model_dir=r'W:\future_exchange\modules\utils\picodet_lcnet_x1_0_fgd_layout_table_infer')
         self.__image_ocr_res_cache = {}
@@ -59,7 +60,13 @@ class OCRHandler:
         if not raw_result and input_marker:
             raw_result = self.__image_ocr_res_cache.get(input_marker)
         if not raw_result:
-            raw_result = self.__ppeng.ocr(img=image, cls=False)
+            if not self.__ppeng:
+                self.__ppeng = PaddleOCR(use_angle_cls=True, lang='ch')
+            try:
+                raw_result = self.__ppeng.ocr(img=image, cls=False)
+            except RuntimeError as e:
+                self.__ppeng =  PaddleOCR(use_angle_cls=True, lang='ch')
+                raw_result = self.__ppeng.ocr(img=image, cls=False)
 
         if isinstance(img_input, Path) and str(img_input) not in self.__image_ocr_res_cache and raw_result:
             self.__image_ocr_res_cache[str(img_input)] = raw_result
@@ -409,7 +416,13 @@ class OCRHandler:
                     continue
                 output.append(raw_result[0][0][1][0])
             else:
-                structured_result = self._table_engine(img_input)
+                if not self._table_engine:
+                    self._table_engine = PPStructure(layout=False, lang='ch')
+                try:
+                    structured_result = self._table_engine(img_input)
+                except RuntimeError as e:
+                    self._table_engine = PPStructure(layout=False, lang='ch')
+                    structured_result = self._table_engine(img_input)
 
                 # for res in sorted_layout_boxes(structured_result, img_input.shape[1]):
                 for res in structured_result:
@@ -431,7 +444,14 @@ class OCRHandler:
             img_input_path = Path(img_input_path)
         if not output_path:
             output_path = img_input_path.parent
-        layout_res_raw = self._layout_engine(str(img_input_path))
+        if not self._layout_engine:
+            self._layout_engine = PPStructure(ocr=False, return_ocr_result_in_table=True, lang='ch')
+        try:
+            layout_res_raw = self._layout_engine(str(img_input_path))
+        except RuntimeError as e:
+            self._layout_engine = PPStructure(ocr=False, return_ocr_result_in_table=True, lang='ch')
+            layout_res_raw = self._layout_engine(str(img_input_path))
+
         if if_debug:
             font_path = str(Path(__file__).parent / 'simfang.ttf')
             image = Image.open(img_input_path).convert('RGB')
