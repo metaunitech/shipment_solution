@@ -69,3 +69,5 @@ keys:
       - 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B 18390/17526cbm：G表示散装舱容：18390，返回18390数字。CBM是单位表示立方，不用输出单位
   - 包装舱容-BALE-CAPACITY:
       - 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B 18390/17526cbm：B表示包装舱容：17526，返回17526数字。CBM是单位表示立方，不用输出单位
+  - IMO-CODE:
+      - 一串像船舶ID的号码，可能不存在，例如：IMO:9604653
