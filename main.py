@@ -9,6 +9,7 @@ import yaml
 import tqdm
 from langchain_community.document_loaders import UnstructuredEmailLoader, OutlookMessageLoader
 from langchain_core.document_loaders import BaseLoader
+import hashlib
 
 from modules.utils.ocr_handler import OCRHandler
 from modules.message_classification import MessageClassifier
@@ -69,6 +70,30 @@ class ShipmentFlow:
                 self.extra_knowledge = json.load(f)
         else:
             self.extra_knowledge = {}
+    @staticmethod
+    def generate_md5_hash(input_data):
+        """
+        根据文本内容或文件路径生成唯一的 MD5 哈希字符串。
+
+        参数:
+        - input_data (str or Path): 输入的文本或文件路径。
+
+        返回:
+        - str: 生成的 MD5 哈希值（十六进制字符串）。
+        """
+        hasher = hashlib.md5()
+
+        if isinstance(input_data, (str, Path)):
+            # 如果输入是文件路径，则直接对路径字符串进行哈希
+            path_str = str(input_data)
+            hasher.update(path_str.encode('utf-8'))
+        else:
+            # 如果输入是文本，则直接计算文本的哈希
+            if isinstance(input_data, str):
+                input_data = input_data.encode('utf-8')
+            hasher.update(input_data)
+
+        return hasher.hexdigest()
 
     def process_msg_dicts(self, msg_dicts):
         msgs = []
@@ -85,6 +110,7 @@ class ShipmentFlow:
             message = event.get('message', {})
             chat_type = message.get('chat_type')
             message_type = message.get('message_type')
+            task_id_components = [chat_type, message_type]
             logger.info([event, event_id, chat_type, message_type])
             if not chat_type:
                 logger.error("Chat type is not mentioned.")
@@ -115,9 +141,10 @@ class ShipmentFlow:
                 content = content.get('text')
                 with open(target_folder / 'input_text.txt', 'w', encoding='utf-8') as f:
                     f.write(content)
-
+                content_hash = self.generate_md5_hash(content)
+                task_id_components.append(content_hash)
                 res = self.unit_flow(document_path=None, content=content, receive_id=receive_id,
-                                     receive_type=receive_type)
+                                     receive_type=receive_type, task_id='_'.join(task_id_components))
                 if res:
                     msgs.append(res)
             elif message_type == 'file':
@@ -129,18 +156,20 @@ class ShipmentFlow:
                 # os.makedirs(target_folder, exist_ok=True)
                 file_path = self.feishu_message_handler.retrieve_file(message_id, file_key, target_folder)
                 logger.info(f"Document {file_path.name} received.")
-                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                rich_text_log = (
-                    f'<b>【上传文件接收成功】</b>\n'
-                    f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
-                    f'<b>【时间】</b>: {current_time}'
-                )
-                self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
-                                                                     template_id=self.templates['rich_text_general_id'],
-                                                                     template_variable={'log_rich_text': rich_text_log},
-                                                                     receive_id_type=receive_type)
+                # current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                # rich_text_log = (
+                #     f'<b>【上传文件接收成功】</b>\n'
+                #     f'<b><font color="green"><b>{file_path.name}接收成功</b></font>\n'
+                #     f'<b>【时间】</b>: {current_time}'
+                # )
+                # self.feishu_message_handler.send_message_by_template(receive_id=receive_id,
+                #                                                      template_id=self.templates['rich_text_general_id'],
+                #                                                      template_variable={'log_rich_text': rich_text_log},
+                #                                                      receive_id_type=receive_type)
+                file_path_hash = self.generate_md5_hash(file_path)
+                task_id_components.append(file_path_hash)
                 res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
-                                     receive_type=receive_type)
+                                     receive_type=receive_type, task_id='_'.join(task_id_components))
                 if res:
                     msgs.append(res)
             elif message_type == 'image':
@@ -163,8 +192,10 @@ class ShipmentFlow:
                 #                                                      template_id=self.templates['rich_text_general_id'],
                 #                                                      template_variable={'log_rich_text': rich_text_log},
                 #                                                      receive_id_type=receive_type)
+                file_path_hash = self.generate_md5_hash(file_path)
+                task_id_components.append(file_path_hash)
                 res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
-                                     receive_type=receive_type)
+                                     receive_type=receive_type, task_id='_'.join(task_id_components))
                 if res:
                     msgs.append(res)
             elif message_type == 'post':
@@ -181,8 +212,10 @@ class ShipmentFlow:
                         file_path = self.feishu_message_handler.retrieve_file(message_id, img_keys[0], target_folder,
                                                                               file_type='image')
                         logger.info(f"Document {file_path.name} received.")
+                        file_path_hash = self.generate_md5_hash(file_path)
+                        _task_id_components = task_id_components+[file_path_hash]
                         res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
-                                             receive_type=receive_type)
+                                             receive_type=receive_type, task_id='_'.join(_task_id_components))
                         if res:
                             msgs.append(res)
                     else:
@@ -192,9 +225,10 @@ class ShipmentFlow:
                 content = '\n'.join(content)
                 with open(target_folder / 'input_text.txt', 'w', encoding='utf-8') as f:
                     f.write(content)
-
+                content_hash = self.generate_md5_hash(content)
+                task_id_components.append(content_hash)
                 res = self.unit_flow(document_path=None, content=content, receive_id=receive_id,
-                                     receive_type=receive_type)
+                                     receive_type=receive_type, task_id='_'.join(task_id_components))
                 if res:
                     msgs.append(res)
             else:
