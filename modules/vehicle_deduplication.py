@@ -37,10 +37,12 @@ class VehicleDeduplicator:
         return fuzz.ratio(clean_name1, clean_name2) > 90
 
     @staticmethod
-    def util_remove_symbols_and_spaces(name):
+    def util_remove_symbols_and_spaces(name, ignore_space=False):
         # 使用正则表达式去掉所有非字母数字和中文字符
         cleaned_string = re.sub(r'[^\u4e00-\u9fffA-Za-z0-9]', '', name)
         cleaned_string = cleaned_string.upper()
+        if not ignore_space:
+            cleaned_string = ''.join(cleaned_string.split(' '))
         return cleaned_string
 
     @staticmethod
@@ -52,6 +54,15 @@ class VehicleDeduplicator:
             if name.startswith(prefix):
                 return name[len(prefix):]
         return name
+
+    @staticmethod
+    def util_InitialMatch(name1, name2):
+        if ' ' in name1 and ' ' in name2:
+            return ''.join([i[0] for i in name1.split(' ')]).upper() == ''.join([i[0] for i in name2.split(' ')]).upper()
+        elif ' ' in name1 and ' ' not in name2:
+            return ''.join([i[0] for i in name1.split(' ')]).upper() == name2.upper()
+        elif ' ' not in name1 and ' ' in name2:
+            return name1.upper() == ''.join([i[0] for i in name2.split(' ')])
 
     def step_PreprocessName(self, name):
         if not name:
@@ -90,10 +101,17 @@ class VehicleDeduplicator:
     def method_FuzzyMatch(self, name):  # TODO
         return [self.current_vehicles[i] for i in self.current_vehicles.keys() if self.util_FuzzyMatch(name, i)]
 
+    def method_InitialMatch(self, name):
+        return [self.current_vehicles[i] for i in self.current_vehicles.keys() if self.util_InitialMatch(name, i)]
+
     def check_existing_vehicle(self, name, **kwargs):
         for method in [self.method_ExactMatch,
-                       self.method_FuzzyMatch]:
-            vid = method(name=self.util_remove_symbols_and_spaces(name))
+                       self.method_FuzzyMatch,
+                       self.method_InitialMatch]:
+            if method != self.method_InitialMatch:
+                vid = method(name=self.util_remove_symbols_and_spaces(name))
+            else:
+                vid = method(name=self.util_remove_symbols_and_spaces(name, ignore_space=True))
             if vid:
                 if isinstance(vid, str):
                     vids = [vid]
