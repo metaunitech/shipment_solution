@@ -12,7 +12,7 @@ class OCRHandler:
     def __init__(self):
         self.__ppeng = PaddleOCR(use_angle_cls=True, lang='ch')
         self._layout_engine = PPStructure(ocr=False, return_ocr_result_in_table=True)
-        self._table_engine = PPStructure(layout=False)
+        self._table_engine = PPStructure(layout=False, lang='ch')
         # self.__table_engine = PPStructure(
         #     layout_model_dir=r'W:\future_exchange\modules\utils\picodet_lcnet_x1_0_fgd_layout_table_infer')
         self.__image_ocr_res_cache = {}
