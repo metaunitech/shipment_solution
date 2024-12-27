@@ -434,8 +434,12 @@ class ShipmentFlow:
         }
         if records_ids and document_type:
             table_id = self.tables[document_type]
-            record_link_list = [i for i in records_ids]
-            n_records['目标记录：record ID'] = '\n'.join(record_link_list)
+            record_results = self.feishu_spreadsheet_handler.batch_get_records(app_token=self.app_token,
+                                                                               table_id=table_id,
+                                                                               record_ids=records_ids)
+            urls = [i for i in record_results['data']['records']['shared_url']]
+            n_records['目标记录：record ID'] = '\n'.join(records_ids)
+            n_records['消息记录'] = '<hr>'.join(urls)
         if document_type:
             n_records['内容分类'] = document_type
         if not force_new:
