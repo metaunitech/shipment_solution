@@ -18,11 +18,13 @@ background:
   - DEPTH MOULDED表示船深
   - SUMMER SALT WATER表达夏季海水，DWT / DRAFT SUMMER SALT WATER 58,761 MT / 12.828 M中前一个表示DWT，后一个表示夏季海水吃水。
   - SWL 表示安全工作负荷（SWL，Safe Working Load）。例如：4 x 30 MT SWL 表示船舶配备了4台起重机（或吊机），每台的安全工作负荷（SWL，Safe Working Load）为30吨（MT，Metric Ton）。
+  - 如果船盘里有写RTVG, RVG都是表示待通知的意思 不知道什么时候空，OPEN DATE值为空，
+  - 船盘里类似 16K/08LT，前面表示的是DWCC  16000  /后面表示BUILD YEAR:2008;同理20K/09LT， DWCC 22000，BUILD YEAR： 2009
 keys:
 #  - 船舶代码-ID
   - 船舶类型-TYPE
   - 船舶英文名称-ENGLISH-NAME:
-      - 可租赁船的英文名，一定会出现在船盘中, 通常在每个片段的开头，取值取到明显的分隔符例如逗号等。通常以MV开头MV <英文>+<数字>或者MV <英文>，也会有中文的船名，返回MV后面的名字，例如：对于MV ELIJAH，船舶英文名称为：ELIJAH；对于MV GAO XIN 15 DWCC 6700 OPEN NIIGATA，船舶英文名称为：GAO XIN 15；ORIENTAL SOURCES 10.3K HAIPHONG,VIETNAM 24 DEC KRIS TWEEN DECK/FE-SEA，船舶英文名称为：ORIENTAL SOURCES;MV ZHE HAI 515, 50K,  WILL OPEN MINA ZAYED，船舶英文名称为：ZHE HAI 515
+      - 可租赁船的英文名，一定会出现在船盘中, 通常在每个片段的开头，取值取到明显的分隔符例如逗号等。通常以MV开头MV <英文>+<数字>或者MV <英文>，也会有中文的船名，返回MV后面的名字.MV或MV.或M/V是动力船舶的标记，经常会出现在船名的前面，提取时船名时不要显示。例如：对于MV ELIJAH，船舶英文名称为：ELIJAH；对于MV GAO XIN 15 DWCC 6700 OPEN NIIGATA，船舶英文名称为：GAO XIN 15；ORIENTAL SOURCES 10.3K HAIPHONG,VIETNAM 24 DEC KRIS TWEEN DECK/FE-SEA，船舶英文名称为：ORIENTAL SOURCES;MV ZHE HAI 515, 50K,  WILL OPEN MINA ZAYED，船舶英文名称为：ZHE HAI 515
   - 船舶中文名称-CHINESE-NAME:
       - 如果原文中没有则默认和英文名称一样
   - 建造年份-BUILT-YEAR:
