@@ -149,6 +149,7 @@ def rerun():
         res = SHIPMENT_FLOW_INS.unit_flow(document_path=None,
                                           content=data.get("content"),
                                           task_id=data.get('task_id'),
+                                          receive_type='rerun',
                                           skip_success=False)
         if res:
             return jsonify(res), 200
@@ -169,6 +170,7 @@ def single_rerun():
                                           content=data.get("content"),
                                           task_id=task_id,
                                           document_type=document_type,
+                                          receive_type='single_rerun',
                                           skip_success=False)
         if res:
             return jsonify(res), 200

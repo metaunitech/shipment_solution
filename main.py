@@ -135,7 +135,7 @@ class ShipmentFlow:
             else:
                 logger.error(f"Unknown chat_type: {chat_type}")
                 continue
-
+            receive_type = chat_type
             if message_type == 'text':
                 content_str = message.get('content')
                 content = json.loads(content_str) if content_str else {}
@@ -423,6 +423,12 @@ class ShipmentFlow:
             return
 
     def update_jobs(self, job_id, msg_body, source, status, records_ids=None, document_type=None, logs=None, force_new=False):
+        if source == 'chat_id':
+            source = '讨论组'
+        elif source == "Email_default":
+            source = 'CHARTERING@JAH-LINE.COM'
+        elif source == None:
+            source = '重跑'
         n_records = {
             'id': job_id,
             '消息主体': msg_body,
@@ -432,8 +438,10 @@ class ShipmentFlow:
         }
         if records_ids and document_type:
             table_id = self.tables[document_type]
-            record_link_list = [f"https://bitable.feishu.cn/app/{self.app_token}/table/{table_id}/record/{i}" for i in records_ids]
-            n_records['消息记录'] = '<hr>'.join(record_link_list)
+            record_link_list = [i for i in records_ids]
+            n_records['目标记录：record ID'] = '\n'.join(record_link_list)
+        if document_type:
+            n_records['内容分类'] = document_type
         if not force_new:
             records, _ = self.feishu_spreadsheet_handler.get_records(self.app_token, self.tables['inputs_status'],
                                                                      view_id=self.views['inputs_status'], id=job_id)
