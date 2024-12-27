@@ -21,6 +21,7 @@ background:
   - 如果船盘里有写RTVG, RVG都是表示待通知的意思 不知道什么时候空，OPEN DATE值为空，
   - 船盘里类似 16K/08LT，前面表示的是DWCC  16000  /后面表示BUILD YEAR:2008;同理20K/09LT， DWCC 22000，BUILD YEAR： 2009
   - 对于DWT 11,200 MT ON 7.0M, 7.0指的是吃水为7
+  - L/B/D 116.99/19.6/14 L指的是船长，B是船宽，D是型深。分别是116.99，19.6，14
 keys:
 #  - 船舶代码-ID
   - 船舶类型-TYPE

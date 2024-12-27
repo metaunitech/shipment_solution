@@ -19,7 +19,10 @@ class DocumentType(BaseModel):
         description="若document_type是船盘，返回当前邮件中可供出租的船的数量，一般出现新的船名就是一个可供出租的船舶；若document_type是货盘，返回邮件中需要租赁的需求数量，一般出现一个新的商品就是一个需要租赁的需求；若是其他邮件返回0"
     )
     reason: str = Field(
-        description='这个文本片段的字面解释，以及做出这种分类的原因。'
+        description='将这段邮件中的缩写翻译成中文可以理解的形式，并结合总结做出消息分类的原因。'
+    )
+    translated_content: str = Field(
+        description='根据船舶相关基础知识把消息进行翻译成可读内容。'
     )
 
 
@@ -73,12 +76,13 @@ class MessageClassifier:
         document_type = answer_instance.document_type
         entry_count = answer_instance.entry_count
         reason = answer_instance.reason
+        translated_content = answer_instance.translated_content
         logger.success(f'Content type: {document_type}. Entry count: {entry_count} Reason: {reason}')
         # RULES:
         if 'CQD' in content and document_type != 'CQD':
             document_type = 'cargo_info'
             reason = 'CQD 是货盘邮件的标志，force to 货盘邮件'
-        return document_type, reason, entry_count
+        return document_type, reason, entry_count, translated_content
 
 
 if __name__ == '__main__':

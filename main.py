@@ -292,10 +292,10 @@ class ShipmentFlow:
             extra_knowledge_list.append(self.extra_knowledge.get('General_专业名词'))
 
         extra_knowledge = '\n'.join(extra_knowledge_list) if extra_knowledge_list else None
-        document_type, reason, entry_count = self.message_classifier.classify(content_str,
+        document_type, reason, entry_count, translated_content = self.message_classifier.classify(content_str,
                                                                               extra_knowledge=extra_knowledge)
 
-        return document_type, reason, entry_count
+        return document_type, reason, entry_count, translated_content
 
     def extract_key_information(self, document_loader, document_type, entry_count: int, extra_info: str):
         logger.info(f"->     Starts to extract key information from {document_type}.")
@@ -384,7 +384,7 @@ class ShipmentFlow:
             document_paths = self.collect_emails()
         for document_path in tqdm.tqdm(document_paths):
             document_loader = self.load_document(Path(document_path))
-            document_type, reason, entry_count = self.classify_document(document_loader)
+            document_type, reason, entry_count, translated_content = self.classify_document(document_loader)
             logger.success(
                 f"=>     Classify {document_path}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
             if '船舶数据' in document_path and document_type == 'ship_info':
@@ -713,7 +713,7 @@ class ShipmentFlow:
         # Classify
         if document_type:
             logger.info(f"Skip classification. Document type: {document_type}")
-            document_type, reason, entry_count = document_type, '', 1
+            document_type, reason, entry_count, translated_content = document_type, '', 1, ''
         else:
             try:
                 self.update_jobs(job_id=job_id,
@@ -721,14 +721,14 @@ class ShipmentFlow:
                                  source=receive_type,
                                  status='分类中',
                                  logs=f"开始邮件分类")
-                document_type, reason, entry_count = self.classify_document(document_loader)
+                document_type, reason, entry_count, translated_content = self.classify_document(document_loader)
                 logger.success(
-                    f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
+                    f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}, TRANSLATED_CONTENT: {translated_content}")
                 self.update_jobs(job_id=job_id,
                                  msg_body=content_str,
                                  source=receive_type,
                                  status='分类中',
-                                 logs=f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
+                                 logs=f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}, TRANSLATED_CONTENT: {translated_content}")
 
             except Exception as e:
                 document_type = None
@@ -756,7 +756,8 @@ class ShipmentFlow:
         extraction_res = self.extract_key_information(document_loader=document_loader,
                                                       document_type=document_type,
                                                       entry_count=entry_count,
-                                                      extra_info=reason)
+                                                      extra_info=reason+f'\nTranslated: {translated_content}')
+        content_str += f'\nTranslated: {translated_content}'
         output_res = {'extraction_res': extraction_res}
         if not extraction_res:
             self.update_jobs(job_id=job_id,
