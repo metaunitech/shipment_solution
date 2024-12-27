@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+import time
 
 import traceback
 from pathlib import Path
@@ -434,7 +435,8 @@ class ShipmentFlow:
             '消息主体': msg_body,
             '数据源': source,
             '状态': status,
-            'logs': logs if logs else ""
+            'logs': logs if logs else "",
+            '任务最近更新时间': int(time.time()*1000)
         }
         if records_ids and document_type:
             table_id = self.tables[document_type]
