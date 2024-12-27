@@ -422,7 +422,7 @@ class ShipmentFlow:
             logger.success(f"Added {job_id}")
             return
 
-    def update_jobs(self, job_id, msg_body, source, status, records_ids=None, logs=None, force_new=False):
+    def update_jobs(self, job_id, msg_body, source, status, records_ids=None, document_type=None, logs=None, force_new=False):
         n_records = {
             'id': job_id,
             '消息主体': msg_body,
@@ -430,8 +430,10 @@ class ShipmentFlow:
             '状态': status,
             'logs': logs if logs else ""
         }
-        if records_ids:
-            n_records['消息记录'] = '<hr>'.join(records_ids)
+        if records_ids and document_type:
+            table_id = self.tables[document_type]
+            record_link_list = [f"https://bitable.feishu.cn/app/{self.app_token}/table/{table_id}/record/{i}" for i in records_ids]
+            n_records['消息记录'] = '<hr>'.join(record_link_list)
         if not force_new:
             records, _ = self.feishu_spreadsheet_handler.get_records(self.app_token, self.tables['inputs_status'],
                                                                      view_id=self.views['inputs_status'], id=job_id)
@@ -793,6 +795,7 @@ class ShipmentFlow:
                                  msg_body=content_str,
                                  source=receive_type,
                                  records_ids = records_ids,
+                                 document_type=document_type,
                                  status='插入数据',
                                  logs=f"数据成功插入飞书表")
 
