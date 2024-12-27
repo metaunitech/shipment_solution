@@ -424,12 +424,6 @@ class ShipmentFlow:
             return
 
     def update_jobs(self, job_id, msg_body, source, status, records_ids=None, document_type=None, logs=None, force_new=False):
-        if source == 'chat_id':
-            source = '讨论组'
-        elif source == "Email_default":
-            source = 'CHARTERING@JAH-LINE.COM'
-        elif source == None:
-            source = '重跑'
         n_records = {
             'id': job_id,
             '消息主体': msg_body,
