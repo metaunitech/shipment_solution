@@ -37,12 +37,18 @@ cargo_info:
       - { 'BAHODOPI /TIANJIN': 'TIANJIN' }
     mandatory: 1
   最小货量-QUANTITY:
-    comments: 货量区间中较小的那个值。货量在文中一般是个区间，例如：4.000 / 5.000 dwcc。dwcc指的是Dead Weight Cargo Capacity，其中最小货量为4吨。也有可能是一个值例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最小货量为5000
+    comments: 返回最小的货量。货量在文中一般是个区间或者在货物名前面，例如：4.000 / 5.000 ，其中最小需要的货量为4吨；例如5000MT SEMI OCKE表示5000 Metric Ton的SEMI COKE，最小货量为5000
     type: float
+    examples:
+      - {'10,500 STEEL BILLET': '10500'}
+      - {'4.000 / 5.000 dwcc': '4'}
     mandatory: 1
   最大货量-QUANTITY:
-    comments: 货量区间中较大的那个值。货量在文中一般是个区间，例如：4.000 / 5.000 dwcc。dwcc指的是Dead Weight Cargo Capacity，其中最大货量为5吨.也有可能是一个值例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最大货量也为5000
+    comments: 返回最大的货量。货量在文中一般是个区间或者在货物名前面，例如：4.000 / 5.000，其中最大需要的货量为5吨；例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最大货量也为5000
     type: float
+    examples:
+      - { '10,500 STEEL BILLET': '10500' }
+      - { '4.000 / 5.000 dwcc': '5' }
   佣金-COMM:
     type: float
     comments: 只用返回百分比值，不用带百分号%
@@ -106,9 +112,9 @@ ship_info:
     type: str
     comments: 船舶资料里的如果体现GEARLESS 或G.LESS或GLESS, 则GEAR 值填 None. 如果仅说了YES，返回None，例如：“GEAR：YES”。如果原文类似：<CARGO GEAR： YES X 4 X 30 MT SWL> 返回 G4*30，以此类推。如果仅说了YES，返回None
     examples:
-      - { "GEARLESS": "None" }
-      - { "G.LESS或GLESS": "None" }
-      - { "CARGO GEAR：YES": "None" }
+      - { "GEARLESS": "NIL" }
+      - { "G.LESS或GLESS": "NIL" }
+      - { "CARGO GEAR：YES": "NIL" }
       - { "CARGO GEAR：YES X 4 X 30 MT SWL": "G4*30" }
   船舶英文名称-ENGLISH-NAME:
     type: str

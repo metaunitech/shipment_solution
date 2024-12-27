@@ -23,14 +23,14 @@ background:
   - 货盘前面后面或最后的公司名，或接在报货公司后面的公司名， 是指报货公司，如果一条信息里包含多个货盘，则每个货盘的报货公司都取一样的
   - 货物名称里一般都是字母，不会有数字
   - 货量里如果有22000/25000或22000-25000，表示最少货量是22000，最多货量是25000
-
+  - dwcc指的是Dead Weight Cargo Capacity
 keys:
   - 货物名称-CARGO-NAME:
       - 返回需要运输的货物名称, 保留原名，不要翻译，例如ilmenite sand in ows option货物名称为ilmenite sand
   - 最小货量-QUANTITY:
-      - 返回最小的货量。货量在文中一般是个区间或者在货物名前面，例如：4.000 / 5.000 ，其中最小需要的货量为4吨；例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最小货量为5000
+      - 返回最小的货量。货量在文中一般是个区间或者在货物名前面，例如：4.000 / 5.000 dwcc，其中最小需要的货量为4吨。也有可能是一个值例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最小货量为5000
   - 最大货量-QUANTITY:
-      - 返回最大的货量。货量在文中一般是个区间或者在货物名前面，例如：4.000 / 5.000，其中最大需要的货量为5吨；例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最大货量也为5000
+      - 返回最大的货量。货量在文中一般是个区间或者在货物名前面，例如：4.000 / 5.000 dwcc，其中最大需要的货量为5吨.也有可能是一个值例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最大货量也为5000
   - 积载包装-SF-PACKAGE:
       - 货盘里出现BULK,BLK,IN BULK 都是表示货物包装是BULK; 货盘BAG,BAGS,IN BAGS,IN BAG,都是表示货物包装是BAG
   - 装货港口-L-PORT:
