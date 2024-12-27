@@ -1,4 +1,5 @@
 import json
+import time
 import traceback
 
 from flask import Flask, request, jsonify
@@ -148,6 +149,26 @@ def rerun():
         res = SHIPMENT_FLOW_INS.unit_flow(document_path=None,
                                           content=data.get("content"),
                                           task_id=data.get('task_id'),
+                                          skip_success=False)
+        if res:
+            return jsonify(res), 200
+    return jsonify({"STATUS": "NO RESULT"}), 200
+
+
+@app.route('/api/single_rerun', methods=['POST'])
+def single_rerun():
+    # 从 Form Data 获取数据
+    data = request.form.to_dict()  # 转为 Python 字典
+    # 打印接收到的数据
+    logger.info(f"Received Form Data: {data}")
+    if data.get('content'):
+        ship_id = data.get('ship_id')
+        document_type = data.get("document_type")
+        task_id = f"{document_type}_single_rerun_{ship_id}_{int(time.time() * 1000)}"
+        res = SHIPMENT_FLOW_INS.unit_flow(document_path=None,
+                                          content=data.get("content"),
+                                          task_id=task_id,
+                                          document_type=document_type,
                                           skip_success=False)
         if res:
             return jsonify(res), 200

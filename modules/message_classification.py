@@ -73,6 +73,10 @@ class MessageClassifier:
         entry_count = answer_instance.entry_count
         reason = answer_instance.reason
         logger.success(f'Content type: {document_type}. Entry count: {entry_count} Reason: {reason}')
+        # RULES:
+        if 'CQD' in content and document_type != 'CQD':
+            document_type = 'cargo_info'
+            reason = 'CQD 是货盘邮件的标志，force to 货盘邮件'
         return document_type, reason, entry_count
 
 

@@ -18,10 +18,10 @@ API_TOKEN = 'a9d2815b090f143cdac247d7600a127f.WSDK8WqwJzZtCmBK'
 
 class Date(BaseModel):
     formatted_date: datetime.datetime = Field(
-        description='格式化的python Datetime 输出。'
+        description='<年>-<月>-<日>格式的日期输出，例如2022-10-01。'
     )
     reason: str = Field(
-        description='格式化的原因'
+        description='修改格式的原因'
     )
 
 
@@ -58,14 +58,14 @@ class KIValidation:
 
         format_instruction = parser.get_format_instructions()
         prompt = (
-            f'#TASK: 我需要你帮我把我的输入变成一个日期，格式为%Y-%m-%d. 如果输入没有年份，默认今天的年份。\n'
+            f'# TASK: \n我需要你帮我把我的类似日期的字符串输入变成一个日期，格式为%Y-%m-%d. 如果输入没有年份，默认今天的年份。\n'
+            f"注：今天是{datetime.datetime.now().strftime('%YY-%MM-%DD')}，"
             f'{comments if comments else ""}\n'
-            "EXAMPLES:\n"
+            "# EXAMPLES:\n"
             "以下是例子，以JSON的格式给你，其中key是输入，输出是对应的value.\n"
             f"{json.dumps(examples, indent=2, ensure_ascii=False) if examples else ''}\n"
             f"# INPUT:\n"
             f"输入：{input}\n"
-            f"注：今天是{datetime.datetime.now().strftime('%YY-%MM-%DD')}，"
             f"YOUR ANSWER:\n"
             f"请按照如下格式要求返回我**日期结果**JSON\n"
             f"{format_instruction}\n"

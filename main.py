@@ -422,7 +422,7 @@ class ShipmentFlow:
             logger.success(f"Added {job_id}")
             return
 
-    def update_jobs(self, job_id, msg_body, source, status, logs=None, force_new=False):
+    def update_jobs(self, job_id, msg_body, source, status, records_ids=None, logs=None, force_new=False):
         n_records = {
             'id': job_id,
             '消息主体': msg_body,
@@ -430,6 +430,8 @@ class ShipmentFlow:
             '状态': status,
             'logs': logs if logs else ""
         }
+        if records_ids:
+            n_records['消息记录'] = '<hr>'.join(records_ids)
         if not force_new:
             records, _ = self.feishu_spreadsheet_handler.get_records(self.app_token, self.tables['inputs_status'],
                                                                      view_id=self.views['inputs_status'], id=job_id)
@@ -511,9 +513,9 @@ class ShipmentFlow:
                 for k in cur_res:
                     cur_res[k] = str(cur_res[k])
                 data_to_insert.append(cur_res)
-            self.feishu_spreadsheet_handler.add_records(app_token=self.app_token,
-                                                        table_id=self.tables['ship_info'],
-                                                        records=data_to_insert)
+            records_ids = self.feishu_spreadsheet_handler.add_records(app_token=self.app_token,
+                                                                      table_id=self.tables['ship_info'],
+                                                                      records=data_to_insert)
         elif document_type == 'cargo_info':
             data_to_insert = []
             for data in extraction_res:
@@ -530,13 +532,14 @@ class ShipmentFlow:
                 for k in cur_res:
                     cur_res[k] = str(cur_res[k])
                 data_to_insert.append(cur_res)
-            self.feishu_spreadsheet_handler.add_records(app_token=self.app_token,
-                                                        table_id=self.tables['cargo_info'],
-                                                        records=data_to_insert)
+            records_ids = self.feishu_spreadsheet_handler.add_records(app_token=self.app_token,
+                                                                      table_id=self.tables['cargo_info'],
+                                                                      records=data_to_insert)
         else:
             return
 
-        logger.success(f"Inserted for {document_path}")
+        logger.success(f"Inserted for {document_path}. Records_ids: {records_ids}")
+        return records_ids
 
     def insert_data_to_bx(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
                           raw_text=None):
@@ -634,7 +637,7 @@ class ShipmentFlow:
                                'YJBL': data.get('佣金-COMM'),
                                'BPCompany': data.get('报盘公司-COMPANY'),
                                'CarrierPrice': data.get('运费单价-FRT-RATE', 0),
-                               'Remark_DZ': raw_text}
+                               'Remark_DZ': data.get('备注-REMARK')}
                     for keyname in ['YJBL', 'WeightHT2', 'WeightHT4', 'CarrierPrice']:
                         try:
                             payload[keyname] = float(payload[keyname])
@@ -682,7 +685,7 @@ class ShipmentFlow:
         return to_html_table(json_data)
 
     def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, receive_type=None,
-                  task_id=None, debug=False, skip_success=True):
+                  task_id=None, debug=False, skip_success=True, document_type=None):
         logger.info(f"Current receive_type: {receive_type} receive_id: {receive_id}")
         logger.error(f'{receive_id} {receive_type}')
         document_loader = self.load_document(document_path=Path(document_path) if document_path else None,
@@ -696,34 +699,43 @@ class ShipmentFlow:
             if skip_success and existing_job['fields']['状态'] == '成功':
                 logger.error(f"Job exists and success. Skipped")
                 return
-
-
         # Classify
-        try:
-            self.update_jobs(job_id=job_id,
-                             msg_body=content_str,
-                             source=receive_type,
-                             status='分类中',
-                             logs=f"开始邮件分类")
-            document_type, reason, entry_count = self.classify_document(document_loader)
-            logger.success(
-                f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
-            self.update_jobs(job_id=job_id,
-                             msg_body=content_str,
-                             source=receive_type,
-                             status='分类中',
-                             logs=f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
+        if document_type:
+            logger.info(f"Skip classification. Document type: {document_type}")
+            document_type, reason, entry_count = document_type, '', 1
+        else:
+            try:
+                self.update_jobs(job_id=job_id,
+                                 msg_body=content_str,
+                                 source=receive_type,
+                                 status='分类中',
+                                 logs=f"开始邮件分类")
+                document_type, reason, entry_count = self.classify_document(document_loader)
+                logger.success(
+                    f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
+                self.update_jobs(job_id=job_id,
+                                 msg_body=content_str,
+                                 source=receive_type,
+                                 status='分类中',
+                                 logs=f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}")
 
-        except Exception as e:
-            logger.error(traceback.format_exc())
-            self.update_jobs(job_id=job_id,
-                             msg_body=content_str,
-                             source=receive_type,
-                             status='异常',
-                             logs=traceback.format_exc())
-
-
+            except Exception as e:
+                document_type = None
+                logger.error(traceback.format_exc())
+                self.update_jobs(job_id=job_id,
+                                 msg_body=content_str,
+                                 source=receive_type,
+                                 status='异常',
+                                 logs=traceback.format_exc())
+                return
         # Extraction
+        if document_type == 'others':
+            self.update_jobs(job_id=job_id,
+                             msg_body=content_str,
+                             source=receive_type,
+                             status='成功',
+                             logs=f"不属于船盘/货盘邮件")
+            return
         self.update_jobs(job_id=job_id,
                          msg_body=content_str,
                          source=receive_type,
@@ -759,7 +771,6 @@ class ShipmentFlow:
                          status='结果校验中',
                          logs=f"=>     结果校验成功：{extraction_res}")
 
-
         # INSERTION
         if not debug:
             try:
@@ -769,13 +780,14 @@ class ShipmentFlow:
                                  status='插入数据',
                                  logs=f"开始插入数据")
                 total, content = self.get_data_loader_context(document_loader)
-                self.insert_data_to_spreadsheet(Path(document_path) if document_path else None,
-                                                document_type,
-                                                extraction_res,
-                                                raw_text='\n'.join(content))
+                records_ids = self.insert_data_to_spreadsheet(Path(document_path) if document_path else None,
+                                                              document_type,
+                                                              extraction_res,
+                                                              raw_text='\n'.join(content))
                 self.update_jobs(job_id=job_id,
                                  msg_body=content_str,
                                  source=receive_type,
+                                 records_ids = records_ids,
                                  status='插入数据',
                                  logs=f"数据成功插入飞书表")
 
@@ -790,14 +802,13 @@ class ShipmentFlow:
 
                 return
         else:
-
             logger.success(json.dumps(extraction_res, indent=4, ensure_ascii=False))
         self.update_jobs(job_id=job_id,
                          msg_body=content_str,
                          source=receive_type,
                          status='成功',
                          logs=json.dumps(extraction_res, indent=2, ensure_ascii=False))
-        return extraction_res
+        return extraction_res, records_ids
 
     def main(self, document_paths=None):
         if not document_paths:

@@ -85,6 +85,7 @@ class FeishuSpreadsheetHandler(FeishuApp):
 
         # 处理业务结果
         lark.logger.info(lark.JSON.marshal(response.data, indent=4))
+        return [i['record_id'] for i in json.loads(lark.JSON.marshal(response.data, indent=4)).get('records')]
 
     def unit_get_records(self, app_token, table_id, view_id, page_token=None, page_size=20, show_fields=None, **kwargs):
         client = lark.Client.builder() \
@@ -151,7 +152,8 @@ class FeishuSpreadsheetHandler(FeishuApp):
         page_token = None
         total = -1
         while 1:
-            res = self.unit_get_records(app_token, table_id, view_id, page_token=page_token,show_fields=show_fields, **kwargs)
+            res = self.unit_get_records(app_token, table_id, view_id, page_token=page_token, show_fields=show_fields,
+                                        **kwargs)
             items = res.get("items", [])
             final_res.extend(items)
             total = res.get('total', total)
