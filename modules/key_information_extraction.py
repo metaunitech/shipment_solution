@@ -346,6 +346,7 @@ YOUR ANSWER:
         text_lines = kwargs.get("text_lines") if not args else args[1]
 
         extra_knowledge = kwargs.get('extra_knowledge', None)
+        logger.info(f"Starts to use extra_knowledge: {extra_knowledge}")
         if extra_knowledge:
             background_infos.append(extra_knowledge)
         modified_outputs, modified_conflicts = self.extract(

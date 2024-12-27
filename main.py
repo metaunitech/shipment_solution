@@ -746,6 +746,7 @@ class ShipmentFlow:
         self.update_jobs(job_id=job_id,
                          msg_body=content_str,
                          source=receive_type,
+                         document_type=document_type,
                          status='提取中',
                          logs=f"开始邮件信息提取")
         extraction_res = self.extract_key_information(document_loader=document_loader,

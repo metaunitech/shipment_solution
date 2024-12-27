@@ -58,18 +58,19 @@ class KIValidation:
 
         format_instruction = parser.get_format_instructions()
         prompt = (
-            f'# TASK: \n我需要你帮我把我的类似日期的字符串输入变成一个日期，格式为%Y-%m-%d. 如果输入没有年份，默认今天的年份。\n'
+            f'# TASK: \n我需要你帮我把我的类似日期的字符串输入变成一个格式化的日期字符串，格式为%Y-%m-%d. 如果输入没有年份，默认今天的年份。根据FORMAT_SCHEMA返回我JSON格式的结果\n'
             f"注：今天是{datetime.datetime.now().strftime('%YY-%MM-%DD')}，"
             f'{comments if comments else ""}\n'
+            f'# FORMAT_SCHEMA:\n'
+            f"{format_instruction}\n"
             "# EXAMPLES:\n"
-            "以下是例子，以JSON的格式给你，其中key是输入，输出是对应的value.\n"
+            "以下是例子，其中key是输入，输出是对应的value.\n"
             f"{json.dumps(examples, indent=2, ensure_ascii=False) if examples else ''}\n"
             f"# INPUT:\n"
             f"输入：{input}\n"
             f"YOUR ANSWER:\n"
-            f"请按照如下格式要求返回我**日期结果**JSON\n"
-            f"{format_instruction}\n"
             f"TS:{str(time.time() * 1000)}")
+        logger.debug(prompt)
         res_raw = llm_ins.invoke(prompt)
         res_content = res_raw.content
         logger.debug(res_content)
@@ -112,6 +113,7 @@ class KIValidation:
     @retry(stop_max_attempt_number=3, wait_fixed=2000)
     def unit_bulk_validate(self, document_type, res, content=None, mutual_content=None, current_missing=None, note=None,
                            extra_knowledge=None):
+        logger.info(f"Starts to use extra_knowledge: {extra_knowledge}")
         current_missing = [] if current_missing is None else current_missing
         llm_ins = self.create_llm_instance()
         parser = PydanticOutputParser(pydantic_object=RefinedDict)
@@ -222,7 +224,7 @@ class KIValidation:
             refined_dict = res
             for i in range(5):
                 refined_dict, note = self.unit_bulk_validate(document_type, refined_dict, current_missing=missing_keys,
-                                                             content=body, mutual_content=mutual_body, note=note)
+                                                             content=body, mutual_content=mutual_body, note=note, extra_knowledge=extra_knowledge)
                 missing_keys = self.check_if_mandatory_fit(document_type, refined_dict)
 
                 if not missing_keys:
