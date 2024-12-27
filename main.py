@@ -686,6 +686,7 @@ class ShipmentFlow:
 
     def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, receive_type=None,
                   task_id=None, debug=False, skip_success=True, document_type=None):
+        output_res = None
         logger.info(f"Current receive_type: {receive_type} receive_id: {receive_id}")
         logger.error(f'{receive_id} {receive_type}')
         document_loader = self.load_document(document_path=Path(document_path) if document_path else None,
@@ -698,7 +699,7 @@ class ShipmentFlow:
         if existing_job:
             if skip_success and existing_job['fields']['状态'] == '成功':
                 logger.error(f"Job exists and success. Skipped")
-                return
+                return output_res
         # Classify
         if document_type:
             logger.info(f"Skip classification. Document type: {document_type}")
@@ -727,7 +728,7 @@ class ShipmentFlow:
                                  source=receive_type,
                                  status='异常',
                                  logs=traceback.format_exc())
-                return
+                return output_res
         # Extraction
         if document_type == 'others':
             self.update_jobs(job_id=job_id,
@@ -735,7 +736,7 @@ class ShipmentFlow:
                              source=receive_type,
                              status='成功',
                              logs=f"不属于船盘/货盘邮件")
-            return
+            return output_res
         self.update_jobs(job_id=job_id,
                          msg_body=content_str,
                          source=receive_type,
@@ -745,6 +746,7 @@ class ShipmentFlow:
                                                       document_type=document_type,
                                                       entry_count=entry_count,
                                                       extra_info=reason)
+        output_res = {'extraction_res': extraction_res}
         if not extraction_res:
             self.update_jobs(job_id=job_id,
                              msg_body=content_str,
@@ -765,6 +767,7 @@ class ShipmentFlow:
                          status='结果校验中',
                          logs=f"开始校验结果")
         extraction_res = self.validate_key_information(document_type, extraction_res)
+        output_res = {'extraction_res': extraction_res}
         self.update_jobs(job_id=job_id,
                          msg_body=content_str,
                          source=receive_type,
@@ -784,6 +787,8 @@ class ShipmentFlow:
                                                               document_type,
                                                               extraction_res,
                                                               raw_text='\n'.join(content))
+                output_res = {'extraction_res': extraction_res,
+                              'records_ids': records_ids}
                 self.update_jobs(job_id=job_id,
                                  msg_body=content_str,
                                  source=receive_type,
@@ -808,7 +813,7 @@ class ShipmentFlow:
                          source=receive_type,
                          status='成功',
                          logs=json.dumps(extraction_res, indent=2, ensure_ascii=False))
-        return extraction_res, records_ids
+        return output_res
 
     def main(self, document_paths=None):
         if not document_paths:
