@@ -1,8 +1,9 @@
 # encoding=utf-8
 # SHIPMENTFLOW
 from main import ShipmentFlow
-ins = ShipmentFlow(r'W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\feishu_config.yaml')
-ins.unit_flow(content="""YONG DING HE 22K BLT 2008 OPEN KEMAMAN SPOT""",receive_id='test001', receive_type='email',debug=False)
+ins = ShipmentFlow(r'configs/feishu_config.yaml')
+ins.feishu_spreadsheet_handler.batch_get_records(ins.app_token, ins.tables['ship_info'], ['recuy9qvJMDa5O'])
+# ins.unit_flow(content="""YONG DING HE 22K BLT 2008 OPEN KEMAMAN SPOT""",receive_id='test001', receive_type='email',debug=False)
 # ins.update_jobs('demo', 'dd', 'dd', status='结果校验中')
 #####
 # ins.debug_data_insert(data=[{"货物名称-CARGO-NAME": "hot rolled coils", "最大货量-QUANTITY": "2200.0", "装货港口-L-PORT": "SON DUONG, VIETNAM", "卸货港口-L-PORT": "BELAWAN, INDONESIA", "装运开始日期-LAY-DATE": "2024-09-01", "佣金-COMM": "2.5", "运费单价-FRT-RATE": "80000.0", "原文依据": "need named vsl to fix\n\n—freight $ 80k\n—2,200mt hot rolled coils, 10pct molco\n—son duong, vietnam / belawan, indonesa\n—laycan:ppt onwards\n—invite bst fio or filo\n—cqd term\n—com 2.5\n\n\n\n—freight $ 20 pmt\n—5,000mt bulk clay\n—p.kelang / taipei, taiwan\n—dec 15-20 try vsl date\n—invite bst fio\n—com 2.5", "source_name": "PureText"}])
