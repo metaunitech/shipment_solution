@@ -439,7 +439,7 @@ class ShipmentFlow:
                                                                                record_ids=records_ids)
             urls = [i['shared_url'] for i in record_results['records']]
             n_records['目标记录：record ID'] = '\n'.join(records_ids)
-            n_records['消息记录'] = '<hr>'.join(urls)
+            n_records['结果链接'] = '<hr>'.join(urls)
         if document_type:
             n_records['内容分类'] = document_type
         if not force_new:
