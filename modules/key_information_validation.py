@@ -18,7 +18,7 @@ API_TOKEN = 'a9d2815b090f143cdac247d7600a127f.WSDK8WqwJzZtCmBK'
 
 class Date(BaseModel):
     formatted_date: datetime.datetime = Field(
-        description='<年>-<月>-<日>格式的日期输出，例如2022-10-01。'
+        description='格式化的日期'
     )
     reason: str = Field(
         description='修改格式的原因'
