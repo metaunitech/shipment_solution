@@ -162,9 +162,9 @@ def single_rerun():
     # 打印接收到的数据
     logger.info(f"Received Form Data: {data}")
     if data.get('content'):
-        ship_id = data.get('ship_id')
+        _id = data.get('id')
         document_type = data.get("document_type")
-        task_id = f"{document_type}_single_rerun_{ship_id}_{int(time.time() * 1000)}"
+        task_id = f"{document_type}_single_rerun_{_id}_{int(time.time() * 1000)}"
         res = SHIPMENT_FLOW_INS.unit_flow(document_path=None,
                                           content=data.get("content"),
                                           task_id=task_id,
