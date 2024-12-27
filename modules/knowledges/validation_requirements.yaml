@@ -22,10 +22,10 @@ cargo_info:
     type: str
     comments: 返回港口大写英文,通常在如下格式中是左边那个：<装货港口缩写>/(-)<卸货港口缩写>。
     examples:
-      - {'DANGJIN/OSAKA': "DANGJIN"}
-      - {"son duong, vietnam / belawan, indonesa": "SON DUONG, VIETNAM"}
-      - {" -L/D PORT :1SBP JOSSINGFJORD, NORWAY/ 1SBP ZHENJIANG OR YIZHENG OR HUANGHUA,CHINA": "JOSSINGFJORD, NORWAY"}
-      - {'BAHODOPI /TIANJIN': 'BAHODOPI'}
+      - { 'DANGJIN/OSAKA': "DANGJIN" }
+      - { "son duong, vietnam / belawan, indonesa": "SON DUONG, VIETNAM" }
+      - { " -L/D PORT :1SBP JOSSINGFJORD, NORWAY/ 1SBP ZHENJIANG OR YIZHENG OR HUANGHUA,CHINA": "JOSSINGFJORD, NORWAY" }
+      - { 'BAHODOPI /TIANJIN': 'BAHODOPI' }
     mandatory: 1
   卸货港口-D-PORT:
     type: str
@@ -33,8 +33,8 @@ cargo_info:
     examples:
       - { 'DANGJIN/OSAKA': "OSAKA" }
       - { "son duong, vietnam / belawan, indonesa": "BELAWAN, INDONESA" }
-      - {" -L/D PORT :1SBP JOSSINGFJORD, NORWAY/ 1SBP ZHENJIANG OR YIZHENG OR HUANGHUA,CHINA": "ZHENJIANG OR YIZHENG OR HUANGHUA,CHINA"}
-      - {'BAHODOPI /TIANJIN': 'TIANJIN'}
+      - { " -L/D PORT :1SBP JOSSINGFJORD, NORWAY/ 1SBP ZHENJIANG OR YIZHENG OR HUANGHUA,CHINA": "ZHENJIANG OR YIZHENG OR HUANGHUA,CHINA" }
+      - { 'BAHODOPI /TIANJIN': 'TIANJIN' }
     mandatory: 1
   最小货量-QUANTITY:
     comments: 货量区间中较小的那个值。货量在文中一般是个区间，例如：4.000 / 5.000 dwcc。dwcc指的是Dead Weight Cargo Capacity，其中最小货量为4吨。也有可能是一个值例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最小货量为5000
@@ -53,19 +53,19 @@ cargo_info:
     type: str
     comments: 必须提取到值.装卸率(DIS RATE)里若有/或-隔开的,/-前面的表示装率，后面的表示卸率.如果看到CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD. 如果文中出现xxx MT /CQD,左边的xxx是装率，右边的是卸率
     examples:
-      - {"DIS RATE 1 000 MT PWWD SHINC/CQD": 'CQD'}
-      - {"CQD BENDS": "CQD"}
-      - {"Load and Discharge rate: 8,000 / 5,000 MT PWWD SHEX UU": "5,000 MT PWWD SHEX UU"}
-      - {"L/D RATE:7,000 SSHEX UU/7,000MT SHINC": "7,000MT SHINC"}
+      - { "DIS RATE 1 000 MT PWWD SHINC/CQD": 'CQD' }
+      - { "CQD BENDS": "CQD" }
+      - { "Load and Discharge rate: 8,000 / 5,000 MT PWWD SHEX UU": "5,000 MT PWWD SHEX UU" }
+      - { "L/D RATE:7,000 SSHEX UU/7,000MT SHINC": "7,000MT SHINC" }
     mandatory: 1
   装率-L-RATE:
     type: str
     comments: 必须提取到值.装卸率(DIS RATE)里若有/或-隔开的,/-前面的表示装率，后面的表示卸率.如果看到CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD. 如果文中出现xxx MT /CQD,左边的xxx是装率，右边的是卸率
     examples:
-      - {"DIS RATE 1 000 MT PWWD SHINC/CQD": '1 000 MT PWWD SHINC'}
-      - {"CQD BENDS": "CQD" }
-      - {"Load and Discharge rate: 8,000 / 5,000 MT PWWD SHEX UU": "8,000 MT PWWD SHEX UU"}
-      - {"L/D RATE:7,000 SSHEX UU/7,000MT SHINC": "7,000 SSHEX UU"}
+      - { "DIS RATE 1 000 MT PWWD SHINC/CQD": '1 000 MT PWWD SHINC' }
+      - { "CQD BENDS": "CQD" }
+      - { "Load and Discharge rate: 8,000 / 5,000 MT PWWD SHEX UU": "8,000 MT PWWD SHEX UU" }
+      - { "L/D RATE:7,000 SSHEX UU/7,000MT SHINC": "7,000 SSHEX UU" }
     mandatory: 1
 
 ship_info:
@@ -74,7 +74,7 @@ ship_info:
     function: validate_date
     comments: 船只空闲的日期，在船舶邮件里肯定存在, 必须要提取出来,如果是None则改为今天的日期。是一个日期，表示船只空闲可供租赁的日期，是一个时间区间的最开始（如果最开始比今天早，就取今天）或者具体的日期, 船盘如果写PPT，而默认空船日期是当天。 如果空船日期是一段时间的 如19-22JAN, 则空船日期取最前面的日期1-19; OPEN KANMON-BUSAN RANGE 2TH ／OCT的空船日期是10-02. 注意：如果日期没有提到年份，结合当前时间推算年份。船盘空船日期 EAR JAN,EAR FEB, 如果今天是2025-12-20则空船日期为2025-1-1,2025-2-1以此类推，因为2024-1-1已经过去了，所以是2025年.
     examples:
-      - {"19-22JAN (假如今天是2024-12-20)": "2025-1-19"}
+      - { "19-22JAN (假如今天是2024-12-20)": "2025-1-19" }
     mandatory: 1
   载货吨-DWCC:
     type: float
@@ -100,16 +100,16 @@ ship_info:
     type: str
     comments: 船舶资料只写了YES就返回None，例如：“GRABS：YES”。如果船舶资料中有类似：GRAB:2*8CBM,2*12CBM，输出2*12+2*12；如果是GRAB4*8,输出4*8,一般GRAB在4个以下
     examples:
-      - {"GRABS：YES": "None"}
-      - {"GRAB:2*8CBM,2*12CBM": "2*12+2*12"}
+      - { "GRABS：YES": "None" }
+      - { "GRAB:2*8CBM,2*12CBM": "2*12+2*12" }
   吊机-GEAR:
     type: str
     comments: 船舶资料里的如果体现GEARLESS 或G.LESS或GLESS, 则GEAR 值填 None. 如果仅说了YES，返回None，例如：“GEAR：YES”。如果原文类似：<CARGO GEAR： YES X 4 X 30 MT SWL> 返回 G4*30，以此类推。如果仅说了YES，返回None
     examples:
-      - {"GEARLESS": "None"}
-      - {"G.LESS或GLESS": "None"}
-      - {"CARGO GEAR：YES": "None"}
-      - {"CARGO GEAR：YES X 4 X 30 MT SWL": "G4*30"}
+      - { "GEARLESS": "None" }
+      - { "G.LESS或GLESS": "None" }
+      - { "CARGO GEAR：YES": "None" }
+      - { "CARGO GEAR：YES X 4 X 30 MT SWL": "G4*30" }
   船舶英文名称-ENGLISH-NAME:
     type: str
     comment: 必须提取到值,通常在每个片段的开头。通常以MV/MV./M/V开头，或者其他部分是船的参数而有一个很像名字的词语，返回结果中把MV/MV./M/V省略，只输出后面的船名。
@@ -119,15 +119,23 @@ ship_info:
     comment: 必须提取到值, 返回大写的港口名字，通常船盘文档中出现的港口就是空船港口。
     mandatory: 1
     examples:
-      - {'MV HAPPY TRADER DWCC 27,200MTS ==== SHUAIBA 23 DEC': 'SHUAIBA'}
+      - { 'MV HAPPY TRADER DWCC 27,200MTS ==== SHUAIBA 23 DEC': 'SHUAIBA' }
 
   散装舱容-GRAIN-CAPACITY:
     type: float
     comment: 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B <散装舱容>/<包装舱容>cbm.G表示散装舱容,返回/左边的数字。CBM是单位表示立方，不用输出单位
     examples:
-      - {'Capacity G/B 18390/17526cbm': '18390'}
+      - { 'Capacity G/B 18390/17526cbm': '18390' }
   包装舱容-BALE-CAPACITY:
     type: float
     comment: 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B <散装舱容>/<包装舱容>cbm.B表示包装舱容,返回/右边的数字。CBM是单位表示立方，不用输出单位
     examples:
       - { 'Capacity G/B 18390/17526cbm': '17526' }
+  甲板数-DECK:
+    type: str
+    comment: 从如下几个选项里选：[NIL, SD, TD, TRD]船舶资料上若体现SINGLE DECK或SD,DECCK返回”SD“; 资料上若显示TWEEN DECK 或TD或双甲板,DECK，返回”TD“; 若资料上显示 TRIPLE DECT或TRD或三甲板，DECK 返回”TRD“
+    examples:
+      - {'SINGLE DECK': 'SD'}
+      - {'SD,DECCK': 'SD'}
+      - {'TWEEN DECK 或TD或双甲板': 'TD'}
+      - {' TRIPLE DECT或TRD或三甲板': 'TRD'}

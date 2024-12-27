@@ -172,13 +172,15 @@ class KIValidation:
                 if j not in refined_dict:
                     logger.error(f"{j} value {res[j]} need to be added. It is not in res.")
                     refined_dict[j] = res[j]
-
+            # RULES:
+            rate_string = str(content) + ';' + str(mutual_content)
             if document_type == 'ship_info':
                 if not refined_dict.get('载重吨-DWT'):
                     refined_dict['载重吨-DWT'] = refined_dict.get('载货吨-DWCC')
+                if 'SINGLE DECK' in rate_string:
+                    refined_dict['甲板数-DECK'] = 'SD'
 
             if document_type == "cargo_info":
-                rate_string = str(content) + ';' + str(mutual_content)
                 l_rate, d_rate = self.parse_rates(rate_string=rate_string)
                 logger.info(f"LDRATE: {l_rate} {d_rate}")
                 if l_rate:
