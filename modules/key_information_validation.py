@@ -188,7 +188,7 @@ class KIValidation:
             note = ''
             for k in ['装运开始日期-LAY-DATE', '装运结束日期-CANCELING-DATE', '空船日期-OPEN-DATE']:
                 if k in refined_dict.keys() and datetime.datetime.strptime(refined_dict[k],
-                                                                           "%Y-%m-%d") < datetime.datetime.now():
+                                                                           "%Y-%m-%d")+datetime.timedelta(days=1) < datetime.datetime.now():
                     refined_dict[k] = None
                     note += f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}"
                     logger.error(f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}")
