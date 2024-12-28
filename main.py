@@ -356,7 +356,7 @@ class ShipmentFlow:
         return outs
 
     @retry(stop_max_attempt_number=2, wait_fixed=2000)
-    def validate_key_information(self, document_type, extraction_res, content):
+    def validate_key_information(self, document_type, extraction_res):
         logger.info("Starts to Validate results.")
         extra_knowledge_list = []
         if document_type == 'others':
