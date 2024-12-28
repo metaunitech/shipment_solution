@@ -80,7 +80,7 @@ class MessageClassifier:
         logger.success(f'Content type: {document_type}. Entry count: {entry_count} Reason: {reason}. Translated: {translated_content}')
         # RULES:
         cargo_keywords = ['CQD']
-        ship_keywords = ['']
+        ship_keywords = []
         if any([i in content for i in cargo_keywords]) and document_type != 'cargo_info':
             document_type = 'cargo_info'
             reason = 'force to 货盘邮件'
