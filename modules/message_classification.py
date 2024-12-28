@@ -19,7 +19,7 @@ class DocumentType(BaseModel):
         description="若document_type是船盘，返回当前邮件中可供出租的船的数量，一般出现新的船名就是一个可供出租的船舶；若document_type是货盘，返回邮件中需要租赁的需求数量，一般出现一个新的商品就是一个需要租赁的需求；若是其他邮件返回0"
     )
     reason: str = Field(
-        description='将这段邮件中的缩写翻译成中文可以理解的形式，并结合总结做出消息分类的原因。'
+        description='做出消息分类的原因。'
     )
     translated_content: str = Field(
         description='根据船舶相关基础知识和提供的Knowledge精简地总结消息中缩写/参数提供的信息，合并同一条货盘（同样的货物）/船盘（同样的船名），但不要漏掉任何一个参数。'
