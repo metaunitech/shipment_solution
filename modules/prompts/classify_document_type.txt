@@ -4,7 +4,7 @@
 # Task:
 我会给你一封邮件的存储地址，标题，内容，你需要帮我判断该邮件属于船舶邮件（ship_info），货盘邮件（cargo_info）还是其他类型邮件（others）。
 请根据下面我对这三种邮件给出的定义（definitions）、给你提供的例子（examples）结合行业知识(Knowledge)进行判断。
-把你的判断结果和中文判断理由,根据output_schema 的要求的JSON格式返回给我。
+把你的判断结果、中文判断理由、根据知识翻译的原文,根据OUTPUT SCHEMA 的要求的JSON格式返回一个字典给我，里面包含：document_type, entry_count, reason, translated_content。
 
 # Definitions
 船舶邮件（ship_info）:邮件的大致内容是自己的船舶有空闲时间，可以提供租赁。内容中通常有提供可以被租赁的船舶（>=1艘船）的信息。信息包括：船名，船的出发港，船的配置等。通常出现一个不同的船舶的空船港口或空船时间即为一个不同的船舶。一般每段船舶信息的开头是以船只名称开始。
@@ -15,6 +15,7 @@
 - **日期处理**
   - EAR SEP 默认录入9.1号，END SEP 默认9.20，MID SEP 默认9.15。
   - 对于区间时间如“18-25TH SEP”，只录最前面的日期，例如9.18。
+  - MV.HOA BINH 54 -----OPEN PHIL 10-15TH FEB表示该船舶空船日期是2月10日
   - 如果没有写年份，需与当前月份对比判断。如现在是2024年12月，资料上显示“1-1”，则OPEN DATE为2025-1-1。
 
 - **百分比和比率**
@@ -34,12 +35,16 @@
   - “5000MT SEMI COKE”表示5000公吨的SEMI COKE。
   - “DWT,DWCC,GRT,NRT”等如果出现类似“32,225”或“32.225”，则取值为32225。
   - “DWT 11,200 MT ON 7.0M”，其中7.0指的是吃水为7米。
-  - “L/B/D 116.99/19.6/14”分别表示船长、船宽和型深。
+  - “L/B/D 116.99/19.6/14”分别表示船长116.99、船宽19.6和型深14。
+  - ”3HO/3HA"表示3个舱位（HOLD） 3个舱口（HATCH）
+  - Hold表示舱位，Hatch表示舱位
+  - Hatch: 1/2/3/4 表示有4个Hatch。 Hold的表达方式也类似。提到了Hold或Hatch一定要在重点里表现出数量。
 
 - **船舶参数**
   - “DEPTH MOULDED”表示船深。
   - “SUMMER SALT WATER”表达夏季海水，“DWT / DRAFT SUMMER SALT WATER 58,761 MT / 12.828 M”中前一个表示DWT，后一个表示夏季海水吃水。
   - “SWL 表示安全工作负荷（Safe Working Load）。例如：“4 x 30 MT SWL”表示船舶配备了4台起重机，每台的安全工作负荷为30吨。
+  - 船舶的TYPE 有GENERAL ,看到是GENERAL CARGO VSL, GENERAL都可以取值为GENERAL, 船舶的TYPE 有BULK ,看到是BULK VSL, BULK CARRIER都可以取值为BULK, 船舶的TYPE 有WOOD ,看到是WOOD VSL, WOOD CHIP, WOOD-CHIP VSL, 都可以取值为WOOD, 船舶的TYPE 有LOG ,看到是LOG VSL, LOGGED 都可以取值为LOG
 
 - **公司和联系人**
   - 船盘最前面或最后面的公司名一般是指OWNR COMPANY；如果一条信息包含多条船舶，则每个船舶的OWNR COMAPNY都是一样的。
@@ -47,13 +52,13 @@
   - 货盘前面后面或最后的公司名，或接在报货公司后面的公司名，是指报货公司，如果一条信息里包含多个货盘，则每个货盘的报货公司都取一样的。
 
 - **其他**
-  - “RTVG”或“RVG”都是表示待通知的意思，OPEN DATE值为空。
+  - “RTVG”或“RVG”都是表示OPEN DATE待通知的意思，OPEN DATE值为空。
   - “PPT”默认空船日期是当天，结束日期默认加五天。
   - 装运结束日期，默认加5天。如果有明确标识，则按照实际添加。
   - 如果文中出现“xxx MT /CQD”或者“CQD/xxx MT”，左边的是装率，右边的是卸率。
   - “货量里如果有22000/25000或22000-25000”，表示最少货量是22000，最多货量是25000。
+  - 原文中常用的数据展示形式为：<字段A>/<字段B>/<字段C> <ValueA>/<ValueB>/<ValueC>，请在翻译版中将其拆开表示，例如：<字段A>：<ValueA>, <字段B>：<ValueB>, <字段C>：<ValueC>
 
-通过这些规则，可以更准确地解析和录入船舶邮件和货物报价中的信息。
 # Knowledge
 {extra_knowledge}
 

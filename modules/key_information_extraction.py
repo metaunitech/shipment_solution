@@ -108,7 +108,7 @@ class TextKIE:
 # BACKGROUND
 今天日期：{today_ts}
 
-原文中的一些背景知识如下，你或许会用上：
+原文中的一些背景知识如下：
 {background_info_str}
 
 对于需要提取的字段的定义如下：
@@ -123,13 +123,12 @@ class TextKIE:
 
 注意：
 1）不要杜撰，请从文件内提取出关键信息，可以换一种说法，但不能凭空捏造。
-2）如果原文中没有包含目标字段的关键信息，请不要再结果的JSON中包含该字段
-3）在字段中必须有明确的描述才能被提取出来，不要利用太多你的猜测。
-4）如果原文中出现背景信息中的词汇，请务必结合背景知识的语义以及原文来推测是否包含目标字段信息。
-5）原文中的人名，地名，公司名等名词请保留其原有的语言，不要进行翻译。
-6）对于数字，比例等具体的值必须在原文中出现才提取出来，不要自己捏造。
-7）并不是所有字段都能在原文中找到，对于文中没有提及的字段，返回‘无’
-8）在原文中|是用来隔开可能的不同列。请结合列的位置信息找到对应的关键信息。尤其注意表格的表头和内容。
+2）如果原文中没有包含目标字段的关键信息，请不要在结果的JSON中包含该字段
+3）如果原文中出现背景信息中的词汇，请务必结合背景知识的语义以及原文来推测是否包含目标字段信息。
+4）原文中的人名，地名，公司名等名词请保留其原有的语言，不要进行翻译。
+5）对于数字，比例等具体的值必须在原文中出现才提取出来，不要自己捏造。
+6）并不是所有字段都能在原文中找到，对于文中没有提及的字段，返回‘无’
+7）原文中常用的数据展示形式为：<字段A>/<字段B>/<字段C> <ValueA>/<ValueB>/<ValueC>，表示<字段A>=<ValueA>, <字段B>=<ValueB>, <字段C>=<ValueC>.以此类推
 
 请结合注意事项、背景知识、目标字段的解释 Step by Step从我提供的原文中提取出目标字段。
 
@@ -137,7 +136,7 @@ class TextKIE:
 你做的关键信息提取的结果以JSON格式返回给我。 {format_instructions}
 YOUR ANSWER:
             """
-            # logger.debug(prompt)
+            logger.debug(prompt)
             res_content = self.llm_engine.predict(prompt)
         else:
             prompt = f"""# TASK： 我会给你一段{file_type}类型文件的内容，我需要你帮我从内容中根据我提供的信息做关键信息提取的任务。
@@ -147,7 +146,7 @@ YOUR ANSWER:
 # BACKGROUND       
 今天日期：{today_ts}
      
-原文中的一些背景知识如下，你或许会用上：
+原文中的一些背景知识如下：
 {background_info_str}
 
 我所需要的关键信息字段如下：
@@ -161,13 +160,12 @@ YOUR ANSWER:
 
 注意：
 1）不要杜撰，请从文件内提取出关键信息，可以换一种说法，但不能凭空捏造。
-2）如果原文中没有包含目标字段的关键信息，请不要再结果的JSON中包含该字段
-3）在字段中必须有明确的描述才能被提取出来，不要利用太多你的猜测。
-4）如果原文中出现背景信息中的词汇，请务必结合背景知识的语义以及原文来推测是否包含目标字段信息。
-5）原文中的人名，地名，公司名等名词请保留其原有的语言，不要进行翻译。
-6）对于数字，比例等具体的值必须在原文中出现才提取出来，不要自己捏造。
-7）并不是所有字段都能在原文中找到，对于文中没有提及的字段，返回‘无’
-8）在原文中|是用来隔开可能的不同列。请结合列的位置信息找到对应的关键信息。尤其注意表格的表头和内容。
+2）如果原文中没有包含目标字段的关键信息，请不要在结果的JSON中包含该字段
+3）如果原文中出现背景信息中的词汇，请务必结合背景知识的语义以及原文来推测是否包含目标字段信息。
+4）原文中的人名，地名，公司名等名词请保留其原有的语言，不要进行翻译。
+5）对于数字，比例等具体的值必须在原文中出现才提取出来，不要自己捏造。
+6）并不是所有字段都能在原文中找到，对于文中没有提及的字段，返回‘无’
+7）原文中常用的数据展示形式为：<字段A>/<字段B>/<字段C> <ValueA>/<ValueB>/<ValueC>，表示<字段A>=<ValueA>, <字段B>=<ValueB>, <字段C>=<ValueC>.以此类推
             
 请结合注意事项、背景知识、目标字段的解释 Step by Step从我提供的原文中提取出目标字段。
 
@@ -270,9 +268,15 @@ YOUR ANSWER:
                                                 f"{w} is a mandatory word for {_target_key}. Missing thus skipped.")
                                             to_remove_key_parts.append(_target_key)
                                 for w in optional_keywords:
-                                    search_res = re.search(rf"\n*(.*?{w}.*?)\n*", txt)
+                                    w = w.upper()
+                                    search_res = re.search(rf"\n*(.*?{w}.*)\n*?", txt,flags=re.MULTILINE)
+                                    logger.debug(rf"\n*(.*?{w}.*)\n*?")
+                                    logger.debug(txt)
+                                    logger.debug(search_res)
                                     if search_res:
                                         key_possible_area_keywords.append(search_res.group(1))
+                                        logger.success(
+                                            f"{w} is a optional regex for {_target_key}. Possibly in {search_res.group(1)}")
                     # Add keyword and key def.
                     if isinstance(i, str):
                         todo_keys.append(i)
@@ -286,7 +290,7 @@ YOUR ANSWER:
                         if key_possible_area_keywords:
                             logger.warning(f"Found key_possible_area:{key_possible_area_keywords}")
                             i[_target_key][
-                                0] += f'，本字段可能出现在如下句子附近（也有可能不存在，请结合上下文理解并提取）：{";".join(key_possible_area_keywords)}'
+                                0] += f'\n{_target_key}可能出现在如下句子附近（也有可能不存在，请结合上下文理解并提取）：{";".join(key_possible_area_keywords)}'
                         todo_keys.append(_target_key)
                         key_definitions.update({_target_key: key_details[0]})
 

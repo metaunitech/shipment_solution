@@ -1,3 +1,7 @@
+import json
+import time
+import traceback
+
 import tqdm
 
 from main import ShipmentFlow
@@ -5,11 +9,36 @@ from modules.utils.email_helper import EmailHelper
 from pathlib import Path
 from loguru import logger
 
+import os
 
+# 确保 logs 文件夹存在
+log_dir = Path(__file__).parent / 'logs'
+os.makedirs(log_dir, exist_ok=True)
+
+# 设置 loguru 日志处理器
+logger.remove()  # 移除默认的处理器，防止重复打印
+start_time_str = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
+log_file_name = f"{start_time_str}.log"
+log_file_path = f"{log_dir}/{log_file_name}"
+
+logger.add(
+    f"{log_file_path}",  # 日志文件路径和名称，使用运行开始时间命名
+    format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}",  # 日志格式
+    rotation="00:00",  # 每天午夜轮换日志文件
+    compression="zip",  # 压缩旧的日志文件
+    level="DEBUG"  # 设置最低日志级别
+)
+logger.add(
+    sink=lambda msg: tqdm.tqdm.write(msg, end=''),  # 控制台输出，与 tqdm 兼容
+    format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}",
+    colorize=True,  # 控制台输出时使用颜色
+    level="DEBUG"
+)
 class DailyFlow:
-    def __init__(self):
+    def __init__(self, timeout=3 * 60 * 60):
         self.email_handler = EmailHelper(Path(__file__).parent / 'configs' / 'emails.yaml')
         self.flow_ins = ShipmentFlow(Path(__file__).parent / 'configs' / 'feishu_config.yaml')
+        self.timeout = timeout
 
     def get_email_list(self):
         res = {}
@@ -26,13 +55,24 @@ class DailyFlow:
                 continue
             content = f"标题：{subject}\n FROM: {sender}\n RECEIVE_DATE: {date}\n CONTENT: {m_content}"
             logger.info(f"Content: {content}")
-            self.flow_ins.unit_flow(content=content,
-                                    receive_id=email_id,
-                                    receive_type=f'Email_{name}')
+            try:
+                out = self.flow_ins.unit_flow(content=content,
+                                              receive_id=email_id,
+                                              source_name=f'Email_{name}')
+                logger.success(f"{json.dumps(out, indent=4, ensure_ascii=False)}")
+            except Exception as e:
+                logger.error(e)
+                logger.debug(traceback.format_exc())
+                continue
 
     def main(self):
+        start_ts = time.time()
         res = self.get_email_list()
         for name in res:
+            if time.time() - start_ts >= self.timeout:
+                logger.error("Exceed timeout. Quit")
+                return
+            logger.info(f"Still have {self.timeout - time.time() + start_ts} seconds.")
             self.register_tasks(name, res[name])
 
 

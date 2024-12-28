@@ -1,17 +1,17 @@
 pymupdf
 loguru
-langchain
-langchain-openai
-langchain_community
+langchain==0.2.16
+langchain-openai==0.1.23
+langchain_community==0.2.17
 pillow
 pandas
 xlwings
 openpyxl
 PyPDF2
 chardet
-paddleocr
+paddleocr==2.8.1
 opencv-python
-paddlepaddle
+paddlepaddle==2.6.1
 retrying
 unstructured
 # python-magic-bin

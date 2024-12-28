@@ -24,7 +24,8 @@ background:
   - L/B/D 116.99/19.6/14 L指的是船长，B是船宽，D是型深。分别是116.99，19.6，14
 keys:
 #  - 船舶代码-ID
-  - 船舶类型-TYPE
+  - 船舶类型-TYPE:
+      - 船舶的TYPE 有GENERAL ,看到是GENERAL CARGO VSL, GENERAL都可以取值为GENERAL, 船舶的TYPE 有BULK ,看到是BULK VSL, BULK CARRIER都可以取值为BULK, 船舶的TYPE 有WOOD ,看到是WOOD VSL, WOOD CHIP, WOOD-CHIP VSL, 都可以取值为WOOD, 船舶的TYPE 有LOG ,看到是LOG VSL, LOGGED 都可以取值为LOG
   - 船舶英文名称-ENGLISH-NAME:
       - 可租赁船的英文名，一定会出现在船盘中, 通常在每个片段的开头，取值取到明显的分隔符例如逗号等。通常以MV开头MV <英文>+<数字>或者MV <英文>，也会有中文的船名，返回MV后面的名字.MV或MV.或M/V是动力船舶的标记，经常会出现在船名的前面，提取时船名时不要显示。例如：对于MV ELIJAH，船舶英文名称为：ELIJAH；对于MV GAO XIN 15 DWCC 6700 OPEN NIIGATA，船舶英文名称为：GAO XIN 15；ORIENTAL SOURCES 10.3K HAIPHONG,VIETNAM 24 DEC KRIS TWEEN DECK/FE-SEA，船舶英文名称为：ORIENTAL SOURCES;MV ZHE HAI 515, 50K,  WILL OPEN MINA ZAYED，船舶英文名称为：ZHE HAI 515
   - 船舶中文名称-CHINESE-NAME:
@@ -32,7 +33,11 @@ keys:
   - 建造年份-BUILT-YEAR:
       - 直接返回年份（4位数字），忽略月份
   - 载货吨-DWCC:
-      - 直接返回Decimal(18,6)结果，DWCC的数字就是载货吨
+      - 直接返回Decimal(18,6)结果，DWCC的数字就是载货吨，如果文中没有提及返回无，一般小于等于DWT
+      - {
+        'mandatory': ['DWCC'],
+        'optional': [ ]
+      }
   - 载重吨-DWT:
       - 直接返回float结果，通常是DWT附近的数字.如果文中没出现DWT，和重量相关的数值如果没有说明默认为DWT。
   - 总吨位-GRT:
@@ -47,11 +52,19 @@ keys:
       - 直接返回float结果, 默认单位是M.文中通常会以DEPTH MOULDED介绍
   - 船级-CLASS
   - 舱口数量-HATCH:
-      - 直接返回int结果。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）。如果船舶资料上没有明显的几H几H的然后列出了几个以CBM为单位的东西，可以根据如 NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH. 舱口数如果船规没有别的地方写明，默认和舱位数一样
+      - 直接返回int结果。如果文中出现Hatch字样，一定有Hatch数量。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）例如：3HO/3HA表示3个舱口。如果文中分别列出Hatch的具体参数（CBM为单位），根据参数个数推算出Hatch数量。例如： NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH.
+      - {
+        'mandatory': [ ],
+        'optional': [ '\d+ho/\d+ha', 'hatch' ]
+      }
   - 舱位数量-HOLD:
-      - 直接返回int结果。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）。如果船舶资料上没有明显的几H几H的然后列出了几个以CBM为单位的东西，可以根据如 NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH. 舱口数如果船规没有别的地方写明，默认和舱位数一样
+      - 直接返回int结果。如果文中出现hold字样，一定有hold数量。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）例如：3HO/3HA表示3个舱位。如果文中分别列出Hold的具体参数（CBM为单位），根据参数个数推算出Hold数量可以根据如 NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH.
+      - {
+        'mandatory': [ ],
+        'optional': [ '\d+ho/\d+ha', 'hold' ]
+      }
   - 吊机-GEAR:
-      - 船舶资料里的如果体现GEARLESS 或G.LESS或GLESS, 则GEAR 值填 None. 如果仅说了YES，返回None，例如：“GEAR：YES”。如果原文类似：<CARGO GEAR： YES X 4 X 30 MT SWL> 返回 G4*30，以此类推。如果仅说了YES，返回None
+      - 船舶资料里的如果体现GEARLESS 或G.LESS或GLESS, 则GEAR 值填 None. 如果仅说了YES，返回None，例如：“GEAR：YES”。如果原文类似：<CARGO GEAR： YES X 4 X 30 MT SWL> 返回 G4*30，以此类推。如果仅说了YES，返回None，CRANE也表示吊机，25MT*2 CRANE返回25MT*2
       - str, <Number of Gear1> * <SWL1> + <Number of Gear2> * <SWL2>（如果有多种GEAR）或者None
   - 抓斗-GRAB:
       -船舶资料只写了YES就返回None，例如：“GRABS：YES”。如果船舶资料中有类似：GRAB:2*8CBM,2*12CBM，输出2*12+2*12；如果是GRAB4*8,输出4*8,一般GRAB在4个以下
@@ -60,18 +73,31 @@ keys:
       - 直接返回float结果, 默认单位是M。SUMMER SALT WATER表达夏季海水，DWT / DRAFT SUMMER SALT WATER 58,761 MT / 12.828 M中前一个表示DWT，后一个表示夏季海水吃水。
   - 甲板数-DECK:
       - 船舶资料上若体现SINGLE DECK或SD,DECCK返回”SD“; 资料上若显示TWEEN DECK 或TD或双甲板,DECK，返回”TD“; 若资料上显示 TRIPLE DECT或TRD或三甲板，DECK 返回”TRD“
+      - SD/TD/TRD
+      - {
+        'mandatory': [ ],
+        'optional': [ 'deck' ]
+      }
   - P&I
 #  - 船舶名称-VSL-NAME
   - 空船港口-OPEN-PORT:
-      - 返回大写的港口名字，通常船盘文档中出现的港口就是空船港口。
+      - 返回大写的港口名字，通常船盘文档中出现的港口就是空船港口，注意，如果有<港口>,<国家>，返回<港口>即可。
   - 船东-OWNER:
     - 船盘最前面或最后面有的公司名，一般是指OWNR COMPANY; 如果一条信息包含多条船舶，则每个船舶的OWNR COMPANY都是一样的.如果没有提及返回None
   - 空船日期-OPEN-DATE:
     - 注意：在船舶邮件里肯定存在, 必须要提取出来，如果文中没有提到，则为今日当天日期。船只空闲的日期,是一个日期，表示船只空闲可供租赁的日期，是一个时间区间的最开始（如果最开始比今天早，就取今天）或者具体的日期, 船盘如果写PPT，默认空船日期是当天。如果空船日期是一段时间的 如19-22JAN, 则空船日期取最前面的日期1-19; OPEN KANMON-BUSAN RANGE 2TH ／OCT的空船日期是10-02. 注意：如果日期没有提到年份，结合当前时间推算年份。船盘空船日期 EAR JAN,EAR FEB, 如果今天是2025-12-20则空船日期为2025-1-1,2025-2-1以此类推，因为2024-1-1已经过去了，所以是2025年.
     - \%Y-\%m-\%d
+    - {
+        'mandatory': [ ],
+        'optional': [ 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC' ]
+      }
   - 散装舱容-GRAIN-CAPACITY:
       - 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B 18390/17526cbm：G表示散装舱容：18390，返回18390数字。CBM是单位表示立方，不用输出单位
   - 包装舱容-BALE-CAPACITY:
       - 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B 18390/17526cbm：B表示包装舱容：17526，返回17526数字。CBM是单位表示立方，不用输出单位
   - IMO-CODE:
       - 一串像船舶ID的号码，可能不存在，例如：IMO:9604653
+      - {
+        'mandatory': [ ],
+        'optional': ['IMO']
+      }

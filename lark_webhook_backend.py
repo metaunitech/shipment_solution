@@ -1,4 +1,5 @@
 import json
+import re
 import time
 import traceback
 
@@ -82,6 +83,9 @@ def add_data_to_bx():
             data[keyname] = float(data[keyname])
         except:
             data[keyname] = data[keyname]
+    for k in data:
+        if isinstance(data[k], str):
+            data[k] = re.sub(r'\n', '\r\n', data[k])
     res = SHIPMENT_FLOW_INS.bx_handler.add_sa_job(payload=data)
     # 返回 JSON 响应
     return jsonify(res), 200
@@ -91,6 +95,9 @@ def add_data_to_bx():
 def add_data_to_bx_cargo():
     # 从 Form Data 获取数据
     data = request.form.to_dict()  # 转为 Python 字典
+    for k in data:
+        if isinstance(data[k], str):
+            data[k] = re.sub(r'\n', '\r\n', data[k])
     # 打印接收到的数据
     logger.info(f"Received Form Data: {data}")
     raw_text = data.get('原文依据')
@@ -108,6 +115,9 @@ def add_data_to_bx_cargo():
 def add_data_to_bx_vessel():
     # 从 Form Data 获取数据
     data = request.form.to_dict()  # 转为 Python 字典
+    for k in data:
+        if isinstance(data[k], str):
+            data[k] = re.sub(r'\n', '\r\n', data[k])
     # 打印接收到的数据
     logger.info(f"Received Form Data: {data}")
     raw_text = data.get('原文依据')
@@ -149,7 +159,7 @@ def rerun():
         res = SHIPMENT_FLOW_INS.unit_flow(document_path=None,
                                           content=data.get("content"),
                                           task_id=data.get('task_id'),
-                                          receive_type='rerun',
+                                          source_name='rerun',
                                           skip_success=False)
         if res:
             return jsonify(res), 200
@@ -170,7 +180,7 @@ def single_rerun():
                                           content=data.get("content"),
                                           task_id=task_id,
                                           document_type=document_type,
-                                          receive_type='single_rerun',
+                                          source_name='single_rerun',
                                           skip_success=False)
         if res:
             return jsonify(res), 200

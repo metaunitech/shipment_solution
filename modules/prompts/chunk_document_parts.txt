@@ -20,7 +20,7 @@
 
 原文中可能会出现一些用以切分区间的符号，例如++++++、---------等。
 
-我需要你通过理解邮件内容，如果包含多条船的信息（例如DWCC，DWT等），请把该邮件原文以船舶为单位将原文中关于其的信息进行切割，返回我切割过后的原文内容。
+我需要你通过理解邮件内容，如果包含多条船的信息（例如DWCC，DWT等），请把该邮件原文以船舶为单位将原文中关于该船舶的信息进行切割，返回我切割过后的原文内容。
 
 每一块切割后的原文内容，如果是船舶邮件，需要包含独立的船名、船舶的空船港口或空船时间；如果是货盘邮件需要包含独立的需要运输的货物。
 
@@ -97,7 +97,7 @@ Branch office add: 574 Nguyen Cong Hoan Street, Dong Khe Ward, Ngo Quyen  Distri
 Email : haitintracoship@gmail.com    www.haitintraco.com
 
 - 拆分后的parts：
-    - mutual_info(共同的信息块)：
+    - mutual_info(所有船舶/货物共享的参数信息块)：
 PLS ARRANGE SUITABLE CGO FOR THE FLW TONNAGE:
 --
 THANKS & BEST REGARDS,

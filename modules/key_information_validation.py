@@ -58,7 +58,7 @@ class KIValidation:
 
         format_instruction = parser.get_format_instructions()
         prompt = (
-            f'# TASK: \n我需要你帮我把我的类似日期的字符串输入变成一个格式化的日期字符串，格式为%Y-%m-%d. 如果输入没有年份，默认今天的年份。根据FORMAT_SCHEMA返回我JSON格式的结果\n'
+            f'# TASK: \n我需要你帮我把我的类似日期的字符串输入校验并变成一个格式化的日期字符串，格式为%Y-%m-%d. 如果输入没有年份，默认今天的年份。根据FORMAT_SCHEMA返回我JSON格式的字典结果，字典里包含：formatted_date和reason\n'
             f"注：今天是{datetime.datetime.now().strftime('%YY-%MM-%DD')}，"
             f'{comments if comments else ""}\n'
             f'# FORMAT_SCHEMA:\n'
@@ -68,7 +68,9 @@ class KIValidation:
             f"{json.dumps(examples, indent=2, ensure_ascii=False) if examples else ''}\n"
             f"# INPUT:\n"
             f"输入：{input}\n"
-            f"YOUR ANSWER:\n"
+            f'# FORMAT_SCHEMA:\n'
+            f"{format_instruction}\n"
+            f"YOUR ANSWER(Result string in JSON Format only):\n"
             f"TS:{str(time.time() * 1000)}")
         logger.debug(prompt)
         res_raw = llm_ins.invoke(prompt)
@@ -127,23 +129,24 @@ class KIValidation:
             comments = details_vals.get('comments')
             examples = details_vals.get('examples')
             if comments:
-                text += f'对于该字段，{comments}.'
+                text += f'对于该字段，{comments}'
             if examples:
-                text += f'例如：{str(examples)}'
+                text += f'我会用一组字典列表给你一些例子，其中的字典（key是输入，value是修改后的结果）：{str(examples)}'
             key_requirement_parts_texts.append(text)
         key_requirement_text = "\n".join(key_requirement_parts_texts)
         format_instruction = parser.get_format_instructions()
         missing_force_prompt = "" if not current_missing else f"当前的提取结果中缺少{current_missing}这几个字段，请从原文依据中提出。"
         prompt = (
-            f'# TASK: \n我现在有一个字典需要通过API上传，但是字典里有的字段的值不满足字段格式要求。我需要你按照字段的格式要求将我的字典值进行修正，字段名都保持不变\n'
-            f'注意：对于KeyValueRequirements提到必须提取到值的字段{str(mandatory_keys)}，如果当前字典中为None或者字典中不存在，则从原文依据中重新提取字段值并加入字典。返回我JSON格式。\n'
-            f'# Knowledge:\n'
+            f'# TASK: \n我现在有一个输入字典需要通过API上传，但是字典里有的字段的值不满足字段格式要求。我需要你按照字段的格式要求将我的字典值进行修正，字段名都保持不变\n'
+            f'原文中常用的数据展示形式为：<字段A>/<字段B>/<字段C> <ValueA>/<ValueB>/<ValueC>，请仔细检查提取出来的字段是否和表现形式一一对应。\n'
+            f'注意：对于KeyValueRequirements提到必须提取到值的字段{str(mandatory_keys)}，如果当前字典中为None或者字典中不存在，则从原文依据中重新提取字段值并加入字典。同时也要校验所有值为空的字段，在文中尝试提取并加入字典。返回我JSON格式。\n'
+            f"今天的日期是：{datetime.datetime.now().strftime('%Y-%m-%d')}，仅供参考，校验日期的时候可以借鉴。"
+            f'\n# Knowledge:\n'
             f'{"" if not extra_knowledge else extra_knowledge}'
-            f'# KeyValueRequirements:\n{key_requirement_text}\n'
-            f"今天的日期是：{datetime.datetime.now().strftime('%Y-%m-%d')}"
-            f"# INPUT:\n"
-            f"原文依据: {str(content) + ';' + str(mutual_content)}"
-            f"输入字典：{json.dumps(res, indent=2, ensure_ascii=False)}\n"
+            f'\n# KeyValueRequirements:\n{key_requirement_text}\n'
+            f"\n# INPUT:\n"
+            f"\n原文依据: \n{str(content) + ';' + (mutual_content if mutual_content else '')}\n"
+            f"输入字典：\n{json.dumps(res, indent=2, ensure_ascii=False)}\n"
             f"\n{missing_force_prompt}"
             f"\n{note}"
             f"YOUR ANSWER:\n"
@@ -152,6 +155,7 @@ class KIValidation:
             f"TS:{str(time.time() * 1000)}")
         try:
             # Invoke the LLM and parse the result
+            logger.debug(prompt)
             res_raw = llm_ins.invoke(prompt)
             res_content = res_raw.content
             logger.debug(res_content)
@@ -179,6 +183,23 @@ class KIValidation:
                     refined_dict['载重吨-DWT'] = refined_dict.get('载货吨-DWCC')
                 if 'SINGLE DECK' in rate_string:
                     refined_dict['甲板数-DECK'] = 'SD'
+                for mv_part in ['MV.', 'M/V.', 'M/V', 'MV', 'M.V']:
+                    if mv_part in refined_dict.get('船舶英文名称-ENGLISH-NAME'):
+                        vsl_name = re.sub(rf'{mv_part}', '', refined_dict['船舶英文名称-ENGLISH-NAME'])
+                        logger.warning(f'Removed {mv_part} in name. Current: {vsl_name}')
+                        # vsl_name = refined_dict['船舶英文名称-ENGLISH-NAME'].sub(mv_part, '')
+                        refined_dict['船舶英文名称-ENGLISH-NAME'] = vsl_name
+                if not refined_dict.get('船舶中文名称-CHINESE-NAME'):
+                    refined_dict['船舶中文名称-CHINESE-NAME'] = refined_dict['船舶英文名称-ENGLISH-NAME']
+                if 'PPT' in rate_string:
+                    logger.warning("PPT found in rate_string.")
+                    refined_dict['空船日期-OPEN-DATE'] = datetime.datetime.now().strftime('%Y-%m-%d')
+                try:
+                    if res.get('空船日期-OPEN-DATE') and datetime.datetime.strptime(res.get('空船日期-OPEN-DATE'), '%Y-%m-%d')-datetime.timedelta(days=1) >= datetime.datetime.now():
+                        logger.warning("Reformat to previous extraction result for OPEN-DATE")
+                        refined_dict['空船日期-OPEN-DATE'] = res.get('空船日期-OPEN-DATE')
+                except:
+                    pass
 
             if document_type == "cargo_info":
                 l_rate, d_rate = self.parse_rates(rate_string=rate_string)
@@ -187,13 +208,22 @@ class KIValidation:
                     refined_dict['装率-L-RATE'] = l_rate
                 if d_rate:
                     refined_dict['卸率-D-RATE'] = d_rate
+                if 'PPT' in rate_string:
+                    refined_dict['装运开始日期-LAY-DATE'] = datetime.datetime.now().strftime('%Y-%m-%d')
+                    refined_dict['装运结束日期-CANCELING-DATE'] = (datetime.datetime.now()+datetime.timedelta(days=1)).strftime('%Y-%m-%d')
             note = ''
             for k in ['装运开始日期-LAY-DATE', '装运结束日期-CANCELING-DATE', '空船日期-OPEN-DATE']:
-                if k in refined_dict.keys() and datetime.datetime.strptime(refined_dict[k],
-                                                                           "%Y-%m-%d")+datetime.timedelta(days=1) < datetime.datetime.now():
-                    refined_dict[k] = None
-                    note += f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}"
-                    logger.error(f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}")
+                if k in refined_dict.keys():
+                    try:
+                        date_val = datetime.datetime.strptime(refined_dict[k], "%Y-%m-%d")
+                        if date_val + datetime.timedelta(days=1) < datetime.datetime.now():
+                            refined_dict[k] = None
+                            note += f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}\n"
+                            logger.error(f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}")
+                    except:
+                        note+= f"Current {k}:{refined_dict[k]} not in datetime format. Need reformat.\n"
+                        logger.error(f"Current {k}:{refined_dict[k]} not in datetime format. Need reformat.")
+                        refined_dict[k] = None
 
             # Check if the keys are modified
             # if any([i not in res.keys() for i in refined_dict.keys()]):

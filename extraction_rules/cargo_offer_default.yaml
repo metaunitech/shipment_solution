@@ -34,9 +34,9 @@ keys:
   - 积载包装-SF-PACKAGE:
       - 货盘里出现BULK,BLK,IN BULK 都是表示货物包装是BULK; 货盘BAG,BAGS,IN BAGS,IN BAG,都是表示货物包装是BAG
   - 装货港口-L-PORT:
-      - 始发的港口，通常在如下格式中是左边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，DANGJIN就是装货港口;或者<港口>to<港口>中的左边那个。例如：dangjing to OSAKA, DANGJIN就是装港港口
+      - 始发的港口，通常在如下格式中是左边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，DANGJIN就是装货港口;或者<港口>to<港口>中的左边那个。例如：dangjing to OSAKA, DANGJIN就是装港港口，注意，如果有<港口>,<国家>，返回<港口>即可。
   - 卸货港口-D-PORT:
-      - 目标的港口，通常在如下格式中是右边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，OSAKA就是卸货港口;或者<港口>to<港口>中的右边那个。例如：dangjing to OSAKA, OSAKA就是装港港口
+      - 目标的港口，通常在如下格式中是右边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，OSAKA就是卸货港口;或者<港口>to<港口>中的右边那个。例如：dangjing to OSAKA, OSAKA就是装港港口，注意，如果有<港口>,<国家>，返回<港口>即可。
   - 装率-L-RATE:
       - 装卸率(DIS RATE)里若有/或-隔开的,/-前面的表示装率，后面的表示卸率,例如："DIS RATE 1 000 MT PWWD SHINC/CQD"装率 '1 000 MT PWWD SHINC' 如果描述CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD
   - 卸率-D-RATE:
@@ -44,6 +44,10 @@ keys:
   - 装运开始日期-LAY-DATE:
       - 在货盘邮件里肯定存在，通常是出现的日期区间的开始日期，例如：28-30 AUG 2024里，装运开始时间为：2024-08-28; MID-END SEP里，装运开始时间为：09-15;LAYCAN EAR-MID SEP,装运开始时间为：09-01。货盘装载期EAR JAH，默认为1-5TH JAN,装期开始为2025-1-1，结束日期为2025-1-5;货盘装载期MID JAH，默认为是15-20TH JAN,装期开始为2025-1-15，结束日期为2025-1-20;货盘装载期END JAH，默认为是25-30TH JAN,装期开始为2025-1-25，结束日期为2025-1-30. 货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那LAY-DATE 就是2025-1-1而不2024-1-1
       - \%Y-\%m-\%d
+      - {
+        'mandatory': [ ],
+        'optional': [ 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC' ]
+      }
   - 佣金-COMM:
       - 只用返回百分值，例如2.5%只用返回2.5即可
   - 运费单价-FRT-RATE:
@@ -53,3 +57,7 @@ keys:
   - 装运结束日期-CANCELING-DATE:
       - 在货盘邮件里肯定存在，通常是出现的日期区间的结尾日期，例如：28-30 AUG 2024里，装运结束时间为：2024-08-30; MID-END SEP里，装运结束时间为：09-30;LAYCAN EAR-MID SEP里，装运结束时间为：09-15。货盘装载期EAR JAH，默认为1-5TH JAN,装期开始为2025-1-1，结束日期为2025-1-5;货盘装载期MID JAH，默认为是15-20TH JAN,装期开始为2025-1-15，结束日期为2025-1-20;货盘装载期END JAH，默认为是25-30TH JAN,装期开始为2025-1-25，结束日期为2025-1-30.货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那CANCELING-DATE 就是2025-1-1而不2024-1-1
       - \%Y-\%m-\%d
+      - {
+        'mandatory': [ ],
+        'optional': [ 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC' ]
+      }

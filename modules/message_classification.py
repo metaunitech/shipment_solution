@@ -19,10 +19,10 @@ class DocumentType(BaseModel):
         description="若document_type是船盘，返回当前邮件中可供出租的船的数量，一般出现新的船名就是一个可供出租的船舶；若document_type是货盘，返回邮件中需要租赁的需求数量，一般出现一个新的商品就是一个需要租赁的需求；若是其他邮件返回0"
     )
     reason: str = Field(
-        description='将这段邮件中的缩写翻译成中文可以理解的形式，并结合总结做出消息分类的原因。'
+        description='做出消息分类的原因。'
     )
     translated_content: str = Field(
-        description='根据船舶相关基础知识把消息进行翻译成可读内容。'
+        description='根据船舶相关基础知识和提供的Knowledge精简地总结消息中包含的货盘（同样的货物）/船盘（同样的船名）的所有参数信息（可能分散在消息不同位置），数量和entry_count一致。'
     )
 
 
@@ -37,7 +37,7 @@ class MessageClassifier:
                           openai_api_key=API_TOKEN,
                           openai_api_base="https://open.bigmodel.cn/api/paas/v4/")
 
-    def classify(self, content, extra_knowledge=None):
+    def classify(self, content, extra_knowledge=None, num_vote=3):
         logger.info(f"Starts to use extra_knowledge: {extra_knowledge}")
         prompt_path = self.__prompt_base_dir / 'classify_document_type.txt'
         with open(prompt_path, 'r', encoding='utf-8') as f:
@@ -77,11 +77,16 @@ class MessageClassifier:
         entry_count = answer_instance.entry_count
         reason = answer_instance.reason
         translated_content = answer_instance.translated_content
-        logger.success(f'Content type: {document_type}. Entry count: {entry_count} Reason: {reason}')
+        logger.success(f'Content type: {document_type}. Entry count: {entry_count} Reason: {reason}. Translated: {translated_content}')
         # RULES:
-        if 'CQD' in content and document_type != 'CQD':
+        cargo_keywords = ['CQD', ' SF ']
+        ship_keywords = []
+        if any([i in content for i in cargo_keywords]) and document_type != 'cargo_info':
             document_type = 'cargo_info'
-            reason = 'CQD 是货盘邮件的标志，force to 货盘邮件'
+            reason = 'force to 货盘邮件'
+        if any([i in content for i in ship_keywords]) and document_type != 'ship_info':
+            document_type = 'ship_info'
+            reason = 'force to 船盘'
         return document_type, reason, entry_count, translated_content
 
 

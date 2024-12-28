@@ -120,17 +120,17 @@ class ShipmentFlow:
             if chat_type == 'p2p':
                 sender_id = event.get('sender', {}).get('sender_id', {}).get('open_id')
                 receive_id = sender_id
-                receive_type = 'open_id'
+                # receive_type = 'open_id'
             elif chat_type == 'group':
                 receive_id = message.get('chat_id')
-                receive_type = 'chat_id'
+                # receive_type = 'chat_id'
                 mentions = message.get('mentions', [])
                 if message_type == 'text' and '1303f8a4a54f575f' not in [i.get('tenant_key', '') for i in mentions]:
                     logger.error(f"Not mention current bot. Skipped.{[i.get('name', 'Unknown') for i in mentions]}")
                     continue
             elif chat_type == 'post':
                 receive_id = event.get('sender', {}).get('sender_id', {}).get('open_id')
-                receive_type = 'open_id'
+                # receive_type = 'open_id'
                 logger.error(f'{receive_id} {receive_type}')
 
             else:
@@ -146,7 +146,7 @@ class ShipmentFlow:
                 content_hash = self.generate_md5_hash(content)
                 task_id_components.append(content_hash)
                 res = self.unit_flow(document_path=None, content=content, receive_id=receive_id,
-                                     receive_type=receive_type, task_id='_'.join(task_id_components))
+                                     source_name=receive_type, task_id='_'.join(task_id_components))
                 if res:
                     msgs.append(res)
             elif message_type == 'file':
@@ -171,7 +171,7 @@ class ShipmentFlow:
                 file_path_hash = self.generate_md5_hash(file_path)
                 task_id_components.append(file_path_hash)
                 res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
-                                     receive_type=receive_type, task_id='_'.join(task_id_components))
+                                     source_name=receive_type, task_id='_'.join(task_id_components))
                 if res:
                     msgs.append(res)
             elif message_type == 'image':
@@ -197,7 +197,7 @@ class ShipmentFlow:
                 file_path_hash = self.generate_md5_hash(file_path)
                 task_id_components.append(file_path_hash)
                 res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
-                                     receive_type=receive_type, task_id='_'.join(task_id_components))
+                                     source_name=receive_type, task_id='_'.join(task_id_components))
                 if res:
                     msgs.append(res)
             elif message_type == 'post':
@@ -217,7 +217,7 @@ class ShipmentFlow:
                         file_path_hash = self.generate_md5_hash(file_path)
                         _task_id_components = task_id_components + [file_path_hash]
                         res = self.unit_flow(document_path=str(file_path), content=None, receive_id=receive_id,
-                                             receive_type=receive_type, task_id='_'.join(_task_id_components))
+                                             source_name=receive_type, task_id='_'.join(_task_id_components))
                         if res:
                             msgs.append(res)
                     else:
@@ -230,7 +230,7 @@ class ShipmentFlow:
                 content_hash = self.generate_md5_hash(content)
                 task_id_components.append(content_hash)
                 res = self.unit_flow(document_path=None, content=content, receive_id=receive_id,
-                                     receive_type=receive_type, task_id='_'.join(task_id_components))
+                                     source_name=receive_type, task_id='_'.join(task_id_components))
                 if res:
                     msgs.append(res)
             else:
@@ -293,7 +293,7 @@ class ShipmentFlow:
 
         extra_knowledge = '\n'.join(extra_knowledge_list) if extra_knowledge_list else None
         document_type, reason, entry_count, translated_content = self.message_classifier.classify(content_str,
-                                                                              extra_knowledge=extra_knowledge)
+                                                                                                  extra_knowledge=extra_knowledge)
 
         return document_type, reason, entry_count, translated_content
 
@@ -321,7 +321,8 @@ class ShipmentFlow:
         _, contents_list = self.get_data_loader_context(document_loader)
         # contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
         content_str = '\n'.join(contents_list)
-        content_str += f'\n原文得一些总结和分析：{extra_info}'
+        if extra_info:
+            content_str += f'\n# Reason: \n{extra_info}'
         if entry_count == 1:
             vessel_info_chunks, mutual_info, comment = [content_str], '', 'Only one entry'
         else:
@@ -341,8 +342,8 @@ class ShipmentFlow:
         extra_knowledge = '\n'.join(extra_knowledge_list) if extra_knowledge_list else None
         for vessel_info_chunk in tqdm.tqdm(vessel_info_chunks):
             text_lines = [
-                "参考原文：" + content_str,
-                '本次提取任务从原文中以下部分提取一个: \n' + vessel_info_chunk
+                "参考原文：\n" + content_str,
+                '本次提取任务从原文中以下部分提取: \n' + vessel_info_chunk
             ] if entry_count > 1 else [content_str]
             modified_outputs = self.kie_instance(rule_config_path=str(config_path),
                                                  file_type=document_type,
@@ -410,7 +411,7 @@ class ShipmentFlow:
                                                                      show_fields=['状态'], id=job_id)
             if not records:
                 logger.info("Initializing new records.")
-                self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], [n_records])
+                record_ids = self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], [n_records])
                 logger.success(f"Added {job_id}")
                 return
             else:
@@ -419,18 +420,19 @@ class ShipmentFlow:
         else:
             # NEW RECORDS
             logger.info("Initializing new records.")
-            self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], [n_records])
+            record_ids = self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], [n_records])
             logger.success(f"Added {job_id}")
             return
 
-    def update_jobs(self, job_id, msg_body, source, status, records_ids=None, document_type=None, logs=None, force_new=False):
+    def update_jobs(self, job_id, msg_body, source, status, records_ids=None, document_type=None, logs=None,
+                    force_new=False, enhanced_body=None):
         n_records = {
             'id': job_id,
             '消息主体': msg_body,
             '数据源': source,
             '状态': status,
             'logs': logs if logs else "",
-            '任务最近更新时间': int(time.time()*1000)
+            '任务最近更新时间': int(time.time() * 1000)
         }
         if records_ids and document_type:
             table_id = self.tables[document_type]
@@ -439,7 +441,9 @@ class ShipmentFlow:
                                                                                record_ids=records_ids)
             urls = [i['shared_url'] for i in record_results['records']]
             n_records['目标记录：record ID'] = '\n'.join(records_ids)
-            n_records['结果链接'] = '<hr>'.join(urls)
+            n_records['结果链接'] = ' <hr> '.join(urls)
+        if enhanced_body:
+            n_records['消息主体+AI分析'] = enhanced_body
         if document_type:
             n_records['内容分类'] = document_type
         if not force_new:
@@ -447,7 +451,7 @@ class ShipmentFlow:
                                                                      view_id=self.views['inputs_status'], id=job_id)
             if not records:
                 logger.info("Initializing new records.")
-                self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], n_records)
+                record_ids = self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], n_records)
             else:
                 record_ids = [i['record_id'] for i in records]
                 for record_id in record_ids:
@@ -459,7 +463,8 @@ class ShipmentFlow:
         else:
             # NEW RECORDS
             logger.info("Initializing new records.")
-            self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], n_records)
+            record_ids = self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], n_records)
+        return record_ids
 
     # def insert_data_to_spreadsheet(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
     #                                raw_text=None):
@@ -510,7 +515,8 @@ class ShipmentFlow:
                     vessel_code = self.bx_handler.get_vessel(vid).get('job_info', {}).get('VesselCode')
                     logger.success(f"{vessel_code} already exists")
                     cur_res['船舶代码-ID'] = vessel_code
-                    cur_res['备注-REMARK'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[2] else ''])+f'\n无需新建船舶，{vessel_code}已存在。'
+                    cur_res['备注-REMARK'] = '\n'.join([data[1] if data[1] else '', data[2] if data[
+                        2] else ''])
                 if raw_text:
                     cur_res['原文依据'] = raw_text
 
@@ -694,18 +700,21 @@ class ShipmentFlow:
 
         return to_html_table(json_data)
 
-    def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, receive_type=None,
+    def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, source_name=None,
                   task_id=None, debug=False, skip_success=True, document_type=None):
         output_res = None
-        logger.info(f"Current receive_type: {receive_type} receive_id: {receive_id}")
-        logger.error(f'{receive_id} {receive_type}')
+        logger.info(f"Current receive_type: {source_name} receive_id: {receive_id}")
+        logger.error(f'{receive_id} {source_name}')
         document_loader = self.load_document(document_path=Path(document_path) if document_path else None,
                                              content=content)
         data = document_loader.load()
         contents_list = [i.page_content for i in data]
         content_str = '\n'.join(contents_list)
-        job_id = task_id if task_id else f"{receive_type}_{receive_id}"
-        existing_job = self.add_job(job_id=job_id, msg_body=content_str, source=receive_type)
+        if '系统退信/The email is returned' in content_str:
+            logger.error("系统退信，跳过")
+            return output_res
+        job_id = task_id if task_id else f"{source_name}_{receive_id}"
+        existing_job = self.add_job(job_id=job_id, msg_body=content_str, source=source_name)
         if existing_job:
             if skip_success and existing_job['fields']['状态'] == '成功':
                 logger.error(f"Job exists and success. Skipped")
@@ -718,7 +727,7 @@ class ShipmentFlow:
             try:
                 self.update_jobs(job_id=job_id,
                                  msg_body=content_str,
-                                 source=receive_type,
+                                 source=source_name,
                                  status='分类中',
                                  logs=f"开始邮件分类")
                 document_type, reason, entry_count, translated_content = self.classify_document(document_loader)
@@ -726,7 +735,7 @@ class ShipmentFlow:
                     f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}, TRANSLATED_CONTENT: {translated_content}")
                 self.update_jobs(job_id=job_id,
                                  msg_body=content_str,
-                                 source=receive_type,
+                                 source=source_name,
                                  status='分类中',
                                  logs=f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}, TRANSLATED_CONTENT: {translated_content}")
 
@@ -735,7 +744,7 @@ class ShipmentFlow:
                 logger.error(traceback.format_exc())
                 self.update_jobs(job_id=job_id,
                                  msg_body=content_str,
-                                 source=receive_type,
+                                 source=source_name,
                                  status='异常',
                                  logs=traceback.format_exc())
                 return output_res
@@ -743,46 +752,48 @@ class ShipmentFlow:
         if document_type == 'others':
             self.update_jobs(job_id=job_id,
                              msg_body=content_str,
-                             source=receive_type,
+                             source=source_name,
                              status='成功',
                              logs=f"不属于船盘/货盘邮件")
             return output_res
         self.update_jobs(job_id=job_id,
                          msg_body=content_str,
-                         source=receive_type,
+                         source=source_name,
                          document_type=document_type,
                          status='提取中',
                          logs=f"开始邮件信息提取")
         extraction_res = self.extract_key_information(document_loader=document_loader,
                                                       document_type=document_type,
                                                       entry_count=entry_count,
-                                                      extra_info=reason+f'\nTranslated: {translated_content}')
-        content_str += f'\nTranslated: {translated_content}'
+                                                      extra_info=reason + f'\n# Translated: \n{translated_content}')
+        enhanced_content_str = content_str + f'\n# Translated: \n{translated_content}'
         output_res = {'extraction_res': extraction_res}
         if not extraction_res:
             self.update_jobs(job_id=job_id,
                              msg_body=content_str,
-                             source=receive_type,
+                             source=source_name,
                              status='分类中',
+                             enhanced_body=enhanced_content_str,
                              logs=f"未曾成功提取出结果。{extraction_res}")
             return
         extraction_res = [] if not extraction_res else extraction_res
         self.update_jobs(job_id=job_id,
                          msg_body=content_str,
-                         source=receive_type,
+                         source=source_name,
                          status='分类中',
+                         enhanced_body=enhanced_content_str,
                          logs=f"=>     初次提取成功：{extraction_res}")
         # Validation
         self.update_jobs(job_id=job_id,
                          msg_body=content_str,
-                         source=receive_type,
+                         source=source_name,
                          status='结果校验中',
                          logs=f"开始校验结果")
         extraction_res = self.validate_key_information(document_type, extraction_res)
         output_res = {'extraction_res': extraction_res}
         self.update_jobs(job_id=job_id,
                          msg_body=content_str,
-                         source=receive_type,
+                         source=source_name,
                          status='结果校验中',
                          logs=f"=>     结果校验成功：{extraction_res}")
 
@@ -791,7 +802,7 @@ class ShipmentFlow:
             try:
                 self.update_jobs(job_id=job_id,
                                  msg_body=content_str,
-                                 source=receive_type,
+                                 source=source_name,
                                  status='插入数据',
                                  logs=f"开始插入数据")
                 total, content = self.get_data_loader_context(document_loader)
@@ -803,8 +814,8 @@ class ShipmentFlow:
                               'records_ids': records_ids}
                 self.update_jobs(job_id=job_id,
                                  msg_body=content_str,
-                                 source=receive_type,
-                                 records_ids = records_ids,
+                                 source=source_name,
+                                 records_ids=records_ids,
                                  document_type=document_type,
                                  status='插入数据',
                                  logs=f"数据成功插入飞书表")
@@ -814,7 +825,7 @@ class ShipmentFlow:
                 logger.error(traceback.format_exc())
                 self.update_jobs(job_id=job_id,
                                  msg_body=content_str,
-                                 source=receive_type,
+                                 source=source_name,
                                  status='插入数据',
                                  logs=f"飞书表插入失败，失败报错：{traceback.format_exc()}")
 
@@ -823,7 +834,7 @@ class ShipmentFlow:
             logger.success(json.dumps(extraction_res, indent=4, ensure_ascii=False))
         self.update_jobs(job_id=job_id,
                          msg_body=content_str,
-                         source=receive_type,
+                         source=source_name,
                          status='成功',
                          logs=json.dumps(extraction_res, indent=2, ensure_ascii=False))
         return output_res

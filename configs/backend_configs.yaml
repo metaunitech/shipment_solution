@@ -2,10 +2,13 @@ WEB:
   port: 6164
 
 LLM:
-  llm_params:
-    platform: Zhipu
-    model_name: glm-4-flash
-    api_key: 9e9d13e921871472a449274bad42cb42.uGbjrWiZQOaVilYy
+  ZHIPU_glm4_flash:
+    llm_params:
+      platform: Zhipu
+      model_name: glm-4-flash
+      api_key: 9e9d13e921871472a449274bad42cb42.uGbjrWiZQOaVilYy
+  DOUBAO_
+
 
 Feishu:
   app_token: B7XnbQTtLapDfDsJj27c7ZgQnLd
