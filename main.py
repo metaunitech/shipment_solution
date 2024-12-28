@@ -441,7 +441,7 @@ class ShipmentFlow:
                                                                                record_ids=records_ids)
             urls = [i['shared_url'] for i in record_results['records']]
             n_records['目标记录：record ID'] = '\n'.join(records_ids)
-            n_records['结果链接'] = '<hr>'.join(urls)
+            n_records['结果链接'] = ' <hr> '.join(urls)
         if enhanced_body:
             n_records['消息主体+AI分析'] = enhanced_body
         if document_type:
