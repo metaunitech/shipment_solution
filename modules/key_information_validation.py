@@ -129,21 +129,21 @@ class KIValidation:
             if comments:
                 text += f'对于该字段，{comments}.'
             if examples:
-                text += f'例如：{str(examples)}'
+                text += f'例子（key是input，value是结果）：{str(examples)}'
             key_requirement_parts_texts.append(text)
         key_requirement_text = "\n".join(key_requirement_parts_texts)
         format_instruction = parser.get_format_instructions()
         missing_force_prompt = "" if not current_missing else f"当前的提取结果中缺少{current_missing}这几个字段，请从原文依据中提出。"
         prompt = (
-            f'# TASK: \n我现在有一个字典需要通过API上传，但是字典里有的字段的值不满足字段格式要求。我需要你按照字段的格式要求将我的字典值进行修正，字段名都保持不变\n'
+            f'# TASK: \n我现在有一个输入字典需要通过API上传，但是字典里有的字段的值不满足字段格式要求。我需要你按照字段的格式要求将我的字典值进行修正，字段名都保持不变\n'
             f'注意：对于KeyValueRequirements提到必须提取到值的字段{str(mandatory_keys)}，如果当前字典中为None或者字典中不存在，则从原文依据中重新提取字段值并加入字典。返回我JSON格式。\n'
             f'# Knowledge:\n'
             f'{"" if not extra_knowledge else extra_knowledge}'
             f'# KeyValueRequirements:\n{key_requirement_text}\n'
             f"今天的日期是：{datetime.datetime.now().strftime('%Y-%m-%d')}"
             f"# INPUT:\n"
-            f"原文依据: {str(content) + ';' + str(mutual_content)}"
-            f"输入字典：{json.dumps(res, indent=2, ensure_ascii=False)}\n"
+            f"原文依据: {str(content) + ';' + str(mutual_content)}\n"
+            f"输入字典：\n{json.dumps(res, indent=2, ensure_ascii=False)}\n"
             f"\n{missing_force_prompt}"
             f"\n{note}"
             f"YOUR ANSWER:\n"
