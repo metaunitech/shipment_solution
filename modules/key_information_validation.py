@@ -58,7 +58,7 @@ class KIValidation:
 
         format_instruction = parser.get_format_instructions()
         prompt = (
-            f'# TASK: \n我需要你帮我把我的类似日期的字符串输入变成一个格式化的日期字符串，格式为%Y-%m-%d. 如果输入没有年份，默认今天的年份。根据FORMAT_SCHEMA返回我JSON格式的结果\n'
+            f'# TASK: \n我需要你帮我把我的类似日期的字符串输入变成一个格式化的日期字符串，格式为%Y-%m-%d. 如果输入没有年份，默认今天的年份。根据FORMAT_SCHEMA返回我JSON格式的字典结果，字典里包含：formatted_date和reason\n'
             f"注：今天是{datetime.datetime.now().strftime('%YY-%MM-%DD')}，"
             f'{comments if comments else ""}\n'
             f'# FORMAT_SCHEMA:\n'
@@ -68,7 +68,7 @@ class KIValidation:
             f"{json.dumps(examples, indent=2, ensure_ascii=False) if examples else ''}\n"
             f"# INPUT:\n"
             f"输入：{input}\n"
-            f"YOUR ANSWER:\n"
+            f"YOUR ANSWER(JSON):\n"
             f"TS:{str(time.time() * 1000)}")
         logger.debug(prompt)
         res_raw = llm_ins.invoke(prompt)

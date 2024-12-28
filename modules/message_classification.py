@@ -22,7 +22,7 @@ class DocumentType(BaseModel):
         description='做出消息分类的原因。'
     )
     translated_content: str = Field(
-        description='根据船舶相关基础知识和提供的Knowledge精简地总结消息中缩写/参数提供的信息，合并同一条货盘（同样的货物）/船盘（同样的船名），但不要漏掉任何一个参数。'
+        description='根据船舶相关基础知识和提供的Knowledge精简地总结消息中包含的货盘（同样的货物）/船盘（同样的船名）的所有参数信息（可能分散在消息不同位置），数量和entry_count一致。'
     )
 
 
