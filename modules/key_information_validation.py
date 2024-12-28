@@ -152,6 +152,7 @@ class KIValidation:
             f"TS:{str(time.time() * 1000)}")
         try:
             # Invoke the LLM and parse the result
+            logger.debug(prompt)
             res_raw = llm_ins.invoke(prompt)
             res_content = res_raw.content
             logger.debug(res_content)

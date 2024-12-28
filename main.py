@@ -293,7 +293,7 @@ class ShipmentFlow:
 
         extra_knowledge = '\n'.join(extra_knowledge_list) if extra_knowledge_list else None
         document_type, reason, entry_count, translated_content = self.message_classifier.classify(content_str,
-                                                                              extra_knowledge=extra_knowledge)
+                                                                                                  extra_knowledge=extra_knowledge)
 
         return document_type, reason, entry_count, translated_content
 
@@ -321,7 +321,8 @@ class ShipmentFlow:
         _, contents_list = self.get_data_loader_context(document_loader)
         # contents_list = [json.dumps(i.__dict__, ensure_ascii=False, indent=2) for i in data]
         content_str = '\n'.join(contents_list)
-        content_str += f'\n原文得一些总结和分析：{extra_info}'
+        if extra_info:
+            content_str += f'\n# Reason: \n{extra_info}'
         if entry_count == 1:
             vessel_info_chunks, mutual_info, comment = [content_str], '', 'Only one entry'
         else:
@@ -355,7 +356,7 @@ class ShipmentFlow:
         return outs
 
     @retry(stop_max_attempt_number=2, wait_fixed=2000)
-    def validate_key_information(self, document_type, extraction_res):
+    def validate_key_information(self, document_type, extraction_res, content):
         logger.info("Starts to Validate results.")
         extra_knowledge_list = []
         if document_type == 'others':
@@ -423,14 +424,15 @@ class ShipmentFlow:
             logger.success(f"Added {job_id}")
             return
 
-    def update_jobs(self, job_id, msg_body, source, status, records_ids=None, document_type=None, logs=None, force_new=False):
+    def update_jobs(self, job_id, msg_body, source, status, records_ids=None, document_type=None, logs=None,
+                    force_new=False):
         n_records = {
             'id': job_id,
             '消息主体': msg_body,
             '数据源': source,
             '状态': status,
             'logs': logs if logs else "",
-            '任务最近更新时间': int(time.time()*1000)
+            '任务最近更新时间': int(time.time() * 1000)
         }
         if records_ids and document_type:
             table_id = self.tables[document_type]
@@ -510,7 +512,8 @@ class ShipmentFlow:
                     vessel_code = self.bx_handler.get_vessel(vid).get('job_info', {}).get('VesselCode')
                     logger.success(f"{vessel_code} already exists")
                     cur_res['船舶代码-ID'] = vessel_code
-                    cur_res['备注-REMARK'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[2] else ''])+f'\n无需新建船舶，{vessel_code}已存在。'
+                    cur_res['备注-REMARK'] = '\n==='.join([data[1] if data[1] else '', data[2] if data[
+                        2] else '']) + f'\n无需新建船舶，{vessel_code}已存在。'
                 if raw_text:
                     cur_res['原文依据'] = raw_text
 
@@ -756,8 +759,8 @@ class ShipmentFlow:
         extraction_res = self.extract_key_information(document_loader=document_loader,
                                                       document_type=document_type,
                                                       entry_count=entry_count,
-                                                      extra_info=reason+f'\nTranslated: {translated_content}')
-        content_str += f'\nTranslated: {translated_content}'
+                                                      extra_info=reason + f'\n# Translated: \n{translated_content}')
+        # content_str += f'\n# Translated: \n{translated_content}'
         output_res = {'extraction_res': extraction_res}
         if not extraction_res:
             self.update_jobs(job_id=job_id,
@@ -804,7 +807,7 @@ class ShipmentFlow:
                 self.update_jobs(job_id=job_id,
                                  msg_body=content_str,
                                  source=receive_type,
-                                 records_ids = records_ids,
+                                 records_ids=records_ids,
                                  document_type=document_type,
                                  status='插入数据',
                                  logs=f"数据成功插入飞书表")

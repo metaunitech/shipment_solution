@@ -40,6 +40,7 @@
   - “DEPTH MOULDED”表示船深。
   - “SUMMER SALT WATER”表达夏季海水，“DWT / DRAFT SUMMER SALT WATER 58,761 MT / 12.828 M”中前一个表示DWT，后一个表示夏季海水吃水。
   - “SWL 表示安全工作负荷（Safe Working Load）。例如：“4 x 30 MT SWL”表示船舶配备了4台起重机，每台的安全工作负荷为30吨。
+  - 船舶的TYPE 有GENERAL ,看到是GENERAL CARGO VSL, GENERAL都可以取值为GENERAL, 船舶的TYPE 有BULK ,看到是BULK VSL, BULK CARRIER都可以取值为BULK, 船舶的TYPE 有WOOD ,看到是WOOD VSL, WOOD CHIP, WOOD-CHIP VSL, 都可以取值为WOOD, 船舶的TYPE 有LOG ,看到是LOG VSL, LOGGED 都可以取值为LOG
 
 - **公司和联系人**
   - 船盘最前面或最后面的公司名一般是指OWNR COMPANY；如果一条信息包含多条船舶，则每个船舶的OWNR COMAPNY都是一样的。
@@ -47,13 +48,12 @@
   - 货盘前面后面或最后的公司名，或接在报货公司后面的公司名，是指报货公司，如果一条信息里包含多个货盘，则每个货盘的报货公司都取一样的。
 
 - **其他**
-  - “RTVG”或“RVG”都是表示待通知的意思，OPEN DATE值为空。
+  - “RTVG”或“RVG”都是表示OPEN DATE待通知的意思，OPEN DATE值为空。
   - “PPT”默认空船日期是当天，结束日期默认加五天。
   - 装运结束日期，默认加5天。如果有明确标识，则按照实际添加。
   - 如果文中出现“xxx MT /CQD”或者“CQD/xxx MT”，左边的是装率，右边的是卸率。
   - “货量里如果有22000/25000或22000-25000”，表示最少货量是22000，最多货量是25000。
 
-通过这些规则，可以更准确地解析和录入船舶邮件和货物报价中的信息。
 # Knowledge
 {extra_knowledge}
 
