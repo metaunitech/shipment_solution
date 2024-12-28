@@ -28,7 +28,7 @@ class DailyFlow:
             logger.info(f"Content: {content}")
             self.flow_ins.unit_flow(content=content,
                                     receive_id=email_id,
-                                    receive_type=f'Email_{name}')
+                                    source_name=f'Email_{name}')
 
     def main(self):
         res = self.get_email_list()
