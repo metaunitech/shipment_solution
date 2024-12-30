@@ -181,10 +181,15 @@ class KIValidation:
                     refined_dict['载重吨-DWT'] = refined_dict.get('载货吨-DWCC')
                 if 'SINGLE DECK' in rate_string:
                     refined_dict['甲板数-DECK'] = 'SD'
+                for mv_part in ['MV.', 'M/V.', 'M/V', 'MV', 'M.V']:
+                    if mv_part in refined_dict['船舶英文名称-ENGLISH-NAME']:
+                        vsl_name = refined_dict['船舶英文名称-ENGLISH-NAME'].sub(mv_part, '')
+                        refined_dict['船舶英文名称-ENGLISH-NAME'] = vsl_name
                 if not refined_dict.get('船舶中文名称-CHINESE-NAME'):
                     refined_dict['船舶中文名称-CHINESE-NAME'] = refined_dict['船舶英文名称-ENGLISH-NAME']
                 if 'PPT' in rate_string:
                     refined_dict['空船日期-OPEN-DATE'] = datetime.datetime.now().strftime('%Y-%m-%d')
+
 
             if document_type == "cargo_info":
                 l_rate, d_rate = self.parse_rates(rate_string=rate_string)
