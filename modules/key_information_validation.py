@@ -127,9 +127,9 @@ class KIValidation:
             comments = details_vals.get('comments')
             examples = details_vals.get('examples')
             if comments:
-                text += f'对于该字段，{comments}.'
+                text += f'对于该字段，{comments}'
             if examples:
-                text += f'例子（key是input，value是结果）：{str(examples)}'
+                text += f'我会用一组字典列表给你一些例子，其中的字典（key是输入，value是修改后的结果）：{str(examples)}'
             key_requirement_parts_texts.append(text)
         key_requirement_text = "\n".join(key_requirement_parts_texts)
         format_instruction = parser.get_format_instructions()
@@ -137,13 +137,13 @@ class KIValidation:
         prompt = (
             f'# TASK: \n我现在有一个输入字典需要通过API上传，但是字典里有的字段的值不满足字段格式要求。我需要你按照字段的格式要求将我的字典值进行修正，字段名都保持不变\n'
             f'原文中常用的数据展示形式为：<字段A>/<字段B>/<字段C> <ValueA>/<ValueB>/<ValueC>，请仔细检查提取出来的字段是否和表现形式一一对应。\n'
-            f'注意：对于KeyValueRequirements提到必须提取到值的字段{str(mandatory_keys)}，如果当前字典中为None或者字典中不存在，则从原文依据中重新提取字段值并加入字典。返回我JSON格式。\n'
-            f'# Knowledge:\n'
+            f'注意：对于KeyValueRequirements提到必须提取到值的字段{str(mandatory_keys)}，如果当前字典中为None或者字典中不存在，则从原文依据中重新提取字段值并加入字典。同时也要校验所有值为空的字段，在文中尝试提取并加入字典。返回我JSON格式。\n'
+            f"今天的日期是：{datetime.datetime.now().strftime('%Y-%m-%d')}，仅供参考，校验日期的时候可以借鉴。"
+            f'\n# Knowledge:\n'
             f'{"" if not extra_knowledge else extra_knowledge}'
-            f'# KeyValueRequirements:\n{key_requirement_text}\n'
-            f"今天的日期是：{datetime.datetime.now().strftime('%Y-%m-%d')}"
-            f"# INPUT:\n"
-            f"原文依据: {str(content) + ';' + str(mutual_content)}\n"
+            f'\n# KeyValueRequirements:\n{key_requirement_text}\n'
+            f"\n# INPUT:\n"
+            f"\n原文依据: \n{str(content) + ';' + (mutual_content if mutual_content else '')}\n"
             f"输入字典：\n{json.dumps(res, indent=2, ensure_ascii=False)}\n"
             f"\n{missing_force_prompt}"
             f"\n{note}"
@@ -190,7 +190,14 @@ class KIValidation:
                 if not refined_dict.get('船舶中文名称-CHINESE-NAME'):
                     refined_dict['船舶中文名称-CHINESE-NAME'] = refined_dict['船舶英文名称-ENGLISH-NAME']
                 if 'PPT' in rate_string:
+                    logger.warning("PPT found in rate_string.")
                     refined_dict['空船日期-OPEN-DATE'] = datetime.datetime.now().strftime('%Y-%m-%d')
+                try:
+                    if res.get('空船日期-OPEN-DATE') and datetime.datetime.strptime(res.get('空船日期-OPEN-DATE'), '%Y-%m-%d')-datetime.timedelta(days=1) >= datetime.datetime.now():
+                        logger.warning("Reformat to previous extraction result for OPEN-DATE")
+                        refined_dict['空船日期-OPEN-DATE'] = res.get('空船日期-OPEN-DATE')
+                except:
+                    pass
 
 
             if document_type == "cargo_info":

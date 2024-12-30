@@ -78,14 +78,17 @@ ship_info:
   空船日期-OPEN-DATE:
     type: datetime
     function: validate_date
-    comments: 船只空闲的日期，如果是None则改为今天的日期。必须校验是否是该对应的船只的空船日期。是一个日期，表示船只空闲可供租赁的日期，是一个时间区间的最开始（如果最开始比今天早，就取今天）或者具体的日期, 船盘如果写PPT，而默认空船日期是当天。 如果空船日期是一段时间的 如19-22JAN, 则空船日期取最前面的日期1-19; OPEN KANMON-BUSAN RANGE 2TH ／OCT的空船日期是10-02. 注意：如果日期没有提到年份，结合当前时间推算年份。船盘空船日期 EAR JAN,EAR FEB, 如果今天是2025-12-20则空船日期为2025-1-1,2025-2-1以此类推，因为2024-1-1已经过去了，所以是2025年.
-    examples:
-      - { "19-22JAN (假如今天是2024-12-20)": "2025-1-19" }
+#    comments: 船只空闲的日期，如果是None则改为今天的日期。必须校验是否是该对应的船只的空船日期。是一个日期，表示船只空闲可供租赁的日期，是一个时间区间的最开始（如果最开始比今天早，就取今天）或者具体的日期, 船盘如果写PPT，而默认空船日期是当天。 如果空船日期是一段时间的 如19-22JAN, 则空船日期取最前面的日期1-19; OPEN KANMON-BUSAN RANGE 2TH ／OCT的空船日期是10-02. 注意：如果日期没有提到年份，结合当前时间推算年份。船盘空船日期 EAR JAN,EAR FEB, 如果今天是2025-12-20则空船日期为2025-1-1,2025-2-1以此类推，因为2024-1-1已经过去了，所以是2025年.
+    comments: 船只空闲的日期，校验1.结合今天的日期判断，如果当前提取出来的空船日期已经过去，将其改为今日。否则保持不变 2.是一个日期 3.船盘如果写PPT为当天 4. 校验年份，如果年份早于今年则根据原文依据修改成正确的年月日 5. 结合当前的船舶英文名和原文，校验是否是该船舶的空船日期
+#    examples:
+#      - { "19-22JAN (今日假如是2024-12-20)": "2025-1-19" }
     mandatory: 1
   载货吨-DWCC:
     type: float
+    comments: 校验DWCC是否小于等于DWT，如果不是则重新结合原文提取DWCC的值。如果文中没有提到DWCC，不用返回值。
   载重吨-DWT:
     type: float
+    comments: 载重吨，一般会在DWT字段附近，船盘中一般都会包含。
   总吨位-GRT:
     type: float
   净吨位-NRT:
@@ -100,8 +103,16 @@ ship_info:
     type: float
   舱口数量-HATCH:
     type: int
+    comments: 结合原文校验该数量。原文中一般会有如下几种表达方式，针对对应形式：1. <numA>HA/<num>HO，校验值是否是numA 2. 文中会列出每个hatch详细的cpm/mt参数，校验字段数量是否等于Hatch的总数
+    examples:
+      - {'Hatch 1/2/3/4 1.59/11.47/11.47/11.49 mt / m2': '4'}
+      - {'No Hatch': '0'}
   舱位数量-HOLD:
     type: int
+    comments: 结合原文校验该数量。原文中一般会有如下几种表达方式，针对对应形式：1. <numA>HA/<numB>HO，校验值是否是numB 2. 文中会列出每个hold详细的cpm/mt参数，校验字段数量是否等于Hold的总数
+    examples:
+      - { 'Hold 1/2/3/4 1.59/11.47/11.47/11.49 mt / m2': '4' }
+      - { 'No Hold': '0' }
   抓斗-GRAB:
     type: str
     comments: 船舶资料只写了YES就返回NIL，例如：“GRABS：YES”。如果船舶资料中有类似：GRAB:2*8CBM,2*12CBM，输出2*12+2*12；如果是GRAB4*8,输出4*8,一般GRAB在4个以下
@@ -150,9 +161,12 @@ ship_info:
       - {' TRIPLE DECT或TRD或三甲板': 'TRD'}
   船舶类型-TYPE:
     type: str
-    comment: 从如下几个选项里选：[GENERAL, BULK, WOOD, LOG]
+    comment: 从如下几个选项里选择一个：[GENERAL, BULK, WOOD, LOG]
     example:
       - { "GENERAL CARGO VSL": "GENERAL" }
       - { "BULK VSL": "BULK" }
       - { "WOOD VSL": "WOOD" }
       - { "LOG VSL": "LOG" }
+  船东-OWNER:
+    type: str
+    comment: 校验是否是船东，一般是指OWNR COMPANY。如果一条信息包含多条船舶，则每个船舶的OWNR COMPANY都是一样的。

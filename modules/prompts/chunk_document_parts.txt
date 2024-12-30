@@ -97,7 +97,7 @@ Branch office add: 574 Nguyen Cong Hoan Street, Dong Khe Ward, Ngo Quyen  Distri
 Email : haitintracoship@gmail.com    www.haitintraco.com
 
 - 拆分后的parts：
-    - mutual_info(共同的信息块)：
+    - mutual_info(所有船舶/货物共享的参数信息块)：
 PLS ARRANGE SUITABLE CGO FOR THE FLW TONNAGE:
 --
 THANKS & BEST REGARDS,

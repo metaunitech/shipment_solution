@@ -28,7 +28,7 @@
       - SUMMER SALT WATER表达夏季海水，DWT / DRAFT SUMMER SALT WATER 58,761 MT / 12.828 M中前一个表示DWT，后一个表示夏季海水吃水。
       - SWL 表示安全工作负荷（SWL，Safe Working Load）。例如：4 x 30 MT SWL 表示船舶配备了4台起重机（或吊机），每台的安全工作负荷（SWL，Safe Working Load）为30吨（MT，Metric Ton）。
       - 如果船盘里有写RTVG, RVG都是表示待通知的意思 不知道什么时候空，OPEN DATE值为空
-      - - 对于DWT 11,200 MT ON 7.0M, 7.0指的是吃水为7
+      - 对于DWT 11,200 MT ON 7.0M, 7.0指的是吃水为7
 # Knowledge
 {extra_knowledge}
 

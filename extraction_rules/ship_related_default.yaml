@@ -33,7 +33,7 @@ keys:
   - 建造年份-BUILT-YEAR:
       - 直接返回年份（4位数字），忽略月份
   - 载货吨-DWCC:
-      - 直接返回Decimal(18,6)结果，DWCC的数字就是载货吨
+      - 直接返回Decimal(18,6)结果，DWCC的数字就是载货吨，如果文中没有提及返回无，一般小于等于DWT
   - 载重吨-DWT:
       - 直接返回float结果，通常是DWT附近的数字.如果文中没出现DWT，和重量相关的数值如果没有说明默认为DWT。
   - 总吨位-GRT:
@@ -47,10 +47,10 @@ keys:
   - 型深-DEPTH:
       - 直接返回float结果, 默认单位是M.文中通常会以DEPTH MOULDED介绍
   - 船级-CLASS
-  - 舱口数量-HATCH:
-      - 直接返回int结果。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）例如：3HO/3HA表示3个舱口。如果船舶资料上没有明显的几H几H的然后列出了几个以CBM为单位的东西，可以根据如 NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH. 舱口数如果船规没有别的地方写明，默认和舱位数一样
+  - 舱位数量-HATCH:
+      - 直接返回int结果。如果文中出现Hatch字样，一定有Hatch数量。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）例如：3HO/3HA表示3个舱口。如果文中分别列出Hatch的具体参数（CBM为单位），根据参数个数推算出Hatch数量。例如： NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH.
   - 舱位数量-HOLD:
-      - 直接返回int结果。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）例如：3HO/3HA表示3个舱位。如果船舶资料上没有明显的几H几H的然后列出了几个以CBM为单位的东西，可以根据如 NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH. 舱口数如果船规没有别的地方写明，默认和舱位数一样
+      - 直接返回int结果。如果文中出现hold字样，一定有hold数量。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）例如：3HO/3HA表示3个舱位。如果文中分别列出Hold的具体参数（CBM为单位），根据参数个数推算出Hold数量可以根据如 NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH.
   - 吊机-GEAR:
       - 船舶资料里的如果体现GEARLESS 或G.LESS或GLESS, 则GEAR 值填 None. 如果仅说了YES，返回None，例如：“GEAR：YES”。如果原文类似：<CARGO GEAR： YES X 4 X 30 MT SWL> 返回 G4*30，以此类推。如果仅说了YES，返回None，CRANE也表示吊机，25MT*2 CRANE返回25MT*2
       - str, <Number of Gear1> * <SWL1> + <Number of Gear2> * <SWL2>（如果有多种GEAR）或者None
