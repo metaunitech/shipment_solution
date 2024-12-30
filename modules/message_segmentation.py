@@ -38,7 +38,7 @@ class MessageSegmenter:
                           openai_api_key=API_TOKEN,
                           openai_api_base="https://open.bigmodel.cn/api/paas/v4/")
 
-    @retry(stop_max_attempt_number=2, wait_fixed=2000)
+    @retry(stop_max_attempt_number=5, wait_fixed=2000)
     def segment(self, content, content_type, entry_count):
         prompt_path = self.__prompt_base_dir / 'chunk_document_parts.txt'
         with open(prompt_path, 'r', encoding='utf-8') as f:
