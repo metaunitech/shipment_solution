@@ -342,8 +342,8 @@ class ShipmentFlow:
         extra_knowledge = '\n'.join(extra_knowledge_list) if extra_knowledge_list else None
         for vessel_info_chunk in tqdm.tqdm(vessel_info_chunks):
             text_lines = [
-                "参考原文：" + content_str,
-                '本次提取任务从原文中以下部分提取一个: \n' + vessel_info_chunk
+                "参考原文：\n" + content_str,
+                '本次提取任务从原文中以下部分提取: \n' + vessel_info_chunk
             ] if entry_count > 1 else [content_str]
             modified_outputs = self.kie_instance(rule_config_path=str(config_path),
                                                  file_type=document_type,
