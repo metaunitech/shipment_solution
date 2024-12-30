@@ -183,7 +183,9 @@ class KIValidation:
                     refined_dict['甲板数-DECK'] = 'SD'
                 for mv_part in ['MV.', 'M/V.', 'M/V', 'MV', 'M.V']:
                     if mv_part in refined_dict['船舶英文名称-ENGLISH-NAME']:
-                        vsl_name = refined_dict['船舶英文名称-ENGLISH-NAME'].sub(mv_part, '')
+                        vsl_name = re.sub(rf'{mv_part}', '', refined_dict['船舶英文名称-ENGLISH-NAME'])
+                        logger.warning(f'Removed {mv_part} in name. Current: {vsl_name}')
+                        # vsl_name = refined_dict['船舶英文名称-ENGLISH-NAME'].sub(mv_part, '')
                         refined_dict['船舶英文名称-ENGLISH-NAME'] = vsl_name
                 if not refined_dict.get('船舶中文名称-CHINESE-NAME'):
                     refined_dict['船舶中文名称-CHINESE-NAME'] = refined_dict['船舶英文名称-ENGLISH-NAME']
