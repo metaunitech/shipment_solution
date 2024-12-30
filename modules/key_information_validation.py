@@ -136,6 +136,7 @@ class KIValidation:
         missing_force_prompt = "" if not current_missing else f"当前的提取结果中缺少{current_missing}这几个字段，请从原文依据中提出。"
         prompt = (
             f'# TASK: \n我现在有一个输入字典需要通过API上传，但是字典里有的字段的值不满足字段格式要求。我需要你按照字段的格式要求将我的字典值进行修正，字段名都保持不变\n'
+            f'原文中常用的数据展示形式为：<字段A>/<字段B>/<字段C> <ValueA>/<ValueB>/<ValueC>，请仔细检查提取出来的字段是否和表现形式一一对应。\n'
             f'注意：对于KeyValueRequirements提到必须提取到值的字段{str(mandatory_keys)}，如果当前字典中为None或者字典中不存在，则从原文依据中重新提取字段值并加入字典。返回我JSON格式。\n'
             f'# Knowledge:\n'
             f'{"" if not extra_knowledge else extra_knowledge}'
