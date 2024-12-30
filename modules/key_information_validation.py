@@ -180,6 +180,10 @@ class KIValidation:
                     refined_dict['载重吨-DWT'] = refined_dict.get('载货吨-DWCC')
                 if 'SINGLE DECK' in rate_string:
                     refined_dict['甲板数-DECK'] = 'SD'
+                if not refined_dict.get('船舶中文名称-CHINESE-NAME'):
+                    refined_dict['船舶中文名称-CHINESE-NAME'] = refined_dict['船舶英文名称-ENGLISH-NAME']
+                if 'PPT' in rate_string:
+                    refined_dict['空船日期-OPEN-DATE'] = datetime.datetime.now().strftime('%Y-%m-%d')
 
             if document_type == "cargo_info":
                 l_rate, d_rate = self.parse_rates(rate_string=rate_string)
@@ -188,6 +192,9 @@ class KIValidation:
                     refined_dict['装率-L-RATE'] = l_rate
                 if d_rate:
                     refined_dict['卸率-D-RATE'] = d_rate
+                if 'PPT' in rate_string:
+                    refined_dict['装运开始日期-LAY-DATE'] = datetime.datetime.now().strftime('%Y-%m-%d')
+                    refined_dict['装运结束日期-CANCELING-DATE'] = (datetime.datetime.now()+datetime.timedelta(days=1)).strftime('%Y-%m-%d')
             note = ''
             for k in ['装运开始日期-LAY-DATE', '装运结束日期-CANCELING-DATE', '空船日期-OPEN-DATE']:
                 if k in refined_dict.keys() and datetime.datetime.strptime(refined_dict[k],
