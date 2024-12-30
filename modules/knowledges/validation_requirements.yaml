@@ -104,9 +104,9 @@ ship_info:
     type: int
   抓斗-GRAB:
     type: str
-    comments: 船舶资料只写了YES就返回None，例如：“GRABS：YES”。如果船舶资料中有类似：GRAB:2*8CBM,2*12CBM，输出2*12+2*12；如果是GRAB4*8,输出4*8,一般GRAB在4个以下
+    comments: 船舶资料只写了YES就返回NIL，例如：“GRABS：YES”。如果船舶资料中有类似：GRAB:2*8CBM,2*12CBM，输出2*12+2*12；如果是GRAB4*8,输出4*8,一般GRAB在4个以下
     examples:
-      - { "GRABS：YES": "None" }
+      - { "GRABS：YES": "NIL" }
       - { "GRAB:2*8CBM,2*12CBM": "2*12+2*12" }
   吊机-GEAR:
     type: str
@@ -116,9 +116,10 @@ ship_info:
       - { "G.LESS或GLESS": "NIL" }
       - { "CARGO GEAR：YES": "NIL" }
       - { "CARGO GEAR：YES X 4 X 30 MT SWL": "G4*30" }
+      - {"25MT*2 CRANE": "25MT*2"}
   船舶英文名称-ENGLISH-NAME:
     type: str
-    comment: 必须提取到值,通常在每个片段的开头。通常以MV/MV./M/V开头，或者其他部分是船的参数而有一个很像名字的词语，返回结果中把MV/MV./M/V省略，只输出后面的船名。
+    comment: 通常以MV/MV./M/V开头，或者其他部分是船的参数而有一个很像名字的词语，返回结果中把MV/MV./M/V省略,**绝对不能包含MV**，只输出后面的船名。
     mandatory: 1
   空船港口-OPEN-PORT:
     type: str
@@ -141,9 +142,17 @@ ship_info:
       - {'G/B CAPA 17507CBM/16362CBM;': '16362'}
   甲板数-DECK:
     type: str
-    comment: 从如下几个选项里选：[NIL, SD, TD, TRD]船舶资料上若体现SINGLE DECK或SD,DECCK返回”SD“; 资料上若显示TWEEN DECK 或TD或双甲板,DECK，返回”TD“; 若资料上显示 TRIPLE DECT或TRD或三甲板，DECK 返回”TRD“
+    comment: 从如下几个选项里选：[NIL, SD, TD, TRD].船舶资料上若体现SINGLE DECK或SD,DECCK返回”SD“; 资料上若显示TWEEN DECK 或TD或双甲板,DECK，返回”TD“; 若资料上显示 TRIPLE DECT或TRD或三甲板，DECK 返回”TRD“
     examples:
       - {'SINGLE DECK': 'SD'}
       - {'SD,DECCK': 'SD'}
       - {'TWEEN DECK 或TD或双甲板': 'TD'}
       - {' TRIPLE DECT或TRD或三甲板': 'TRD'}
+  船舶类型-TYPE:
+    type: str
+    comment: 从如下几个选项里选：[GENERAL, BULK, WOOD, LOG]
+    example:
+      - { "GENERAL CARGO VSL": "GENERAL" }
+      - { "BULK VSL": "BULK" }
+      - { "WOOD VSL": "WOOD" }
+      - { "LOG VSL": "LOG" }

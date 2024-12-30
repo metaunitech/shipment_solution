@@ -24,7 +24,8 @@ background:
   - L/B/D 116.99/19.6/14 L指的是船长，B是船宽，D是型深。分别是116.99，19.6，14
 keys:
 #  - 船舶代码-ID
-  - 船舶类型-TYPE
+  - 船舶类型-TYPE:
+      - 船舶的TYPE 有GENERAL ,看到是GENERAL CARGO VSL, GENERAL都可以取值为GENERAL, 船舶的TYPE 有BULK ,看到是BULK VSL, BULK CARRIER都可以取值为BULK, 船舶的TYPE 有WOOD ,看到是WOOD VSL, WOOD CHIP, WOOD-CHIP VSL, 都可以取值为WOOD, 船舶的TYPE 有LOG ,看到是LOG VSL, LOGGED 都可以取值为LOG
   - 船舶英文名称-ENGLISH-NAME:
       - 可租赁船的英文名，一定会出现在船盘中, 通常在每个片段的开头，取值取到明显的分隔符例如逗号等。通常以MV开头MV <英文>+<数字>或者MV <英文>，也会有中文的船名，返回MV后面的名字.MV或MV.或M/V是动力船舶的标记，经常会出现在船名的前面，提取时船名时不要显示。例如：对于MV ELIJAH，船舶英文名称为：ELIJAH；对于MV GAO XIN 15 DWCC 6700 OPEN NIIGATA，船舶英文名称为：GAO XIN 15；ORIENTAL SOURCES 10.3K HAIPHONG,VIETNAM 24 DEC KRIS TWEEN DECK/FE-SEA，船舶英文名称为：ORIENTAL SOURCES;MV ZHE HAI 515, 50K,  WILL OPEN MINA ZAYED，船舶英文名称为：ZHE HAI 515
   - 船舶中文名称-CHINESE-NAME:
@@ -47,11 +48,11 @@ keys:
       - 直接返回float结果, 默认单位是M.文中通常会以DEPTH MOULDED介绍
   - 船级-CLASS
   - 舱口数量-HATCH:
-      - 直接返回int结果。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）。如果船舶资料上没有明显的几H几H的然后列出了几个以CBM为单位的东西，可以根据如 NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH. 舱口数如果船规没有别的地方写明，默认和舱位数一样
+      - 直接返回int结果。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）例如：3HO/3HA表示3个舱口。如果船舶资料上没有明显的几H几H的然后列出了几个以CBM为单位的东西，可以根据如 NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH. 舱口数如果船规没有别的地方写明，默认和舱位数一样
   - 舱位数量-HOLD:
-      - 直接返回int结果。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）。如果船舶资料上没有明显的几H几H的然后列出了几个以CBM为单位的东西，可以根据如 NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH. 舱口数如果船规没有别的地方写明，默认和舱位数一样
+      - 直接返回int结果。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）例如：3HO/3HA表示3个舱位。如果船舶资料上没有明显的几H几H的然后列出了几个以CBM为单位的东西，可以根据如 NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH. 舱口数如果船规没有别的地方写明，默认和舱位数一样
   - 吊机-GEAR:
-      - 船舶资料里的如果体现GEARLESS 或G.LESS或GLESS, 则GEAR 值填 None. 如果仅说了YES，返回None，例如：“GEAR：YES”。如果原文类似：<CARGO GEAR： YES X 4 X 30 MT SWL> 返回 G4*30，以此类推。如果仅说了YES，返回None
+      - 船舶资料里的如果体现GEARLESS 或G.LESS或GLESS, 则GEAR 值填 None. 如果仅说了YES，返回None，例如：“GEAR：YES”。如果原文类似：<CARGO GEAR： YES X 4 X 30 MT SWL> 返回 G4*30，以此类推。如果仅说了YES，返回None，CRANE也表示吊机，25MT*2 CRANE返回25MT*2
       - str, <Number of Gear1> * <SWL1> + <Number of Gear2> * <SWL2>（如果有多种GEAR）或者None
   - 抓斗-GRAB:
       -船舶资料只写了YES就返回None，例如：“GRABS：YES”。如果船舶资料中有类似：GRAB:2*8CBM,2*12CBM，输出2*12+2*12；如果是GRAB4*8,输出4*8,一般GRAB在4个以下
