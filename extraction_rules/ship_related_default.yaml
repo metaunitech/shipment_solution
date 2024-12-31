@@ -47,7 +47,7 @@ keys:
   - 型深-DEPTH:
       - 直接返回float结果, 默认单位是M.文中通常会以DEPTH MOULDED介绍
   - 船级-CLASS
-  - 舱位数量-HATCH:
+  - 舱口数量-HATCH:
       - 直接返回int结果。如果文中出现Hatch字样，一定有Hatch数量。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）例如：3HO/3HA表示3个舱口。如果文中分别列出Hatch的具体参数（CBM为单位），根据参数个数推算出Hatch数量。例如： NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH.
   - 舱位数量-HOLD:
       - 直接返回int结果。如果文中出现hold字样，一定有hold数量。一般来说船舶资料里会明确几个H（Hatch）几个H（HOLD）例如：3HO/3HA表示3个舱位。如果文中分别列出Hold的具体参数（CBM为单位），根据参数个数推算出Hold数量可以根据如 NO. 1. 12,361.2 CBM NO. 2. 15,976.4 CBM NO. 3. 14,510.6 CBM NO. 4. 15,971.0 CBM NO. 5. 13,541.1 CBM) 得出是5个HOLD,5个HATCH.
