@@ -1,3 +1,5 @@
+import time
+
 import tqdm
 
 from main import ShipmentFlow
@@ -7,10 +9,10 @@ from loguru import logger
 
 
 class DailyFlow:
-    def __init__(self):
+    def __init__(self, timeout=3*60*60):
         self.email_handler = EmailHelper(Path(__file__).parent / 'configs' / 'emails.yaml')
         self.flow_ins = ShipmentFlow(Path(__file__).parent / 'configs' / 'feishu_config.yaml')
-
+        self.timeout = timeout
     def get_email_list(self):
         res = {}
         for name in self.email_handler.all_emails.keys():
@@ -31,8 +33,13 @@ class DailyFlow:
                                     source_name=f'Email_{name}')
 
     def main(self):
+        start_ts = time.time()
         res = self.get_email_list()
         for name in res:
+            if time.time() - start_ts >= self.timeout:
+                logger.error("Exceed timeout. Quit")
+                return
+            logger.info(f"Still have {self.timeout- time.time()+start_ts} seconds.")
             self.register_tasks(name, res[name])
 
 
