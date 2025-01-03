@@ -138,7 +138,6 @@ ship_info:
     mandatory: 1
     examples:
       - { 'MV HAPPY TRADER DWCC 27,200MTS ==== SHUAIBA 23 DEC': 'SHUAIBA' }
-
   散装舱容-GRAIN-CAPACITY:
     type: float
     comment: 例如：Capacity G/B或G/B,或CAPA G/B Capacity G/B <散装舱容>/<包装舱容>cbm.G表示散装舱容,返回/左边的数字。CBM是单位表示立方，不用输出单位

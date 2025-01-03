@@ -710,6 +710,9 @@ class ShipmentFlow:
         data = document_loader.load()
         contents_list = [i.page_content for i in data]
         content_str = '\n'.join(contents_list)
+        if '系统退信/The email is returned' in content_str:
+            logger.error("系统退信，跳过")
+            return output_res
         job_id = task_id if task_id else f"{source_name}_{receive_id}"
         existing_job = self.add_job(job_id=job_id, msg_body=content_str, source=source_name)
         if existing_job:
