@@ -58,7 +58,7 @@ class KIValidation:
 
         format_instruction = parser.get_format_instructions()
         prompt = (
-            f'# TASK: \n我需要你帮我把我的类似日期的字符串输入变成一个格式化的日期字符串，格式为%Y-%m-%d. 如果输入没有年份，默认今天的年份。根据FORMAT_SCHEMA返回我JSON格式的字典结果，字典里包含：formatted_date和reason\n'
+            f'# TASK: \n我需要你帮我把我的类似日期的字符串输入校验并变成一个格式化的日期字符串，格式为%Y-%m-%d. 如果输入没有年份，默认今天的年份。根据FORMAT_SCHEMA返回我JSON格式的字典结果，字典里包含：formatted_date和reason\n'
             f"注：今天是{datetime.datetime.now().strftime('%YY-%MM-%DD')}，"
             f'{comments if comments else ""}\n'
             f'# FORMAT_SCHEMA:\n'
@@ -68,7 +68,9 @@ class KIValidation:
             f"{json.dumps(examples, indent=2, ensure_ascii=False) if examples else ''}\n"
             f"# INPUT:\n"
             f"输入：{input}\n"
-            f"YOUR ANSWER(JSON):\n"
+            f'# FORMAT_SCHEMA:\n'
+            f"{format_instruction}\n"
+            f"YOUR ANSWER(Result string in JSON Format only):\n"
             f"TS:{str(time.time() * 1000)}")
         logger.debug(prompt)
         res_raw = llm_ins.invoke(prompt)
@@ -199,7 +201,6 @@ class KIValidation:
                 except:
                     pass
 
-
             if document_type == "cargo_info":
                 l_rate, d_rate = self.parse_rates(rate_string=rate_string)
                 logger.info(f"LDRATE: {l_rate} {d_rate}")
@@ -212,11 +213,17 @@ class KIValidation:
                     refined_dict['装运结束日期-CANCELING-DATE'] = (datetime.datetime.now()+datetime.timedelta(days=1)).strftime('%Y-%m-%d')
             note = ''
             for k in ['装运开始日期-LAY-DATE', '装运结束日期-CANCELING-DATE', '空船日期-OPEN-DATE']:
-                if k in refined_dict.keys() and datetime.datetime.strptime(refined_dict[k],
-                                                                           "%Y-%m-%d")+datetime.timedelta(days=1) < datetime.datetime.now():
-                    refined_dict[k] = None
-                    note += f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}"
-                    logger.error(f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}")
+                if k in refined_dict.keys():
+                    try:
+                        date_val = datetime.datetime.strptime(refined_dict[k], "%Y-%m-%d")
+                        if date_val + datetime.timedelta(days=1) < datetime.datetime.now():
+                            refined_dict[k] = None
+                            note += f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}\n"
+                            logger.error(f"{k} should be later than {datetime.datetime.now().strftime('%Y-%m-%d')}")
+                    except:
+                        note+= f"Current {k}:{refined_dict[k]} not in datetime format. Need reformat.\n"
+                        logger.error(f"Current {k}:{refined_dict[k]} not in datetime format. Need reformat.")
+                        refined_dict[k] = None
 
             # Check if the keys are modified
             # if any([i not in res.keys() for i in refined_dict.keys()]):

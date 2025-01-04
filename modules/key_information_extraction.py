@@ -268,9 +268,15 @@ YOUR ANSWER:
                                                 f"{w} is a mandatory word for {_target_key}. Missing thus skipped.")
                                             to_remove_key_parts.append(_target_key)
                                 for w in optional_keywords:
-                                    search_res = re.search(rf"\n*(.*?{w}.*?)\n*", txt)
+                                    w = w.upper()
+                                    search_res = re.search(rf"\n*(.*?{w}.*)\n*?", txt,flags=re.MULTILINE)
+                                    logger.debug(rf"\n*(.*?{w}.*)\n*?")
+                                    logger.debug(txt)
+                                    logger.debug(search_res)
                                     if search_res:
                                         key_possible_area_keywords.append(search_res.group(1))
+                                        logger.success(
+                                            f"{w} is a optional regex for {_target_key}. Possibly in {search_res.group(1)}")
                     # Add keyword and key def.
                     if isinstance(i, str):
                         todo_keys.append(i)
@@ -284,7 +290,7 @@ YOUR ANSWER:
                         if key_possible_area_keywords:
                             logger.warning(f"Found key_possible_area:{key_possible_area_keywords}")
                             i[_target_key][
-                                0] += f'，本字段可能出现在如下句子附近（也有可能不存在，请结合上下文理解并提取）：{";".join(key_possible_area_keywords)}'
+                                0] += f'\n{_target_key}可能出现在如下句子附近（也有可能不存在，请结合上下文理解并提取）：{";".join(key_possible_area_keywords)}'
                         todo_keys.append(_target_key)
                         key_definitions.update({_target_key: key_details[0]})
 

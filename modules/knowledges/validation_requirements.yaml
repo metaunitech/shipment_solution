@@ -20,7 +20,7 @@ cargo_info:
     mandatory: 1
   装货港口-L-PORT:
     type: str
-    comments: 返回港口大写英文,通常在如下格式中是左边那个：<装货港口缩写>/(-)<卸货港口缩写>。
+    comments: 返回港口大写英文,通常在如下格式中是**左边**那个：<装货港口缩写>/(-)<卸货港口缩写>，注意，如果有<港口>,<国家>，返回<港口>即可。
     examples:
       - { 'DANGJIN/OSAKA': "DANGJIN" }
       - { "son duong, vietnam / belawan, indonesa": "SON DUONG, VIETNAM" }
@@ -29,7 +29,7 @@ cargo_info:
     mandatory: 1
   卸货港口-D-PORT:
     type: str
-    comments: 返回港口大写英文,通常在如下格式中是右边那个：<装货港口缩写>/(-)<卸货港口缩写>
+    comments: 返回港口大写英文,通常在如下格式中是**右边**那个：<装货港口缩写>/(-)<卸货港口缩写>，注意，如果有<港口>,<国家>，返回<港口>即可
     examples:
       - { 'DANGJIN/OSAKA': "OSAKA" }
       - { "son duong, vietnam / belawan, indonesa": "BELAWAN, INDONESA" }
@@ -134,7 +134,7 @@ ship_info:
     mandatory: 1
   空船港口-OPEN-PORT:
     type: str
-    comment: 必须提取到值, 返回大写的港口名字，通常船盘文档中出现的港口就是空船港口。
+    comment: 必须提取到值, 返回大写的港口名字，通常船盘文档中出现的港口就是空船港口，注意，如果有<港口>,<国家>，返回<港口>即可。
     mandatory: 1
     examples:
       - { 'MV HAPPY TRADER DWCC 27,200MTS ==== SHUAIBA 23 DEC': 'SHUAIBA' }
