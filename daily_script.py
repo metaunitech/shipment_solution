@@ -1,4 +1,6 @@
+import json
 import time
+import traceback
 
 import tqdm
 
@@ -9,10 +11,11 @@ from loguru import logger
 
 
 class DailyFlow:
-    def __init__(self, timeout=3*60*60):
+    def __init__(self, timeout=3 * 60 * 60):
         self.email_handler = EmailHelper(Path(__file__).parent / 'configs' / 'emails.yaml')
         self.flow_ins = ShipmentFlow(Path(__file__).parent / 'configs' / 'feishu_config.yaml')
         self.timeout = timeout
+
     def get_email_list(self):
         res = {}
         for name in self.email_handler.all_emails.keys():
@@ -28,9 +31,15 @@ class DailyFlow:
                 continue
             content = f"标题：{subject}\n FROM: {sender}\n RECEIVE_DATE: {date}\n CONTENT: {m_content}"
             logger.info(f"Content: {content}")
-            self.flow_ins.unit_flow(content=content,
-                                    receive_id=email_id,
-                                    source_name=f'Email_{name}')
+            try:
+                out = self.flow_ins.unit_flow(content=content,
+                                              receive_id=email_id,
+                                              source_name=f'Email_{name}')
+                logger.success(f"{json.dumps(out, indent=4, ensure_ascii=False)}")
+            except Exception as e:
+                logger.error(e)
+                logger.debug(traceback.format_exc())
+                continue
 
     def main(self):
         start_ts = time.time()
@@ -39,7 +48,7 @@ class DailyFlow:
             if time.time() - start_ts >= self.timeout:
                 logger.error("Exceed timeout. Quit")
                 return
-            logger.info(f"Still have {self.timeout- time.time()+start_ts} seconds.")
+            logger.info(f"Still have {self.timeout - time.time() + start_ts} seconds.")
             self.register_tasks(name, res[name])
 
 
