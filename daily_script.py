@@ -12,13 +12,17 @@ from loguru import logger
 import os
 
 # 确保 logs 文件夹存在
-log_dir = "logs"
+log_dir = Path(__file__).parent / 'logs'
 os.makedirs(log_dir, exist_ok=True)
 
 # 设置 loguru 日志处理器
 logger.remove()  # 移除默认的处理器，防止重复打印
+start_time_str = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
+log_file_name = f"{start_time_str}.log"
+log_file_path = f"{log_dir}/{log_file_name}"
+
 logger.add(
-    f"{log_dir}/{{time:YYYY-MM-DD}}.log",  # 日志文件路径和名称
+    f"{log_file_path}",  # 日志文件路径和名称，使用运行开始时间命名
     format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}",  # 日志格式
     rotation="00:00",  # 每天午夜轮换日志文件
     compression="zip",  # 压缩旧的日志文件
@@ -30,7 +34,6 @@ logger.add(
     colorize=True,  # 控制台输出时使用颜色
     level="DEBUG"
 )
-
 class DailyFlow:
     def __init__(self, timeout=3 * 60 * 60):
         self.email_handler = EmailHelper(Path(__file__).parent / 'configs' / 'emails.yaml')
