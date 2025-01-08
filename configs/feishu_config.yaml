@@ -1,19 +1,25 @@
 #app_id: cli_a67a6821cb7e100d
-app_id: cli_a7dc48ca347c900d
+#app_id: cli_a7dc48ca347c900d
+app_id: cli_a7f758e6b8765013
 
 #app_secret: ewQv9QsRP82WsHATIHS8egqVvcTSNlc8
-app_secret: Mu1PbrmU763wmcWisQQWVbQTQWiXWDHr
+#app_secret: Mu1PbrmU763wmcWisQQWVbQTQWiXWDHr
+app_secret: 2M8Itxlgta7uFeYEGy4XCfabuOYJbQRz
 #app_token: B7XnbQTtLapDfDsJj27c7ZgQnLd
-app_token: O2Q6bNHULa3HxusXxCNc9J9KnHg
+#app_token: O2Q6bNHULa3HxusXxCNc9J9KnHg
+app_token: MjG1wtfdJiAwolkV1ubc05v5nbc
 template:
 #  rich_text_general_id: AAq7OhvOhSJB2
   rich_text_general_id: AAqjLmvtfKQNo
 table:
 #  ship_info: tbly9gtTypeOLQ8Q
-  ship_info: tblxWMRi7KAWhPDp
+#  ship_info: tblxWMRi7KAWhPDp
+  ship_info: tbl1Pd2w1yS9mckJ
 #  cargo_info: tblSsCLLIEXguHpk
-  cargo_info: tblbEvfQAM577e3J
-  inputs_status: tblowlKy1UIzilNU
+#  cargo_info: tblbEvfQAM577e3J
+  cargo_info: tblV6GsrBqwtmXgM
+#  inputs_status: tblowlKy1UIzilNU
+  inputs_status: tblsnl2rn3gqV5hJ
 view:
   inputs_status: vewPgUKpd6
 chat_id:
