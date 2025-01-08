@@ -37,7 +37,7 @@ class MessageClassifier:
                           openai_api_key=API_TOKEN,
                           openai_api_base="https://open.bigmodel.cn/api/paas/v4/")
 
-    def classify(self, content, extra_knowledge=None):
+    def classify(self, content, extra_knowledge=None, num_vote=3):
         logger.info(f"Starts to use extra_knowledge: {extra_knowledge}")
         prompt_path = self.__prompt_base_dir / 'classify_document_type.txt'
         with open(prompt_path, 'r', encoding='utf-8') as f:
