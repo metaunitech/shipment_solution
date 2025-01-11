@@ -244,6 +244,7 @@ class KIValidation:
                 if isinstance(refined_dict[k], str):
                     refined_dict[k] = refined_dict[k].upper()
 
+
             # Check if the keys are modified
             # if any([i not in res.keys() for i in refined_dict.keys()]):
             #     raise ValueError(
