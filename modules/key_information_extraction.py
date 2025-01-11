@@ -9,6 +9,8 @@ from modules.models.output_parser import KeyValuePairList, KeyValuePair, KeyValu
 from langchain.output_parsers import PydanticOutputParser
 from loguru import logger
 import json
+import concurrent.futures
+from typing import List, Dict, Any, Optional
 
 import yaml
 
@@ -320,6 +322,67 @@ YOUR ANSWER:
         modified_outputs = {i: output.get(i) for i in all_keys if output.get(i)}
         modified_conflicts = {i: conflict_outs.get(i) for i in all_keys if conflict_outs.get(i)}
         return modified_outputs, modified_conflicts
+    # def extract(self, file_type: str, raw_text_lines: List[str], target_key_raw: List[str],
+    #             key_definition_max_length: int = 15, text_line_max: int = 50,
+    #             method_description_dict: Optional[Dict[str, str]] = None,
+    #             background_infos: Optional[Dict[str, Any]] = None, if_parallel: bool = False) -> Dict[str, Any]:
+    #     """
+    #     Extract information from text with optional parallel processing.
+    #
+    #     :param file_type: Type of the file.
+    #     :param raw_text_lines: List of text lines from the file.
+    #     :param target_key_raw: List of target keys to extract.
+    #     :param key_definition_max_length: Max number of keys per extraction batch.
+    #     :param text_line_max: Max number of lines per text slice.
+    #     :param method_description_dict: Optional descriptions for extraction methods.
+    #     :param background_infos: Additional context for extraction.
+    #     :param if_parallel: Whether to process slices in parallel.
+    #     :return: Dictionary of extracted key-value pairs.
+    #     """
+    #     # Split text into slices
+    #     text_slices = [
+    #         "\n".join(raw_text_lines[i:i + text_line_max])
+    #         for i in range(0, len(raw_text_lines), text_line_max)
+    #     ]
+    #
+    #     # Split keys into smaller groups
+    #     key_groups = [
+    #         target_key_raw[i:i + key_definition_max_length]
+    #         for i in range(0, len(target_key_raw), key_definition_max_length)
+    #     ]
+    #
+    #     results = {}
+    #
+    #     def process_slice_and_keys(slice_text, keys):
+    #         return self.extract_unit(
+    #             file_type=file_type,
+    #             raw_text=slice_text,
+    #             keys=keys,
+    #             key_definitions=method_description_dict,
+    #             background_infos=background_infos
+    #         )
+    #
+    #     if if_parallel:
+    #         # Parallel execution
+    #         with concurrent.futures.ThreadPoolExecutor() as executor:
+    #             future_to_slice = {
+    #                 executor.submit(process_slice_and_keys, slice_text, keys): (slice_text, keys)
+    #                 for slice_text in text_slices for keys in key_groups
+    #             }
+    #             for future in concurrent.futures.as_completed(future_to_slice):
+    #                 try:
+    #                     result = future.result()
+    #                     results.update(result)
+    #                 except Exception as e:
+    #                     print(f"Error processing slice: {e}")
+    #     else:
+    #         # Sequential execution
+    #         for slice_text in text_slices:
+    #             for keys in key_groups:
+    #                 result = process_slice_and_keys(slice_text, keys)
+    #                 results.update(result)
+    #
+    #     return results
 
     @staticmethod
     def parse_extraction_rule_configs(config_file_path):
@@ -362,7 +425,7 @@ YOUR ANSWER:
             text_line_max=kwargs.get('text_line_max', 60),
             method_description_dict=kwargs.get('method_description_dict',
                                                {}),
-            background_infos=background_infos
+            background_infos=background_infos,
         )
         return modified_outputs, modified_conflicts, self.content_slices, self.extraction_history
 

@@ -293,7 +293,8 @@ class ShipmentFlow:
 
         extra_knowledge = '\n'.join(extra_knowledge_list) if extra_knowledge_list else None
         document_type, reason, entry_count, translated_content = self.message_classifier.classify(content_str,
-                                                                                                  extra_knowledge=extra_knowledge)
+                                                                                                  extra_knowledge=extra_knowledge,
+                                                                                                  if_parallel=True)
 
         return document_type, reason, entry_count, translated_content
 

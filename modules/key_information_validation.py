@@ -201,6 +201,12 @@ class KIValidation:
                 except:
                     pass
 
+                if ',' in refined_dict.get('空船港口-OPEN-PORT'):
+                    refined_dict['空船港口-OPEN-PORT'] = refined_dict['空船港口-OPEN-PORT'].split(',')[0]
+                if '，' in refined_dict.get('空船港口-OPEN-PORT'):
+                    refined_dict['空船港口-OPEN-PORT'] = refined_dict['空船港口-OPEN-PORT'].split('，')[0]
+
+
             if document_type == "cargo_info":
                 l_rate, d_rate = self.parse_rates(rate_string=rate_string)
                 logger.info(f"LDRATE: {l_rate} {d_rate}")
@@ -211,6 +217,15 @@ class KIValidation:
                 if 'PPT' in rate_string:
                     refined_dict['装运开始日期-LAY-DATE'] = datetime.datetime.now().strftime('%Y-%m-%d')
                     refined_dict['装运结束日期-CANCELING-DATE'] = (datetime.datetime.now()+datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+                if ',' in refined_dict.get('装货港口-L-PORT'):
+                    refined_dict['装货港口-L-PORT'] = refined_dict['装货港口-L-PORT'].split(',')[0]
+                if '，' in refined_dict.get('装货港口-L-PORT'):
+                    refined_dict['装货港口-L-PORT'] = refined_dict['装货港口-L-PORT'].split('，')[0]
+                if ',' in refined_dict.get('卸货港口-D-PORT'):
+                    refined_dict['卸货港口-D-PORT'] = refined_dict['卸货港口-D-PORT'].split(',')[0]
+                if '，' in refined_dict.get('装货港口-L-PORT'):
+                    refined_dict['卸货港口-D-PORT'] = refined_dict['卸货港口-D-PORT'].split('，')[0]
+
             note = ''
             for k in ['装运开始日期-LAY-DATE', '装运结束日期-CANCELING-DATE', '空船日期-OPEN-DATE']:
                 if k in refined_dict.keys():
@@ -224,6 +239,9 @@ class KIValidation:
                         note+= f"Current {k}:{refined_dict[k]} not in datetime format. Need reformat.\n"
                         logger.error(f"Current {k}:{refined_dict[k]} not in datetime format. Need reformat.")
                         refined_dict[k] = None
+
+            for k in refined_dict.keys():
+                refined_dict[k] = refined_dict[k].upper()
 
             # Check if the keys are modified
             # if any([i not in res.keys() for i in refined_dict.keys()]):

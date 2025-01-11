@@ -2,13 +2,25 @@ WEB:
   port: 6164
 
 LLM:
-  ZHIPU_glm4_flash:
+  Zhipu_glm4_flash:
     llm_params:
       platform: Zhipu
       model_name: glm-4-flash
       api_key: 9e9d13e921871472a449274bad42cb42.uGbjrWiZQOaVilYy
-  DOUBAO_
+      endpoint: https://open.bigmodel.cn/api/paas/v4/
 
 
-Feishu:
-  app_token: B7XnbQTtLapDfDsJj27c7ZgQnLd
+  zhipu_glm4_plus:
+    llm_params:
+      platform: Zhipu
+      model_name: glm-4-plus
+      api_key: 9e9d13e921871472a449274bad42cb42.uGbjrWiZQOaVilYy
+      endpoint: https://open.bigmodel.cn/api/paas/v4/
+
+  Doubao:
+    llm_params:
+      platform: Doubao
+      model_name: doubao-pro-256k
+      api_key: b3c547c4-6ecb-416a-8575-7b7498a5b639
+      endpoint: https://ark.cn-beijing.volces.com/api/v3/
+

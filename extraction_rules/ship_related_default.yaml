@@ -15,7 +15,7 @@ background:
   - 空船时间或货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那OPEN DATE 就是2025-1-1而不2024-1-1
   - DWT,DWCC,GRT ,NRT,LOA,DRAFT,BM,DEPTH,BM都只要取数字，不要单位MT或M
   - 船盘如果写PPT，而默认空船日期是当天
-  - DEPTH MOULDED表示船深
+#  - DEPTH MOULDED表示船深
   - SUMMER SALT WATER表达夏季海水，DWT / DRAFT SUMMER SALT WATER 58,761 MT / 12.828 M中前一个表示DWT，后一个表示夏季海水吃水。
   - SWL 表示安全工作负荷（SWL，Safe Working Load）。例如：4 x 30 MT SWL 表示船舶配备了4台起重机（或吊机），每台的安全工作负荷（SWL，Safe Working Load）为30吨（MT，Metric Ton）。
   - 如果船盘里有写RTVG, RVG都是表示待通知的意思 不知道什么时候空，OPEN DATE值为空，
@@ -81,7 +81,7 @@ keys:
   - P&I
 #  - 船舶名称-VSL-NAME
   - 空船港口-OPEN-PORT:
-      - 返回大写的港口名字，通常船盘文档中出现的港口就是空船港口，注意，如果有<港口>,<国家>，返回<港口>即可。
+      - 返回大写的港口英文名字，通常船盘文档中出现的港口就是空船港口，注意，如果有<港口>,<国家>，返回<港口>即可。
   - 船东-OWNER:
     - 船盘最前面或最后面有的公司名，一般是指OWNR COMPANY; 如果一条信息包含多条船舶，则每个船舶的OWNR COMPANY都是一样的.如果没有提及返回None
   - 空船日期-OPEN-DATE:
