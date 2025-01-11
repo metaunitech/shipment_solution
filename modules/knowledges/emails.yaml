@@ -1,0 +1,6 @@
+emails:
+        CHARTERING:
+                server: smtp.qiye.163.com
+                user: CHARTERING@JAH-LINE.COM
+                password: BUb4R2u2Z7ac15wN
+cache_path: storage

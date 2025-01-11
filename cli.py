@@ -5,55 +5,55 @@ ins = ShipmentFlow(r'configs/feishu_config.yaml')
 # ins.feishu_spreadsheet_handler.batch_get_records(ins.app_token, ins.tables['ship_info'], ['recuy9qvJMDa5O'])
 ins.unit_flow(content="""MV SHI DA 11 28K Gearless Blt 2010 OPEN  INCHON 5JAN
 
-Class OMCS
+# Class OMCS
 
-Pni MARITIME MUTUAL
-
-
-
-NO INDIA
-
-NO AUSTRALIA
+# Pni MARITIME MUTUAL
 
 
 
-For CIS coal, 
+# NO INDIA
 
-Nakhodka ok
-
-Vladivostok ok
-
-Posyet ok
-
-Vanino 1may-1dec only
+# NO AUSTRALIA
 
 
 
-For Steel, NO DECK, NO HATCH
+# For CIS coal, 
 
-Tank Top Strength ( MT / M2 ) 
+# Nakhodka ok
 
-( Hold 1/2/3/4/ )    11.59/11.47/11.47/11.49 mt / m2
+# Vladivostok ok
 
+# Posyet ok
 
-
-
-
-Class9 dangerous goods ok
-
-Ferro nickel ok
-
-Nickel matte ok
-
-Mixed hydroxide precipitate (MHP) ok
+# Vanino 1may-1dec only
 
 
 
-Last call vostochny 2023.5.12
+# For Steel, NO DECK, NO HATCH
+
+# Tank Top Strength ( MT / M2 ) 
+
+# ( Hold 1/2/3/4/ )    11.59/11.47/11.47/11.49 mt / m2
 
 
 
-No russian bunker allowed""",receive_id='test001', source_name='email',debug=True, skip_success=False)
+
+
+# Class9 dangerous goods ok
+
+# Ferro nickel ok
+
+# Nickel matte ok
+
+# Mixed hydroxide precipitate (MHP) ok
+
+
+
+# Last call vostochny 2023.5.12
+
+
+
+# No russian bunker allowed""",receive_id='test001', source_name='email',debug=True, skip_success=False)
 # ins.update_jobs('demo', 'dd', 'dd', status='结果校验中')
 #####
 # ins.debug_data_insert(data=[{"货物名称-CARGO-NAME": "hot rolled coils", "最大货量-QUANTITY": "2200.0", "装货港口-L-PORT": "SON DUONG, VIETNAM", "卸货港口-L-PORT": "BELAWAN, INDONESIA", "装运开始日期-LAY-DATE": "2024-09-01", "佣金-COMM": "2.5", "运费单价-FRT-RATE": "80000.0", "原文依据": "need named vsl to fix\n\n—freight $ 80k\n—2,200mt hot rolled coils, 10pct molco\n—son duong, vietnam / belawan, indonesa\n—laycan:ppt onwards\n—invite bst fio or filo\n—cqd term\n—com 2.5\n\n\n\n—freight $ 20 pmt\n—5,000mt bulk clay\n—p.kelang / taipei, taiwan\n—dec 15-20 try vsl date\n—invite bst fio\n—com 2.5", "source_name": "PureText"}])
@@ -158,3 +158,16 @@ import requests
 # print(res.text)
 # res = requests.post('http://47.113.144.105:6164/api/add_bx', headers={'Content-Type': 'application/json','User-Agent': 'My User Agent 1.0'}, data={'ddd': 'aaa'})
 # print(res.text)
+from langchain_openai import ChatOpenAI
+from pathlib import Path
+import yaml
+# def create_llm_instance(model_name="Doubao"):
+#     with open(Path(__file__).parent / 'configs' / 'backend_configs.yaml', 'r') as f:
+#         config = yaml.safe_load(f)
+#     return ChatOpenAI(temperature=0.95,
+#                         model=config['LLM'][model_name]['llm_params']['model_name'],
+#                         openai_api_key=config['LLM'][model_name]['llm_params']['api_key'],
+#                         openai_api_base=config['LLM'][model_name]['llm_params']['endpoint'])
+# ins = create_llm_instance()
+# res = ins.invoke("hello")
+# print(res)
