@@ -1,3 +1,4 @@
+import hashlib
 import json
 import time
 import traceback
@@ -42,6 +43,31 @@ class DailyFlow:
         self.flow_ins = ShipmentFlow(Path(__file__).parent / 'configs' / 'feishu_config.yaml')
         self.timeout = timeout
 
+    @staticmethod
+    def generate_md5_hash(input_data):
+        """
+        根据文本内容或文件路径生成唯一的 MD5 哈希字符串。
+
+        参数:
+        - input_data (str or Path): 输入的文本或文件路径。
+
+        返回:
+        - str: 生成的 MD5 哈希值（十六进制字符串）。
+        """
+        hasher = hashlib.md5()
+
+        if isinstance(input_data, (str, Path)):
+            # 如果输入是文件路径，则直接对路径字符串进行哈希
+            path_str = str(input_data)
+            hasher.update(path_str.encode('utf-8'))
+        else:
+            # 如果输入是文本，则直接计算文本的哈希
+            if isinstance(input_data, str):
+                input_data = input_data.encode('utf-8')
+            hasher.update(input_data)
+
+        return hasher.hexdigest()
+
     def get_email_list(self):
         res = {}
         for name in self.email_handler.all_emails.keys():
@@ -70,7 +96,7 @@ class DailyFlow:
             logger.info(f"Content: {content}")
             try:
                 out = self.flow_ins.unit_flow(content=content,
-                                              receive_id=email_id,
+                                              receive_id=self.generate_md5_hash(m_content),
                                               source_name=f'Email_{name}')
                 logger.success(f"{json.dumps(out, indent=4, ensure_ascii=False)}")
             except Exception as e:
