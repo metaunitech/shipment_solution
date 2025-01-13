@@ -242,7 +242,7 @@ class KIValidation:
 
             for k in refined_dict.keys():
                 if isinstance(refined_dict[k], str):
-                    refined_dict[k] = refined_dict[k].upper()
+                    refined_dict[k] = refined_dict[k].strip().upper()
 
 
             # Check if the keys are modified
