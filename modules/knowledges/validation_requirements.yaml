@@ -160,7 +160,7 @@ ship_info:
       - {' TRIPLE DECT或TRD或三甲板': 'TRD'}
   船舶类型-TYPE:
     type: str
-    comment: 从如下几个选项里选择一个：[GENERAL, BULK, WOOD, LOG]
+    comment: 从如下几个选项里选择一个：[GENERAL, BULK, LOG, OIL, MOC, CONTAINER]
     example:
       - { "GENERAL CARGO VSL": "GENERAL" }
       - { "BULK VSL": "BULK" }

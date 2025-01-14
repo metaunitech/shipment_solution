@@ -37,6 +37,7 @@
   - “DWT 11,200 MT ON 7.0M”，其中7.0指的是吃水为7米。
   - “L/B/D 116.99/19.6/14”分别表示船长116.99、船宽19.6和型深14。
   - ”3HO/3HA"表示3个舱位（HOLD） 3个舱口（HATCH）
+  - G/B CAPA 20053CBM 表示散装和包装舱容都是一样，20053
   - Hold表示舱位，Hatch表示舱位
   - Hatch: 1/2/3/4 表示有4个Hatch。 Hold的表达方式也类似。提到了Hold或Hatch一定要在重点里表现出数量。
 
@@ -45,6 +46,10 @@
   - “SUMMER SALT WATER”表达夏季海水，“DWT / DRAFT SUMMER SALT WATER 58,761 MT / 12.828 M”中前一个表示DWT，后一个表示夏季海水吃水。
   - “SWL 表示安全工作负荷（Safe Working Load）。例如：“4 x 30 MT SWL”表示船舶配备了4台起重机，每台的安全工作负荷为30吨。
   - 船舶的TYPE 有GENERAL ,看到是GENERAL CARGO VSL, GENERAL都可以取值为GENERAL, 船舶的TYPE 有BULK ,看到是BULK VSL, BULK CARRIER都可以取值为BULK, 船舶的TYPE 有WOOD ,看到是WOOD VSL, WOOD CHIP, WOOD-CHIP VSL, 都可以取值为WOOD, 船舶的TYPE 有LOG ,看到是LOG VSL, LOGGED 都可以取值为LOG
+  - BOX是表示舱的型状，而船舶类型-TYPE 是按用途来分的，一般有GENERAL, BULK, LOG, OIL, MOC, CONTAINER
+  - 40MT *2 CRANES 表示二个40吨的CRANE吊机，GEAR表示C2*40
+  - GEARLESS表示 GEAR为NIL
+  - P&I AND CLASS COVERED: 表示这条船是有PNI和CLASS的但是没有写明是哪种，所以CLASS和PNI都应为空；DRAF为5.5 经常跟在ON后面
 
 - **公司和联系人**
   - 船盘最前面或最后面的公司名一般是指OWNR COMPANY；如果一条信息包含多条船舶，则每个船舶的OWNR COMAPNY都是一样的。
@@ -58,7 +63,38 @@
   - 如果文中出现“xxx MT /CQD”或者“CQD/xxx MT”，左边的是装率，右边的是卸率。
   - “货量里如果有22000/25000或22000-25000”，表示最少货量是22000，最多货量是25000。
   - 原文中常用的数据展示形式为：<字段A>/<字段B>/<字段C> <ValueA>/<ValueB>/<ValueC>，请在翻译版中将其拆开表示，例如：<字段A>：<ValueA>, <字段B>：<ValueB>, <字段C>：<ValueC>
-
+- **常用的港口缩写**
+    ECI: East Coast India
+    WCI: West Coast India
+    N.CN: North China
+    S.CN: South China
+    P.G: Persian Gulf
+    E.MY: East Malaysia
+    W.MY: West Malaysia
+    CJK AREA: Changjiakou Area
+    F.E.: Fareast Asia
+    Med Sea: Mediterranean Sea
+    PNG: Papua New Guinea
+    S.E.A: South East Asia
+    N.E.A: North East Asia
+    W.A: West Asia
+    R.S.: Red Sea
+    B.S.: Black Sea
+    W.Africa: West Africa
+    E.Africa: East Africa
+    Bohai Bay: Bohai Bay
+    NCE: Europe Line
+    CEN: West America Line
+    PNN: Canada Line
+    S.Kalimadan: South of Kalimadan
+    E.Kalimadan: East of Kalimadan
+    N.China: North of China
+    M.China: Middle of China
+    S.China: South of China
+    N.Vietnam: North Vietnam
+    M.Vietnam: Middle of Vietnam
+    S.Vietnam: South Vietnam
+    MED: Mediterranean
 # Knowledge
 {extra_knowledge}
 
