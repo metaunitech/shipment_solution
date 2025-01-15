@@ -79,8 +79,12 @@ class DailyFlow:
         current_time = datetime.now(timezone.utc)
         cutoff_date = current_time - timedelta(days=delta_date)
         # 计算截止日期
-
+        start_ts = time.time()
         for email_id in tqdm.tqdm(email_id_list[::-1]):
+            if time.time() - start_ts >= self.timeout:
+                logger.error("Exceed timeout. Quit")
+                return
+            logger.info(f"Still have {self.timeout - time.time() + start_ts} seconds.")
             logger.info(f"Working on email {name} {email_id}")
             subject, m_content, sender, date = self.email_handler.get_email_detail(name, email_id)
 
@@ -105,13 +109,8 @@ class DailyFlow:
                 continue
 
     def main(self):
-        start_ts = time.time()
         res = self.get_email_list()
         for name in res:
-            if time.time() - start_ts >= self.timeout:
-                logger.error("Exceed timeout. Quit")
-                return
-            logger.info(f"Still have {self.timeout - time.time() + start_ts} seconds.")
             self.register_tasks(name, res[name])
 
 
