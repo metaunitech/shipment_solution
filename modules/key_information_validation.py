@@ -192,15 +192,19 @@ class KIValidation:
                         refined_dict['船舶英文名称-ENGLISH-NAME'] = vsl_name
                 if not refined_dict.get('船舶中文名称-CHINESE-NAME'):
                     refined_dict['船舶中文名称-CHINESE-NAME'] = refined_dict['船舶英文名称-ENGLISH-NAME']
-                if 'PPT' in rate_string:
-                    logger.warning("PPT found in rate_string.")
-                    refined_dict['空船日期-OPEN-DATE'] = datetime.datetime.now().strftime('%Y-%m-%d')
+                # if 'PPT' in rate_string:
+                #     logger.warning("PPT found in rate_string.")
+                #     refined_dict['空船日期-OPEN-DATE'] = datetime.datetime.now().strftime('%Y-%m-%d')
                 try:
                     if res.get('空船日期-OPEN-DATE') and datetime.datetime.strptime(res.get('空船日期-OPEN-DATE'), '%Y-%m-%d')-datetime.timedelta(days=1) >= datetime.datetime.now():
                         logger.warning("Reformat to previous extraction result for OPEN-DATE")
                         refined_dict['空船日期-OPEN-DATE'] = res.get('空船日期-OPEN-DATE')
                 except:
                     pass
+
+                if 'PPT' in rate_string:
+                    logger.warning("PPT found in rate_string.")
+                    refined_dict['空船日期-OPEN-DATE'] = datetime.datetime.now().strftime('%Y-%m-%d')
 
                 if ',' in refined_dict.get('空船港口-OPEN-PORT'):
                     refined_dict['空船港口-OPEN-PORT'] = refined_dict['空船港口-OPEN-PORT'].split(',')[0]

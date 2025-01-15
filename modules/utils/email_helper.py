@@ -12,6 +12,11 @@ email_configs = {
         "server": "smtp.qiye.163.com",
         "user": "CHARTERING@JAH-LINE.COM",
         "password": "BUb4R2u2Z7ac15wN"
+    },
+    'chartering@jahline.com':{
+        'server': 'pophz.qiye.163.com',
+        'user': 'chartering@jahline.com',
+        'password': 'wAyhJMYAK754GmYn'
     }
 }
 
@@ -22,6 +27,24 @@ class EmailHelper:
             configs = yaml.load(f, Loader=yaml.FullLoader)
         self.all_emails = configs.get('emails', {})
         self.cache_storage = configs.get('cache_path')
+
+    def initialize_email_instance(self, name):
+        server = self.all_emails[name]["server"]
+        user = self.all_emails[name]["user"]
+        password = self.all_emails[name]["password"]
+        if_ssl = bool(self.all_emails[name]['ssl'])
+        method = self.all_emails[name]['method']
+        port = self.all_emails[name]['port']
+        print(type(if_ssl))
+        print(if_ssl)
+        if method == 'pop3':
+            mail_server = zmail.server(user, password, pop_host=server, pop_port=port, pop_ssl=if_ssl)
+        elif method == 'smtp':
+            # 创建邮件服务对象
+            mail_server = zmail.server(user, password, smtp_host=server, smtp_port=port)
+        else:
+            mail_server = None
+        return mail_server
 
     def check_if_parsed(self, email_id, name='default'):
         email_id = str(email_id)
@@ -72,12 +95,8 @@ class EmailHelper:
             json.dump(log_data, f, indent=4)
 
     def fetch_today_latest_email(self, name):
-        server = self.all_emails[name]["server"]
-        user = self.all_emails[name]["user"]
-        password = self.all_emails[name]["password"]
-
         # 创建邮件服务对象
-        mail_server = zmail.server(user, password, smtp_host=server, smtp_port=25)
+        mail_server = self.initialize_email_instance(name)
         latest_email = mail_server.get_latest()
         return latest_email['id']
 
@@ -93,12 +112,7 @@ class EmailHelper:
         return task_list
 
     def get_email_detail(self, name, email_id):
-        server = self.all_emails[name]["server"]
-        user = self.all_emails[name]["user"]
-        password = self.all_emails[name]["password"]
-
-        # 创建邮件服务对象
-        mail_server = zmail.server(user, password, smtp_host=server, smtp_port=25)
+        mail_server = self.initialize_email_instance(name)
         try:
             mail = mail_server.get_mail(email_id)
             return mail['subject'], '\n'.join(mail['content_text']), mail['from'], mail['date']
@@ -135,7 +149,8 @@ class EmailHelper:
 
 
 if __name__ == "__main__":
-    ins = EmailHelper(config_path=r"W:\Personal_Project\NeiRelated\projects\shipment_solution\configs\emails.yaml")
-    res = ins.get_email_detail('default', 3471)
-    # res = ins.get_today_task_list('default')
+    ins = EmailHelper(config_path=r"/Users/anthonyf/Desktop/MetaInFlow/shipment_solution/configs/emails.yaml")
+    res = ins.get_email_detail('chartering@jahline.com', 1)
+    # res = ins.get_today_task_list('chartering@jahline.com')
+    print(res)
     print("HERE")
