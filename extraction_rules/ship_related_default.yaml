@@ -27,7 +27,7 @@ keys:
   - 船舶类型-TYPE:
       - 船舶的TYPE 有GENERAL ,看到是GENERAL CARGO VSL, GENERAL都可以取值为GENERAL, 船舶的TYPE 有BULK ,看到是BULK VSL, BULK CARRIER都可以取值为BULK, 船舶的TYPE 有WOOD ,看到是WOOD VSL, WOOD CHIP, WOOD-CHIP VSL, 都可以取值为WOOD, 船舶的TYPE 有LOG ,看到是LOG VSL, LOGGED 都可以取值为LOG
   - 船舶英文名称-ENGLISH-NAME:
-      - 可租赁船的英文名，一定会出现在船盘中, 通常在每个片段的开头，取值取到明显的分隔符例如逗号等。通常以MV开头MV <英文>+<数字>或者MV <英文>，也会有中文的船名，返回MV后面的名字.MV或MV.或M/V是动力船舶的标记，经常会出现在船名的前面，提取时船名时不要显示。例如：对于MV ELIJAH，船舶英文名称为：ELIJAH；对于MV GAO XIN 15 DWCC 6700 OPEN NIIGATA，船舶英文名称为：GAO XIN 15；ORIENTAL SOURCES 10.3K HAIPHONG,VIETNAM 24 DEC KRIS TWEEN DECK/FE-SEA，船舶英文名称为：ORIENTAL SOURCES;MV ZHE HAI 515, 50K,  WILL OPEN MINA ZAYED，船舶英文名称为：ZHE HAI 515
+      - 可租赁船的英文名，必须是英文，一定会出现在船盘中, 通常在每个片段的开头，取值取到明显的分隔符例如逗号等。通常以MV开头MV <英文>+<数字>或者MV <英文>，也会有中文的船名，返回MV后面的名字.MV或MV.或M/V是动力船舶的标记，经常会出现在船名的前面，提取时船名时不要显示。例如：对于MV ELIJAH，船舶英文名称为：ELIJAH；对于MV GAO XIN 15 DWCC 6700 OPEN NIIGATA，船舶英文名称为：GAO XIN 15；ORIENTAL SOURCES 10.3K HAIPHONG,VIETNAM 24 DEC KRIS TWEEN DECK/FE-SEA，船舶英文名称为：ORIENTAL SOURCES;MV ZHE HAI 515, 50K,  WILL OPEN MINA ZAYED，船舶英文名称为：ZHE HAI 515
   - 船舶中文名称-CHINESE-NAME:
       - 如果原文中没有则默认和英文名称一样
   - 建造年份-BUILT-YEAR:
