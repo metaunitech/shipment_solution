@@ -1,5 +1,27 @@
 background:
   - 船舶邮件（ship_info）原始信息，一般都是用英文的。
+  - EAR SEP 可以默认录入9.1号， END SEP 默认9.20， MID,SEP 默认 ,9.15
+  - SEIYO FORTUNE    10514MT    2007   NINGDE   18-25TH SEP 这种时间是区间的，就录最前面的9.18
+  - 10pct 10% (percent)指的是货物质量占据总船容的10%
+  - ttl 2.5 pct指的是佣金总计2.5% (Commission total 2.5%)
+  - F.I.O.S.T.：free in,out,stowed and trimmed 船方不负担装船，卸船，理仓，以及平仓费用
+  - 3,000MT 5PCT MOLCO：3,000公吨，允许5%的增减。
+  - PIC：Point of Contact，联系人。
+  - CQD/3DAYS TO HEAVUP：CQD（Cargo Quantity Discharged），3天内完成卸货
+  - CQD BE (TRY DISRATE)：CQD（Cargo Quantity Discharged）Bends，尝试卸货速率。
+  - DWT,DWCC或货量 显示类似42.5K，则数据提变成42500，K是表示1000
+  - DWT,DWCC,GRT,NRT,如果这样有遇到类似这样表示时，32，225或32.225 ,则取值为32225
+  - 船盘最前面或最后面有的公司名，一般是指OWNR COMPANY;如果一条信息包含多条船舶，则每个船舶的OWNR COMANY都是一样的
+  - 空船时间或货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那OPEN DATE 就是2025-1-1而不2024-1-1
+  - DWT,DWCC,GRT ,NRT,LOA,DRAFT,BM,DEPTH,BM都只要取数字，不要单位MT或M
+  - 船盘如果写PPT，而默认空船日期是当天
+#  - DEPTH MOULDED表示船深
+  - SUMMER SALT WATER表达夏季海水，DWT / DRAFT SUMMER SALT WATER 58,761 MT / 12.828 M中前一个表示DWT，后一个表示夏季海水吃水。
+  - SWL 表示安全工作负荷（SWL，Safe Working Load）。例如：4 x 30 MT SWL 表示船舶配备了4台起重机（或吊机），每台的安全工作负荷（SWL，Safe Working Load）为30吨（MT，Metric Ton）。
+  - 如果船盘里有写RTVG, RVG都是表示待通知的意思 不知道什么时候空，OPEN DATE值为空，
+  - 船盘里类似 16K/08LT，前面表示的是DWCC  16000  /后面表示BUILD YEAR:2008;同理20K/09LT， DWCC 22000，BUILD YEAR： 2009
+  - 对于DWT 11,200 MT ON 7.0M, 7.0指的是吃水为7
+  - L/B/D 116.99/19.6/14 L指的是船长，B是船宽，D是型深。分别是116.99，19.6，14
 keys:
 #  - 船舶代码-ID
   - 船舶类型-TYPE:

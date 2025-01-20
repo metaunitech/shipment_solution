@@ -1,0 +1,10 @@
+emails:
+  chartering@jahline.com:
+    server: pophz.qiye.163.com
+    user: chartering@jahline.com
+    password: wAyhJMYAK754GmYn
+    method: pop3
+    ssl: true
+    port: 995
+
+cache_path: storage

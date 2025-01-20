@@ -1,5 +1,29 @@
 background:
   - cargo offer原始信息，一般都是用英文的。
+  - 5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，是表达重量的。
+  - EAR SEP 录入9.1号， END SEP 默认9.20， MID,SEP 默认 9.15
+  - SEIYO FORTUNE    10514MT    2007   NINGDE   18-25TH SEP 这种时间是区间的，就录最前面的9.18
+  - 10pct 10% (percent)指的是货物质量占据总船容的10%
+  - ttl 2.5 pct指的是佣金总计2.5% (Commission total 2.5%)
+  - F.I.O.S.T.：free in,out,stowed and trimmed 船方不负担装船，卸船，理仓，以及平仓费用
+  - 3,000MT 5PCT MOLCO：3,000公吨，允许5%的增减。
+  - PIC：Point of Contact，联系人。
+  - CQD 表示一种卸率或者装率
+  - FIO表示Free In and Out免装卸货费用，船方不负责装卸货费用
+  - CQD/3DAYS TO HEAVUP：CQD（Cargo Quantity Discharged），3天内完成卸货
+  - CQD BE (TRY DISRATE)：CQD（Cargo Quantity Discharged）Bends，尝试卸货速率。
+  - Gcn 3,75% pu iac -> Gcn：佣金（General Commission）。3,75%：佣金率为3.75%。pu iac：按发票金额计算（Per Unit Invoice Amount）
+  - 装运结束日期，默认加5天。如果有明确标识，则按照实际添加
+  - PPT，默认装运开始时间是当时提取数据哪天，然后结束日期默认加五天
+  - 货盘里有看到USD标识的表示运价，也只要数据不要单位，如USD10/MT FIOST, FRT -RATE只要10 ;另外如果有遇到USD80K的，FRT -RATE取值应80000，K表示的是1000
+  - 货盘里遇到货量类似这样的 50-65k mt， 最小货量取值是   50000， 最大货量取值是  65000
+  - 货盘里如果看到CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD
+  - 注意：如果文中出现xxx MT /CQD 或者  CQD/xxx MT,左边的是装率，右边的是卸率
+  - 货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024年12月，资料上显示是1-1，那OPEN DATE 就是2025-1-1而不2024-1-1因为2024年1-1已经过去了，应该指的是2025年的1-1
+  - 货盘前面后面或最后的公司名，或接在报货公司后面的公司名， 是指报货公司，如果一条信息里包含多个货盘，则每个货盘的报货公司都取一样的
+  - 货物名称里一般都是字母，不会有数字
+  - 货量里如果有22000/25000或22000-25000，表示最少货量是22000，最多货量是25000
+  - dwcc指的是Dead Weight Cargo Capacity
 keys:
   - 货物名称-CARGO-NAME:
       - 返回需要运输的货物名称, 必须是英文，保留原名，必须是英文，例如ilmenite sand in ows option货物名称为ilmenite sand

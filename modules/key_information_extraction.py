@@ -3,6 +3,7 @@ import random
 import re
 import traceback
 
+from nltk.corpus import crubadan
 from retrying import retry
 from langchain_openai import ChatOpenAI
 from modules.models.output_parser import KeyValuePairList, KeyValuePair, KeyValuePairDict
@@ -66,6 +67,28 @@ class TextKIE:
             output[pair[0]] = pair[1]
         return output
 
+    def brief_validation(self, file_type, keys, current_results, raw_text):
+        final_res = True
+        notes = []
+        for key in keys:
+            if key in ['报盘公司-COMPANY', '备注-REMARK', '船舶中文名称-CHINESE-NAME', '船东-OWNER']:
+                if isinstance(current_results.get(key), str):
+                    chinese_pattern = re.compile(r'[\u4e00-\u9fff]')
+                    if bool(chinese_pattern.search(current_results[key])):
+                        notes.append([f'注意：{key}的结果应该是英文'])
+                        final_res = False
+        for k in ['装运开始日期-LAY-DATE', '装运结束日期-CANCELING-DATE', '空船日期-OPEN-DATE']:
+            if k in keys:
+                try:
+                    date_val = datetime.datetime.strptime(current_results[k], "%Y-%m-%d")
+                    if current_results[k] == datetime.datetime.now().strftime('%Y-%m-%d'):
+                        final_res = False
+                except:
+                    notes.append(f"注意：{k} 的结果格式应为%Y-%m-%d")
+                    final_res = False
+        return final_res, notes
+
+
     @retry(stop_max_attempt_number=3, wait_fixed=0.5)
     def extract_unit(self, file_type, raw_text, keys, key_definitions=None, extraction_method=None,
                      background_infos=None):
@@ -78,9 +101,9 @@ class TextKIE:
         key_definitions_str = ''
 
         for k in key_definitions:
-            key_definitions_str += f"{k}指的是：{key_definitions[k][0]}\n返回的格式是:{key_definitions[k][1]}\n" if isinstance(
+            key_definitions_str += f"字段[{k}]指的是：{key_definitions[k][0]}\n返回的格式是:{key_definitions[k][1]}\n" if isinstance(
                 key_definitions[k], list) and len(
-                key_definitions[k]) >= 2 else f"{k}指的是：{key_definitions[k]}\n"
+                key_definitions[k]) >= 2 else f"字段[{k}]指的是：{key_definitions[k]}\n"
         if extraction_method is None:
             extraction_method = {}
         raw_file_type = extraction_method.get('raw_file_type')
@@ -115,6 +138,7 @@ class TextKIE:
 
 对于需要提取的字段的定义如下：
 {key_definitions_str}
+帮我从文中提取：{required_key_info}
             
 如果需要提取的字段没有给你定义，请按照你的常识进行提取。
 # INPUT
@@ -153,6 +177,8 @@ YOUR ANSWER:
 
 我所需要的关键信息字段如下：
 {required_key_info}。
+帮我从文中提取：{required_key_info}
+
 
 # INPUT
 你所需要处理的文件内容为：
@@ -299,9 +325,28 @@ YOUR ANSWER:
 
                 logger.info(f"Starts to do txt part {idx1}[{parts}]; Keys part: {idx2} [{todo_keys}]")
                 try:
-                    cur_res = self.extract_unit(file_type, txt, todo_keys, key_definitions,
-                                                extraction_method=method_description_dict,
-                                                background_infos=background_infos)
+                    notes = []
+                    cur_res = {}
+                    for attempt in range(5):
+                        if not notes:
+                            cur_background_infos = background_infos
+                        else:
+                            if background_infos is None:
+                                cur_background_infos = notes
+                            else:
+                                cur_background_infos = background_infos + notes
+                        cur_res = self.extract_unit(file_type, txt, todo_keys, key_definitions,
+                                                    extraction_method=method_description_dict,
+                                                    background_infos=cur_background_infos)
+                        # Add check cur_res
+                        if_valid_res, notes = self.brief_validation(file_type, todo_keys, cur_res, txt)
+                        if if_valid_res:
+                            logger.success("Current result is valid.")
+                            break
+                        else:
+                            notes_str = '\n'.join(notes)
+                            logger.warning(f"[Attempt {attempt}] Current result not valid. {notes_str}")
+
                     for k in cur_res:
                         self.extraction_history[k + (cur_res[k])] = idx1
                     logger.success(f"{idx1}&{idx2}")

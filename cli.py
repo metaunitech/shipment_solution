@@ -3,57 +3,7 @@
 from main import ShipmentFlow
 ins = ShipmentFlow(r'configs/feishu_config.yaml')
 # ins.feishu_spreadsheet_handler.batch_get_records(ins.app_token, ins.tables['ship_info'], ['recuy9qvJMDa5O'])
-ins.unit_flow(content="""MV SHI DA 11 28K Gearless Blt 2010 OPEN  INCHON 5JAN
-
-# Class OMCS
-
-# Pni MARITIME MUTUAL
-
-
-
-# NO INDIA
-
-# NO AUSTRALIA
-
-
-
-# For CIS coal, 
-
-# Nakhodka ok
-
-# Vladivostok ok
-
-# Posyet ok
-
-# Vanino 1may-1dec only
-
-
-
-# For Steel, NO DECK, NO HATCH
-
-# Tank Top Strength ( MT / M2 ) 
-
-# ( Hold 1/2/3/4/ )    11.59/11.47/11.47/11.49 mt / m2
-
-
-
-
-
-# Class9 dangerous goods ok
-
-# Ferro nickel ok
-
-# Nickel matte ok
-
-# Mixed hydroxide precipitate (MHP) ok
-
-
-
-# Last call vostochny 2023.5.12
-
-
-
-# No russian bunker allowed""",receive_id='test001', source_name='email',debug=True, skip_success=False)
+ins.unit_flow(content="""MV AFRICAN PELICAN                         34,365 DWT / '15 BLT NAMURA LOGGER                             - OPEN BUNBURY, AUSTRALIA 04 FEB""",receive_id='test001', source_name='email',debug=True, skip_success=False)
 # ins.update_jobs('demo', 'dd', 'dd', status='结果校验中')
 #####
 # ins.debug_data_insert(data=[{"货物名称-CARGO-NAME": "hot rolled coils", "最大货量-QUANTITY": "2200.0", "装货港口-L-PORT": "SON DUONG, VIETNAM", "卸货港口-L-PORT": "BELAWAN, INDONESIA", "装运开始日期-LAY-DATE": "2024-09-01", "佣金-COMM": "2.5", "运费单价-FRT-RATE": "80000.0", "原文依据": "need named vsl to fix\n\n—freight $ 80k\n—2,200mt hot rolled coils, 10pct molco\n—son duong, vietnam / belawan, indonesa\n—laycan:ppt onwards\n—invite bst fio or filo\n—cqd term\n—com 2.5\n\n\n\n—freight $ 20 pmt\n—5,000mt bulk clay\n—p.kelang / taipei, taiwan\n—dec 15-20 try vsl date\n—invite bst fio\n—com 2.5", "source_name": "PureText"}])
