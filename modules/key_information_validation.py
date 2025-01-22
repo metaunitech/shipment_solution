@@ -1,5 +1,6 @@
 import datetime
 import time
+import traceback
 
 from langchain_openai import ChatOpenAI
 from langchain.output_parsers import PydanticOutputParser, OutputFixingParser
@@ -157,7 +158,7 @@ class KIValidation:
             f"TS:{str(time.time() * 1000)}")
         try:
             # Invoke the LLM and parse the result
-            logger.debug(prompt)
+            # logger.debug(prompt)
             res_raw = llm_ins.invoke(prompt)
             res_content = res_raw.content
             logger.debug(res_content)
@@ -201,6 +202,7 @@ class KIValidation:
                         logger.warning("Reformat to previous extraction result for OPEN-DATE")
                         refined_dict['空船日期-OPEN-DATE'] = res.get('空船日期-OPEN-DATE')
                 except:
+                    logger.warning(traceback.format_exc())
                     pass
 
                 if 'PPT' in rate_string:
@@ -223,10 +225,13 @@ class KIValidation:
                 if 'PPT' in rate_string:
                     refined_dict['装运开始日期-LAY-DATE'] = datetime.datetime.now().strftime('%Y-%m-%d')
                     refined_dict['装运结束日期-CANCELING-DATE'] = (datetime.datetime.now()+datetime.timedelta(days=1)).strftime('%Y-%m-%d')
-                if res.get('装运结束日期-CANCELING-DATE') \
-                    and res.get('装运开始日期-LAY-DATE') \
-                    and datetime.datetime.strptime(res.get('装运结束日期-CANCELING-DATE'),'%Y-%m-%d') < datetime.datetime.strptime(res.get('装运开始日期-LAY-DAT'),'%Y-%m-%d'):
-                    refined_dict['装运结束日期-CANCELING-DATE'] = (datetime.datetime.strptime(res['装运结束日期-CANCELING-DATE'],'%Y-%m-%d')+datetime.timedelta(days=5)).strftime('%Y-%m-%d')
+                if res.get('装运结束日期-CANCELING-DATE') and res.get('装运开始日期-LAY-DATE'):
+                    try:
+                        if datetime.datetime.strptime(res.get('装运结束日期-CANCELING-DATE'),'%Y-%m-%d') < datetime.datetime.strptime(res.get('装运开始日期-LAY-DAT'),'%Y-%m-%d'):
+                            refined_dict['装运结束日期-CANCELING-DATE'] = (datetime.datetime.strptime(res['装运结束日期-CANCELING-DATE'],'%Y-%m-%d')+datetime.timedelta(days=5)).strftime('%Y-%m-%d')
+                    except:
+                        logger.warning(traceback.format_exc())
+                        pass
                 if ',' in refined_dict.get('装货港口-L-PORT'):
                     refined_dict['装货港口-L-PORT'] = refined_dict['装货港口-L-PORT'].split(',')[0]
                 if '，' in refined_dict.get('装货港口-L-PORT'):

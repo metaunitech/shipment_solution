@@ -201,7 +201,7 @@ YOUR ANSWER:
 你做的关键信息提取的结果以JSON格式返回给我。 {format_instructions}
 YOUR ANSWER:
             """
-            logger.debug(prompt)
+            # logger.debug(prompt)
             res_content = self.llm_engine.predict(prompt)
         logger.info(res_content)
         pairs = {}

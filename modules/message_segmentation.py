@@ -58,7 +58,7 @@ class MessageSegmenter:
                                         format_instruction=format_instruction,
                                         input_content=content,
                                         entry_count=entry_count)
-        logger.debug(prompt)
+        # logger.debug(prompt)
         res_raw = llm_ins.invoke(prompt)
         res_content = res_raw.content
         logger.debug(res_content)
