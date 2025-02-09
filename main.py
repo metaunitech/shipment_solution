@@ -246,8 +246,8 @@ class ShipmentFlow:
         return ChatOpenAI(temperature=0.95,
                           model=model_name,
                           openai_api_key=API_TOKEN,
+                          openai_api_base="https://open.bigmodel.cn/api/paas/v4/")
                           # openai_api_base="https://open.bigmodel.cn/api/paas/v4/")
-                          openai_api_base="https://api.deepseek.com/v1/")
 
     def collect_emails(self):
         messages = glob(str(self.email_storage_path / '**' / '*.eml'), recursive=True)
