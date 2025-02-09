@@ -13,7 +13,9 @@ from retrying import retry
 from typing import Dict
 import re
 
-MODEL_NAME = 'glm-4-flash'
+# MODEL_NAME = 'glm-4-flash'
+MODEL_NAME = 'glm-zero-preview'
+
 API_TOKEN = 'a9d2815b090f143cdac247d7600a127f.WSDK8WqwJzZtCmBK'
 
 

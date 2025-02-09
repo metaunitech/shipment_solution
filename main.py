@@ -9,6 +9,7 @@ from langchain_openai import ChatOpenAI
 import yaml
 import tqdm
 from langchain_community.document_loaders import UnstructuredEmailLoader, OutlookMessageLoader
+from langchain_community.callbacks import get_openai_callback
 from langchain_core.document_loaders import BaseLoader
 import hashlib
 
@@ -30,8 +31,10 @@ from langchain_core.documents import Document
 from typing import Union
 from retrying import retry
 
-MODEL_NAME = 'glm-4-flash'
+MODEL_NAME = 'glm-zero-preview'
+# MODEL_NAME = 'deepseek-chat'
 API_TOKEN = 'a9d2815b090f143cdac247d7600a127f.WSDK8WqwJzZtCmBK'
+# API_TOKEN = 'sk-28b68164d8fc44fba257afaaaafc82b4'
 
 
 class StringListLoader(BaseLoader):
@@ -243,7 +246,8 @@ class ShipmentFlow:
         return ChatOpenAI(temperature=0.95,
                           model=model_name,
                           openai_api_key=API_TOKEN,
-                          openai_api_base="https://open.bigmodel.cn/api/paas/v4/")
+                          # openai_api_base="https://open.bigmodel.cn/api/paas/v4/")
+                          openai_api_base="https://api.deepseek.com/v1/")
 
     def collect_emails(self):
         messages = glob(str(self.email_storage_path / '**' / '*.eml'), recursive=True)
@@ -412,7 +416,8 @@ class ShipmentFlow:
                                                                      show_fields=['状态'], id=job_id)
             if not records:
                 logger.info("Initializing new records.")
-                record_ids = self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], [n_records])
+                record_ids = self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'],
+                                                                         [n_records])
                 logger.success(f"Added {job_id}")
                 return
             else:
@@ -421,7 +426,8 @@ class ShipmentFlow:
         else:
             # NEW RECORDS
             logger.info("Initializing new records.")
-            record_ids = self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], [n_records])
+            record_ids = self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'],
+                                                                     [n_records])
             logger.success(f"Added {job_id}")
             return
 
@@ -452,7 +458,8 @@ class ShipmentFlow:
                                                                      view_id=self.views['inputs_status'], id=job_id)
             if not records:
                 logger.info("Initializing new records.")
-                record_ids = self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], n_records)
+                record_ids = self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'],
+                                                                         n_records)
             else:
                 record_ids = [i['record_id'] for i in records]
                 for record_id in record_ids:
@@ -464,7 +471,8 @@ class ShipmentFlow:
         else:
             # NEW RECORDS
             logger.info("Initializing new records.")
-            record_ids = self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'], n_records)
+            record_ids = self.feishu_spreadsheet_handler.add_records(self.app_token, self.tables['inputs_status'],
+                                                                     n_records)
         return record_ids
 
     # def insert_data_to_spreadsheet(self, document_path: Union[Path, None], document_type, extraction_res, event_id=None,
@@ -703,141 +711,147 @@ class ShipmentFlow:
 
     def unit_flow(self, document_path: Union[str, None] = None, content=None, receive_id=None, source_name=None,
                   task_id=None, debug=False, skip_success=True, document_type=None):
-        output_res = None
-        logger.info(f"Current receive_type: {source_name} receive_id: {receive_id}")
-        logger.error(f'{receive_id} {source_name}')
-        document_loader = self.load_document(document_path=Path(document_path) if document_path else None,
-                                             content=content)
-        data = document_loader.load()
-        contents_list = [i.page_content for i in data]
-        content_str = '\n'.join(contents_list)
-        if '系统退信/The email is returned' in content_str:
-            logger.error("系统退信，跳过")
-            return output_res
-        job_id = task_id if task_id else f"{source_name}_{receive_id}"
-        existing_job = self.add_job(job_id=job_id, msg_body=content_str, source=source_name)
-        if existing_job:
-            if skip_success and existing_job['fields']['状态'] == '成功':
-                logger.error(f"Job exists and success. Skipped")
+        with get_openai_callback() as cb:
+            output_res = None
+            logger.info(f"Current receive_type: {source_name} receive_id: {receive_id}")
+            logger.error(f'{receive_id} {source_name}')
+            document_loader = self.load_document(document_path=Path(document_path) if document_path else None,
+                                                 content=content)
+            data = document_loader.load()
+            contents_list = [i.page_content for i in data]
+            content_str = '\n'.join(contents_list)
+            if '系统退信/The email is returned' in content_str:
+                logger.error("系统退信，跳过")
+                logger.success(f"Total token usage: {cb.total_tokens}")
                 return output_res
-        # Classify
-        if document_type:
-            logger.info(f"Skip classification. Document type: {document_type}")
-            document_type, reason, entry_count, translated_content = document_type, '', 1, ''
-        else:
-            try:
-                self.update_jobs(job_id=job_id,
-                                 msg_body=content_str,
-                                 source=source_name,
-                                 status='分类中',
-                                 logs=f"开始邮件分类")
-                document_type, reason, entry_count, translated_content = self.classify_document(document_loader)
-                logger.success(
-                    f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}, TRANSLATED_CONTENT: {translated_content}")
-                self.update_jobs(job_id=job_id,
-                                 msg_body=content_str,
-                                 source=source_name,
-                                 status='分类中',
-                                 logs=f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}, TRANSLATED_CONTENT: {translated_content}")
+            job_id = task_id if task_id else f"{source_name}_{receive_id}"
+            existing_job = self.add_job(job_id=job_id, msg_body=content_str, source=source_name)
+            if existing_job:
+                if skip_success and existing_job['fields']['状态'] == '成功':
+                    logger.error(f"Job exists and success. Skipped")
+                    logger.success(f"Total token usage: {cb.total_tokens}")
+                    return output_res
+            # Classify
+            if document_type:
+                logger.info(f"Skip classification. Document type: {document_type}")
+                document_type, reason, entry_count, translated_content = document_type, '', 1, ''
+            else:
+                try:
+                    self.update_jobs(job_id=job_id,
+                                     msg_body=content_str,
+                                     source=source_name,
+                                     status='分类中',
+                                     logs=f"开始邮件分类")
+                    document_type, reason, entry_count, translated_content = self.classify_document(document_loader)
+                    logger.success(
+                        f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}, TRANSLATED_CONTENT: {translated_content}")
+                    self.update_jobs(job_id=job_id,
+                                     msg_body=content_str,
+                                     source=source_name,
+                                     status='分类中',
+                                     logs=f"=>     Classify {document_path if document_path else 'text'}: TYPE:{document_type}, ENTRY_COUNT: {entry_count} REASON:{reason}, TRANSLATED_CONTENT: {translated_content}")
 
-            except Exception as e:
-                document_type = None
-                logger.error(traceback.format_exc())
+                except Exception as e:
+                    document_type = None
+                    logger.error(traceback.format_exc())
+                    self.update_jobs(job_id=job_id,
+                                     msg_body=content_str,
+                                     source=source_name,
+                                     status='异常',
+                                     logs=traceback.format_exc())
+                    logger.success(f"Total token usage: {cb.total_tokens}")
+                    return output_res
+            # Extraction
+            if document_type == 'others':
                 self.update_jobs(job_id=job_id,
                                  msg_body=content_str,
                                  source=source_name,
-                                 status='异常',
-                                 logs=traceback.format_exc())
+                                 status='成功',
+                                 logs=f"不属于船盘/货盘邮件")
                 return output_res
-        # Extraction
-        if document_type == 'others':
             self.update_jobs(job_id=job_id,
                              msg_body=content_str,
                              source=source_name,
-                             status='成功',
-                             logs=f"不属于船盘/货盘邮件")
-            return output_res
-        self.update_jobs(job_id=job_id,
-                         msg_body=content_str,
-                         source=source_name,
-                         document_type=document_type,
-                         status='提取中',
-                         logs=f"开始邮件信息提取")
-        extraction_res = self.extract_key_information(document_loader=document_loader,
-                                                      document_type=document_type,
-                                                      entry_count=entry_count,
-                                                      extra_info=reason + f'\n# Translated: \n{translated_content}')
-        enhanced_content_str = content_str + f'\n# Translated: \n{translated_content}'
-        output_res = {'extraction_res': extraction_res}
-        if not extraction_res:
+                             document_type=document_type,
+                             status='提取中',
+                             logs=f"开始邮件信息提取")
+            extraction_res = self.extract_key_information(document_loader=document_loader,
+                                                          document_type=document_type,
+                                                          entry_count=entry_count,
+                                                          extra_info=reason + f'\n# Translated: \n{translated_content}')
+            enhanced_content_str = content_str + f'\n# Translated: \n{translated_content}'
+            output_res = {'extraction_res': extraction_res}
+            if not extraction_res:
+                self.update_jobs(job_id=job_id,
+                                 msg_body=content_str,
+                                 source=source_name,
+                                 status='分类中',
+                                 enhanced_body=enhanced_content_str,
+                                 logs=f"未曾成功提取出结果。{extraction_res}")
+                return
+            extraction_res = [] if not extraction_res else extraction_res
             self.update_jobs(job_id=job_id,
                              msg_body=content_str,
                              source=source_name,
                              status='分类中',
                              enhanced_body=enhanced_content_str,
-                             logs=f"未曾成功提取出结果。{extraction_res}")
-            return
-        extraction_res = [] if not extraction_res else extraction_res
-        self.update_jobs(job_id=job_id,
-                         msg_body=content_str,
-                         source=source_name,
-                         status='分类中',
-                         enhanced_body=enhanced_content_str,
-                         logs=f"=>     初次提取成功：{extraction_res}")
-        # Validation
-        self.update_jobs(job_id=job_id,
-                         msg_body=content_str,
-                         source=source_name,
-                         status='结果校验中',
-                         logs=f"开始校验结果")
-        extraction_res = self.validate_key_information(document_type, extraction_res)
-        output_res = {'extraction_res': extraction_res}
-        self.update_jobs(job_id=job_id,
-                         msg_body=content_str,
-                         source=source_name,
-                         status='结果校验中',
-                         logs=f"=>     结果校验成功：{extraction_res}")
+                             logs=f"=>     初次提取成功：{extraction_res}")
+            # Validation
+            self.update_jobs(job_id=job_id,
+                             msg_body=content_str,
+                             source=source_name,
+                             status='结果校验中',
+                             logs=f"开始校验结果")
+            extraction_res = self.validate_key_information(document_type, extraction_res)
+            output_res = {'extraction_res': extraction_res}
+            self.update_jobs(job_id=job_id,
+                             msg_body=content_str,
+                             source=source_name,
+                             status='结果校验中',
+                             logs=f"=>     结果校验成功：{extraction_res}")
 
-        # INSERTION
-        if not debug:
-            try:
-                self.update_jobs(job_id=job_id,
-                                 msg_body=content_str,
-                                 source=source_name,
-                                 status='插入数据',
-                                 logs=f"开始插入数据")
-                total, content = self.get_data_loader_context(document_loader)
-                records_ids = self.insert_data_to_spreadsheet(Path(document_path) if document_path else None,
-                                                              document_type,
-                                                              extraction_res,
-                                                              raw_text='\n'.join(content))
-                output_res = {'extraction_res': extraction_res,
-                              'records_ids': records_ids}
-                self.update_jobs(job_id=job_id,
-                                 msg_body=content_str,
-                                 source=source_name,
-                                 records_ids=records_ids,
-                                 document_type=document_type,
-                                 status='插入数据',
-                                 logs=f"数据成功插入飞书表")
+            # INSERTION
+            if not debug:
+                try:
+                    self.update_jobs(job_id=job_id,
+                                     msg_body=content_str,
+                                     source=source_name,
+                                     status='插入数据',
+                                     logs=f"开始插入数据")
+                    total, content = self.get_data_loader_context(document_loader)
+                    records_ids = self.insert_data_to_spreadsheet(Path(document_path) if document_path else None,
+                                                                  document_type,
+                                                                  extraction_res,
+                                                                  raw_text='\n'.join(content))
+                    output_res = {'extraction_res': extraction_res,
+                                  'records_ids': records_ids}
+                    logger.success(output_res)
+                    self.update_jobs(job_id=job_id,
+                                     msg_body=content_str,
+                                     source=source_name,
+                                     records_ids=records_ids,
+                                     document_type=document_type,
+                                     status='插入数据',
+                                     logs=f"数据成功插入飞书表")
 
-                logger.success(f"=>      Data Inserted.")
-            except Exception as e:
-                logger.error(traceback.format_exc())
-                self.update_jobs(job_id=job_id,
-                                 msg_body=content_str,
-                                 source=source_name,
-                                 status='插入数据',
-                                 logs=f"飞书表插入失败，失败报错：{traceback.format_exc()}")
-
-                return
-        else:
-            logger.success(json.dumps(extraction_res, indent=4, ensure_ascii=False))
-        self.update_jobs(job_id=job_id,
-                         msg_body=content_str,
-                         source=source_name,
-                         status='成功',
-                         logs=json.dumps(extraction_res, indent=2, ensure_ascii=False))
+                    logger.success(f"=>      Data Inserted.")
+                except Exception as e:
+                    logger.error(traceback.format_exc())
+                    self.update_jobs(job_id=job_id,
+                                     msg_body=content_str,
+                                     source=source_name,
+                                     status='插入数据',
+                                     logs=f"飞书表插入失败，失败报错：{traceback.format_exc()}")
+                    logger.success(f"Total token usage: {cb.total_tokens}")
+                    return
+            else:
+                logger.success(json.dumps(extraction_res, indent=4, ensure_ascii=False))
+            self.update_jobs(job_id=job_id,
+                             msg_body=content_str,
+                             source=source_name,
+                             status='成功',
+                             logs=json.dumps(extraction_res, indent=2, ensure_ascii=False))
+            logger.success(f"Total token usage: {cb.total_tokens}")
         return output_res
 
     def main(self, document_paths=None):

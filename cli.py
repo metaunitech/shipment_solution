@@ -3,7 +3,164 @@
 from main import ShipmentFlow
 ins = ShipmentFlow(r'configs/feishu_config.yaml')
 # ins.feishu_spreadsheet_handler.batch_get_records(ins.app_token, ins.tables['ship_info'], ['recuy9qvJMDa5O'])
-ins.unit_flow(content="""MV AFRICAN PELICAN                         34,365 DWT / '15 BLT NAMURA LOGGER                             - OPEN BUNBURY, AUSTRALIA 04 FEB""",receive_id='test001', source_name='email',debug=True, skip_success=False)
+ins.unit_flow(content="""标题：OPEN TONNAGE 02.01
+ FROM: "Ms Quyen- Hai Phuong Co., LTD" <quyen.chartering@haiphuongship.com.vn>
+ RECEIVE_DATE: 2025-01-02 09:10:49+07:00
+ CONTENT: Dear Sir/ Madams,
+
+           Happy New Year 2025 !
+
+Pls offer suitable cargo/ trip/ TC order for our vsls as flw:
+
+
+ 
+
+　VSL
+
+DWCC
+
+　CAPA　
+
+　POSITION OPEN
+
+　DATE　
+
+　　
+
+
+1
+
+HPC FUTURE
+
+32,000
+
+43,127
+
+RVT
+
+        PG- JAPAN
+
+
+2
+
+HPC UNITY
+
+27,800
+
+39,995
+
+XIAMEN
+
+19 JAN
+
+W.W  EX USA/ CANADA/ RUS/ RED SEA
+
+
+3
+
+HSC NEW LUCKY
+
+32,000
+
+43,127
+
+YEOSU
+
+11 JAN
+
+W.W  EX USA/ CANADA/ RUS/ RED SEA
+
+1. M/V HPC FUTURE 
+
+BULKER /SINGLE DECK - VIETNAM FLAG
+
+DWT 32,816.3 MTS ON 10.15M DRFT
+
+CHINA BUILT 2010. CLASS VR
+
+GRT 20767, NRT 12116
+
+LOA 179.9M, BEAM 28.4M, DEPTH 14.1M
+
+HOLDS 5, HATCHES 5. HATCH COVER: MCGREGOR, HYDRO FOLDING TYPE
+
+GRAIN 43127.43 CBM, BALE 41402.40 CBM
+
+4 X 25T CRANES. GRAB: N.A
+
+(ADA WOG)
+
+2. M/V HPC UNITY
+
+BULKER /SINGLE DECK - PANAMA FLAG
+
+DWT 29,033 MTS ON 10.038M DRFT
+
+CHINA BUILT 2011. CLASS NK
+
+GRT 18481, NRT 10335
+
+LOA 169.99M, BEAM 27M, DEPTH 14.2M
+
+HOLDS 5, HATCHES 5. HATCH COVER: MCGREGOR, HYDRO FOLDING TYPE
+
+GRAIN 39995.5 CBM, BALE 39070.3 CBM
+
+4 X 25T CRANES. GRAB: N.A
+
+(ADA WOG)
+
+3. M/V HSC NEW LUCKY ( EX NAME: HAI PHUONG 87)
+
+BULKER /SINGLE DECK - PANAMA FLAG
+
+DWT 32,816.3 MTS ON 10.15M DR
+
+CHINA BUILT 2009. CLASS NK
+
+GRT 20767, NRT 12116
+
+LOA 179.9M, BEAM 28.4M, DEPTH 14.1M
+
+HOLDS 5, HATCHES 5. HATCH COVER: MCGREGOR, HYDRO FOLDING TYPE
+
+GRAIN 43127.43 CBM, BALE 41402.40 CBM
+
+4 X 25T CRANES. GRAB: N.A
+
+(ADA WOG)
+
+IF YOU HAVE ANY REQUIREMENT PLS CONTACT WITH ME,
+
+Thank and best regards!
+
+
+ <https://haiphuongship.vn/> 
+
+        
+Ms Quyen
+
+
+Chartering Department
+
+
+M: (84) 942 608670( Zalo/ whatsapp)
+
+Skype: daoquyen82
+
+
+E:  <mailto:quyen.chartering@haiphuongship.com.vn>
+quyen.chartering@haiphuongship.com.vn 
+
+
+Private E:  <mailto:quyenshipping@gmail.com> quyenshipping@gmail.com
+
+
+ <http://haiphuongship.vn/> Hai Phuong Company Limited
+
+
+Hai Phong City | 180000, Viet Nam
+""",receive_id='test001', source_name='email',debug=True, skip_success=False)
 # ins.update_jobs('demo', 'dd', 'dd', status='结果校验中')
 #####
 # ins.debug_data_insert(data=[{"货物名称-CARGO-NAME": "hot rolled coils", "最大货量-QUANTITY": "2200.0", "装货港口-L-PORT": "SON DUONG, VIETNAM", "卸货港口-L-PORT": "BELAWAN, INDONESIA", "装运开始日期-LAY-DATE": "2024-09-01", "佣金-COMM": "2.5", "运费单价-FRT-RATE": "80000.0", "原文依据": "need named vsl to fix\n\n—freight $ 80k\n—2,200mt hot rolled coils, 10pct molco\n—son duong, vietnam / belawan, indonesa\n—laycan:ppt onwards\n—invite bst fio or filo\n—cqd term\n—com 2.5\n\n\n\n—freight $ 20 pmt\n—5,000mt bulk clay\n—p.kelang / taipei, taiwan\n—dec 15-20 try vsl date\n—invite bst fio\n—com 2.5", "source_name": "PureText"}])

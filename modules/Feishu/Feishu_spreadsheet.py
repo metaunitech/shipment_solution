@@ -81,6 +81,9 @@ class FeishuSpreadsheetHandler(FeishuApp):
         if not response.success():
             lark.logger.error(
                 f"client.bitable.v1.app_table_record.batch_create failed, code: {response.code}, msg: {response.msg}, log_id: {response.get_log_id()}")
+
+            logger.error(response.msg)
+            logger.error(records)
             return
 
         # 处理业务结果

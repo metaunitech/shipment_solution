@@ -24,3 +24,10 @@ LLM:
       api_key: b3c547c4-6ecb-416a-8575-7b7498a5b639
       endpoint: https://ark.cn-beijing.volces.com/api/v3/
 
+  DeepSeek:
+    llm_params:
+      platform: DeepSeek
+      model_name: deepseek-chat
+      api_key: sk-28b68164d8fc44fba257afaaaafc82b4
+      endpoint: https://api.deepseek.com/v1/
+
