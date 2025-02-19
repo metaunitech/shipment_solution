@@ -12,9 +12,9 @@ from pathlib import Path
 from retrying import retry
 from typing import Dict
 import re
-
-# MODEL_NAME = 'glm-4-flash'
-MODEL_NAME = 'glm-zero-preview'
+# TODO: MOVE TO CONFIG
+MODEL_NAME = 'glm-4-flash'
+# MODEL_NAME = 'glm-zero-preview'
 
 API_TOKEN = 'a9d2815b090f143cdac247d7600a127f.WSDK8WqwJzZtCmBK'
 
@@ -143,6 +143,7 @@ class KIValidation:
             f'# TASK: \n我现在有一个输入字典需要通过API上传，但是字典里有的字段的值不满足字段格式要求。我需要你按照字段的格式要求将我的字典值进行修正，字段名都保持不变\n'
             f'原文中常用的数据展示形式为：<字段A>/<字段B>/<字段C> <ValueA>/<ValueB>/<ValueC>，请仔细检查提取出来的字段是否和表现形式一一对应。\n'
             f'所有字段都不要以符号开头,以实际内容开头，例如“MIRAI” -> MIRAI.\n'
+            f'所有字段都需要是英文\n'
             f'所有字段都需要是英文\n'
             f'注意：对于KeyValueRequirements提到必须提取到值的字段{str(mandatory_keys)}，如果当前字典中为None或者字典中不存在，则从原文依据中重新提取字段值并加入字典。同时也要校验所有值为空的字段，在文中尝试提取并加入字典。非必要字段可以为空（如果实在没有），不要放在结果字典中。返回我JSON格式。\n'
             f"今天的日期是：{datetime.datetime.now().strftime('%Y-%m-%d')}，仅供参考，校验日期的时候可以借鉴。"

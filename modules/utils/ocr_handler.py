@@ -41,8 +41,8 @@ class OCRHandler:
             img_input = Path(img_input)
             image = self.preprocess_image(image_path=img_input)
             if if_debug:
-                out_image_path = Path(img_input).parent if not out_image_dir else out_image_dir
-                assert out_image_path, 'You need to provide output image path'
+                out_image_dir = Path(img_input).parent if not out_image_dir else out_image_dir
+                assert out_image_dir, 'You need to provide output image path'
 
         elif isinstance(img_input, Path):
             if str(img_input) in self.__image_ocr_res_cache:
@@ -50,8 +50,8 @@ class OCRHandler:
                 raw_result = self.__image_ocr_res_cache[str(img_input)]
             image = self.preprocess_image(image_path=img_input)
             if if_debug:
-                out_image_path = Path(img_input).parent if not out_image_dir else out_image_dir
-                assert out_image_path, 'You need to provide output image path'
+                out_image_dir = Path(img_input).parent if not out_image_dir else out_image_dir
+                assert out_image_dir, 'You need to provide output image path'
 
         else:
             image = img_input
@@ -61,11 +61,11 @@ class OCRHandler:
             raw_result = self.__image_ocr_res_cache.get(input_marker)
         if not raw_result:
             if not self.__ppeng:
-                self.__ppeng = PaddleOCR(use_angle_cls=True, lang='ch')
+                self.__ppeng = PaddleOCR(use_angle_cls=True, lang='en')
             try:
                 raw_result = self.__ppeng.ocr(img=image, cls=False)
             except RuntimeError as e:
-                self.__ppeng =  PaddleOCR(use_angle_cls=True, lang='ch')
+                self.__ppeng =  PaddleOCR(use_angle_cls=True, lang='en')
                 raw_result = self.__ppeng.ocr(img=image, cls=False)
 
         if isinstance(img_input, Path) and str(img_input) not in self.__image_ocr_res_cache and raw_result:
@@ -414,14 +414,14 @@ class OCRHandler:
                                                  input_marker=image_hash + str(part_idx))
                 if not raw_result:
                     continue
-                output.append(raw_result[0][0][1][0])
+                output.extend([i[1][0] for i in raw_result[0]])
             else:
                 if not self._table_engine:
-                    self._table_engine = PPStructure(layout=False, lang='ch')
+                    self._table_engine = PPStructure(layout=False, lang='en')
                 try:
                     structured_result = self._table_engine(img_input)
                 except RuntimeError as e:
-                    self._table_engine = PPStructure(layout=False, lang='ch')
+                    self._table_engine = PPStructure(layout=False, lang='en')
                     structured_result = self._table_engine(img_input)
 
                 # for res in sorted_layout_boxes(structured_result, img_input.shape[1]):
@@ -436,7 +436,7 @@ class OCRHandler:
                                                          input_marker=image_hash + str(part_idx))
                         if not raw_result:
                             continue
-                        output.append(raw_result[0][0][1][0])
+                        output.append([i[1][0] for i in raw_result[0]])
         return output
 
     def layout_extraction(self, img_input_path, if_debug=True, output_path=None):
@@ -445,11 +445,11 @@ class OCRHandler:
         if not output_path:
             output_path = img_input_path.parent
         if not self._layout_engine:
-            self._layout_engine = PPStructure(ocr=False, return_ocr_result_in_table=True, lang='ch')
+            self._layout_engine = PPStructure(ocr=False, return_ocr_result_in_table=True, lang='en')
         try:
             layout_res_raw = self._layout_engine(str(img_input_path))
         except RuntimeError as e:
-            self._layout_engine = PPStructure(ocr=False, return_ocr_result_in_table=True, lang='ch')
+            self._layout_engine = PPStructure(ocr=False, return_ocr_result_in_table=True, lang='en')
             layout_res_raw = self._layout_engine(str(img_input_path))
 
         if if_debug:
@@ -464,9 +464,9 @@ class OCRHandler:
 
 
 if __name__ == "__main__":
-    img_path = r"J:\中债\cb_extractor\storage\1718264051942\华侨城集团有限公司2022年社会责任报告\49.png"
+    img_path = Path(r"/Users/anthonyf/projects/grainedAI/dataset_downloader/scripts/pdfpro/storage/dior-receipt-template.png")
     inst = OCRHandler()
     # print(inst.get_ocr_result(img_path))
     # layouts = inst.layout_extraction(img_path)
-    outs = inst.get_ocr_result_by_block(img_path, if_debug=True, crop_method=3)
-    print("HERE")
+    outs = inst.get_ocr_result_by_block(img_path, if_debug=True)
+    print(outs)

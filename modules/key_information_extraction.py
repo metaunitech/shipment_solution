@@ -10,6 +10,7 @@ from modules.models.output_parser import KeyValuePairList, KeyValuePair, KeyValu
 from langchain.output_parsers import PydanticOutputParser
 from loguru import logger
 import json
+from pathlib import Path
 import concurrent.futures
 from typing import List, Dict, Any, Optional
 
@@ -88,6 +89,13 @@ class TextKIE:
                     final_res = False
         return final_res, notes
 
+    def explain_before_extraction(self, file_type, raw_text):
+        prompt_path = Path(__file__).parent/'prompts'/f'explain_raw_text_{file_type}.txt'
+        with open(prompt_path, 'r', encoding='utf-8') as f:
+            prompt_template = f.read()
+        prompt = prompt_template.format(input_content=raw_text)
+        res = self.llm_engine.predict(prompt)
+        return res
 
     @retry(stop_max_attempt_number=3, wait_fixed=0.5)
     def extract_unit(self, file_type, raw_text, keys, key_definitions=None, extraction_method=None,
@@ -153,7 +161,7 @@ class TextKIE:
 3）如果原文中出现背景信息中的词汇，请务必结合背景知识的语义以及原文来推测是否包含目标字段信息。
 4）原文中的人名，地名，公司名等名词请保留其原有的语言，不要进行翻译。
 5）对于数字，比例等具体的值必须在原文中出现才提取出来，不要自己捏造。
-6）并不是所有字段都能在原文中找到，对于文中没有提及的字段，返回‘无’
+6）并不是所有字段都能在原文中找到，对于文中没有提及的字段，返回None
 7）原文中常用的数据展示形式为：<字段A>/<字段B>/<字段C> <ValueA>/<ValueB>/<ValueC>，表示<字段A>=<ValueA>, <字段B>=<ValueB>, <字段C>=<ValueC>.以此类推
 8）所有的提取内容除了“船舶中文名称”都必须是英文，全部输出英文！
 请结合注意事项、背景知识、目标字段的解释 Step by Step从我提供的原文中提取出目标字段。
@@ -245,10 +253,14 @@ YOUR ANSWER:
     def extract(self, file_type, raw_text_lines, target_key_raw,
                 key_definition_max_length=15,
                 text_line_max=50,
-                method_description_dict=None, background_infos=None):
+                method_description_dict=None, background_infos=None, explain_mode_on=False):
         output = {}
         conflict_outs = {}
-
+        if explain_mode_on:
+            logger.info("Using explained mode.")
+            translated_text = self.explain_before_extraction(file_type, '\n'.join(raw_text_lines))
+            raw_text_lines = translated_text.split('\n')
+            logger.info(f"Explained content: \n{translated_text}")
         # Split text lines
         part_count = len(raw_text_lines) // text_line_max + 1
         parts = []
@@ -472,6 +484,7 @@ YOUR ANSWER:
             method_description_dict=kwargs.get('method_description_dict',
                                                {}),
             background_infos=background_infos,
+            explain_mode_on=kwargs.get('explain_mode_on', False)
         )
         return modified_outputs, modified_conflicts, self.content_slices, self.extraction_history
 

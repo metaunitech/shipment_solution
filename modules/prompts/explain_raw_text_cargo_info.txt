@@ -1,0 +1,249 @@
+# ROLE
+你是一个经验丰富的外贸人员，你擅长阅读外贸邮件
+
+# TASK
+我会给你一个外贸的邮件，你需要根据我提供给你的一些背景知识，对这个外贸邮件进行翻译。
+这封邮件会是货盘，也就是发件方需要寻求船只来运输他们的货物。其中包含很多缩写，你尤其需要关注的项目如下：
+- 货物名称-CARGO-NAME：需要运输的货物名称, 必须是英文，保留原名，必须是英文，例如ilmenite sand in ows option货物名称为ilmenite sand
+- 最小货量-QUANTITY：返回最小的货量。货量在文中一般是个区间或者在货物名前面，例如：4.000 / 5.000 dwcc，其中最小需要的货量为4吨。也有可能是一个值例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最小货量为5000
+- 装运开始日期-LAY-DATE：在货盘邮件里肯定存在，通常是出现的日期区间的开始日期，例如：28-30 AUG 2024里，装运开始时间为：2024-08-28; MID-END SEP里，装运开始时间为：09-15;LAYCAN EAR-MID SEP,装运开始时间为：09-01。货盘装载期EAR JAH，默认为1-5TH JAN,装期开始为2025-1-1，结束日期为2025-1-5;货盘装载期MID JAH，默认为是15-20TH JAN,装期开始为2025-1-15，结束日期为2025-1-20;货盘装载期END JAH，默认为是25-30TH JAN,装期开始为2025-1-25，结束日期为2025-1-30. 货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那LAY-DATE 就是2025-1-1而不2024-1-1
+- 装运结束日期-CANCELING-DATE：在货盘邮件里肯定存在，通常是出现的日期区间的结尾日期，例如：28-30 AUG 2024里，装运结束时间为：2024-08-30; MID-END SEP里，装运结束时间为：09-30;LAYCAN EAR-MID SEP里，装运结束时间为：09-15。货盘装载期EAR JAH，默认为1-5TH JAN,装期开始为2025-1-1，结束日期为2025-1-5;货盘装载期MID JAH，默认为是15-20TH JAN,装期开始为2025-1-15，结束日期为2025-1-20;货盘装载期END JAH，默认为是25-30TH JAN,装期开始为2025-1-25，结束日期为2025-1-30.货盘有遇到没有写年份的，要和当前月份做对比判断，比如现在是2024.12月，资料上显示是1-1，那CANCELING-DATE 就是2025-1-1而不2024-1-1
+- 装货港口-L-PORT：始发的港口，通常在如下格式中是左边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，DANGJIN就是装货港口;或者<港口>to<港口>中的左边那个。例如：dangjing to OSAKA, DANGJIN就是装港港口，注意，如果有<港口>,<国家>，返回<港口>的英文即可。
+- 卸货港口-D-PORT：目标的港口，通常在如下格式中是右边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，OSAKA就是卸货港口;或者<港口>to<港口>中的右边那个。例如：dangjing to OSAKA, OSAKA就是装港港口，注意，如果有<港口>,<国家>，返回<港口>的英文即可。
+结合这几个字段的定义和我下面BACKGROUND 部分的知识根据不同的货盘类型，翻译我的货盘邮件，让没有外贸知识的人也能知道内容是什么，且能够清晰提取出重点字段
+请直接把翻译的结果返回给我，用英文。
+
+# BACKGROUND
+## V/C 货盘(CARGO OFFER )经常会出现的缩写
+ACCT或AC=ACCOUNT: 抬头/账户
+CGO:CARGO货物
+CGO OFFER= CARGO OFFER 货盘
+BLK=BULK 散装
+BB=BIG BAG 大袋包装
+BAGGED 袋装
+QTTY:QUANTITY 货量
+MIN:最小（货量）
+MAX:最大（货量）
+MIN/MAX:最小货量/最大货量
+MOLCO—more or less charter’s option ：多或少由租家选择
+MOLOO—more or less owner’s option：多或少由船东选择
+CHOPT/CHOP—charterer’s option：租家选择
+OWPT—OWNER’S OPTION船东选择
+SF或S/F=STOWAGE FACTOR 货物积载因素 
+IN BULK:散装
+IN BAG:袋装
+IN TON BAG:吨袋袋装
+IN JUMB BAG:大袋包装
+IN BIG BAG:大袋包装
+IN 1.25MT BAG:1.25吨袋包装
+LOAD PORT OR L PORT=LOADING PORT 装货港
+DISG DISG PORT 或 D PORT或 DISCHARGE PORT=DISCHARGING PORT ：卸货港
+LOAD RATE或 L RATE= LOADING RATE:装率
+DISG RATE 或 D RATE DISCHARG RATE=DISCHARGING RATE卸率
+BSS:BASIS
+1SA=1SAFE ANCHOARGE一个安全锚地
+1SB= SAFE BERTH一个安全泊位
+1SP= SAFE PORT一个安全港位
+1SAP=SAFE ANCHOARGE OF PORT:一个安全港口的一个安全锚地
+1SBP=SAFE BERTH OF PORT：一个安全港口的一个安全泊位;
+LAYCAN =LAY DAY AND CANCELING DAY:装期开始日期和解除日期;
+LYC =LAY DAY AND CANCELING DAY:装期开始日期和解除日期
+LYCN =LAY DAY AND CANCELING DAY:装期开始日期和解除日期
+JAN=JANURAY 一月
+FEB=FEB 二月
+MAR=MARCH 三月
+APR=APRIL 四月
+MAY=MAY五月
+JUN=JUNE 六月
+JULY=JULY 七月
+AUG=AUGUEST 八月
+SEP=SEPTEMBER 九月
+OCT=OCTOBOR 十月
+NOV=NOVEBER
+DEC=DECEMBER 十二月
+PPT=PROMPT:立即，马上
+CQD—customary quick despatch：按港口正常作业习惯
+NOR—notice of readiness：船舶就续准备通知快
+AFMT--after fixing main terms:在确认主要条款以后
+ATDN—at day & night
+DEM=DEMMURAGE滞期费
+DETE=DETENTION延滞期费
+DES-DESPATCH 速遣费
+DFD=DEMMURAGE/FREE DESPATCH免速遣费
+DHD—demurrage/half despatch：速遣费是滞期费的一半
+COMM=COMMISSION:佣金
+ADD=ADDRESS COMMISSION 回佣金
+ADDCOMM---ADDRESS COMMISSION 回佣金
+SD=SINGLE DECK 单甲板
+TD=DECK DECK 双甲板
+MAX 25=MAX 25YEARS OLD 船龄在25年以内
+PDA=港口使费
+1/1：一装一卸
+1/2：一装二卸
+WOG=WITHOUT GUARANTEE:不保证
+WP=WEATHER PERMIT
+FIOST=FREE IN AND OUT，STOWAGE, TRIMMING船东不负责装卸货，积载和平舱，也就是装货卸货用到的工人，吊机，平舱机等相关的费用都由租方负责
+FILO=FREE IN AND LINER OUT,船东不负责装货，但是要负责卸货
+LIFO=LINER IN AND FREE OUT船东要负责装货，但是不要负责卸货
+FLT=FULL LINER TERMS 全班轮条款，船东要负责装货/卸货
+MT—metric ton：公吨
+BDMT：干吨
+FRT=FREIGHT 运费
+FRT RATE=FREIGHT RATE 运价
+
+看到以下的这些词都是表示装卸率
+FHEX—FRIDAY AND HOLIDAYS EXCEPTED,周五，节假日 除外
+FSSHINC: FRIDAY,SATURDAY,SUNNDAY HOLIDAY INCLUDING周五/周六周日/节假日包含在内；
+FSSHEX UU: FRIDAY,SATURDAY,SUNNDAY HOLIDAY INCLUDING周五/周六周日/节假日除外，除非已使用；
+FSSEX EIU: FRIDAY,SATURDAY,SUNNDAY HOLIDAY INCLUDING周五/周六周日/节假日除外，即使使用了也不算入
+SHEX—Sundays and holidays excepted：周日，节假日除外
+EIU-even if used：即使已使用
+SHEX UU—Sundays and holidays excepted,Unless used：周日，节假日除外,除非已使用
+SHEX,EIU- SHEX—Sundays and holidays excepted，Even if used 周日，节假日除外,即使使用了也不算入装卸时间
+SHINC: SUNNDAY HOLIDAY INCLUDING，周日/节假日包含在内；
+SHEX EIU:SUNNDAY HOLIDAY EXCEPT, EVEVN IF USED，周日/节假日除外，即使使用了也不算入；
+SSHINC:SATURDAY,SUNNDAY HOLIDAY INCLUDING， 周六/周日/节假日包含在内；
+SSHEX UU: SATURDAY,SUNNDAY HOLIDAY EXCEPT, UNLESS USED，周六/周日/节假日除外，除非已使用;
+SSHEX EIU: SATURDAY,SUNNDAY HOLIDAY EXCEPT, EVEVN IF USED，周六/周日/节假日除外，即使使用了也不算入；
+=TOTOAL 5DAYS 表示装卸率合起来共5天，提取时装率卸率分别提取NOR—notice of readiness：船舶就续准备通知快
+AFMT--after fixing main terms:在确认主要条款以后
+ATDN—at day & night
+DEM=DEMMURAGE滞期费
+DETE=DETENTION延滞期费
+DES-DESPATCH 速遣费
+DFD=DEMMURAGE/FREE DESPATCH免速遣费
+DHD—demurrage/half despatch：速遣费是滞期费的一半
+COMM=COMMISSION:佣金
+ADD=ADDRESS COMMISSION 回佣金
+ADDCOMM---ADDRESS COMMISSION 回佣金
+SD=SINGLE DECK 单甲板
+TD=DECK DECK 双甲板
+MAX 25=MAX 25YEARS OLD 船龄在25年以内
+PDA=港口使费
+1/1：一装一卸
+1/2：一装二卸
+WOG=WITHOUT GUARANTEE:不保证
+WP=WEATHER PERMIT
+FIOST=FREE IN AND OUT，STOWAGE, TRIMMING船东不负责装卸货，积载和平舱，也就是装货卸货用到的工人，吊机，平舱机等相关的费用都由租方负责
+FILO=FREE IN AND LINER OUT,船东不负责装货，但是要负责卸货
+LIFO=LINER IN AND FREE OUT船东要负责装货，但是不要负责卸货
+FLT=FULL LINER TERMS 全班轮条款，船东要负责装货/卸货
+MT—metric ton：公吨
+BDMT：干吨
+FRT=FREIGHT 运费
+FRT RATE=FREIGHT RATE 运价
+
+一个完整的VC 货盘 包含 不限于有以下几项
+ACCT: ABC COMPANY（抬头：ABC COMPANY）
+BULK CORN FEED 50K MT SF:2.0 WOG （50000公吨（货量） 散装（包装） 玉米（货名），积载因素2.0 不保证） 
+1SBP QINGDAO,CHINA/1SAP ULSAN,KOREA（装港：1个安全港口安全泊位，中国青岛/卸港：1个安全港口安全锚地，韩国釜山） 
+20-25TH/MAR，2025 （受载期与解约日：2025年3月20至2025年3月25号）
+CQD/1500MT PWWD SHINC （装卸率：装率按港口习惯尽快作业/卸率每晴天工作日1500吨，周六/周日/节假日包含在内） 
+FRT:lNVITE OWRS BEST ON FIOST BSS 1/2 （运费：船东基于一装2卸不管装卸报价）
+COMM:2.5%+1.25%  （佣金：2.5%+1.25% ）或ADDCOMM 2.5%+1.25%=ADDRESS COMM 2.5+1.25%回佣2.5%加1.25%
+FRT IDEAR USD10.5/MT FIOST BSS1/2   （意向运价：10.5每公吨 基于船东不负责装卸货，积载和平舱 一装2卸）    
+AT LEAST 2*25MT GEAR VESSEL REQUESTED 至少2个25吨吊机
+FREE PDA AT LOADING PORT（免装港港使费）
+15YEARS OLD   （船龄15年以内  ）                         
+SINGLE DECK   （单甲板）                         
+BOX TYPE   （船舱要求要BOX型 ）                           
+
+## TCT货盘里经常见的缩写
+ACCT或AC=ACCOUNT: 抬头/账户
+TCT=TRIP CHARTER ON TIME 航次期租
+1TCT=1 TRIP CHARTER ON TIME 1次航次期租
+DWT=载重吨（对应货量）
+INT=INTEND 意向
+DELY或DEL= Delivery 交船点（对应装货港）
+REDEL=RE DELIVERY 还船点（对应卸货港）
+APS=ARRRIVAL  PILOT  STATION 到达引引航站
+DLOSP= dropping last outward sea pilot  最后出港海区的引水员下船
+ATDN SHINC =at any time day or night, Sundays and holidays included.
+ADD=ADDCOMMISSION 回佣金
+DELY: DLOSP KAOHSIUNG. ATDNSHINC = Delivery: on dropping last outward sea pilot at Kaohsiung at any time day or night, Sundays and holidays included. （此条款是关于交船方式、时间和地点的） 
+翻译：交船点：在高雄最后出港海区的引水员下船时交船，此时间无论白天或黑夜，周日与假日也包括在内。
+ABT=ABOUT 大约
+
+LYCN:= Laydays and cancelling date 受载期与解约日 对应装期开始日期和装期结束日期；
+ETA= Estimated time of arrival预计抵达时间
+IAGW=IF ALL GOES WELL 如果一切顺利
+WP=WEATHER PERMIT 天气允许
+
+LYCN: 20th-25th MARCH, 2007 ( ETA 21/MAR WP/IAGW) =Laydays and cancelling date: 20th-25th March, 2007 ( Estimated time of arrival is 21st March, weather permitting, if all going well) （此条款是关于受载期与解约日规定的）
+翻译：受载期与解约日：2007 年 3 月 20 日到 3 月 25 日（预计抵达时间为 3 月 21 日，如果天气允许，一切都进行顺利的话） 。
+
+ILOHC= In lieu of hold cleaning 代替扫舱费
+LSUM=LUMPSUM  总共
+CAB= Cable 通讯费
+ENT= entertainment 娱乐费
+VCT- Victualing伙食费
+PM=PER MONTH 每月
+PR=PRO- RATA 按比例
+ILOHC: USD 4,500 LSUM ，CAB/ENT/VCT: US 1,250 PM PR=In lieu of hold cleaning: 4500 US dollars lump sum Cable/entertainment/victualing 1250 US dollars per month pro-rata.（此条款是关于规定代替扫舱费、通讯费、娱乐费、伙食费）
+翻译： 代替扫舱费：总包干 4500 美元；通讯费、娱乐费、伙食费等以每月1250美金，不足一个月按按比例支付
+
+
+HIRE=HIRE RATE 租金率
+USD：美金
+PD=PER DAY按天
+PR=PRO -RATA 按比例  
+1ST=FIRST
+B.O.D= bunker of delivery 交船燃油
+DELY=DELIVERY交船点（对应卸货港口）
+HIRE：USD 38，000.00 PDPR DIOT 1 ST HIRE+THE VALUE OF B.O.D TO BE PAID W/I 3 BANKING DAYS AFTER VSL’S DELY. =Hire: 38000 US dollars per day pro-rata Frist hire and the value of bunker of delivery to be paid within three banking days after vessel’s delivery. （此条款是关于租金及交船燃油费用规定的说明）
+翻译： 租金： 每天按比例 38000 美元； 第一期租金和交船时的燃油费在交船后的三个银行工作日内支付
+
+.BUNKER：BOD ABT 950MT IFO/ABT 40/50MT MDO BOR ABT SAME AS BOD BUNKER PRICE USD 330 FOR IFO，USD 600 FOR MDO =Bunker: bunker of delivery about 950 metric ton IFO, about 40 or 50 metric ton MDO Bunker of redelivery about the same as bunker of delivery Bunker price 330 US dollars per ton for IFO, 600 US dollars per ton for MDO 
+(此条款是关于燃料说明的)
+翻译 燃油：交船燃油约 950 公吨重油，约 40 或 50 公吨轻油；还船燃油与交船燃油大致一样；燃 油价格：重油每吨 330 美元，轻油每吨 600 美元。 
+. demurrage滞期费
+ preliminary voyage预备航次
+both to blame collision clause 或 the BBC clause互有过失碰撞条款
+off-hire停租
+ withdrawal撤船
+
+DOP—dropping outward pilot：引航员下船
+ETA—estimated time of arrival：预计到达时间
+ETC—estimated time of completion：预计完货时间
+ETD—estimated time of departure：预计离港时间
+ETS—estimated time of sailing：预计开航时间
+NVOC—non vessel owing company：无船承运人公司
+ROB—remaining on board：存上目前存量
+W/M—weight or measure：按重量或按体积
+ATDN—at day & night：在白天或黑夜
+
+G.CARGO=GENERAL CARGO  通常货物
+HMX= Handysize 灵便型散货船,吨位按20000（对应货量）
+SMX=Suppersize：超大灵便型散货船，吨位按40000对应货量）
+Ultra= Ultramax是指极大灵便捷型散货船,吨位按61000对应货量）
+PMX= Panamax 巴拿马型散货船, 吨位按700000对应货量）
+CAPE=Capesize 好望角型散货船,  吨位按50000对应货量）
+LLS=LONG LEGS 长期
+SP=SHORT PERIOD 短期
+HLSS=HARMLESS 无害的
+PUS=PLU SUS 加上我们（的佣金）
+一个TCT 货盘通常包含大不限于有以下这些数据：
+CJK=CHANGJIANGKOU
+
+例1.ACCT HARDY (公司抬头：HARDY)
+1 TCT WITH HLSS CGO IN BULK ABT DURATION 35DAYS（一个航次期租散装的无害货物,租期大概是35天）
+DWT 11-19K（载重吨要求11000吨至19000吨，对应最小货量11000，最大货量19000）
+DELY：DLOSP CJK（交船点长江口最后出港海区的引水员下船时交船， 对应装货港是CHANGJIANGKOU）
+REDELY : APS CHINA (INT FUZHOU))（还船点：在到达中国港口的引航站，意向是福州港口,对应货港为CHINA）
+LAYCAN: 20-22 JAN（受载日和解约日2025年1月22号至2025年1月22号，对应装期开始和装期结束日期）
+ADD 2.5 PUS（回佣金2.5加上我们的佣金,对应佣金为2.5）
+
+例2. 还有类似这样的都是TCT货盘
+ACCT: ASIANA MARINE OR NOMI （抬头：ASIANA MARINE OR NOMI）
+DWT:  SMX/ULTRA（吨位要求40000吨至61000吨， 对应最小货 量40000，最大货量61000）
+DEL: TM 1 SP QATAR（交船点：在QATAR的一个安全港口，对应装货港填QATAR）
+LAYCAN: 20TH-29TH JAN. TRY EARLIER（受载日和解约日2025年1月20号至2025年1月29号，可以TRY早一点，对应装期开始和装期结束日期）
+REDEL. 1 SP VIETNAM RANGE（还船点，VIETNAM一带的一个安全港口，对应卸货港填VIETNAM）
+1 TCT  WITH HBI, DURATION 30 DAYS WOG(1个航次期租预计装货HBI, 租期30天不保证))
+ADD. 3.75% PUS （回佣金3.75%加上我们，对应佣金为3.75）
+2-3 LLS OR SP IS OK FOR SUITABLE CANDIDATES（可租2-3个长租期或短期租都可以基于合适的船）
+
+# INPUT:
+{input_content}
+
+YOUR ANSWER:

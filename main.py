@@ -31,7 +31,7 @@ from langchain_core.documents import Document
 from typing import Union
 from retrying import retry
 
-MODEL_NAME = 'glm-zero-preview'
+MODEL_NAME = 'glm-4-flash'
 # MODEL_NAME = 'deepseek-chat'
 API_TOKEN = 'a9d2815b090f143cdac247d7600a127f.WSDK8WqwJzZtCmBK'
 # API_TOKEN = 'sk-28b68164d8fc44fba257afaaaafc82b4'
@@ -262,7 +262,7 @@ class ShipmentFlow:
             if document_path.suffix == '.msg':
                 logger.success("Loaded by OutlookEmail format")
                 return OutlookMessageLoader(str(document_path))
-            if document_path.suffix in ['.png', '.jpg']:
+            if document_path.suffix in ['.png', '.jpg', '.jpeg']:
                 logger.success("Loaded by image format")
                 raw_contents = self.ocr_engine.get_ocr_result_by_block(document_path, if_debug=True, crop_method=0)
                 return StringListLoader(raw_contents)
@@ -354,9 +354,25 @@ class ShipmentFlow:
                                                  file_type=document_type,
                                                  # text_lines=[mutual_info, vessel_info_chunk]
                                                  text_lines=text_lines,
-                                                 extra_knowledge=extra_knowledge
+                                                 extra_knowledge=extra_knowledge,
+                                                 explain_mode_on=False
                                                  )
-            outs.append([modified_outputs[0], vessel_info_chunk, mutual_info])
+            modified_outputs_2 = self.kie_instance(rule_config_path=str(config_path),
+                                                 file_type=document_type,
+                                                 # text_lines=[mutual_info, vessel_info_chunk]
+                                                 text_lines=text_lines,
+                                                 extra_knowledge=extra_knowledge,
+                                                 explain_mode_on=True
+                                                 )
+            all_outs = {}
+            all_outs.update(modified_outputs[0])
+            for k in modified_outputs_2[0]:
+                if not all_outs.get(k):
+                    logger.warning(f"Added Non explain mode missing key value: {k}: {modified_outputs_2[0][k]}")
+                    all_outs[k] = modified_outputs_2[0][k]
+            # all_outsts.update(modified_outputs_2[0])
+
+            outs.append([all_outs, vessel_info_chunk, mutual_info])
         logger.success(json.dumps(outs, indent=2, ensure_ascii=False))
         return outs
 
