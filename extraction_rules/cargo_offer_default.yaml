@@ -2,7 +2,7 @@ background:
   - cargo offer原始信息，一般都是用英文的。
 keys:
   - 货物名称-CARGO-NAME:
-      - 返回需要运输的货物名称, 必须是英文，保留原名，必须是英文，例如ilmenite sand in ows option货物名称为ilmenite sand
+      - 返回需要运输的货物名称, 必须是英文，只返回货物名中的货物即可，忽略单位，例如in bulk等，必须是英文，例如ilmenite sand in ows option货物名称为ilmenite sand。如果有多个货物，返回第一个。
   - 最小货量-QUANTITY:
       - 返回最小的货量。货量在文中一般是个区间或者在货物名前面，例如：4.000 / 5.000 dwcc，其中最小需要的货量为4吨。也有可能是一个值例如5000MT SEMI COKE表示5000 Metric Ton的SEMI COKE，最小货量为5000
   - 最大货量-QUANTITY:
@@ -10,9 +10,9 @@ keys:
   - 积载包装-SF-PACKAGE:
       - 货盘里出现BULK,BLK,IN BULK 都是表示货物包装是BULK; 货盘BAG,BAGS,IN BAGS,IN BAG,都是表示货物包装是BAG
   - 装货港口-L-PORT:
-      - 始发的港口，通常在如下格式中是左边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，DANGJIN就是装货港口;或者<港口>to<港口>中的左边那个。例如：dangjing to OSAKA, DANGJIN就是装港港口，注意，如果有<港口>,<国家>，返回<港口>的英文即可。
+      - 始发的港口，通常在如下格式中是左边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，DANGJIN就是装货港口;或者<港口>to<港口>中的左边那个。例如：dangjing to OSAKA, DANGJIN就是装港港口，注意，如果有<港口>,<国家>，返回<港口>的英文即可。如果有多个港口，返回第一个港口即可
   - 卸货港口-D-PORT:
-      - 目标的港口，通常在如下格式中是右边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，OSAKA就是卸货港口;或者<港口>to<港口>中的右边那个。例如：dangjing to OSAKA, OSAKA就是装港港口，注意，如果有<港口>,<国家>，返回<港口>的英文即可。
+      - 目标的港口，通常在如下格式中是右边那个：<装货港口缩写>/<卸货港口缩写>，例如：文中如果是DANGJIN/OSAKA，OSAKA就是卸货港口;或者<港口>to<港口>中的右边那个。例如：dangjing to OSAKA, OSAKA就是装港港口，注意，如果有<港口>,<国家>，返回<港口>的英文即可。如果有多个港口，返回第一个港口即可
   - 装率-L-RATE:
       - 装卸率(DIS RATE)里若有/或-隔开的,/-前面的表示装率，后面的表示卸率,例如："DIS RATE 1 000 MT PWWD SHINC/CQD"装率 '1 000 MT PWWD SHINC' 如果描述CQD BENDS， L-RATE 取值CQD, D-RATE取值CQD
   - 卸率-D-RATE:
