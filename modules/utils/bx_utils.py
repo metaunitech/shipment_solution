@@ -5,8 +5,8 @@ import time
 class BXApis:
     def __init__(self):
         # 初始化 appid 和 secret
-        self.appid = "bx48H864BV4Z2NX8X8"
-        self.secret = "A9C0DA0868E94F9680444103FF98ACC8"
+        self.appid = "bx8P8ZFJZ6HXR2RJ02"
+        self.secret = "6F2DCACCD23F484FB1EE9DDCFEA17A63"
         self.token = None
         self.expire_time = None
 
