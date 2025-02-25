@@ -58,11 +58,18 @@ class VehicleDeduplicator:
     @staticmethod
     def util_InitialMatch(name1, name2):
         if ' ' in name1 and ' ' in name2:
-            return ''.join([i[0] for i in name1.split(' ')]).upper() == ''.join([i[0] for i in name2.split(' ')]).upper()
+            return ''.join([i[0] for i in name1.split(' ')]).upper() == ''.join(
+                [i[0] for i in name2.split(' ')]).upper()
         elif ' ' in name1 and ' ' not in name2:
             return ''.join([i[0] for i in name1.split(' ')]).upper() == name2.upper()
         elif ' ' not in name1 and ' ' in name2:
-            return name1.upper() == ''.join([i[0] for i in name2.split(' ')])
+            return name1.upper() == ''.join([i[0] for i in name2.split(' ') if i])
+
+    @staticmethod
+    def util_SlashValueMatch(name1, name2):
+        if '/' in name2:
+            return ''.join(name2.split('/')[-1].split(' ')).upper() == name1.upper()
+        return False
 
     def step_PreprocessName(self, name):
         if not name:
@@ -104,8 +111,12 @@ class VehicleDeduplicator:
     def method_InitialMatch(self, name):
         return [self.current_vehicles[i] for i in self.current_vehicles.keys() if self.util_InitialMatch(name, i)]
 
+    def method_SlashValueMatch(self, name):
+        return [self.current_vehicles[i] for i in self.current_vehicles.keys() if self.util_SlashValueMatch(name, i)]
+
     def check_existing_vehicle(self, name, **kwargs):
         for method in [self.method_ExactMatch,
+                       self.method_SlashValueMatch,
                        self.method_FuzzyMatch,
                        self.method_InitialMatch]:
             if method != self.method_InitialMatch:
@@ -150,5 +161,5 @@ class VehicleDeduplicator:
 
 if __name__ == "__main__":
     ins = VehicleDeduplicator()
-    res = ins.main('TAI ZE XING 319')
+    res = ins.main('J 1')
     print(res)
