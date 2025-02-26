@@ -195,8 +195,8 @@ class KIValidation:
                         logger.warning(f'Removed {mv_part} in name. Current: {vsl_name}')
                         # vsl_name = refined_dict['船舶英文名称-ENGLISH-NAME'].sub(mv_part, '')
                         refined_dict['船舶英文名称-ENGLISH-NAME'] = vsl_name
-                if not refined_dict.get('船舶中文名称-CHINESE-NAME'):
-                    refined_dict['船舶中文名称-CHINESE-NAME'] = refined_dict['船舶英文名称-ENGLISH-NAME']
+                # if not refined_dict.get('船舶中文名称-CHINESE-NAME'):
+                refined_dict['船舶中文名称-CHINESE-NAME'] = refined_dict['船舶英文名称-ENGLISH-NAME']
                 # if 'PPT' in rate_string:
                 #     logger.warning("PPT found in rate_string.")
                 #     refined_dict['空船日期-OPEN-DATE'] = datetime.datetime.now().strftime('%Y-%m-%d')
@@ -258,9 +258,15 @@ class KIValidation:
                         logger.error(f"Current {k}:{refined_dict[k]} not in datetime format. Need reformat.")
                         refined_dict[k] = None
 
+            to_remove_keyname = []
             for k in refined_dict.keys():
                 if isinstance(refined_dict[k], str):
                     refined_dict[k] = refined_dict[k].strip().upper()
+                if refined_dict[k] in ['NAN', 'N/A', '无', '未提及', '未定义', '未提供', 'plaintext', '未知', '无明确描述', 'Not specified', '无明确说明', 'YES', 'None', 'NONE']:
+                    to_remove_keyname.append(k)
+            for k in to_remove_keyname:
+                logger.warning(f"Remove {k}: {refined_dict[k]}")
+                del refined_dict[k]
 
 
             # Check if the keys are modified
