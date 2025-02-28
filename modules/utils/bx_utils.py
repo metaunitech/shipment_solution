@@ -1,6 +1,8 @@
+import json
+
 import requests
 import time
-
+from loguru import logger
 
 class BXApis:
     def __init__(self):
@@ -264,7 +266,7 @@ class BXApis:
             dict: 包含操作结果和描述信息的字典。成功时描述信息为 "success"，失败时为具体的错误详情。
         """
         self.__ensure_token_valid()
-
+        logger.info(f"Starts to add: {json.dumps(payload, ensure_ascii=False, indent=2)}")
         url = "http://47.106.198.93:8080/api/api/SaJob/AddSaJob"
         headers = {
             "token": self.token,

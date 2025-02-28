@@ -624,7 +624,7 @@ class ShipmentFlow:
                             "DeckCount": data.get('甲板数-DECK', 0),
                             "PAndI": data.get('P&I'),
                             "Carrier": data.get('船东-OWNER'),
-                            "Remark": data.get('备注-REMARK')
+                            "Remark": data.get('备注-REMARK'),
                         }
                         for keyname in ["CarryTonSJ", "CarryTon", "Tons", "NetTon", "Length", "Width", "XDeep"
                                                                                                        "FFill"]:
@@ -678,7 +678,9 @@ class ShipmentFlow:
                                'YJBL': data.get('佣金-COMM'),
                                'BPCompany': data.get('报盘公司-COMPANY'),
                                'CarrierPrice': data.get('运费单价-FRT-RATE', 0),
-                               'Remark_DZ': data.get('备注-REMARK')}
+                               'Remark_DZ': data.get('备注-REMARK'),
+                               'LoadingCountry': data.get('装港国家'),
+                               'DischargeCountry': data.get('卸港国家')}
                     for keyname in ['YJBL', 'WeightHT2', 'WeightHT4', 'CarrierPrice']:
                         try:
                             payload[keyname] = float(payload[keyname])
