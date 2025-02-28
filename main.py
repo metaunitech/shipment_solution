@@ -625,6 +625,7 @@ class ShipmentFlow:
                             "PAndI": data.get('P&I'),
                             "Carrier": data.get('船东-OWNER'),
                             "Remark": data.get('备注-REMARK'),
+                            "JD": data.get('空船港口国家')
                         }
                         for keyname in ["CarryTonSJ", "CarryTon", "Tons", "NetTon", "Length", "Width", "XDeep"
                                                                                                        "FFill"]:
