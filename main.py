@@ -642,7 +642,8 @@ class ShipmentFlow:
                         logger.success(res)
                         payload2 = {'VesselCode': vessel_name,
                                     'PortNameE': data.get('空船港口-OPEN-PORT'),
-                                    'DTDate': data.get('空船日期-OPEN-DATE')}
+                                    'DTDate': data.get('空船日期-OPEN-DATE'),
+                                    "JD": data.get('空船港口国家')}
                         res = self.bx_handler.add_vessel_voy_dt(payload2)
                         logger.success(f"voy_dt ADD to BX: {res}")
                     except:
