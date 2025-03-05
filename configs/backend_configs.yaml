@@ -6,7 +6,7 @@ LLM:
     llm_params:
       platform: Zhipu
       model_name: glm-4-flash
-      api_key: 9e9d13e921871472a449274bad42cb42.uGbjrWiZQOaVilYy
+      api_key: fef479de41cc415d844500ad841478d6.Dab1YJV5IIiz4agQ
       endpoint: https://open.bigmodel.cn/api/paas/v4/
 
 
@@ -14,7 +14,7 @@ LLM:
     llm_params:
       platform: Zhipu
       model_name: glm-4-plus
-      api_key: 9e9d13e921871472a449274bad42cb42.uGbjrWiZQOaVilYy
+      api_key: fef479de41cc415d844500ad841478d6.Dab1YJV5IIiz4agQ
       endpoint: https://open.bigmodel.cn/api/paas/v4/
 
   Doubao:

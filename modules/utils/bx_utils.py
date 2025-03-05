@@ -134,6 +134,8 @@ class BXApis:
         }
 
         try:
+            logger.info(f"Starts to add: {json.dumps(payload, ensure_ascii=False, indent=2)}")
+
             response = requests.post(url, json=payload, headers=headers)
             response.raise_for_status()  # 如果响应状态码不是 200，将抛出 HTTPError 异常
             res = response.json()
@@ -171,6 +173,8 @@ class BXApis:
         }
 
         try:
+            logger.info(f"Starts to add: {json.dumps(payload, ensure_ascii=False, indent=2)}")
+
             response = requests.post(url, json=payload, headers=headers)
             response.raise_for_status()  # 如果响应状态码不是 200，将抛出 HTTPError 异常
             res = response.json()
