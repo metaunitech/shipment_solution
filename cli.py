@@ -253,7 +253,101 @@ ins = ShipmentFlow(r'configs/feishu_config.yaml')
 # #     main()
 # API Test
 
-ins.unit_flow(document_path="/Users/anthonyf/Desktop/MetaInFlow/船舶项目/test_ocr_0210.jpeg", skip_success=False, debug=True)
+ins.unit_flow(content="""标题：5500-6000 mts Sugar/Starch/Faba Beans/Macaroni ex Port Tawfique to Hodeidah - Mid March
+ FROM: "YMY Global Navigation Ltd" <fix@ymy-navigation.com>
+ RECEIVE_DATE: 2025-03-09 22:47:41+02:00
+ CONTENT: Dear Sirs / Awad
+
+Good day.
+
+ 
+
+Please offer firm/rated tonnage for:
+
+ 
+
+Cargo: Total abt 5500/6000 mts
+
+ 
+
+A) 3000 MTS BGD SUGAR IN 50 KGS BAGS - SF 1.3 
+
++                                                    
+
+B) 1500 MTS STARCH IN JUMBO BAGS 1 TON EACH / DIM 1.2 X 1.1 X 1.1 
+
++
+
+C) ABT 282 MTS FABA BEANS INSIDE 21000 CARTON ON ABT 188 PALLETS OF 1,5 TON
+( EACH PALLET 112 CARTONS ) - DIM 1.15 X 1.05 X 1.15
+
++
+
+D) 1000 MTS MACARONI ON PALLETS OF 1 TON EACH - DIM 1 X 1 X 1.2
+
+ 
+
+Load port: 1sp/1sb Port Tawfique, Egypt
+
+Disch port: 1sp/1sb Hodeidah, Yemen
+
+Laycan: Mid March
+
+L/D rates: 800/800 
+
+3.75% ttl comm
+
+ 
+
+WCYP?
+
+ 
+
+Thanks & Best Regards
+
+Muhammad Awad
+
+
+Mob
+
+: +20 100 442 8889
+
+
+Skype
+
+: ymy2011
+
+ 
+
+
+
+ 
+
+
+Tel/Fax
+
+: +20 66 3251181
+
+
+E-Mail  
+
+:  <mailto:ymy@ymy-gnt.com> ymy@ymy-gnt.com /
+<mailto:fix@ymy-navigation.com> fix@ymy-navigation.com
+
+Freeport Building, 4th Floor, Office No. 412 - Nahda & Memphis St., Port
+Said, Egypt
+
+40, Heliopolis Gardens, El-Moltaqa, Autostorad Road, Cairo, Egypt
+
+ 
+
+To unsubscribe from this group and stop receiving emails from it, send an email to operators+unsubscribe@ymy-navigation.com.
+
+# Reason: 
+邮件中包含了需要运输的货物信息，包括货物的种类、数量、包装、装运港、卸货港、交货时间、运费率等信息，因此属于货盘邮件。
+# Translated: 
+<货物种类>：糖/淀粉/鹰嘴豆/通心粉<数量>：约5500-6000公吨<包装>：A) 3000公吨糖，50公斤袋装；B) 1500公吨淀粉，1吨袋装；C) 约282公吨鹰嘴豆，21000纸箱装，每托盘1.5吨；D) 1000公吨通心粉，每托盘1吨<装运港>：埃及塔乌菲克港<卸货港>：也门荷台达港<交货时间>：三月中期<运费率>：L/D率800/800
+===""", skip_success=False, debug=True)
 import json
 
 import requests

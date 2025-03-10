@@ -1,7 +1,9 @@
 cargo_info:
   货物名称-CARGO-NAME:
     type: str
-    comments: 返回需要运输的货物名称, 保留原名，不要翻译，例如ilmenite sand in ows option货物名称为ilmenite sand
+    comments: 返回需要运输的货物名称（如果遇到多种货物，只返回第一个）, 保留英文原名，例如ilmenite sand in ows option货物名称为ilmenite sand。删除货物名称中的货量，货量补充词或包装，或积载(BLk、MOLOO、1-2CO等)，只保留运输的货物名称。只返回第一个货物名称。
+    example:
+      - {'5500-6000 mts Sugar/Starch/Faba Beans/Macaroni ': "SUGAR"}
     mandatory: 1
   装运开始日期-LAY-DATE:
     type: datetime
@@ -130,7 +132,7 @@ ship_info:
       - {"25MT*2 CRANE": "25MT*2"}
   船舶英文名称-ENGLISH-NAME:
     type: str
-    comment: 通常以MV/MV./M/V开头，或者其他部分是船的参数而有一个很像名字的词语，返回结果中把MV/MV./M/V省略,**绝对不能包含MV**，只输出后面的船名。
+    comment: 通常以MV/MV./M/V开头，或者其他部分是船的参数而有一个很像名字的词语，返回结果中把MV/MV./M/V省略,**绝对不能包含MV**，只输出后面的船名。如果遇到多艘船，只返回第一个
     mandatory: 1
   空船港口-OPEN-PORT:
     type: str
