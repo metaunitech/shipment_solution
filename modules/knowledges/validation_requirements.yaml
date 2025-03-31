@@ -1,9 +1,16 @@
 cargo_info:
   货物名称-CARGO-NAME:
     type: str
-    comments: 返回需要运输的货物名称（如果遇到多种货物，只返回第一个）, 保留英文原名，例如ilmenite sand in ows option货物名称为ilmenite sand。删除货物名称中的货量，货量补充词或包装，或积载(BLk、MOLOO、1-2CO等)，只保留运输的货物名称。只返回第一个货物名称。
+    comments: 返回需要运输的货物名称（如果遇到多种货物，只返回第一个）, 保留英文原名，只返回货物名中的货物即可，忽略单位，例如in bulk、BULK、BLK等。例如ilmenite sand in ows option货物名称为ilmenite sand。**删除货物名称中的货量，货量补充词或包装，或积载(BLk、MOLOO、1-2CO等)**，只保留运输的货物名称。只返回第一个货物名称。
     example:
       - {'5500-6000 mts Sugar/Starch/Faba Beans/Macaroni ': "SUGAR"}
+      - {'BLK BEAN': "BEAN"}
+      - {'BULK SILICA SAND': "SILICA SAND"}
+      - {'BULK+BAGGED MINS': "MINS"}
+      - {'10% MOLOO CORN 49': "CORN"}
+      - {'10,000MTS BGD SUGAR': "SUGAR"}
+      - {'30/50K LOG (3GRADED EACH 10K)':"LOG"}
+      - {'1563 SAND': "SAND"}
     mandatory: 1
   装运开始日期-LAY-DATE:
     type: datetime
