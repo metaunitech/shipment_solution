@@ -16,8 +16,8 @@ class OCRHandler:
         self._table_engine = None
         # self.__table_engine = PPStructure(
         #     layout_model_dir=r'W:\future_exchange\modules\utils\picodet_lcnet_x1_0_fgd_layout_table_infer')
-        self.__image_ocr_res_cache = {}
-        self.__image_layout_cache = {}
+        # self.__image_ocr_res_cache = {}
+        # self.__image_layout_cache = {}
 
     @staticmethod
     def preprocess_image(image_path, threshold=30):
@@ -35,9 +35,9 @@ class OCRHandler:
     def get_ocr_result(self, img_input, if_debug=True, out_image_dir=None, input_marker=None):
         raw_result = None
         if isinstance(img_input, str):
-            if img_input in self.__image_ocr_res_cache:
-                logger.warning(f"{img_input} already got ocr res in cache.")
-                raw_result = self.__image_ocr_res_cache[img_input]
+            # if img_input in self.__image_ocr_res_cache:
+            #     logger.warning(f"{img_input} already got ocr res in cache.")
+            #     raw_result = self.__image_ocr_res_cache[img_input]
             img_input = Path(img_input)
             image = self.preprocess_image(image_path=img_input)
             if if_debug:
@@ -45,9 +45,9 @@ class OCRHandler:
                 assert out_image_dir, 'You need to provide output image path'
 
         elif isinstance(img_input, Path):
-            if str(img_input) in self.__image_ocr_res_cache:
-                logger.warning(f"{img_input} already got ocr res in cache.")
-                raw_result = self.__image_ocr_res_cache[str(img_input)]
+            # if str(img_input) in self.__image_ocr_res_cache:
+            #     logger.warning(f"{img_input} already got ocr res in cache.")
+            #     raw_result = self.__image_ocr_res_cache[str(img_input)]
             image = self.preprocess_image(image_path=img_input)
             if if_debug:
                 out_image_dir = Path(img_input).parent if not out_image_dir else out_image_dir
@@ -57,8 +57,8 @@ class OCRHandler:
             image = img_input
             if if_debug:
                 assert out_image_dir, 'You need to provide output image path'
-        if not raw_result and input_marker:
-            raw_result = self.__image_ocr_res_cache.get(input_marker)
+        # if not raw_result and input_marker:
+        #     raw_result = self.__image_ocr_res_cache.get(input_marker)
         if not raw_result:
             if not self.__ppeng:
                 self.__ppeng = PaddleOCR(use_angle_cls=True, lang='en')
@@ -68,10 +68,10 @@ class OCRHandler:
                 self.__ppeng =  PaddleOCR(use_angle_cls=True, lang='en')
                 raw_result = self.__ppeng.ocr(img=image, cls=False)
 
-        if isinstance(img_input, Path) and str(img_input) not in self.__image_ocr_res_cache and raw_result:
-            self.__image_ocr_res_cache[str(img_input)] = raw_result
-        if input_marker not in self.__image_ocr_res_cache:
-            self.__image_ocr_res_cache[input_marker] = raw_result
+        # if isinstance(img_input, Path) and str(img_input) not in self.__image_ocr_res_cache and raw_result:
+        #     self.__image_ocr_res_cache[str(img_input)] = raw_result
+        # if input_marker not in self.__image_ocr_res_cache:
+        #     self.__image_ocr_res_cache[input_marker] = raw_result
 
         if if_debug:
             if not raw_result[0]:
