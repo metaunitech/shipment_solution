@@ -591,8 +591,12 @@ class ShipmentFlow:
                 cur_res = data[0]
                 data = cur_res
                 vessel_name = data.get('船舶英文名称-ENGLISH-NAME')
+
                 try:
                     vid = self.shipment_dedup.main(vessel_name)
+                    vessel_code = self.bx_handler.get_vessel(vid).get('job_info', {}).get('VesselCode')
+                    if not vessel_code:
+                        vid = None
                 except:
                     vid = None
                 if not vid:
